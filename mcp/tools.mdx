@@ -26,6 +26,7 @@ The catalogue includes retained server tools. The current token-creation form do
 | [Review a standard across clients](#review-a-standard-across-clients) | `get_standard_rollup` | `compliance:standard_rollup` |
 | [List detections](#list-detections) | `list_detections` | `detection:read` |
 | [Add a detection note](#add-a-detection-note) | `create_detection_note` | `detection:write` |
+| [Get remediation plan outline](#get-remediation-plan-outline) | `get_remediation_plan_outline` | `remediation:read` |
 | [List remediation runs](#list-remediation-runs) | `list_remediation_runs` | `remediation:read` |
 | [Get remediation run status](#get-remediation-run-status) | `get_remediation_run_status` | `remediation:read` |
 | [Search indexed content](#search-indexed-content) | `search_documentation` | `search:read` |
@@ -251,7 +252,27 @@ Attach a note to a detection as an evidence row.
 
 <Warning>This tool writes a detection note. Confirm the target and note text before allowing the call.</Warning>
 
-## Remediation status
+## Remediation reads
+
+### Get remediation plan outline
+
+`get_remediation_plan_outline`
+
+Read bounded plan and step metadata without parameters or credentials. Targets, simulation mode and execution readiness are not checked.
+
+**Required scope:** `remediation:read`
+
+**User permissions:** `remediation.read`.
+
+| Argument | Required | Default |
+| --- | --- | --- |
+| `plan_id` | Yes | — |
+
+- **`plan_id`:** Remediation plan UUID. A plan outside your workspace returns not found.
+
+This is a metadata-only outline, not an execution preview. `previewKind` is `metadata_only`; `executionReadiness` and `targetReadiness` are `not_checked`; `simulationMode` is `unknown`. The result gives plan, detection and Organization UUIDs, required autonomy and reversibility, plus at most 50 steps ordered by position and ID. Each step contains only its UUID, position, allowlisted `actionType` (or `unsupported`), reversibility and `requiresApproval`. `stepsTruncated: true` means more steps exist; never treat the displayed page as the whole plan.
+
+<Warning>No step parameters, target binding or eligible targets, credentials, descriptions, result payloads or plan fingerprint are returned. Reversibility and approval metadata do not establish that the action is ready, permitted or safe to run. Use the signed-in [remediation workflow](/guides/remediation) to inspect current targets and authority and request or approve an action.</Warning>
 
 ### List remediation runs
 

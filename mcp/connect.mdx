@@ -62,10 +62,13 @@ A useful answer identifies the client, the expectation, the actual observation a
 | Which clients have a particular control status? | `list_organizations_by_control_status` |
 | How do clients stand against a standard? | `get_standard_rollup` |
 | What findings are open? | `list_detections` |
+| What kind of steps does a proposed remediation plan contain? | `get_remediation_plan_outline` — requires `remediation:read`; metadata only. |
 | What is the status of a remediation run? | `list_remediation_runs` or `get_remediation_run_status` — requires `remediation:read`; neither confirms rollback eligibility. |
 | Can I add an agreed note to a finding? | `create_detection_note` — requires write access. |
 
 Tool availability and permission checks remain server-side. A client's ability to discover a tool is not permission to execute it.
+
+For an assistant such as Claude Code or Codex, use `get_remediation_plan_outline` to explain the broad intent of an existing plan identified by UUID. The outline gives action types and approval/reversibility metadata, not step parameters, targets, simulation mode or execution readiness. If an action was already requested, use `list_remediation_runs` or `get_remediation_run_status` to report its lifecycle and separate verification state. A run marked completed does not prove the control is fixed. To inspect live target choices, authority and the full plan, or to request, approve or roll back an action, continue in the signed-in [remediation workflow](/guides/remediation) with the appropriate human permissions. These MCP reads do not perform those actions.
 
 For client creation and updates, follow [Manage clients with MCP](/mcp/manage-clients) and issue a separate user-owned key with the required write scope.
 

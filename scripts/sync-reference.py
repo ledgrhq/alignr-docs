@@ -74,7 +74,7 @@ TOOL_GROUPS = {
     'Client actions': [('create_organization', 'Create a client'), ('update_organization', 'Update a client')],
     'Control results': [('get_organization_compliance', 'Read client control results'), ('explain_control_status', 'Explain a control result'), ('list_organizations_by_control_status', 'Find clients by control status'), ('get_standard_rollup', 'Review a standard across clients')],
     'Findings': [('list_detections', 'List detections'), ('create_detection_note', 'Add a detection note')],
-    'Remediation status': [('list_remediation_runs', 'List remediation runs'), ('get_remediation_run_status', 'Get remediation run status')],
+    'Remediation reads': [('get_remediation_plan_outline', 'Get remediation plan outline'), ('list_remediation_runs', 'List remediation runs'), ('get_remediation_run_status', 'Get remediation run status')],
     'Search and questions': [('search_documentation', 'Search indexed content'), ('ask_ledgr', 'Ask an evidence-backed question')],
 }
 ARGUMENT_HELP = {
@@ -95,6 +95,7 @@ ARGUMENT_HELP = {
     'status': 'Status to filter by; the default is shown below.',
     'detection_ref': 'Reference identifying the detection to annotate.',
     'run_id': 'Remediation run UUID. A run outside your workspace returns not found.',
+    'plan_id': 'Remediation plan UUID. A plan outside your workspace returns not found.',
     'note': 'Text to add to the detection.',
 }
 ordered_tools = [name for group in TOOL_GROUPS.values() for name, _ in group]
@@ -142,6 +143,8 @@ for category, group in TOOL_GROUPS.items():
             lines += ['', 'The `total` count and `items` page are restricted to your MSP workspace. Each item contains only the run, detection and plan UUIDs; lifecycle and verification statuses; a `simulated` flag; and creation, start, finish and update timestamps. The page never includes step outputs, vendor payloads, result summaries, labels or rollback material.']
         elif name == 'get_remediation_run_status':
             lines += ['', '<Note>The detail returns the same fixed fields as each list item. A run marked `completed` means execution reached that state; it does not prove the control was fixed. Check `verificationStatus` and fresh source evidence. `simulated: true` means at least one step was rehearsed rather than applied. Neither this tool nor the list reports rollback eligibility: status alone cannot establish that a rollback window is open or an eligible token remains.</Note>']
+        elif name == 'get_remediation_plan_outline':
+            lines += ['', 'This is a metadata-only outline, not an execution preview. `previewKind` is `metadata_only`; `executionReadiness` and `targetReadiness` are `not_checked`; `simulationMode` is `unknown`. The result gives plan, detection and Organization UUIDs, required autonomy and reversibility, plus at most 50 steps ordered by position and ID. Each step contains only its UUID, position, allowlisted `actionType` (or `unsupported`), reversibility and `requiresApproval`. `stepsTruncated: true` means more steps exist; never treat the displayed page as the whole plan.', '', '<Warning>No step parameters, target binding or eligible targets, credentials, descriptions, result payloads or plan fingerprint are returned. Reversibility and approval metadata do not establish that the action is ready, permitted or safe to run. Use the signed-in [remediation workflow](/guides/remediation) to inspect current targets and authority and request or approve an action.</Warning>']
 lines += ['', '## Understand the answer', '', 'A missing result is not proof that a control passed. Read [control statuses](/guides/control-status), retain the client and evidence context, and review [MCP permissions](/mcp/security).']
 (ROOT/'mcp/tools.mdx').write_text('\n'.join(lines)+'\n')
 print(f'Generated {len(paths)} read endpoints and {len(MCP_TOOL_SCOPES)} MCP tools.')
