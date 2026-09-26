@@ -1,0 +1,83 @@
+---
+title: "Evaluate Alignr with one client"
+description: "Run a focused pilot that proves evidence quality, team usability and a useful client outcome."
+---
+
+A useful pilot ends with a decision you can explain: which client questions Alignr can answer from your tools, what remains unknown, and whether your team can turn the results into owned work. Agree that outcome before connecting your entire estate.
+
+This is a suggested evaluation method, not an in-app trial programme or a promise about plan entitlements, pricing or completion time.
+
+## Choose a representative client
+
+Pick a client you are authorised to assess, with a known environment and someone who can confirm the source identities. Start with one technical question, such as administrator MFA registration or backup recency. Add a manual review when the broader question cannot be answered by an observation alone.
+
+| Prepare | Why it matters |
+| --- | --- |
+| One client and its source identifiers | Similar company names are not sufficient to establish the mapping. |
+| One available evidence source | Check its [capabilities and limitations](/guides/integration-catalogue) before promising a result. |
+| One agreed expectation | Choose a relevant [baseline](/controls/baselines/overview); explain any changed threshold. |
+| A technical reviewer | Someone must compare the evidence with the known environment. |
+| A review owner | Someone must decide what to investigate, accept or propose next. |
+
+For a Microsoft client outside your Partner Center, review the [Direct connection option](/guides/client-microsoft-connections) before assuming delegated access will work.
+
+<Warning>
+  A one-client pilot does not create an isolated standard. Enabling a global standard affects the workspace; selecting one client for **Run checks** only chooses that assessment run. Review existing clients and effective settings before activation.
+</Warning>
+
+## Complete five checkpoints
+
+<Steps>
+  <Step title="Establish a trustworthy connection">
+    Follow the [setup wizard](/guides/setup-wizard), confirm the client mapping and inspect completed collection. Verify a known account or device belongs to that client.
+
+    **Evidence of completion:** you can identify the source, subject and observation time. A saved credential is not enough.
+  </Step>
+  <Step title="Explain one assessment">
+    Follow [Your first assessment](/journeys/first-assessment). Check the enabled standard, the control's population and its effective settings. Inspect the result and supporting observations.
+
+    **Evidence of completion:** a reviewer can explain why the result is pass, fail or unknown. Do not make a pilot successful by relaxing a threshold until it passes.
+  </Step>
+  <Step title="Exercise the gap-handling path">
+    Inspect any real missing evidence or unsupported requirement. Trace the source capability, mapping and freshness using [troubleshooting](/guides/troubleshooting). Where human judgement is needed, use a separate manual check.
+
+    **Evidence of completion:** each unknown has a cause or an investigation owner. Do not manufacture a production failure or remove evidence to demonstrate this step.
+  </Step>
+  <Step title="Turn a finding into owned work">
+    Choose the appropriate route: [triage](/guides/triage-issues), [manual follow-up](/guides/client-reviews), a supported [remediation](/guides/remediation), or a [risk/roadmap decision](/guides/risk-and-roadmap).
+
+    **Evidence of completion:** the next action and owner are clear. An approved proposal does not prove delivery, and completed work still needs verification.
+  </Step>
+  <Step title="Prepare something you can discuss">
+    Save a [client report](/guides/client-reports) with known failures and gaps intact. Use the [client-meeting playbook](/journeys/client-meeting) to explain the result and agree next steps.
+
+    **Evidence of completion:** another person can understand the evidence, its limits and the proposed decision without reconstructing your setup.
+  </Step>
+</Steps>
+
+## Record what the pilot actually demonstrated
+
+Use a short evaluation record. This is your team's worksheet, not an Alignr feature.
+
+```text
+Client and technical question:
+Source, mapping and observation checked:
+Control and effective settings:
+Result and evidence reference:
+Unanswered question or limitation:
+Next action, owner and review date:
+Time spent on setup:
+Time spent preparing the review:
+What we would repeat or change:
+Decision: expand / resolve a blocker / stop
+```
+
+If you compare this with your current process, use the same client, review scope and output. Measure the work rather than assuming a time saving. A smaller review or a changed definition does not demonstrate an improvement in the environment.
+
+## Decide whether to expand
+
+Expand when the team trusts the client mapping, can explain results, knows how to handle unknowns and can repeat the review. Resolve a blocker first if a required connector, observation, permission or client-access path is unavailable.
+
+Before handing the pilot to the team, name the source owner and standard owner, agree a review cadence, and record who can approve exceptions. Make sure another teammate can find the evidence and continue the follow-up.
+
+Add the next client deliberately. Review its source access, applicability and exceptions rather than copying the first client's assumptions. Use [daily review](/guides/daily-review) and [Workspace health](/guides/workspace-health) to keep collection and assessment work visible as the pilot grows.

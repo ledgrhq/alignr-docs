@@ -46,3 +46,7 @@ The signup path leads to the wizard immediately and the welcome message links ba
 ## Continuing after the first result
 
 Daily review → triage → supported remediation or client review → risk/roadmap → fixed report or authorised portal sharing. Vendor setup is grouped by category with per-product accordions; UniFi and SonicWall have dedicated mode guides. Keep API recipes in the developer tab and link them from task guidance.
+
+## Buyer and account-manager journeys
+
+The pilot guide in Start here establishes evidence-based evaluation checkpoints without promising trial terms or ROI. The client-meeting playbook joins reviews, risks, reports, portal responses and verification. Keep suggested operating practices distinct from app features.

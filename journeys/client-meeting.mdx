@@ -1,0 +1,58 @@
+---
+title: "Run an evidence-led client meeting"
+description: "Turn technical findings into a clear conversation, recorded decisions and verified follow-up."
+---
+
+A client meeting should answer three questions: **what do we know, what does it mean, and what have we agreed to do?** Use Alignr's results, manual reviews and roadmap together. A score alone cannot answer those questions.
+
+This playbook is a suggested way to use the existing workflows. It does not add a meeting scheduler, automatic minutes or scheduled report delivery.
+
+## Before the meeting
+
+1. Confirm the client and check [source and assessment freshness](/guides/workspace-health).
+2. Inspect automated failures and evidence gaps. Complete due [manual reviews](/guides/client-reviews) where you have the required evidence; keep unfinished work visible.
+3. Review [risk acceptances and proposed work](/guides/risk-and-roadmap), including expiry, costs and delivery assumptions.
+4. Prepare a [saved client report](/guides/client-reports). Check its generation time and contents before sharing.
+5. If using the [portal](/guides/client-portal), verify the intended person's external access and visible information. Staff preview does not establish client access, and portal exclusions do not redact an internal report export.
+
+**Ready to present:** you can trace each material statement to a result, observation or recorded human assessment, and distinguish the saved snapshot from current information.
+
+## Use a clear agenda
+
+| Conversation | Show or explain | Decision to seek |
+| --- | --- | --- |
+| What was assessed? | Client scope, standard, assessment time and remaining coverage gaps. | Are these the intended expectations and systems? |
+| What needs attention? | Selected findings with evidence and practical implications. | What needs investigation or action first? |
+| What remains unknown? | Missing observations, stale evidence or unfinished manual checks. | Who will obtain or review the evidence? |
+| What work is proposed? | Scope, assumptions, one-off or recurring cost and intended timing. | Proceed, revise or decline; identify the next owner. |
+| What happens next? | Open work and the evidence needed to verify completion. | Agree a follow-up date and a completion check. |
+
+## Example: explain a backup concern without overstating it
+
+Suppose fictional Acme has an observation showing a backup older than the agreed window, and its restore review is overdue. These are separate findings.
+
+You could say:
+
+> The latest available backup observation is outside the window we agreed. We need to investigate collection and the backup job before concluding why. Separately, the restore review is overdue, so we do not have a current human review showing the recovery procedure was tested. We propose investigating the backup evidence and arranging the restore review, then checking both outcomes.
+
+Use the actual observation time, control threshold and review record in your meeting. Do not replace those details with the example or describe a successful backup as a successful restore test.
+
+For a worked technical assessment, see [Backup confidence](/controls/recipes/backup-confidence).
+
+## Record the right kind of decision
+
+- **Investigation:** assign the relevant follow-up and retain the unanswered question.
+- **Risk acceptance:** record a reason and future expiry through the supported risk workflow. Acceptance does not make the control pass.
+- **Planned improvement:** create or update a roadmap proposal. Keep one-off, monthly and annual costs distinct.
+- **Client proposal response:** an authorised portal user can approve or decline a visible proposal. This is separate from the MSP's internal approval and does not execute work.
+- **Operational change:** use the supported remediation workflow and its approval requirements.
+
+Record agreements through your team's established meeting-record process as well. Alignr's proposal state is not a substitute for a commercial agreement, purchase order or complete meeting minutes.
+
+## Close the loop after delivery
+
+Record the work, collect fresh evidence where needed and reassess the affected control. For human checks, record a new assessment supported by the review performed. Explain any remaining failure or unknown.
+
+Prepare a new report if you need to share the updated state: later work does not rewrite an earlier saved report. When comparing reviews, check whether scope, thresholds, exclusions or evidence coverage changed before attributing a higher score to improvement.
+
+**Finish with:** a shared understanding of the findings, recorded decisions, named owners and a clear way to verify the next outcome.

@@ -54,6 +54,7 @@
             "group": "Start here",
             "pages": [
               "introduction",
+              "journeys/evaluate-alignr",
               "guides/setup-wizard",
               "quickstart",
               {
@@ -125,6 +126,7 @@
               {
                 "group": "Reports and client portal",
                 "pages": [
+                  "journeys/client-meeting",
                   "guides/client-reports",
                   "guides/client-portal"
                 ]
