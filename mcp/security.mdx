@@ -13,7 +13,7 @@ In the token form, **Select all** selects every currently issuable API and MCP s
 
 A user-scoped key cannot exceed its owner’s current permissions. Tenant scoping is enforced by the server; a prompt or supplied identifier cannot override it.
 
-REST and MCP scopes use different names. A user-owned key needs `organization:write` for MCP `create_organization` and `update_organization`; the owner must still have `organization.write` at call time. Service keys cannot perform these MCP writes. The REST client actions instead require the distinct `organization.write` key scope; see the [REST recipe](/api-reference/manage-clients-recipe) or the [MCP client-management guide](/mcp/manage-clients). The [MCP tool catalogue](/mcp/tools) defines the available MCP actions.
+REST and MCP scopes use different names. A user-owned key needs `organization:write` for MCP `create_organization` and `update_organization`; the owner must still have `organization.write` at call time, be active and have no pending required password change. Revoked or expired keys cannot call the tools. Service keys cannot perform these MCP writes. The REST client actions instead require the distinct `organization.write` key scope; see the [REST recipe](/api-reference/manage-clients-recipe) or the [MCP client-management guide](/mcp/manage-clients). The [MCP tool catalogue](/mcp/tools) defines the available MCP actions.
 
 ## Secrets
 

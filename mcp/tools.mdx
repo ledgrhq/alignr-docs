@@ -107,7 +107,7 @@ Create one client with a user-owned key; look up an uncertain write before retry
 - **`seats`:** Non-negative integer seat count (up to 2,147,483,647).
 - **`psa_ref`:** Optional PSA client reference, up to 200 characters.
 
-<Warning>This creates a client. There is no idempotency key or automatic retry; if the result is uncertain, look up the recorded slug before trying again. A user-owned key and its owner’s current `organization.write` permission are required. Service keys cannot perform this write.</Warning>
+<Warning>This creates a client. There is no idempotency key or automatic retry; if the result is uncertain, look up the recorded slug before trying again. A valid user-owned key and its active owner’s current `organization.write` permission are required; the owner must have no pending required password change. Service keys cannot perform this write.</Warning>
 
 ### Update a client
 
@@ -133,7 +133,7 @@ Update a client's name, seats or PSA reference with a user-owned key.
 - **`psa_ref`:** Optional PSA client reference, up to 200 characters.
 - **`clear_psa_ref`:** Set true to remove the current PSA reference; do not also supply `psa_ref`.
 
-<Warning>This changes a client. Confirm the exact Organization ID and intended fields before calling it. A user-owned key and its owner’s current `organization.write` permission are required. Service keys cannot perform this write.</Warning>
+<Warning>This changes a client. Confirm the exact Organization ID and intended fields before calling it. A valid user-owned key and its active owner’s current `organization.write` permission are required; the owner must have no pending required password change. Service keys cannot perform this write.</Warning>
 
 ## Control results
 

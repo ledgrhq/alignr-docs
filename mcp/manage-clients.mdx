@@ -9,7 +9,7 @@ An Organization is one client in your MSP workspace. These tools manage client r
 
 In **MCP → + Generate token**, choose **User key — bound to my account**. Grant `organization:read` to call `list_organizations` or `get_organization`, and `organization:write` to call `create_organization` or `update_organization`. These are MCP scopes; the [REST API](/api-reference/manage-clients-recipe) uses differently named scopes.
 
-The owner must retain the corresponding `organization.read` or `organization.write` permission at call time. A revoked key, deactivated owner or lost permission stops the call. Service keys cannot perform these client writes, even if assigned `organization:write`. The server limits every result and write to your MSP workspace and records writes in the audit log with the owner and key attribution.
+The owner must retain the corresponding `organization.read` or `organization.write` permission at call time. Client writes also require an active owner with no pending required password change. A revoked or expired key, deactivated owner or lost permission stops the call. Service keys cannot perform these client writes, even if assigned `organization:write`. The server limits every result and write to your MSP workspace and records writes in the audit log with the owner and key attribution.
 
 ## Find a client
 

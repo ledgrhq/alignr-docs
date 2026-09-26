@@ -116,9 +116,9 @@ for category, group in TOOL_GROUPS.items():
                 help_text += ' Omit it to use the tool’s workspace-wide scope.'
             lines.append(f'- **`{argument}`:** {help_text}')
         if name == 'create_organization':
-            lines += ['', '<Warning>This creates a client. There is no idempotency key or automatic retry; if the result is uncertain, look up the recorded slug before trying again. A user-owned key and its owner’s current `organization.write` permission are required. Service keys cannot perform this write.</Warning>']
+            lines += ['', '<Warning>This creates a client. There is no idempotency key or automatic retry; if the result is uncertain, look up the recorded slug before trying again. A valid user-owned key and its active owner’s current `organization.write` permission are required; the owner must have no pending required password change. Service keys cannot perform this write.</Warning>']
         elif name == 'update_organization':
-            lines += ['', '<Warning>This changes a client. Confirm the exact Organization ID and intended fields before calling it. A user-owned key and its owner’s current `organization.write` permission are required. Service keys cannot perform this write.</Warning>']
+            lines += ['', '<Warning>This changes a client. Confirm the exact Organization ID and intended fields before calling it. A valid user-owned key and its active owner’s current `organization.write` permission are required; the owner must have no pending required password change. Service keys cannot perform this write.</Warning>']
         elif name == 'create_detection_note':
             lines += ['', '<Warning>This tool writes a detection note. Confirm the target and note text before allowing the call.</Warning>']
 lines += ['', '## Understand the answer', '', 'A missing result is not proof that a control passed. Read [control statuses](/guides/control-status), retain the client and evidence context, and review [MCP permissions](/mcp/security).']
