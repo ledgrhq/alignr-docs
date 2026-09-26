@@ -1,0 +1,52 @@
+---
+title: "1. Establish the evidence"
+description: "Make sure the assessment starts with the right client and usable observations."
+---
+
+**Journey:** [Overview](/journeys/first-assessment) → **Establish evidence** → [Assess](/journeys/read-your-first-result) → [Follow up](/journeys/close-the-loop)
+
+Your goal is to find usable role and MFA registration observations for the same account in the intended client.
+
+<Steps>
+  <Step title="Connect the directory source">
+    Open **Integrations** and follow the connector's authorisation process. Use the requested permissions and confirm connection health.
+
+    **Checkpoint:** Alignr can access the intended source. This establishes access; collection and assessment still need to happen.
+
+    **If you are stuck:** [Check integration access and collection](/guides/integrations). Do not continue on the assumption that a successful credential save means evidence has arrived.
+  </Step>
+  <Step title="Map the source to Acme">
+    Review the source tenant or company identifier. Link it to the correct existing Organization, or explicitly create the client if needed. Confirm the identifier as well as the display name.
+
+    **Checkpoint:** you can identify the source record and the Alignr client it belongs to.
+
+    **If you are stuck:** [Review Organization mapping](/guides/organizations). Similar names are a reason to check identifiers, not a basis for automatic matching.
+  </Step>
+  <Step title="Inspect collected observations">
+    After collection completes, inspect a selected account's **Directory role** (`has_role`) and **MFA registered** (`mfa_registered`) observations. Confirm that both describe the same account under Acme. Check their source and observation time.
+
+    **Checkpoint:** the role observation identifies the intended administrator, and you can see whether the MFA observation is present.
+
+    **If you are stuck:** [Trace missing evidence](/guides/troubleshooting). A missing registration observation is a useful finding about coverage; do not replace it with an assumed false or true value.
+  </Step>
+</Steps>
+
+## Read one observation
+
+This is an illustrative evidence record, not an API response:
+
+| Question | Example |
+| --- | --- |
+| Which client? | Acme. |
+| Which account? | Alex's source account identifier. |
+| What was observed? | MFA registered (`mfa_registered`). |
+| What value was reported? | `true`. |
+| Can it support today's assessment? | Inspect its actual source, collection context and observation time. |
+
+The word **predicate** simply names the property being observed. You do not need to memorise the [predicate catalogue](/guides/predicate-reference) to follow this journey.
+
+## Before you continue
+
+You should now know where Acme's evidence comes from and how to trace an account's observations. The next step is to decide which expectation to apply.
+
+<Card title="Next: run and explain the assessment" icon="arrow-right" href="/journeys/read-your-first-result">Choose a standard and interpret the evidence together.</Card>

@@ -9,3 +9,7 @@ drafts/
 # Maintainer-only source and instructions
 AGENTS.md
 scripts/
+
+# Internal documentation governance
+vault/
+CLAUDE.md

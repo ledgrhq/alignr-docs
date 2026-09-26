@@ -3,6 +3,10 @@
 Public setup, API and MCP documentation for **docs.alignr.io**, hosted by Mintlify.
 This repository is separate from the Alignr application and its internal vault.
 
+## Start here
+
+Read [AGENTS.md](AGENTS.md) and the [documentation vault](vault/MOC.md) before changes. The vault records documentation decisions, information architecture, editorial standards and review evidence. It is excluded from the public site. Update it alongside the affected pages.
+
 ## Preview
 
 Use Node 22 or newer supported LTS and the current `mint` CLI:
@@ -15,6 +19,7 @@ mint dev
 ## Check
 
 ```sh
+python3 scripts/check-docs-vault.py
 mint broken-links
 mint openapi-check api-reference/openapi.json
 mint validate

@@ -1,0 +1,91 @@
+---
+title: "2. Run and explain the assessment"
+description: "Learn what passing, failing and incomplete evidence look like in one worked example."
+---
+
+**Journey:** [Overview](/journeys/first-assessment) → [Establish evidence](/journeys/connect-and-map) → **Assess** → [Follow up](/journeys/close-the-loop)
+
+We will assess whether Acme's observed Global Administrators have MFA registered. The examples below assume suitable source coverage and current, eligible evidence; the app also applies its coverage and freshness rules.
+
+## Choose and run the standard
+
+<Steps>
+  <Step title="Copy the identity template">
+    In **Standards → More → Browse library**, choose **BIOS Identity Assurance** and copy it. The copy starts as a disabled draft.
+  </Step>
+  <Step title="Review the question">
+    Review the **Global Administrators use MFA** control, its population, expectation and settings. Review the other controls and manual checks in the template before enabling the standard.
+
+    **Checkpoint:** you understand that this control selects the Global Administrator role and checks MFA registration. Its name does not establish sign-in policy enforcement.
+  </Step>
+  <Step title="Run checks">
+    Select **Run checks** from Standards. Review the selected standard, clients and settings, then confirm **Run checks for N clients**. Inspect the results after evaluation finishes.
+
+    **Checkpoint:** the result belongs to the intended client and control, with an evaluation time you can identify.
+  </Step>
+</Steps>
+
+## Work through the result
+
+The accounts below are fictional examples. Switch between scenarios to see how the conclusion changes.
+
+<Tabs sync={false}>
+  <Tab title="Pass">
+
+| Account | Observed role | MFA registered |
+| --- | --- | --- |
+| Alex | Global Administrator | `true` |
+
+The selected population contains Alex. The registration observation satisfies the expectation, so this simplified example **passes**.
+
+**Your next question:** does the selected population and source coverage represent the accounts you intended to assess? This result establishes registration for the assessed population.
+
+  </Tab>
+  <Tab title="Fail">
+
+| Account | Observed role | MFA registered |
+| --- | --- | --- |
+| Alex | Global Administrator | `true` |
+| Morgan | Global Administrator | `false` |
+
+Morgan's observed false value contradicts the expectation, so the control **fails**. Alex's satisfying observation does not cancel that failure.
+
+**Your next action:** inspect Morgan's evidence, confirm the account's purpose and ownership, then review an appropriate change.
+
+  </Tab>
+  <Tab title="Missing evidence">
+
+| Account | Observed role | MFA registered |
+| --- | --- | --- |
+| Alex | Global Administrator | `true` |
+| Sam | Global Administrator | No observation |
+
+Sam is in the selected population, but the required observation is absent. This simplified example is **No data** (`no_data`), because the evidence cannot establish a complete pass.
+
+**Your next action:** investigate collection, permissions and account identity matching. Missing evidence is not a registration value of false.
+
+  </Tab>
+</Tabs>
+
+## Two cases that are easy to misread
+
+<AccordionGroup>
+  <Accordion title="What if Morgan fails and Sam has no evidence?">
+    The known contrary observation still proves a **fail**. The result does not mean the assessment has complete coverage. Investigate Morgan's failure and Sam's missing evidence as separate follow-ups.
+  </Accordion>
+  <Accordion title="What if no administrators are observed?">
+    An empty observed population produces **No data** in this example. It does not establish that the client has no administrators or that every administrator satisfies the control.
+  </Accordion>
+</AccordionGroup>
+
+## Explain the result to someone else
+
+A useful explanation follows this pattern:
+
+> We assessed Acme's observed Global Administrators for MFA registration. Morgan's registration observation was false, so the control failed. Sam's registration observation was missing, so coverage also needs investigation. We still need a separate review of effective MFA enforcement.
+
+In a real handover, include the actual source, observation time and evidence references. Do not copy the example names into a client report.
+
+**Checkpoint:** you can distinguish contrary evidence from missing evidence and explain the limit of the conclusion. For other statuses, use [Understanding control results](/guides/control-status).
+
+<Card title="Next: decide what happens next" icon="arrow-right" href="/journeys/close-the-loop">Turn the assessment into an owned, verifiable follow-up.</Card>

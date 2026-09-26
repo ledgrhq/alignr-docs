@@ -14,6 +14,7 @@ jobs:
         with:
           node-version: '22'
       - run: npm install --global mint@4.2.939
+      - run: python3 scripts/check-docs-vault.py
       - run: mint broken-links
       - run: mint openapi-check api-reference/openapi.json
       - run: mint validate

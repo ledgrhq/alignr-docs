@@ -2,6 +2,14 @@
 
 This separate repository publishes the public Mintlify site for docs.alignr.io.
 
+## Read before every change
+
+Read [vault/MOC.md](vault/MOC.md) and the relevant linked decisions, information architecture, editorial standards and maintenance workflow before editing. This vault is the source of truth for documentation design and governance; the application vault remains authoritative for product behaviour. Update affected vault notes and the review log in the same change as public content. Record new decisions explicitly, and index new notes in MOC. Do not claim the vault is automatically maintained: agents must perform this work.
+
+Run `python3 scripts/check-docs-vault.py` before publication. The vault and agent instructions must remain excluded by `.mintignore`; never link them from public MDX.
+
+## Public documentation rules
+
 - Use Almond, Inter and the restrained monochrome layout matching the owner's Resend reference. Use Alignr branding, never Resend's logo or copy.
 - Public guides live in MDX. Internal architecture and accepted decisions remain in the application repository's vault; do not copy that vault here.
 - Alignr is a technical alignment platform for MSPs. A tenant is an MSP workspace; an Organization is its client. Missing or stale evidence never counts as passing.

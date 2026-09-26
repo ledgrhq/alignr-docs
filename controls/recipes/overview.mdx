@@ -1,0 +1,26 @@
+---
+title: "Control recipes"
+description: "Choose a focused question, build the condition and check its limits."
+---
+
+A good control recipe starts with one question and finishes with evidence you can explain. Use these recipes after the [first-client journey](/journeys/first-assessment), or jump straight to the expectation you need.
+
+| Recipe | Question | Start here |
+| --- | --- | --- |
+| Endpoint encryption | Do MDM-enrolled devices report encryption enabled? | [Build the encryption control](/controls/create-custom). |
+| Vulnerability threshold | Is the observed open-finding count within an agreed limit? | [Build a configurable count check](/controls/recipes/vulnerability-limit). |
+| Administrator MFA | Do observed Global Administrators have MFA registered? | [Follow the identity assessment](/journeys/read-your-first-result). |
+| Backup recency | Are successful-backup timestamps within the configured window? | [Review the backup baseline](/controls/baselines/backup). |
+
+## Read a recipe in four parts
+
+1. **Scope:** which clients and subjects are assessed?
+2. **Condition:** which observation is compared with which expectation?
+3. **Examples:** what would satisfy, contradict or leave the question unanswered?
+4. **Limits:** what requires another control or a manual review?
+
+The simple control editor can create an observation-based population and a single expectation. Exact population values and additional filters require an appropriate built-in definition or an [advanced definition](/controls/advanced-definitions).
+
+## Before enabling a recipe
+
+Confirm source coverage, inspect an editable draft, review client settings and [test the result cases](/controls/test-and-rollout). Sample thresholds are starting points to discuss, not a recommended policy for every client.

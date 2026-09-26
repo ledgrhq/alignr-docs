@@ -54,7 +54,16 @@
             "group": "Start here",
             "pages": [
               "introduction",
-              "quickstart"
+              "quickstart",
+              {
+                "group": "Your first assessment",
+                "pages": [
+                  "journeys/first-assessment",
+                  "journeys/connect-and-map",
+                  "journeys/read-your-first-result",
+                  "journeys/close-the-loop"
+                ]
+              }
             ]
           },
           {
@@ -82,6 +91,13 @@
                 "pages": [
                   "controls/overview",
                   "controls/baselines/overview",
+                  {
+                    "group": "Control recipes",
+                    "pages": [
+                      "controls/recipes/overview",
+                      "controls/recipes/vulnerability-limit"
+                    ]
+                  },
                   {
                     "group": "Baseline categories",
                     "pages": [
