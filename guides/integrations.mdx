@@ -3,49 +3,61 @@ title: "Connect integrations"
 description: "Bring source evidence into your client assessments."
 ---
 
-## Connect your source
+## Choose the job before connecting
 
-Open **Integrations** and select the source you want to connect. The connection form identifies the credentials and settings for that connector. Follow the vendor’s authorisation process with an account permitted to grant the requested access.
+A connection can supply client records, assessment evidence, or both depending on its supported capabilities. Check the selected integration's description and connection mode.
 
-Use the least access required by the selected connection mode. Do not reuse a personal administrator password where the connector supports a dedicated application or API credential.
-
-## Map source records
-
-After connecting, review discovered companies or tenants and explicitly link them to your clients. A source record with a similar name is not proof that it belongs to the same Organization.
-
-[Review Organization mapping](/guides/organizations).
-
-## Check collection
-
-Inspect the connection’s collection status and the evidence it produces. Check the correct client, source reference and observation time. A source may connect successfully but return no usable evidence for a particular control.
-
-## Troubleshoot
-
-- **Authorisation fails:** check the connection mode, credential expiry and vendor permissions.
-- **Client missing:** check source access and unresolved mappings.
-- **Evidence missing:** confirm collection completed and the connector supplies the predicates the control requires.
-- **Evidence stale:** check recent collection failures and credential validity.
-
-[Understand evidence and coverage](/guides/evidence).
-
-## Connection, mapping, collection and coverage
-
-These are four separate milestones:
-
-| Milestone | What it establishes | What it does not establish |
+| Your task | Look for | Next action |
 | --- | --- | --- |
-| Connected | Alignr can use the configured source connection. | Every client or source feature is accessible. |
-| Mapped | A source record is linked to the intended client. | Collection has produced all required observations. |
-| Collected | A collection run produced or refreshed evidence. | Every predicate needed by every control is present. |
-| Covered | The control's evidence requirements are supported in the client's context. | The available observations satisfy the control. |
+| Bring source companies or tenants into Alignr. | A client-directory source or a source that supports client discovery. | Import and explicitly match client records. |
+| Assess account, device or workload settings. | An evidence source that supplies the control's required observations. | Map the source, collect evidence and run checks. |
+| Explore a demonstration. | A connection marked simulated/demo. | Treat it as demonstration data; use a live source for client evidence. |
+
+A **client-directory source** does not write evidence facts or execute remediation. Importing a client from it is useful setup work, but it does not supply MFA, patching or backup observations.
+
+## Connect and follow the appropriate path
+
+Open **Integrations** and select your source. Follow the connector's connection form with an account permitted to grant the requested access. Use the connection mode and credentials described by that form.
+
+<Tabs sync={false}>
+  <Tab title="Import client records">
+    1. Open **Clients → Import clients**, or use **Import clients** on a directory integration.
+    2. Select the **Import source** and use **Refresh client records** when available.
+    3. Review stable identifiers and choose the correct existing client before selecting **Link**, or use **Create** for a genuinely new client.
+
+    **Checkpoint:** the intended source record is linked to the right Organization. Follow [Organization mapping](/guides/organizations) for the identity checks.
+  </Tab>
+  <Tab title="Collect assessment evidence">
+    1. Review the integration's **Clients & sites** mappings for the intended client.
+    2. On an evidence integration where it is available, use **Sync now**. Inspect **Sync history** for the collection outcome.
+    3. Confirm the required observations arrived with the intended client, source and observation time.
+    4. Review and enable the standard, then use **Standards → Run checks**.
+
+    **Checkpoint:** a completed evaluation uses the intended evidence. A source can connect successfully while a particular observation remains unavailable.
+  </Tab>
+</Tabs>
+
+## Import, collect and assess are different actions
 
 ```mermaid
 flowchart TD
-    A["Authorise source"] --> B["Review client mappings"]
-    B --> C["Collect observations"]
-    C --> D["Inspect source and timestamps"]
-    D --> E["Evaluate supported controls"]
+    I["Import and match client records"] --> M["Known client and source mapping"]
+    M --> C["Collect from an evidence source"]
+    C --> F["Inspect current observations"]
+    F --> R["Run checks against a reviewed standard"]
+    R --> E["Read results and coverage gaps"]
 ```
+
+The diagram is a workflow, not a chain of automatic triggers. A directory refresh does not collect control evidence, and **Run checks** does not start a source sync or retry. Confirm each completed step before moving on.
+
+## If a step does not complete
+
+- **Authorisation fails:** check connection mode, credential expiry and vendor permissions.
+- **Client missing:** check the import source, its access and unresolved client matches.
+- **Evidence missing:** confirm this is an evidence source, collection completed, and the source supplies the required predicate.
+- **Evidence stale:** inspect collection failures and credential validity, then confirm new observations arrive.
+
+[Follow the troubleshooting path](/guides/troubleshooting#connected-but-no-results) for the symptom you see.
 
 ## Why one source cannot answer every question
 

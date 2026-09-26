@@ -16,6 +16,7 @@ This is the source of truth for **how the public docs are designed, written and 
 - [Information architecture](Information%20Architecture.md) — readers, navigation and learning paths.
 - [Editorial standards](Editorial%20Standards.md) — writing, examples, visuals and completion criteria.
 - [Maintenance workflow](Maintenance%20Workflow.md) — source ownership, generators, publication and vault updates.
+- [Review checklist](Review%20Checklist.md) — repeatable criteria for independent review and re-review.
 - [Review log](Review%20Log.md) — verification, known gaps and next improvements.
 
 ## Publication boundary

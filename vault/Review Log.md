@@ -20,3 +20,18 @@ Added a four-page Acme assessment journey, a recipe index and vulnerability thre
 ## 2026-09-26 — Troubleshooting and backup recipe
 
 Reworked troubleshooting into symptom-led investigations with recovery checkpoints. Added a backup recipe combining source-verified template settings, illustrative timestamp cases and a separate restore review. Clarified the false-versus-missing wording in the results guide. Validation: build, broken-link, whitespace and vault checks passed. Template defaults (1 day, range 1–30; restore cadence 30 days) and 12-hour, 36-hour, future and exact-boundary timestamp comparisons passed against application source with a fixed evaluation clock. Browser checks covered symptom-anchor navigation, opening the missing-observation branch and its mobile layout. No client assessment or vendor recovery operation was performed.
+
+## 2026-09-26 — Setup review loop
+
+Two independent source/content reviewers inspected the setup and learning paths.
+Confirmed findings: generic integration instructions conflated client-directory import
+with evidence collection; mapping instructions omitted real entry points; copied disabled
+standards had no explicit enable step before a guarded Run checks action; optional
+scenario tabs introduced names used without context on the next page.
+
+Fixes: explicit import/evidence paths, Clients → Import clients and Clients & sites
+instructions, Review & enable → Enabled → Save changes, explained partial/zero-result
+run outcomes, a recap at the journey handoff and a two-clock evidence diagram.
+Source inspection covered IntegrationDetailPage, ClientImportWorkspace,
+DeployWizardPage, StandardDetailPage and EditStandardDrawer. Added a reusable
+Review Checklist. The second independent pass found no blockers. It refined identity-source wording and the observation-time label; both fixes were applied. Link, whitespace and vault checks passed. Desktop and 390px mobile mapping previews were inspected; diagram labels were shortened after the mobile review and the example IDs retained in an adjacent table. Exact staged-build validation passed. No authenticated app workflow was executed.

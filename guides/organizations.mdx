@@ -1,46 +1,75 @@
 ---
 title: "Organizations and clients"
-description: "Keep each client\u2019s evidence and assessment in the right context."
+description: "Import source records, confirm client mappings and keep evidence in the right place."
 ---
 
-## Your workspace and your clients
+Your **tenant** is your MSP’s workspace. An **Organization** is one of your clients within it. The app calls these **Clients**; API paths use `organizations`.
 
-Your **tenant** is your MSP’s workspace. An **Organization** is one of your clients within that workspace. The application also uses **Clients** for the client-facing workflow; API paths use `organizations`.
+A mapping answers one question: **which client owns this source company, tenant or site?** It does not establish whether that client passes a control.
 
-## Link a source record
+## Import and link a client
 
-Review the companies or tenants discovered by a connected source. Choose an existing client or explicitly create one. Confirm the source identifier as well as the name before linking.
+You need access to clients and integrations, permission to manage mappings, and permission to create clients if you will add a new one.
 
-Mapping establishes where evidence belongs. Incorrect mapping can produce misleading assessment results even when a connection is healthy.
+<Steps>
+  <Step title="Choose the source">
+    Open **Clients → Import clients**. Choose a connected source in **Import source**. Where available, select **Refresh client records** to retrieve its current directory.
 
-## Use an Organization ID
+    **Checkpoint:** the source you selected is the one that holds the client records you intend to import. A simulated source uses saved example records and does not contact the provider.
+  </Step>
+  <Step title="Check the record's identity">
+    Find the source company, tenant or site. Compare its displayed **ID** and name with the intended client's environment. A suggested match is a starting point for review; it has not linked the record for you.
 
-The [API quickstart](/api-reference/introduction) lists the Organizations visible to your key. Use the returned `id` when an API operation or MCP tool asks for `organization_id`.
+    **Checkpoint:** you can explain why this source record belongs to this client, beyond a similar name.
+  </Step>
+  <Step title="Link or create">
+    If the client already exists, choose it in **Choose client…**, then select **Link**. If it does not exist, select **Create** and complete the client form. Avoid creating a second client for another source that describes the same business.
 
-A key does not gain access to another MSP’s data by supplying its identifiers.
+    **Checkpoint:** the record is shown as linked to the intended client. Repeat for any other source records that belong to that client.
+  </Step>
+</Steps>
 
-## Example: one MSP, two clients
+If the selected Microsoft connection requires a client assignment or consent before discovery, follow the instructions shown for that connection. Refreshing a directory does not grant customer access.
+
+## Example: Acme across two sources
+
+These names and source identifiers are illustrative. The two source records have different identifiers but belong to the same client.
+
+| Source record | Illustrative source ID |
+| --- | --- |
+| Directory tenant: Acme Ltd | `tenant-acme` |
+| RMM site: Acme HQ | `site-acme-hq` |
 
 ```mermaid
 flowchart TD
-    T["Your MSP workspace"] --> A["Client A"]
-    T --> B["Client B"]
-    S["Source company A"] --> A
-    U["Source company B"] --> B
-    A --> EA["Client A evidence and results"]
-    B --> EB["Client B evidence and results"]
+    A["Directory tenant"] --> C["Confirm each link"]
+    B["RMM site"] --> C
+    C --> D["Acme client"]
+    D --> E["Collect evidence"]
 ```
 
-The diagram shows explicit source-to-client mapping. Your workspace can contain multiple clients, but a source record must be attached to the correct one before its evidence can support that client's assessment.
+Keep one Acme client and link the appropriate source records to it. Several sites can belong to one client. Source IDs identify records in their source systems; the Alignr Organization ID identifies the client in your workspace.
 
-## Names are not identifiers
+## Review or correct an existing mapping
 
-“Example Ltd” may exist in more than one source, with different spelling or ownership. Review stable source identifiers and the expected environment as well as display names. In API and MCP requests, use the returned Organization ID rather than substituting its name.
+Open the connection under **Integrations**, then **Clients & sites**. Search by name or ID. **Assign client** links an unassigned record; **Change client** lets you review an existing assignment. **Refresh sites** retrieves the records accessible to that connection.
 
-## Before reviewing a client
+Before changing a mapping, confirm both the current and intended client. Reassigning a site changes where its future evidence belongs; do not assume that it repairs historical results. Inspect the affected clients and collect fresh evidence before relying on a new assessment.
 
-Confirm the selected client, mapped source records, applied standards and effective overrides. If evidence appears in an unexpected assessment, investigate the mapping and subject identity before changing the control.
+## Mapping is not evidence collection
 
-## Continue
+A **client-directory source** discovers client records but does not write evidence facts. For a source that collects evidence, return to its connection, use **Sync now** when available, and review **Sync history**. Then check that the observations belong to the intended client.
 
-[Review standards and client settings](/guides/standards) before running the assessment.
+If the record is missing, first check the selected source, its accessible directory and any search filters. If the client is linked but observations are missing, follow [integration troubleshooting](/guides/troubleshooting#connected-but-no-results).
+
+## Use an Organization ID in API or MCP requests
+
+You can complete the app workflow above without an API key. For an API or MCP operation that asks for `organization_id`, use the `id` returned by [listing Organizations](/api-reference/introduction), rather than a client name or a vendor's tenant/site identifier.
+
+Supplying an identifier does not give a key access to another MSP’s data.
+
+## Before you continue
+
+You should be able to identify the Alignr client, each linked source record and its stable source identifier. You should also know whether the source imports client records or collects evidence.
+
+<Card title="Next: review the standard" icon="arrow-right" href="/guides/standards">Choose the expectations you want to assess for this client.</Card>

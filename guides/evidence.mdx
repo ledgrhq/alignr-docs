@@ -25,7 +25,7 @@ The following is an illustrative explanation, not an API response:
 
 | Field | Example | Why it matters |
 | --- | --- | --- |
-| Organization | Example client | Identifies whose environment this describes. |
+| Organization | Acme | Identifies whose environment this describes. |
 | Subject | `alex@example.com` | Identifies the person, device or other thing observed. |
 | Predicate | `mfa_registered` | Names the property being observed. |
 | Value | `true` | Records what the source reported. |
@@ -41,6 +41,25 @@ See [Understanding predicates](/guides/predicates) for how to turn technical fie
 These answer different questions. A connector may collect evidence today that a device **last checked in three weeks ago**. The observation is fresh; the device's check-in is old.
 
 Conversely, an old observation saying a device checked in recently at the time of collection does not prove the device is still reporting today. Inspect both the observation timestamp and any timestamp stored in the value.
+
+### Two clocks in one record
+
+Consider these fictional device observations at **26 September, 12:00 UTC**:
+
+| Observation collected | Reported last check-in | What you can conclude |
+| --- | --- | --- |
+| 26 September, 11:55 | 5 September, 09:00 | The source recently reported an old check-in. Fresh collection does not make the device's check-in recent. |
+| 5 September, 09:05 | 5 September, 09:00 | The record described a recent check-in when collected, but it cannot establish today's reporting state. |
+
+```mermaid
+flowchart TD
+    F["One device observation"] --> O["Observed at: when the observation was made"]
+    F --> V["Value: when the device last checked in"]
+    O --> Q["Can this evidence support the assessment now?"]
+    V --> C["Does the check-in satisfy the configured window?"]
+```
+
+Inspect both clocks. Source collection refreshes what Alignr knows; it does not change when the device last reported. This distinction also applies to backup success, sign-in and expiry timestamps.
 
 ## Freshness and source health
 

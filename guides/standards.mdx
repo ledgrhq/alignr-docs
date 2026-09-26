@@ -42,6 +42,23 @@ For example, one client may have an agreed reporting threshold that differs from
   <Step title="Evaluate and inspect">Select **Run checks** from Standards, review the selected clients and settings, and confirm the run. Read the results, evidence and evaluation time. Investigate both failures and gaps.</Step>
 </Steps>
 
+## Enable a reviewed draft
+
+A copied library template starts disabled. Open its standard details and select **Review & enable**. In the editor, turn on **Enabled** and select **Save changes** after reviewing the controls and manual checks. Confirm the standard is enabled before opening **Run checks**; the final run action is unavailable for a disabled standard.
+
+## Read the run outcome
+
+**Run checks** evaluates available evidence. It does not start source collection or automatically retry a failed client run.
+
+| Outcome | What to do |
+| --- | --- |
+| Automated results were recorded. | Open the client's results and inspect the evidence and evaluation time. A completed run does not imply all controls passed. |
+| A run was recorded with no automated results. | Review the standard's contents and enabled controls. If it contains manual checks, complete those assessments separately. |
+| Some clients completed and others failed. | Review each client's outcome. Preserve successful results and investigate the reported failures before deliberately retrying. |
+| Evidence is missing or stale. | Return to the relevant integration, resolve collection or coverage, confirm new evidence, then evaluate again. |
+
+**Checkpoint:** you can distinguish a recorded run from recorded control results, and explain which clients still need attention.
+
 ## Automated and manual checks
 
 An automated control compares observations. A manual check records a human assessment where the question needs judgement or evidence not available through the supported source.

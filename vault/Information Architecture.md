@@ -32,3 +32,7 @@ Existing URLs are retained. New pages must appear in navigation or have a docume
 ## Recovery paths
 
 Troubleshooting starts from the visible symptom and gives a recovery check for each path. The backup recipe connects automated protection/job/recency observations with a separate restore review. Keep its future-timestamp caveat beside the recency example; never imply the current within_days operator is past-only.
+
+## Setup milestones
+
+Keep client-directory import separate from evidence collection, and collection separate from running checks. Setup guides use actual Import clients / Clients & sites entry points. Library draft activation is an explicit prerequisite to evaluation. The evidence guide separates observation time from timestamps carried as values.

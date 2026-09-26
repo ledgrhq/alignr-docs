@@ -34,6 +34,10 @@ python3 scripts/build-predicate-reference.py /path/to/ledgr
 
 Regenerate only affected references. Review against the intended release and inspect the diff. Never query production tenant records to generate references. The predicate/control catalogues combine source metadata with human interpretation; regeneration does not rewrite the surrounding guides.
 
+## Review loops
+
+Use [Review Checklist](Review%20Checklist.md) to review the affected user task, fix confirmed issues, and re-review the changes. Record both passes in Review Log. Check setup against real UI labels and preconditions; a valid Markdown build does not establish a usable workflow.
+
 ## Validation and publication
 
 Use Node 22 and mint@4.2.939, matching the workflow and README:
