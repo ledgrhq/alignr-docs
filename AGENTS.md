@@ -10,7 +10,7 @@ Run `python3 scripts/check-docs-vault.py` before publication. The vault and agen
 
 ## Public documentation rules
 
-- Use Almond, Inter and the restrained monochrome layout matching the owner's Resend reference. Use Alignr branding, never Resend's logo or copy.
+- Use Almond, Geist (body 400, headings 500; DOC-007) and the restrained monochrome layout matching the owner's Resend reference. Use Alignr branding, never Resend's logo or copy.
 - Public guides live in MDX. Internal architecture and accepted decisions remain in the application repository's vault; do not copy that vault here.
 - Alignr is a technical alignment platform for MSPs. A tenant is an MSP workspace; an Organization is its client. Missing or stale evidence never counts as passing.
 - Use British English, except the established label Organization. Use sentence case, direct instructions and bold UI labels.
