@@ -6,6 +6,8 @@ On 26 September 2026, the coordinator used agent-browser to navigate the real lo
 
 The local recorder restarts browser context and lost the in-memory sign-in session. Its login-only recording was discarded outside the repository; no login video or credentials are published. Screen images remain unaltered. Mintlify stripped the nested video track element during preview, so the public page includes an adjacent time-coded text transcript instead of promising unavailable player captions. Public captions identify local demo state and the unconfigured shared Microsoft application.
 
+Later on 26 September, the new five-step wizard replaced the setup captures. The pending docs update removes the slideshow and transcript from the public tour entirely and uses current still images for Microsoft, PSA, RMM, teammates and standards. The original recording account above is retained as historical review evidence, not as a description of the revised public page. The new Microsoft image still shows the unconfigured local demo state; it does not prove provider authorisation.
+
 This was an agent-led walkthrough, not a study with independent humans. No conversion lift, completion-time improvement or successful vendor onboarding was measured.
 
 ## Observed documentation findings

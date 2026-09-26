@@ -16,6 +16,10 @@ Scopes specify what a key may do. REST and MCP use different names:
 
 Choose the exact scopes listed for your endpoint or [MCP tool](/mcp/tools).
 
+A scope is necessary but does not make every REST route accept a key. The documented read operations and MCP tools support scoped keys; many ordinary REST writes currently require a signed-in human session even if a similarly named write scope appears. Check [authentication](/api-reference/authentication) before automating a write.
+
+The form offers **Select all** and **Clear** for bulk selection. **Select all** adds every currently offered scope that you are allowed to issue, including scopes hidden by a text filter; it does not mean “select only these search results”. Review the complete selection before creating the key, or choose individual scopes for a narrower client. Scopes you cannot issue and historical scopes that the form no longer offers are excluded.
+
 ## Create a key
 
 <Steps>
@@ -23,7 +27,7 @@ Choose the exact scopes listed for your endpoint or [MCP tool](/mcp/tools).
     In Alignr, open **MCP** in the main navigation, then select **+ Generate token** on the **MCP/API Tokens** page. Signed-in users can create keys within their own permissions and manage their own keys. Administrators with `settings.manage` can view and manage workspace-wide keys.
   </Step>
   <Step title="Choose the access">
-    Give the key a recognisable name and choose the required scopes. For the REST quickstart, use `organization.read`. For the MCP Organization tool, use `organization:read`.
+    Give the key a recognisable name and choose the required scopes. For the REST quickstart, use `organization.read`. For the MCP Organization tool, use `organization:read`. If you use **Select all**, clear or deselect anything your script or assistant does not need before creating the key.
 
     Choose **User key — bound to my account** for a personal connection. Its permissions are checked against your current roles on every request, and it stops working if your account is deactivated.
 

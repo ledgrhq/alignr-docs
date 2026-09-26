@@ -7,6 +7,8 @@ description: "Understand the access granted to an MCP client."
 
 Grant only the tool scopes the client needs. Read scopes do not imply permission to add detection notes. `detection:write` enables the note-writing tool and should be an explicit choice.
 
+In the token form, **Select all** selects every currently issuable API and MCP scope, even while you are filtering the list. For a single assistant workflow, choose the scopes in the [tool catalogue](/mcp/tools) individually and review the selection before creating the key.
+
 ## Live permission checks
 
 A user-scoped key cannot exceed its owner’s current permissions. Tenant scoping is enforced by the server; a prompt or supplied identifier cannot override it.

@@ -10,9 +10,10 @@ Creating an account opens the setup wizard. You can skip any step and return fro
 You are signed in as soon as account creation succeeds. Alignr also queues a welcome email with a **Set up your workspace** link to [the setup wizard](https://app.alignr.io/setup). You do not need to verify your email before starting. If the email has not arrived, open the wizard directly after signing in.
 
 1. **Microsoft partner access:** prepare a dedicated account in your MSP’s Microsoft tenant, keep MFA enabled, and authorise the partner connection. Customer consent and GDAP relationships remain separate requirements.
-2. **Connect your PSA:** choose Datto Autotask or HaloPSA. Datto RMM is also available for device evidence; it is a separate product, not a PSA.
-3. **Invite teammates:** invite people manually, or preview your MSP’s own Microsoft directory and review each invitation and Alignr role. Previewing a directory does not create users or send invitations. Customer users and guests are not imported as MSP teammates.
-4. **Set up standards:** build a guided baseline or import an existing checklist, then review it before enabling checks.
+2. **Connect your PSA:** choose ConnectWise Manage, HaloPSA or Autotask to connect client and service records.
+3. **Connect your RMM:** choose Datto RMM or NinjaOne for device observations. ConnectWise Automate is shown as unavailable. Match the source sites or organisations to the right clients and check the first collection.
+4. **Invite teammates:** invite people manually, or preview your MSP’s own Microsoft directory and review each invitation and Alignr role. Previewing a directory does not create users or send invitations. Customer users and guests are not imported as MSP teammates.
+5. **Set up standards:** build a guided baseline, then review it before enabling checks. Existing checklists can still be imported from Standards outside the wizard.
 
 Alignr prepares secure connection storage automatically. If preparation is still running, continue with another step; the connection form becomes available when protection has been verified. You never need to provision an AWS key yourself.
 
@@ -33,7 +34,7 @@ Sign in to [Alignr](https://app.alignr.io) with a workspace account. You need pe
     [Learn about integrations](/guides/integrations).
   </Step>
   <Step title="Map your clients">
-    Review the source’s companies or tenants. Link each record to the right existing client, or explicitly create a new client. Check names and identifiers before confirming the mapping.
+    Open **Clients → Import clients** for records from your connected Microsoft, PSA or RMM source. Link each record to the right existing client, or explicitly create a new client. Check names and identifiers before confirming the mapping. Importing a client and collecting device evidence are separate checkpoints.
 
     [Understand Organizations](/guides/organizations).
   </Step>

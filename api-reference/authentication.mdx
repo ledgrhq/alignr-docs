@@ -9,7 +9,9 @@ description: "Authenticate REST requests with a scoped bearer token."
 Authorization: Bearer <your-api-key>
 ```
 
-[Create an API key](/guides/api-keys) with the scopes required by your operation. REST scopes use permission codes such as `organization.read` and `detection.read`. MCP uses its own scope names, described in the [tool reference](/mcp/tools).
+[Create an API key](/guides/api-keys) with the scopes required by a key-compatible operation. REST scopes use permission codes such as `organization.read` and `detection.read`. MCP uses its own scope names, described in the [tool reference](/mcp/tools).
+
+An API key scope grants permission only where the route accepts API keys. The current API supports scoped keys for the documented read routes and MCP tools, but many ordinary REST writes, including Organization and detection mutations, require a signed-in human session. Issuing `organization.write` or another write scope does not by itself make those routes callable with a key.
 
 ## User and service keys
 
@@ -21,6 +23,6 @@ Your credential identifies the tenant: your MSP workspace. Supplying another ten
 
 ## Human authentication
 
-The application also uses short-lived session tokens. Some human-only operations require a signed-in user or additional verification. Step-up authentication is an extra verification step for sensitive actions. An API key does not replace it and cannot obtain a secret-reveal step-up token.
+The application also uses short-lived session tokens. In the [Developer Console](https://app.alignr.io/developer), choose **My session** for operations that require a signed-in human. Some sensitive actions require additional verification. Step-up authentication is an extra verification step for sensitive actions. An API key does not replace it and cannot obtain a secret-reveal step-up token.
 
 Use the authenticated [live reference](/api-reference/live-schema) to check the requirements for each operation.

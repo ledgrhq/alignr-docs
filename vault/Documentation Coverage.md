@@ -60,4 +60,6 @@ Unrouted legacy Ask/Overview/client editing screens; standalone agents or notifi
 
 ## Keep this map current
 
+The setup and developer guides now have a draft update for the five-step wizard, separate Direct/Partner Microsoft registrations, token bulk-selection behaviour and Developer Console entry. The tour uses new five-step local captures and removes the video and old four-step setup images. The other client, assistant and report captures remain from the same day's local demo and need final UI comparison before publication. Publication and hosted-page verification remain pending the matching application release.
+
 For each implemented guide, change its row to linked coverage with source revision and verification evidence. Reconcile new/removed routes, shell actions, connector modes and server-tool scope choices during feature changes. Re-audit the changed user task rather than treating this dated inventory as permanent proof. Preserve the original audit notes as historical evidence.

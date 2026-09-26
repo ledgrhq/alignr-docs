@@ -25,7 +25,7 @@ The tables show the current Alignr form. “Required” means the form requires 
 <AccordionGroup>
 <Accordion title="Microsoft 365 / Entra ID">
 
-Use the client Microsoft setup flow for the shared Alignr application; Client ID and Client secret are only entered when using a custom application. Registration is not sign-in enforcement. Employment/offboarding status needs a separate source.
+Use the client Microsoft setup flow for Alignr's shared **Direct** application; Client ID and Client secret are only entered when using a custom application. The Partner route has a separate platform application. Registration is not sign-in enforcement. Employment/offboarding status needs a separate source.
 
 **Map:** The Microsoft tenant GUID returned by the directory.
 
@@ -43,7 +43,7 @@ Use the client Microsoft setup flow for the shared Alignr application; Client ID
 
 <Accordion title="Microsoft 365 (Partner delegated)">
 
-Use the workspace partner authorisation and client-access workflow. Customer consent, GDAP roles and mapping are separate requirements. This is not the Partner Center subscription connector. Intune device checks use Direct.
+Use the workspace partner authorisation and client-access workflow. The shared Partner application is separate from the Direct application and uses delegated access. Customer consent, GDAP roles and mapping are separate requirements. This is not the Partner Center subscription connector. Intune device checks use Direct.
 
 **Map:** Each reviewed customer Microsoft tenant GUID.
 

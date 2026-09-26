@@ -3,51 +3,46 @@ title: "Take a visual tour"
 description: "See the real setup wizard, client checks, assistant and report screens before you start."
 ---
 
-Use this tour to recognise the screens in the step-by-step guides. These are captures of Alignr running locally on 26 September 2026 with seeded demonstration data. The examples show an environment that still needs configuration and assessment; they are not live customer results.
-
-## The short screen tour
-
-<video className="w-full rounded-xl" alt="Silent tour of the real Alignr setup and assistant screens" controls preload="metadata" poster="/images/walkthroughs/setup-partner.png" aria-label="Silent tour of the real Alignr setup and assistant screens" title="Alignr screen tour">
-  <source src="/images/walkthroughs/screen-tour.mp4" type="video/mp4" />
-</video>
-
-This silent, 18-second tour moves between four screenshots; it does not demonstrate completed authorisation or an AI response. The sections below provide the same information in text and full-size images.
-
-<Accordion title="Screen tour text transcript">
-  - **0–5 seconds:** Microsoft setup. Prepare partner access, then choose the workspace connection method and account.
-  - **5–9 seconds:** Tool setup. Choose Datto RMM, Autotask or HaloPSA; RMM and PSA are different sources.
-  - **9–13 seconds:** Standards. Build a guided baseline or import a checklist, then review it before activation.
-  - **13–18 seconds:** Ask Alignr. Check the client and page scope before sending a question.
-</Accordion>
+Use these annotated screens to recognise the app before you start. Captures use seeded demonstration data; they do not show live customer results or prove that a connection or assessment is complete. Follow the [five-step setup guide](/guides/setup-wizard) for the current Microsoft, PSA, RMM, teammates and standards workflow.
 
 ## 1. Choose your Microsoft access path
 
-<Frame caption="The setup wizard: Microsoft partner access. This local demo has no shared Microsoft application configured.">
-  <img src="/images/walkthroughs/setup-partner.png" alt="Alignr setup wizard showing four steps, partner access guidance, the default connection method and partner account selector." />
+<Frame caption="Microsoft setup is the first of five optional steps. This demonstration workspace has not connected an account.">
+  <img src="/images/walkthroughs/setup-partner.png" alt="Five-step Alignr wizard on the Microsoft step, showing partner access guidance, the connection method selector and partner account choice." />
 </Frame>
 
-- **Left:** choose a setup step. You can return to unfinished steps.
-- **Centre:** prepare partner access, then select the workspace's default connection method and account.
-- **Top right:** **Finish later** returns to the app; it does not establish that setup is complete.
+The setup wizard starts with Microsoft partner access. Prepare a dedicated partner account and use the configured Alignr Partner application to authorise it. A custom app registration is needed only if you deliberately choose that route. Select the workspace's connection method and partner account. You can skip this step and return later. **Finish later** returns to the app; it does not establish that setup is complete.
 
-For a client outside Partner Center, use a Direct connection. Follow the [Microsoft setup walkthrough](/integrations/microsoft-setup) for prerequisites, permissions and verification, or [the wizard guide](/guides/setup-wizard) for all four steps.
+For a client outside Partner Center, use a Direct connection. Follow the [Microsoft setup walkthrough](/integrations/microsoft-setup) for prerequisites, permissions and verification.
 
-## 2. Connect your tools and choose expectations
+## 2. Connect tools, invite teammates and choose expectations
 
 <Tabs sync={false}>
-  <Tab title="Connect tools">
-    <Frame caption="The connection step offers supported starting points; Datto RMM is explicitly separate from a PSA.">
-      <img src="/images/walkthroughs/setup-psa.png" alt="Connect your PSA step with Datto RMM, Datto Autotask and HaloPSA connection choices." />
+  <Tab title="PSA">
+    <Frame caption="The PSA step offers service desk sources for client and service context.">
+      <img src="/images/walkthroughs/setup-psa.png" alt="Five-step wizard on the PSA step, offering ConnectWise Manage, HaloPSA and Autotask." />
     </Frame>
-    Select the intended product and follow its prerequisites. Saving credentials, mapping source clients and collecting evidence are separate checkpoints. Browse the [integration catalogue](/guides/integration-catalogue) for the broader choice of tools.
   </Tab>
-  <Tab title="Choose standards">
-    <Frame caption="Standard setup gives you a route into defining what good looks like.">
-      <img src="/images/walkthroughs/setup-standards.png" alt="The standard setup step in the Alignr wizard, with its available baseline starting choices." />
+  <Tab title="RMM">
+    <Frame caption="RMM is a separate step for managed device observations.">
+      <img src="/images/walkthroughs/setup-rmm.png" alt="Five-step wizard on the RMM step, offering Datto RMM and NinjaOne, with ConnectWise Automate unavailable." />
     </Frame>
-    Review the contents and scope before enabling a standard. A global standard is not isolated to a pilot client merely because you run checks for that client. See [Build or import a standard](/guides/build-or-import-standard).
+  </Tab>
+  <Tab title="Teammates">
+    <Frame caption="Invite a teammate directly, or preview eligible staff from your connected partner directory.">
+      <img src="/images/walkthroughs/setup-teammates.png" alt="Five-step wizard on the Teammates step, showing manual invitation and Microsoft directory preview options." />
+    </Frame>
+  </Tab>
+  <Tab title="Standards">
+    <Frame caption="The wizard starts standards work with a guided baseline draft.">
+      <img src="/images/walkthroughs/setup-standards.png" alt="Five-step wizard on the Standards step, offering a guided baseline builder." />
+    </Frame>
   </Tab>
 </Tabs>
+
+The PSA step offers ConnectWise Manage, HaloPSA and Autotask for client and service context. The separate RMM step offers Datto RMM and NinjaOne for device observations. Both can supply client records for **Clients → Import clients**, where you review each record and create or link the right Alignr client. Saving credentials, importing client records and collecting device evidence are separate checkpoints. Browse the [integration catalogue](/guides/integration-catalogue) for the broader choice of tools.
+
+Next, preview eligible staff from your MSP's Microsoft directory if connected, or invite teammates manually. The standards step offers a guided baseline. Review its contents and scope before enabling it: a global standard is not isolated to a pilot client merely because you run checks for that client. Checklist import is available later under Standards. See [Build or import a standard](/guides/build-or-import-standard).
 
 ## 3. Read the client's checks
 

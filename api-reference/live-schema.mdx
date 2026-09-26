@@ -20,6 +20,8 @@ curl --fail-with-body \
 
 The schema includes `x-ledgr-permission` for route-level permissions and `x-ledgr-destructive` for operations marked as potentially destructive. A null permission extension does not mean an operation is public: authentication and operation-specific checks still apply.
 
+The permission extension does not tell you which credential types a route accepts. A key with a matching write scope can still receive a forbidden response from a route that requires a human session. Many current REST mutations use **My session**; see [Authentication](/api-reference/authentication).
+
 ## Inspect authentication and MCP
 
 ```bash
@@ -40,7 +42,7 @@ Open [Alignr’s developer page](https://app.alignr.io/developer) while signed i
 
 ### Run a request in the explorer
 
-Choose **REST API**, filter by path, method, summary or permission, and open an operation. Check **Try it executes as**: use **My session**, or paste a token and select **Use this key** to test that token's actual access.
+Choose **REST API**, filter by path, method, summary or permission, and open an operation. Check **Try it executes as**: use **My session** for human-session routes, or paste a token and select **Use this key** to test a key-compatible operation's actual access. A displayed scope is not proof that an API key is accepted by that route.
 
 Enter the path and query values and review the request body where applicable. **Execute** sends a read request immediately. Other methods show a confirmation with the method, URL and body before sending. This operates on your live workspace; it is not a sandbox.
 

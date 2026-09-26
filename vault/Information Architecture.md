@@ -43,6 +43,8 @@ The wizard is the first configuration path. Readiness checks actual coverage, an
 
 The signup path leads to the wizard immediately and the welcome message links back to it; neither email delivery nor wizard navigation proves a working connection. Explain automatic connection-key preparation and its retry state in setup and integration guidance. The main app navigation exposes **MCP** as the token entry point; the MCP tab in these docs explains client configuration and the bounded available tools.
 
+The wizard has five optional, resumable steps: Microsoft partner access, PSA, RMM, teammates and standards. Keep PSA client/service context separate from RMM device observations; ConnectWise Automate remains unavailable in the RMM choice. The current wizard offers a guided baseline; checklist import remains a Standards workflow outside it. Platform Direct and Partner Center Microsoft registrations have separate permissions and availability. Token documentation must explain that the bulk **Select all** action ignores the current text filter and selects all issuable current scopes.
+
 ## Continuing after the first result
 
 Daily review → triage → supported remediation or client review → risk/roadmap → fixed report or authorised portal sharing. Vendor setup is grouped by category with per-product accordions; UniFi and SonicWall have dedicated mode guides. Keep API recipes in the developer tab and link them from task guidance.
@@ -53,4 +55,6 @@ The pilot guide in Start here establishes evidence-based evaluation checkpoints 
 
 ## Visual, trust and developer handoffs
 
-Start here includes a real-screen visual tour with a text transcript and full-size expandable images. Detailed Microsoft/Meraki setup stays in Connect your tools. Security/data and billing/support live in Manage your workspace, with buyer entry links on Introduction. The API tab includes an inactive-standard write recipe that explicitly distinguishes human access tokens from API keys.
+Start here includes an annotated tour of current real app screens. Keep those captures in step with the released wizard and exclude video. Detailed Microsoft/Meraki setup stays in Connect your tools. Security/data and billing/support live in Manage your workspace, with buyer entry links on Introduction. The API tab includes an inactive-standard write recipe that explicitly distinguishes human access tokens from API keys. Both API and MCP introductions point to the in-app Developer Console and explain that its requests run against the real workspace.
+
+The public site uses Geist for headings and body, matching the app. Headings use weight 500 and body text 400; keep the documentation legible and check navigation at desktop and mobile widths after font changes.

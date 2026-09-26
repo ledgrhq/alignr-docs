@@ -9,7 +9,7 @@ You can select any step, use **Skip for now**, or **Finish later** and return. W
 
 See the [visual tour](/journeys/visual-tour) to recognise these screens before you start.
 
-## Walk through the four steps
+## Walk through the five steps
 
 <Steps>
   <Step title="Microsoft partner access">
@@ -20,19 +20,24 @@ See the [visual tour](/journeys/visual-tour) to recognise these screens before y
     After authorisation, review and import customer Organizations. Your own staff directory is handled separately in the teammate step.
   </Step>
   <Step title="Connect your PSA">
-    Choose your service tool and enter its API credentials in the connection form. Review the saved connection and match its client records to the right Alignr clients.
+    Choose **ConnectWise Manage**, **HaloPSA** or **Autotask**, then enter its API credentials in the connection form. Review the saved connection and match its client records to the right Alignr clients.
 
-    Connecting a client directory is different from collecting assessment evidence. Follow the [integration guide](/guides/integrations) to check what each source supplies.
+    PSA client records can be reviewed under **Clients → Import clients** to create or link Alignr clients. Connecting a client directory is different from collecting assessment evidence. Follow the [PSA and RMM guide](/integrations/psa-rmm) to check what each source supplies.
+  </Step>
+  <Step title="Connect your RMM">
+    Choose **Datto RMM** or **NinjaOne** for device observations. **ConnectWise Automate** is shown as unavailable. These are RMM sources, separate from the PSA and its service-ticket context. Enter credentials in the connection form, then review and match source sites or organisations to the right Alignr clients.
+
+    RMM sites or organisations can also supply client records under **Clients → Import clients**; review each and create or link the correct Alignr client. Importing a client does not prove device evidence is current. Collect, check the source and observation time, then run a reviewed standard. See [Organizations and clients](/guides/organizations) for the import decisions. You may skip this step and return to it later.
   </Step>
   <Step title="Invite your teammates">
     Select **Invite a teammate**, enter their details and choose their Alignr role. They set their own password using a single-use invitation link.
 
-    You can also preview your MSP's Microsoft staff directory when your permissions allow it. Review each proposed invitation and role; previewing the directory does not send invitations. See [accounts and teammates](/guides/account-and-team).
+    You can also preview your MSP's Microsoft staff directory when your permissions allow it. Review each proposed invitation and role; previewing the directory does not send invitations. This is step four, separate from importing customers in step one. See [accounts and teammates](/guides/account-and-team).
   </Step>
   <Step title="Set up your standards">
-    Choose **Build a guided baseline → Choose standards** to select identity, device, backup and manual review areas. Or choose **Use an existing checklist → Import checklist** to bring an Excel or CSV checklist into an inactive standard.
+    Choose **Build a guided baseline → Choose standards** to select identity, device, backup and manual review areas. Existing checklists can still be imported from **Standards → Import checklist** outside the wizard.
 
-    Both paths require review before enabling checks. Select **Finish setup** when you are ready to leave the wizard.
+    Review the resulting draft before enabling checks. Select **Finish setup** when you are ready to leave the wizard.
   </Step>
 </Steps>
 

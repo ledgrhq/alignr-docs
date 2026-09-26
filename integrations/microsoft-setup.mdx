@@ -26,6 +26,12 @@ For a first client, **Direct** is the route when the client is outside your part
 
 Microsoft treats application permissions differently from delegated permissions even when their names are identical. Do not add delegated grants to a custom Direct application and expect application-token collection to work.
 
+### Alignr's two platform applications
+
+When the deployment offers shared Microsoft applications, **Direct** and **Partner Center** use separate registrations in Alignr's Microsoft tenant. The Direct registration uses Graph **application** permissions for a client administrator to consent in that client's tenant. The Partner registration uses **delegated** Graph permissions and Partner Center delegated `user_impersonation` for an MFA-protected partner account. The Partner registration has no application permissions; it does not use the Direct registration as a fallback.
+
+The registrations share the production callback `https://api.alignr.io/api/v1/integrations/microsoft/oauth/callback`, but have different client IDs and secrets. This is deployment setup, not a step where every MSP must create two registrations. If a route says its shared application is unavailable, ask your deployment administrator to configure that route before authorising it. A custom Direct registration remains a separate option for a client that needs one.
+
 ## Direct: authorise the intended client
 
 <Steps>
@@ -51,14 +57,14 @@ Microsoft treats application permissions differently from delegated permissions 
 
 ### Direct read-permission reference
 
-For the read families used by the current collectors, review these Graph **application** permissions. This is a preparation reference, not a claim about the exact grants configured on your deployment's shared application. The Microsoft consent screen and saved application grants remain the record of what is actually requested and approved.
+For the read families used by the current collectors, review these Graph **application** permissions on the Direct registration. This is a preparation reference, not a claim about the exact grants configured on your deployment's shared Direct application. The Microsoft consent screen and saved application grants remain the record of what is actually requested and approved.
 
 | Read family | Application permission | Microsoft reference |
 | --- | --- | --- |
 | Tenant identity | `Organization.Read.All` | [Organization](https://learn.microsoft.com/en-us/graph/api/organization-get?view=graph-rest-1.0) |
 | User attributes | `User.Read.All` | [Users](https://learn.microsoft.com/en-us/graph/api/user-list?view=graph-rest-1.0) |
 | Directory role membership | `RoleManagement.Read.Directory` | [Role members](https://learn.microsoft.com/en-us/graph/api/directoryrole-list-members?view=graph-rest-1.0) |
-| Subscribed products used to interpret assigned licences | `LicenseAssignment.Read.All` | [Subscribed SKUs](https://learn.microsoft.com/en-us/graph/api/subscribedsku-list?view=graph-rest-1.0) |
+| Subscribed products used to interpret assigned licences | `Organization.Read.All` (already listed above) | [Subscribed SKUs](https://learn.microsoft.com/en-us/graph/api/subscribedsku-list?view=graph-rest-1.0) |
 | Verified domains | `Domain.Read.All` | [Domains](https://learn.microsoft.com/en-us/graph/api/domain-list?view=graph-rest-1.0) |
 | Sign-in activity and authentication registration report | `AuditLog.Read.All` | [Registration report](https://learn.microsoft.com/en-us/graph/api/authenticationmethodsroot-list-userregistrationdetails?view=graph-rest-1.0) |
 | Conditional Access policies | `Policy.Read.All` | [Policies](https://learn.microsoft.com/en-us/graph/api/conditionalaccessroot-list-policies?view=graph-rest-1.0) |
@@ -66,13 +72,13 @@ For the read families used by the current collectors, review these Graph **appli
 | Intune managed devices | `DeviceManagementManagedDevices.Read.All` | [Managed devices](https://learn.microsoft.com/en-us/graph/api/intune-devices-manageddevice-list?view=graph-rest-1.0) |
 | Intune compliance configuration | `DeviceManagementConfiguration.Read.All` | [Compliance policies](https://learn.microsoft.com/en-us/graph/api/intune-deviceconfig-devicecompliancepolicy-list?view=graph-rest-1.0) |
 
-Some APIs accept broader alternatives; do not add broad write access to solve a read-coverage gap. Microsoft documents `AuditLog.Read.All` for the registration report. `Reports.Read.All` alone is not the documented permission for that endpoint. The report also does not work for disabled users, so absence of a row is not proof of no registration.
+Microsoft lists `LicenseAssignment.Read.All` as the least-privileged application permission for subscribed SKUs, and also accepts `Organization.Read.All`, which this Direct registration already needs. Some APIs accept broader alternatives; do not add broad write access to solve a read-coverage gap. Microsoft documents `AuditLog.Read.All` for the registration report. `Reports.Read.All` alone is not the documented permission for that endpoint. The report also does not work for disabled users, so absence of a row is not proof of no registration.
 
 For a custom application, review its **API permissions** in Microsoft Entra, choose the appropriate application permissions and grant authorised admin consent. Supply its **Application client ID** and **Application secret** through Alignr's custom-application form. The custom registration must also support the consent callback configured for your Alignr deployment; obtain that exact callback from the deployment administrator rather than inventing one.
 
 ## Partner: authorise the MSP, then the customer
 
-1. In **Settings → Microsoft**, choose **Partner Center · use your partner account**, select or add the partner connection and **Save Microsoft defaults**.
+1. In **Settings → Microsoft**, choose **Partner Center · use your partner account**, select or add the partner connection and **Save Microsoft defaults**. This route requires the separate Partner platform application when using Alignr's shared registration; Direct application credentials cannot replace it.
 2. Select **Authorise partner account** and sign in to the intended MSP partner tenant with MFA. The current authorisation requests Partner Center `user_impersonation`, `offline_access`, and Graph `User.Read` / `User.Read.All` for the MSP staff-directory preview. This is not customer Graph consent. [Partner Center authentication](https://learn.microsoft.com/en-us/partner-center/developer/partner-center-authentication).
 3. Review and assign the customer's tenant to its Alignr client.
 4. Open the client's **Connections**, confirm the saved Partner Center route and tenant ID, then select **Connect client**.
@@ -90,6 +96,8 @@ AuditLog.Read.All
 Policy.Read.All
 MailboxSettings.Read
 ```
+
+The Partner platform registration also needs Partner Center delegated `user_impersonation` and `offline_access`. It has no Graph or Partner Center application permissions. Your MSP's partner account, customer consent and GDAP roles still determine which customers and workloads are accessible.
 
 The assigned GDAP roles must also permit the workload reads. For example, the registration-report API documents delegated roles including Reports Reader, Security Reader, Security Administrator and Global Reader. A consented scope alone is insufficient. Delegated mailbox settings access also does not establish access to every customer's mailbox; inspect the sampled check and collected evidence before relying on it.
 

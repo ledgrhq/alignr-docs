@@ -18,11 +18,11 @@
   },
   "fonts": {
     "heading": {
-      "family": "Inter",
-      "weight": 700
+      "family": "Geist",
+      "weight": 500
     },
     "body": {
-      "family": "Inter",
+      "family": "Geist",
       "weight": 400
     }
   },
