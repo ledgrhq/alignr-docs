@@ -11,11 +11,11 @@ Authorization: Bearer <your-api-key>
 
 [Create an API key](/guides/api-keys) with the scopes required by a key-compatible operation. REST scopes use permission codes such as `organization.read` and `detection.read`. MCP uses its own scope names, described in the [tool reference](/mcp/tools).
 
-An API key scope grants permission only where the route accepts API keys. The current API supports scoped keys for the documented read routes and MCP tools, but many ordinary REST writes, including Organization and detection mutations, require a signed-in human session. Issuing `organization.write` or another write scope does not by itself make those routes callable with a key.
+An API key scope grants permission only where the route accepts API keys. User-owned keys with `organization.write` can call `POST /organizations`, `PATCH /organizations/{organization_id}` and `DELETE /organizations/{organization_id}` to [manage clients](/api-reference/manage-clients-recipe). Service keys cannot call those client writes, even when they carry that scope. Other REST writes, including standard and detection mutations, still require a signed-in human session. Issuing another write scope does not by itself make its route callable with a key.
 
 ## User and service keys
 
-A user-scoped key’s effective permissions are intersected with its owner’s current permissions on every request. Deactivating the owner removes its access. Service keys have assigned scopes and require an expiry.
+A user-scoped key’s effective permissions are intersected with its owner’s current permissions on every request. Client writes also require an active owner who is not required to change their password. Revoking the key, deactivating its owner or removing `organization.write` from the owner removes write access. Service keys have assigned scopes and require an expiry, but are refused for client writes.
 
 ## Tenant scope
 

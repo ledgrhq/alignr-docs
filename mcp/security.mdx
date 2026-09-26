@@ -13,6 +13,8 @@ In the token form, **Select all** selects every currently issuable API and MCP s
 
 A user-scoped key cannot exceed its owner’s current permissions. Tenant scoping is enforced by the server; a prompt or supplied identifier cannot override it.
 
+The same key may also be used with supported REST operations. `organization.write` lets a user-owned key create, update and archive clients through the [REST API](/api-reference/manage-clients-recipe), but does not add client-write tools to MCP. The current [MCP tool catalogue](/mcp/tools) remains the limit of MCP actions. Service keys cannot perform those REST client writes.
+
 ## Secrets
 
 MCP tools do not reveal vaulted secret values. `get_asset` returns non-vaulted fields. API keys cannot obtain human step-up tokens for secret reveal.

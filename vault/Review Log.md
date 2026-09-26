@@ -2,6 +2,10 @@
 
 Append dated entries. Keep evidence precise and do not turn planned checks into passed checks.
 
+## 2026-09-26 — Scoped client-write API documentation (draft)
+
+Prepared a REST client-management recipe and corrected API-key, authentication and MCP guidance against application commit `366ecc5`. Source inspection covered the Organization routes, `mutation_principal` and integration tests for user-owned key writes, service-key refusal, owner permission and tenant checks, and agent audit attribution. The recipe describes only POST, PATCH and DELETE Organizations; it does not claim wider API-key writes or MCP client-write tools. Regenerated the curated reference from the current application checkout: ten read endpoints and ten MCP tools, with no generated diff. `check-docs-vault.py`, `mint openapi-check`, `mint a11y` and `git diff --check` passed locally using Node 22 for Mintlify. `mint broken-links` reported only the two existing maintainer README links to excluded `AGENTS.md` and `vault/MOC.md`; no public MDX link failed. The installed Mintlify CLI does not provide `mint validate`. No responsive preview or authenticated live API check was performed. The source feature is not yet verified as deployed; do not publish this draft until matching API deployment and guide review are confirmed.
+
 ## 2026-09-26 — Five-step setup and separate Microsoft apps (draft)
 
 Prepared public guide changes on `docs/five-step-setup-partner-tokens` against the clean docs checkout. Source inspection used application wizard commit `94a3461` for the five-step order and existing API-token form for bulk selection. The wizard commit is not yet the published app: the guide must be rechecked against the integrated release before publication. The two Microsoft registrations follow the production provider brief and purpose-specific backend work, whose deployment availability is still unverified. Direct subscribed-SKU wording was checked against Microsoft's Graph permission table: the already-required `Organization.Read.All` is an accepted application permission even though `LicenseAssignment.Read.All` is listed as least privileged.

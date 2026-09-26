@@ -16,7 +16,7 @@ Scopes specify what a key may do. REST and MCP use different names:
 
 Choose the exact scopes listed for your endpoint or [MCP tool](/mcp/tools).
 
-A scope is necessary but does not make every REST route accept a key. The documented read operations and MCP tools support scoped keys; many ordinary REST writes currently require a signed-in human session even if a similarly named write scope appears. Check [authentication](/api-reference/authentication) before automating a write.
+A scope is necessary but does not make every REST route accept a key. A **user key** with `organization.write` can [create, update and archive clients](/api-reference/manage-clients-recipe) while its owner retains that permission. Service keys cannot perform these client writes. Other REST writes may still require a signed-in human session, even if a similarly named write scope appears. Check [authentication](/api-reference/authentication) before automating a write.
 
 The form offers **Select all** and **Clear** for bulk selection. **Select all** adds every currently offered scope that you are allowed to issue, including scopes hidden by a text filter; it does not mean “select only these search results”. Review the complete selection before creating the key, or choose individual scopes for a narrower client. Scopes you cannot issue and historical scopes that the form no longer offers are excluded.
 

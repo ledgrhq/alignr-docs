@@ -1,0 +1,57 @@
+---
+title: "Manage clients with an API key"
+description: "Create, update and archive Organizations through the scoped REST API."
+---
+
+An Organization is one client in your MSP workspace. These three REST operations let an authorised script maintain client records. They do not connect an integration, collect evidence or run checks.
+
+## Prepare a user key
+
+In **MCP → + Generate token**, create a **User key — bound to my account** with `organization.write`. Add `organization.read` if your script will list or inspect clients. Store the issued value as `ALIGNR_API_KEY` in your secret manager or local environment; do not put it in source code.
+
+The key works only while its owner is active, is not required to change their password, and retains `organization.write`. A **Service key** cannot perform these client writes, even if it has that scope. The server checks the key and owner on each request. [Authentication](/api-reference/authentication) explains the wider key boundary.
+
+## Create a client
+
+Choose a unique, stable slug in your workspace. The following fictional example sends a real write if you run it:
+
+```bash
+curl --fail-with-body \
+  'https://api.alignr.io/api/v1/organizations' \
+  --request POST \
+  --header "Authorization: Bearer $ALIGNR_API_KEY" \
+  --header 'Content-Type: application/json' \
+  --data '{"name":"Acme","slug":"acme"}'
+```
+
+Success returns HTTP 201 and an Organization containing its `id`. Save that ID for later requests. A slug conflict returns an error; a lost response does not prove creation failed. Check for the slug through a read-authorised key or in the app before retrying a create request, because the POST is not an idempotent “get or create” operation.
+
+## Update the intended client
+
+Replace the illustrative UUID with the ID returned by creation. PATCH changes only the fields you send; this example updates the display name and a PSA reference used for client matching:
+
+```bash
+curl --fail-with-body \
+  'https://api.alignr.io/api/v1/organizations/11111111-1111-4111-8111-111111111111' \
+  --request PATCH \
+  --header "Authorization: Bearer $ALIGNR_API_KEY" \
+  --header 'Content-Type: application/json' \
+  --data '{"name":"Acme Services","psaRef":"acme-123"}'
+```
+
+Success returns HTTP 200 with the updated Organization. Check the ID and changed fields in the response. A client outside your workspace is treated as not found; its ID does not grant access.
+
+## Archive after review
+
+`DELETE /organizations/{organization_id}` **archives** the client. Confirm the ID and your intended downstream workflow before sending it:
+
+```bash
+curl --fail-with-body \
+  'https://api.alignr.io/api/v1/organizations/11111111-1111-4111-8111-111111111111' \
+  --request DELETE \
+  --header "Authorization: Bearer $ALIGNR_API_KEY"
+```
+
+Success returns HTTP 204 with no response body. Reconcile the client's state if a response is lost before repeating a write.
+
+Client writes are tenant-scoped and audit-logged. A user-key write is attributed to its owner as an agent action, with the key ID recorded for traceability. A key cannot satisfy human approval or step-up requirements on other operations. The [MCP server](/mcp/introduction) has no client-write tool; these actions use REST. Check the [live schema](/api-reference/live-schema) for the contract available on your deployment.

@@ -214,6 +214,7 @@
               "api-reference/pagination",
               "api-reference/errors",
               "api-reference/client-assessment-recipe",
+              "api-reference/manage-clients-recipe",
               "api-reference/create-standard-recipe"
             ]
           },
