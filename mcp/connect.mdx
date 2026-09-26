@@ -1,0 +1,49 @@
+---
+title: "Connect an MCP client"
+description: "Configure a remote client with a scoped Alignr API key."
+---
+
+## Before you begin
+
+You need a client supporting remote Streamable HTTP servers and an Alignr API key. Start with the `organization:read` scope to test a read-only tool. Obtain an Organization ID from Alignr or the REST API.
+
+## Add the server
+
+Use these values in your client’s remote MCP settings:
+
+```text
+Name: Alignr
+URL: https://api.alignr.io/mcp/
+Transport: Streamable HTTP
+Header: Authorization: Bearer <your-api-key>
+```
+
+Clients use different configuration formats and secret-storage mechanisms. If your client accepts an `mcpServers` configuration with `url` and `headers`, the shape is:
+
+```json
+{
+  "mcpServers": {
+    "Alignr": {
+      "url": "https://api.alignr.io/mcp/",
+      "headers": {
+        "Authorization": "Bearer <your-api-key>"
+      }
+    }
+  }
+}
+```
+
+Replace the placeholder using your client’s protected credential mechanism. Do not commit a configuration containing a real key. Clients that support only local stdio processes cannot connect directly with this configuration.
+
+## Verify a read
+
+Reconnect the server in your client and inspect its discovered tools. Ask it to call `get_organization` with the ID of an Organization you can access. Confirm the returned client matches your intended target.
+
+For control results, add the relevant `compliance:*` scopes using a replacement key and consult the [tool reference](/mcp/tools).
+
+## Troubleshoot
+
+- **Unauthorised:** check the bearer header, key expiry and revocation.
+- **Tool denied:** check both the assigned scope and the key owner’s current permissions.
+- **Not found:** confirm the endpoint, server availability and Organization ID.
+- **No tools:** confirm Streamable HTTP support and that the server is enabled using the [live reference](/api-reference/live-schema).

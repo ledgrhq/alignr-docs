@@ -1,0 +1,31 @@
+---
+title: "API introduction"
+description: "Make your first request to the Alignr REST API."
+---
+
+## Base URL
+
+```text
+https://api.alignr.io/api/v1
+```
+
+The REST API uses JSON and bearer authentication. Start with a key granting `organization.read`.
+
+## List your Organizations
+
+Store your API key in the `ALIGNR_API_KEY` environment variable through your secret manager or shell environment, then run:
+
+```bash
+curl --fail-with-body \
+  'https://api.alignr.io/api/v1/organizations?page=1&pageSize=20' \
+  --header "Authorization: Bearer $ALIGNR_API_KEY"
+```
+
+The response contains an `items` array and pagination metadata. Use an Organization’s `id` in requests that require a client identifier. An empty `items` array can be a valid result; it does not prove the workspace is fully configured.
+
+## Next steps
+
+<Columns cols={2}>
+  <Card title="Authentication" icon="key" href="/api-reference/authentication">Understand API keys and permissions.</Card>
+  <Card title="Live API schema" icon="code" href="/api-reference/live-schema">Retrieve the reference for your running deployment.</Card>
+</Columns>

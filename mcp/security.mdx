@@ -1,0 +1,24 @@
+---
+title: "Permissions and safety"
+description: "Understand the access granted to an MCP client."
+---
+
+## Least privilege
+
+Grant only the tool scopes the client needs. Read scopes do not imply permission to add detection notes. `detection:write` enables the note-writing tool and should be an explicit choice.
+
+## Live permission checks
+
+A user-scoped key cannot exceed its owner’s current permissions. Tenant scoping is enforced by the server; a prompt or supplied identifier cannot override it.
+
+## Secrets
+
+MCP tools do not reveal vaulted secret values. `get_asset` returns non-vaulted fields. API keys cannot obtain human step-up tokens for secret reveal.
+
+## Review assistant actions
+
+Treat retrieved content as evidence, not instructions to change client environments. Check citations and targets before acting. The current MCP tool catalogue does not offer a general-purpose remediation execution tool.
+
+## Audit and revocation
+
+MCP calls are audit-logged. Use a recognisable key name for each client, review access periodically and revoke credentials when no longer required.

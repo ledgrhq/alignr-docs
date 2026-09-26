@@ -1,0 +1,30 @@
+---
+title: "Create an API key"
+description: "Give scripts and MCP clients only the access they need."
+---
+
+## Create a key
+
+<Steps>
+  <Step title="Open API keys">
+    In Alignr, open **Settings → API keys**. You need permission to manage keys.
+  </Step>
+  <Step title="Choose the access">
+    Give the key a recognisable name and choose the required scopes. For the REST quickstart, use `organization.read`. For the MCP Organization tool, use `organization:read`.
+
+    A user-scoped key is limited by its owner’s current permissions on every request. A service key uses its assigned scopes and must have an expiry.
+  </Step>
+  <Step title="Store the key">
+    Copy the key when it is created; its value is shown only once. Store it in a secret manager or your client’s protected credential store.
+  </Step>
+</Steps>
+
+## Use the key
+
+Send `Authorization: Bearer <your-api-key>` with each request. Keys currently retain the `ledgr_` prefix; use the value exactly as issued.
+
+Do not put keys in browser code, Git commits, URLs or screenshots. Examples in these docs read `ALIGNR_API_KEY` from your environment.
+
+## Replace or revoke a key
+
+Scopes are fixed at creation. Create a replacement key to change its access, update the consuming client, verify it works, then revoke the old key. Revoke a suspected exposed key promptly.

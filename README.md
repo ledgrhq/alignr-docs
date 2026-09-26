@@ -1,55 +1,57 @@
-# Mintlify Starter Kit
+# Alignr docs
 
-Use the starter kit to get your docs deployed and ready to customize.
+Public setup, API and MCP documentation for **docs.alignr.io**, hosted by Mintlify.
+This repository is separate from the Alignr application and its internal vault.
 
-Click the green **Use this template** button at the top of this repo to copy the Mintlify starter kit. The starter kit contains examples with
+## Preview
 
-- Guide pages
-- Navigation
-- Customizations
-- API reference pages
-- Use of popular components
+Use Node 22 or newer supported LTS and the current `mint` CLI:
 
-**[Follow the full quickstart guide](https://starter.mintlify.com/quickstart)**
-
-## AI-assisted writing
-
-Set up your AI coding tool to work with Mintlify:
-
-```bash
-npx skills add https://mintlify.com/docs
-```
-
-This command installs Mintlify's documentation skill for your configured AI tools like Claude Code, Cursor, Windsurf, and others. The skill includes component reference, writing standards, and workflow guidance.
-
-See the [AI tools guides](/ai-tools) for tool-specific setup.
-
-## Development
-
-Install the [Mintlify CLI](https://www.npmjs.com/package/mint) to preview your documentation changes locally. To install, use the following command:
-
-```
-npm i -g mint
-```
-
-Run the following command at the root of your documentation, where your `docs.json` is located:
-
-```
+```sh
+npm install -g mint@4.2.939
 mint dev
 ```
 
-View your local preview at `http://localhost:3000`.
+## Check
 
-## Publishing changes
+```sh
+mint broken-links
+mint openapi-check api-reference/openapi.json
+mint validate
+```
 
-Install our GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app) to propagate changes from your repo to your deployment. Changes are deployed to production automatically after pushing to the default branch.
+## Regenerate reference
 
-## Need help?
+From the application checkout, run the generator using its installed Python environment:
 
-### Troubleshooting
+```sh
+PYTHONPATH=api api/.venv/bin/python /path/to/alignr-docs/scripts/sync-reference.py
+```
 
-- If your dev environment isn't running: Run `mint update` to ensure you have the most recent version of the CLI.
-- If a page loads as a 404: Make sure you are running in a folder with a valid `docs.json`.
+The generator imports application metadata without starting its lifespan or querying data.
+It publishes an explicit selection of read endpoints and the registered MCP tool signatures.
+Review the snapshot against the intended release before committing. The authenticated live
+schema remains authoritative for deployment-specific availability. No private API credentials
+are needed for generation or hosting. API playground execution is disabled; examples remain copyable.
 
-### Resources
-- [Mintlify documentation](https://mintlify.com/docs)
+## Publish
+
+Mintlify is connected to this repository. Push reviewed changes to its configured deployment
+branch. Configure `docs.alignr.io` in the Mintlify dashboard and use the exact DNS record it
+provides. Confirm HTTPS, redirects and a nested guide after DNS resolves.
+
+The design uses Almond, Inter, a monochrome palette and Alignr's blue icon. It matches the
+Resend reference through native theme settings rather than copied page code or assets.
+
+## Reference provenance
+
+Initial reference generated on 26 September 2026 from application commit
+`19794f3bfafdd3fbc8e79cfd115980e342b2401e`. The application checkout had unrelated
+operational vault changes; no application source was changed by this docs work.
+Ten read endpoints and ten MCP tools are included. Responses whose backend schema
+is an untyped object remain untyped here; do not invent response fields.
+
+Local browser review covered the introduction at desktop and 390px mobile,
+the MCP catalogue and an API endpoint page. Mobile introduction document width
+matched the viewport (390px). Production search indexing, domain configuration
+and authenticated API/MCP requests require hosted acceptance.

@@ -1,0 +1,26 @@
+---
+title: "Authentication"
+description: "Authenticate REST requests with a scoped bearer token."
+---
+
+## Bearer authentication
+
+```http
+Authorization: Bearer <your-api-key>
+```
+
+[Create an API key](/guides/api-keys) with the scopes required by your operation. REST scopes use permission codes such as `organization.read` and `detection.read`. MCP uses its own scope names, described in the [tool reference](/mcp/tools).
+
+## User and service keys
+
+A user-scoped key’s effective permissions are intersected with its owner’s current permissions on every request. Deactivating the owner removes its access. Service keys have assigned scopes and require an expiry.
+
+## Tenant scope
+
+Your credential identifies the tenant. Supplying another tenant’s Organization or resource ID does not grant access. Resources outside your tenant are treated as not found.
+
+## Human authentication
+
+The application also uses short-lived session tokens. Some human-only operations require a signed-in user or additional verification. An API key does not replace step-up authentication and cannot obtain a secret-reveal step-up token.
+
+Use the authenticated [live reference](/api-reference/live-schema) to check the requirements for each operation.

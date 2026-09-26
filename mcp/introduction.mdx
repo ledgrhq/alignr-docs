@@ -1,0 +1,28 @@
+---
+title: "MCP introduction"
+description: "Give an AI assistant governed access to Alignr context."
+---
+
+The Model Context Protocol (MCP) lets a compatible client discover and call Alignr tools. Use it to retrieve client context, inspect detections and explain control results.
+
+## Connection
+
+| Setting | Value |
+| --- | --- |
+| Endpoint | `https://api.alignr.io/mcp/` |
+| Transport | Streamable HTTP |
+| Authentication | `Authorization: Bearer <Alignr API key>` |
+
+Your deployment must have the MCP server enabled. The trailing slash addresses the mounted transport directly.
+
+## What you can do
+
+- Retrieve an Organization or list its detections.
+- Inspect a client’s compliance grid and explain a control’s status.
+- Review a standard across Organizations.
+- Ask questions over authorised evidence.
+- Add a detection note when explicitly granted the write scope.
+
+[Connect your client](/mcp/connect) or inspect the [tool catalogue](/mcp/tools).
+
+<Note>Alignr’s application MCP server is separate from Mintlify’s documentation MCP server. Use the Alignr endpoint for client data and assessment tools.</Note>

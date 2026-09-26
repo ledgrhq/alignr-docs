@@ -1,0 +1,20 @@
+---
+title: "Review remediation"
+description: "Move from a supported finding to an authorised change."
+---
+
+## Plans and runs
+
+A remediation **plan** describes proposed steps. A **run** is one execution of a plan. Review the target, evidence, risk and available reversal before authorising a run.
+
+## Approval and autonomy
+
+The effective autonomy ceiling is the lowest of the rule, client contract, tenant and platform controls. An irreversible action requires a named human approver regardless of that ceiling.
+
+The autonomy levels are `suggest_only`, `document_only`, `one_click`, `change_ticket` and `auto_fix_low_risk`.
+
+## Verify the outcome
+
+A completed action is not proof that the problem is resolved. Review post-action verification and fresh evidence. Where a supported reversal is available, check the run’s rollback information and window before relying on it.
+
+Only use remediation actions supported by the specific finding and connected source.

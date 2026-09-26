@@ -1,38 +1,32 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
-  "name": "Mintlify Starter Kit",
+  "theme": "almond",
+  "name": "Alignr",
+  "description": "Set up Alignr, connect your client environments, and build with the API and MCP server.",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#000000",
+    "light": "#EBECED",
+    "dark": "#767676"
   },
-  "favicon": "/favicon.svg",
-  "navigation": {
-    "pages": [
-      {
-        "group": "Getting Started",
-        "pages": [
-          "index",
-          "quickstart"
-        ]
-      }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
+  "background": {
+    "color": {
+      "dark": "#000000"
     }
   },
+  "appearance": {
+    "default": "dark"
+  },
+  "fonts": {
+    "heading": {
+      "family": "Inter",
+      "weight": 700
+    },
+    "body": {
+      "family": "Inter",
+      "weight": 400
+    }
+  },
+  "favicon": "/favicon.svg",
   "logo": {
     "light": "/logo/light.svg",
     "dark": "/logo/dark.svg"
@@ -40,33 +34,150 @@
   "navbar": {
     "links": [
       {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "label": "Website",
+        "href": "https://alignr.io"
       }
     ],
     "primary": {
       "type": "button",
-      "label": "Dashboard",
-      "href": "https://app.mintlify.com"
+      "label": "Open Alignr",
+      "href": "https://app.alignr.io"
     }
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "icon": "book-open",
+        "groups": [
+          {
+            "group": "Get started",
+            "pages": [
+              "introduction",
+              "quickstart",
+              "guides/api-keys"
+            ]
+          },
+          {
+            "group": "Set up Alignr",
+            "pages": [
+              "guides/integrations",
+              "guides/organizations",
+              "guides/standards"
+            ]
+          },
+          {
+            "group": "Learn",
+            "pages": [
+              "guides/evidence",
+              "guides/control-status",
+              "guides/remediation"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API reference",
+        "icon": "terminal",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "api-reference/introduction",
+              "api-reference/authentication",
+              "api-reference/pagination",
+              "api-reference/errors"
+            ]
+          },
+          {
+            "group": "Reference",
+            "pages": [
+              "api-reference/live-schema"
+            ]
+          },
+          {
+            "group": "Organizations",
+            "openapi": "/api-reference/openapi.json",
+            "pages": [
+              "GET /api/v1/organizations",
+              "GET /api/v1/organizations/{organization_id}"
+            ]
+          },
+          {
+            "group": "Standards",
+            "openapi": "/api-reference/openapi.json",
+            "pages": [
+              "GET /api/v1/standards",
+              "GET /api/v1/standards/{standard_id}",
+              "GET /api/v1/standards/{standard_id}/controls"
+            ]
+          },
+          {
+            "group": "Alignment",
+            "openapi": "/api-reference/openapi.json",
+            "pages": [
+              "GET /api/v1/organizations/{organization_id}/compliance",
+              "GET /api/v1/organizations/{organization_id}/compliance/trend"
+            ]
+          },
+          {
+            "group": "Detections",
+            "openapi": "/api-reference/openapi.json",
+            "pages": [
+              "GET /api/v1/detections",
+              "GET /api/v1/detections/{detection_id}"
+            ]
+          },
+          {
+            "group": "Evidence",
+            "openapi": "/api-reference/openapi.json",
+            "pages": [
+              "GET /api/v1/facts"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "MCP",
+        "icon": "plug",
+        "groups": [
+          {
+            "group": "Get started",
+            "pages": [
+              "mcp/introduction",
+              "mcp/connect"
+            ]
+          },
+          {
+            "group": "Reference",
+            "pages": [
+              "mcp/tools",
+              "mcp/security"
+            ]
+          }
+        ]
+      }
+    ]
   },
   "contextual": {
     "options": [
       "copy",
-      "view",
-      "chatgpt",
-      "claude",
-      "perplexity",
-      "mcp",
-      "cursor",
-      "vscode"
+      "view"
     ]
   },
-  "footer": {
-    "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/introduction"
+    },
+    {
+      "source": "/index",
+      "destination": "/introduction"
+    }
+  ],
+  "api": {
+    "playground": {
+      "display": "none"
     }
   }
 }

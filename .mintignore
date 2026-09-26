@@ -5,3 +5,7 @@
 # Draft content
 drafts/
 *.draft.mdx
+
+# Maintainer-only source and instructions
+AGENTS.md
+scripts/

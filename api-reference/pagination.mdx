@@ -1,0 +1,26 @@
+---
+title: "Pagination"
+description: "Retrieve all the results without assuming the first page is complete."
+---
+
+## Page-based lists
+
+For endpoints such as `/organizations`, pass `page` and `pageSize`:
+
+```bash
+curl --fail-with-body \
+  'https://api.alignr.io/api/v1/organizations?page=2&pageSize=20' \
+  --header "Authorization: Bearer $ALIGNR_API_KEY"
+```
+
+Page-based responses include `items`, `total`, `page`, `pageSize` and `totalPages`. Start at page 1 and use the returned metadata to decide whether to continue.
+
+## Cursor-based lists
+
+Endpoints that support cursor pagination return `nextCursor` and `hasMore`. Pass the returned cursor using that endpoint’s documented cursor parameter. Treat the cursor as opaque; do not parse or construct it.
+
+Cursor responses may have null page numbers or totals. Check the operation’s schema rather than assuming all list endpoints have the same parameters.
+
+## Filters
+
+Keep the same filters while moving through a result set. For example, the Organizations list accepts `q` for name search and `health` for health filtering. Inspect the returned items as well as the HTTP status to confirm that your request selected the intended results.

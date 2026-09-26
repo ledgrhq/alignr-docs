@@ -1,0 +1,34 @@
+---
+title: "Errors"
+description: "Handle failures without treating an incomplete request as success."
+---
+
+## Error responses
+
+Application errors use this envelope:
+
+```json
+{
+  "error": {
+    "code": "not_found",
+    "message": "Resource not found",
+    "details": {}
+  }
+}
+```
+
+The example message is illustrative. Branch on the status and machine-readable code, not exact wording. An upstream gateway may return a different response format.
+
+| Status | What to check |
+| --- | --- |
+| `401` | Missing, expired, revoked or invalid credentials. |
+| `403` | The credential lacks permission for the operation. |
+| `404` | The resource does not exist in the caller’s accessible tenant, or the route is unavailable. |
+| `409` | The request conflicts with current state. |
+| `422` | The request fails validation. Inspect safe error details. |
+| `429` | Requests are being rate limited. Back off and respect a retry header when provided. |
+| `5xx` | A server or upstream failure. Preserve enough context to diagnose it. |
+
+## Retry deliberately
+
+Use bounded retries with backoff for transient read failures. Do not blindly repeat a mutation after a timeout: the original request may have succeeded. Confirm the resulting state before retrying an operation that changes data.

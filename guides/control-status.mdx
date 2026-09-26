@@ -1,0 +1,18 @@
+---
+title: "Control statuses"
+description: "Distinguish a failure from a gap in evidence."
+---
+
+| Status | Meaning | Next step |
+| --- | --- | --- |
+| `pass` | Available evidence satisfies the evaluated control. | Review freshness and scope. |
+| `fail` | Evidence shows the control is not satisfied. | Inspect the finding and supporting evidence. |
+| `no_data` | Required usable evidence is missing. | Check collection, mapping and freshness. |
+| `not_covered` | Available sources do not cover the control’s evidence requirements. | Review source coverage or a suitable manual check. |
+| `not_applicable` | The control does not apply in this context. | Confirm the applicability decision. |
+
+## Read the explanation
+
+A status is a starting point. Review effective parameters and evaluation time alongside the evidence. Use the MCP `explain_control_status` tool to ask why a particular client has a particular result.
+
+<Note>Do not combine unknown or uncovered results with passing results when describing a client’s technical alignment.</Note>

@@ -1,0 +1,20 @@
+---
+title: "Organizations and clients"
+description: "Keep each client\u2019s evidence and assessment in the right context."
+---
+
+## Your workspace and your clients
+
+Your **tenant** is your MSP’s workspace. An **Organization** is one of your clients within that workspace. The application also uses **Clients** for the client-facing workflow; API paths use `organizations`.
+
+## Link a source record
+
+Review the companies or tenants discovered by a connected source. Choose an existing client or explicitly create one. Confirm the source identifier as well as the name before linking.
+
+Mapping establishes where evidence belongs. Incorrect mapping can produce misleading assessment results even when a connection is healthy.
+
+## Use an Organization ID
+
+The [API quickstart](/api-reference/introduction) lists the Organizations visible to your key. Use the returned `id` when an API operation or MCP tool asks for `organization_id`.
+
+A key does not gain access to another MSP’s data by supplying its identifiers.

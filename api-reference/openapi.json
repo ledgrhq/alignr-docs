@@ -1,0 +1,1770 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Alignr API",
+    "version": "0.1.0",
+    "description": "Selected read operations. Generated from the Alignr application; no tenant data is included."
+  },
+  "servers": [
+    {
+      "url": "https://api.alignr.io"
+    }
+  ],
+  "paths": {
+    "/api/v1/organizations": {
+      "get": {
+        "tags": [
+          "Organizations"
+        ],
+        "summary": "List Organizations",
+        "operationId": "list_organizations_api_v1_organizations_get",
+        "parameters": [
+          {
+            "name": "health",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/OrgHealth"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Health"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "1-based page number",
+              "title": "Page"
+            },
+            "description": "1-based page number"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Rows per page",
+              "title": "Pagesize"
+            },
+            "description": "Rows per page"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Rows per page (alias of pageSize)",
+              "title": "Limit"
+            },
+            "description": "Rows per page (alias of pageSize)"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Rows to skip (alias of page)",
+              "title": "Offset"
+            },
+            "description": "Rows to skip (alias of page)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response List Organizations Api V1 Organizations Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "description": "Requires `organization.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability.",
+        "x-ledgr-permission": "organization.read"
+      }
+    },
+    "/api/v1/organizations/{organization_id}": {
+      "get": {
+        "tags": [
+          "Organizations"
+        ],
+        "summary": "Get an Organization",
+        "operationId": "get_organization_api_v1_organizations__organization_id__get",
+        "parameters": [
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Organization Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Organization Api V1 Organizations  Organization Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "description": "Requires `organization.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability.",
+        "x-ledgr-permission": "organization.read"
+      }
+    },
+    "/api/v1/standards": {
+      "get": {
+        "tags": [
+          "Standards"
+        ],
+        "summary": "List standards",
+        "operationId": "list_standards_api_v1_standards_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardPage"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "description": "Requires `detection_rule.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability.",
+        "x-ledgr-permission": "detection_rule.read"
+      }
+    },
+    "/api/v1/standards/{standard_id}": {
+      "get": {
+        "tags": [
+          "Standards"
+        ],
+        "summary": "Get a standard",
+        "operationId": "get_standard_api_v1_standards__standard_id__get",
+        "parameters": [
+          {
+            "name": "standard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Standard Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "description": "Requires `detection_rule.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability.",
+        "x-ledgr-permission": "detection_rule.read"
+      }
+    },
+    "/api/v1/standards/{standard_id}/controls": {
+      "get": {
+        "tags": [
+          "Standards"
+        ],
+        "summary": "List controls",
+        "operationId": "list_standard_controls_api_v1_standards__standard_id__controls_get",
+        "parameters": [
+          {
+            "name": "standard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Standard Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ControlPage"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "description": "Requires `detection_rule.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability.",
+        "x-ledgr-permission": "detection_rule.read"
+      }
+    },
+    "/api/v1/organizations/{organization_id}/compliance": {
+      "get": {
+        "tags": [
+          "Alignment"
+        ],
+        "summary": "Get client compliance",
+        "operationId": "get_organization_compliance_api_v1_organizations__organization_id__compliance_get",
+        "parameters": [
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Organization Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComplianceGridRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "description": "Requires `detection.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability.",
+        "x-ledgr-permission": "detection.read"
+      }
+    },
+    "/api/v1/organizations/{organization_id}/compliance/trend": {
+      "get": {
+        "tags": [
+          "Alignment"
+        ],
+        "summary": "Get compliance trend",
+        "description": "Requires `detection.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability.",
+        "operationId": "get_organization_compliance_trend_api_v1_organizations__organization_id__compliance_trend_get",
+        "parameters": [
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Organization Id"
+            }
+          },
+          {
+            "name": "windowDays",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 366,
+              "minimum": 1,
+              "description": "How many days of trend to return",
+              "default": 90,
+              "title": "Windowdays"
+            },
+            "description": "How many days of trend to return"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComplianceTrendRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "x-ledgr-permission": "detection.read"
+      }
+    },
+    "/api/v1/detections": {
+      "get": {
+        "tags": [
+          "Detections"
+        ],
+        "summary": "List detections",
+        "operationId": "list_detections_api_v1_detections_get",
+        "parameters": [
+          {
+            "name": "organization_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Organization Id"
+            }
+          },
+          {
+            "name": "organizationId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Organizationid"
+            }
+          },
+          {
+            "name": "rule_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Rule Id"
+            }
+          },
+          {
+            "name": "ruleId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Ruleid"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/DetectionStatus"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "open",
+              "title": "Status"
+            }
+          },
+          {
+            "name": "severity",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/Severity"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Severity"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Category"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "1-based page number",
+              "title": "Page"
+            },
+            "description": "1-based page number"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Rows per page",
+              "title": "Pagesize"
+            },
+            "description": "Rows per page"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Rows per page (alias of pageSize)",
+              "title": "Limit"
+            },
+            "description": "Rows per page (alias of pageSize)"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Rows to skip (alias of page)",
+              "title": "Offset"
+            },
+            "description": "Rows to skip (alias of page)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response List Detections Api V1 Detections Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "description": "Requires `detection.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability.",
+        "x-ledgr-permission": "detection.read"
+      }
+    },
+    "/api/v1/detections/{detection_id}": {
+      "get": {
+        "tags": [
+          "Detections"
+        ],
+        "summary": "Get a detection",
+        "operationId": "get_detection_api_v1_detections__detection_id__get",
+        "parameters": [
+          {
+            "name": "detection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Detection Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Detection Api V1 Detections  Detection Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "description": "Requires `detection.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability.",
+        "x-ledgr-permission": "detection.read"
+      }
+    },
+    "/api/v1/facts": {
+      "get": {
+        "tags": [
+          "Evidence"
+        ],
+        "summary": "List facts",
+        "operationId": "list_facts_api_v1_facts_get",
+        "parameters": [
+          {
+            "name": "org",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Org"
+            }
+          },
+          {
+            "name": "organization_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Organization Id"
+            }
+          },
+          {
+            "name": "organizationId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Organizationid"
+            }
+          },
+          {
+            "name": "subject",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Subject"
+            }
+          },
+          {
+            "name": "predicate",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Predicate"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "1-based page number",
+              "title": "Page"
+            },
+            "description": "1-based page number"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Rows per page",
+              "title": "Pagesize"
+            },
+            "description": "Rows per page"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Rows per page (alias of pageSize)",
+              "title": "Limit"
+            },
+            "description": "Rows per page (alias of pageSize)"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Rows to skip (alias of page)",
+              "title": "Offset"
+            },
+            "description": "Rows to skip (alias of page)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response List Facts Api V1 Facts Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "description": "Requires `fact.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability.",
+        "x-ledgr-permission": "fact.read"
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "An Alignr API key."
+      }
+    },
+    "schemas": {
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "Severity": {
+        "type": "string",
+        "enum": [
+          "high",
+          "medium",
+          "low"
+        ],
+        "title": "Severity"
+      },
+      "DetectionStatus": {
+        "type": "string",
+        "enum": [
+          "open",
+          "snoozed",
+          "resolved",
+          "dismissed"
+        ],
+        "title": "DetectionStatus"
+      },
+      "ComplianceTrendRead": {
+        "properties": {
+          "organizationId": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Organizationid"
+          },
+          "organizationName": {
+            "type": "string",
+            "title": "Organizationname"
+          },
+          "windowDays": {
+            "type": "integer",
+            "title": "Windowdays"
+          },
+          "buckets": {
+            "items": {
+              "$ref": "#/components/schemas/TrendBucketRead"
+            },
+            "type": "array",
+            "title": "Buckets"
+          }
+        },
+        "type": "object",
+        "required": [
+          "organizationId",
+          "organizationName",
+          "windowDays",
+          "buckets"
+        ],
+        "title": "ComplianceTrendRead",
+        "description": "`GET /organizations/{orgId}/compliance/trend` \u2014 how this organisation's\nfive-status rollup moved over `windowDays` UTC calendar days ending today."
+      },
+      "TrendBucketRead": {
+        "properties": {
+          "day": {
+            "type": "string",
+            "format": "date",
+            "title": "Day"
+          },
+          "passCount": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Passcount"
+          },
+          "failCount": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Failcount"
+          },
+          "noDataCount": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Nodatacount"
+          },
+          "notCoveredCount": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notcoveredcount"
+          },
+          "notApplicableCount": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notapplicablecount"
+          }
+        },
+        "type": "object",
+        "required": [
+          "day"
+        ],
+        "title": "TrendBucketRead",
+        "description": "One UTC calendar day of `GET /organizations/{orgId}/compliance/trend` \u2014\nthe wire shape of `control_evaluation_service.TrendBucket`.\n\nA **gap** day (`control_evaluation_service.status_trend` recorded zero\nevaluations for it) carries every count as `null`, never `0` \u2014 see\n`TrendBucket`'s own docstring. A day that genuinely had evaluations always\ncarries all five counts, including any that are legitimately zero. The two\nmust stay distinguishable on the wire exactly as they must in the service:\na UI that defaults a missing count to `0` before checking for `null` would\nsilently repaint \"nobody swept this client that day\" as \"a clean bill of\nhealth that day\", which is precisely the failure spec \u00a75's `not_covered`\nexists to rule out one step earlier in the pipeline."
+      },
+      "ComplianceGridRead": {
+        "properties": {
+          "organizationId": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Organizationid"
+          },
+          "organizationName": {
+            "type": "string",
+            "title": "Organizationname"
+          },
+          "rollup": {
+            "$ref": "#/components/schemas/ControlStatus"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ComplianceRow"
+            },
+            "type": "array",
+            "title": "Items"
+          }
+        },
+        "type": "object",
+        "required": [
+          "organizationId",
+          "organizationName",
+          "rollup",
+          "items"
+        ],
+        "title": "ComplianceGridRead",
+        "description": "`GET /organizations/{orgId}/compliance` (`ComplianceGrid` in\n`frontend/src/types/standards.ts`)."
+      },
+      "ComplianceRow": {
+        "properties": {
+          "ruleId": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Ruleid"
+          },
+          "ruleName": {
+            "type": "string",
+            "title": "Rulename"
+          },
+          "standardId": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Standardid"
+          },
+          "standardName": {
+            "type": "string",
+            "title": "Standardname"
+          },
+          "category": {
+            "type": "string",
+            "title": "Category"
+          },
+          "severity": {
+            "$ref": "#/components/schemas/Severity"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ControlStatus"
+          },
+          "subjectsEvaluated": {
+            "type": "integer",
+            "title": "Subjectsevaluated"
+          },
+          "subjectsFailing": {
+            "type": "integer",
+            "title": "Subjectsfailing"
+          },
+          "detail": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ComplianceRowDetail"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "evaluatedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evaluatedat"
+          },
+          "standardVersion": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Standardversion"
+          },
+          "effectiveEnabled": {
+            "type": "boolean",
+            "title": "Effectiveenabled"
+          },
+          "parameters": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Parameters"
+          },
+          "effectiveParameters": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Effectiveparameters"
+          },
+          "requiredPredicates": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Requiredpredicates"
+          },
+          "sourceTypeCodes": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "type": "object",
+            "title": "Sourcetypecodes"
+          },
+          "sourceOptions": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "type": "object",
+            "title": "Sourceoptions"
+          },
+          "connectedSourceTypeCodes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Connectedsourcetypecodes"
+          },
+          "isOverridden": {
+            "type": "boolean",
+            "title": "Isoverridden"
+          },
+          "disabledReason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Disabledreason"
+          },
+          "disabledByName": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Disabledbyname"
+          },
+          "disabledAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Disabledat"
+          },
+          "openDetectionCount": {
+            "type": "integer",
+            "title": "Opendetectioncount"
+          }
+        },
+        "type": "object",
+        "required": [
+          "ruleId",
+          "ruleName",
+          "standardId",
+          "standardName",
+          "category",
+          "severity",
+          "status",
+          "subjectsEvaluated",
+          "subjectsFailing",
+          "effectiveEnabled",
+          "parameters",
+          "effectiveParameters",
+          "requiredPredicates",
+          "sourceTypeCodes",
+          "sourceOptions",
+          "connectedSourceTypeCodes",
+          "isOverridden",
+          "openDetectionCount"
+        ],
+        "title": "ComplianceRow",
+        "description": "One row of the per-client compliance grid \u2014 `GET /organizations/{orgId}/\ncompliance` (`ComplianceRow` in `frontend/src/types/standards.ts`). Mirrors a\n`control_evaluations` row joined against the \u00a74 cascade, already resolved\nserver-side (`effectiveEnabled`/`effectiveParameters`/`isOverridden`) so the\ngrid never re-derives the cascade itself."
+      },
+      "ComplianceRowDetail": {
+        "properties": {
+          "missingPredicates": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Missingpredicates",
+            "default": []
+          },
+          "satisfiedBy": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "type": "object",
+            "title": "Satisfiedby",
+            "default": {}
+          },
+          "connectedHere": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Connectedhere",
+            "default": []
+          },
+          "refusedHere": {
+            "items": {
+              "$ref": "#/components/schemas/ComplianceRefusal"
+            },
+            "type": "array",
+            "title": "Refusedhere",
+            "default": []
+          },
+          "degradedCoverage": {
+            "items": {
+              "$ref": "#/components/schemas/DegradedCoverageEntry"
+            },
+            "type": "array",
+            "title": "Degradedcoverage",
+            "default": []
+          }
+        },
+        "type": "object",
+        "title": "ComplianceRowDetail",
+        "description": "`control_evaluations.detail`, reshaped onto the wire's camelCase\ncontract. Two independent reasons a row carries one instead of `null`:\n\n- the row is `notCovered` (spec \u00a75/\u00a75a) \u2014 `missingPredicates`,\n  `satisfiedBy`, `connectedHere`, `refusedHere` are populated, and\n  `degradedCoverage` is always empty (a predicate that reconciled off an\n  existing fact is, by definition, not `notCovered` \u2014 see step 3a);\n- the row is `pass`/`fail`/`no_data` but evaluated against at least one\n  predicate whose live coverage is `degradedCoverage` (step 3a) \u2014 only\n  that field is populated, and every `notCovered`-only field stays at its\n  empty default.\n\nA `fail` row's `failing_subjects` and a `notApplicable` row's disable\nmetadata are already surfaced through `ComplianceRow`'s own\n`subjectsFailing`/`disabledReason`/`disabledByName`/`disabledAt` fields, so\nrestating them here would be a second, divergeable copy of the same fact."
+      },
+      "DegradedCoverageEntry": {
+        "properties": {
+          "typeCode": {
+            "type": "string",
+            "title": "Typecode"
+          },
+          "predicate": {
+            "type": "string",
+            "title": "Predicate"
+          },
+          "status": {
+            "$ref": "#/components/schemas/IntegrationStatus"
+          }
+        },
+        "type": "object",
+        "required": [
+          "typeCode",
+          "predicate",
+          "status"
+        ],
+        "title": "DegradedCoverageEntry",
+        "description": "One connector that would supply a predicate this row's control needed,\nbut is not currently `connected` here \u2014 surfaced on a `pass`/`fail`/\n`no_data` row that only evaluated at all because an *existing* fact\nreconciled a live coverage gap (`control_evaluation_service` module\ndocstring, step 3a \u2014 the fix for \"an open detection citing a predicate the\ngrid claims nothing can check\"). This is **not** a failure of the control:\nthe control evaluated normally, off the last observation this connector\nwrote before it stopped being healthy. `status` is the connector's current\n`IntegrationStatus` (`error`, `disabled`, or `available` \u2014 never\n`connected`, or this predicate would not have been a gap at all)."
+      },
+      "IntegrationStatus": {
+        "type": "string",
+        "enum": [
+          "connected",
+          "error",
+          "disabled",
+          "available"
+        ],
+        "title": "IntegrationStatus"
+      },
+      "ComplianceRefusal": {
+        "properties": {
+          "connector": {
+            "type": "string",
+            "title": "Connector"
+          },
+          "reason": {
+            "type": "string",
+            "title": "Reason"
+          }
+        },
+        "type": "object",
+        "required": [
+          "connector",
+          "reason"
+        ],
+        "title": "ComplianceRefusal",
+        "description": "One connector \u2014 already connected and mapped to this organisation \u2014 that\nexplicitly declines to emit one of a `notCovered` control's required\npredicates (spec \u00a75a). `reason` is the connector's own declared string,\ncarried through unchanged."
+      },
+      "ControlStatus": {
+        "type": "string",
+        "enum": [
+          "pass",
+          "fail",
+          "no_data",
+          "not_covered",
+          "not_applicable"
+        ],
+        "title": "ControlStatus",
+        "description": "The outcome of one control evaluated against one organisation \u2014 spec \u00a75,\ndecided by ADR-0014 \u00a74. Three of the five members are not \"fail\", even though\nnone of them is \"pass\" either: a control that has not affirmatively fired has\nproved nothing, so `no_data` (population exists, no facts arrived),\n`not_covered` (nothing connected here could ever supply the facts) and\n`not_applicable` (disabled, or overridden out, for this organisation) stay\ndistinct outcomes rather than being folded into whichever of `pass`/`fail` is\ncheaper to compute. Collapsing any of them into `pass` reproduces the exact\nfailure this design exists to rule out \u2014 a compliance grid rendering green for\na client nobody is actually monitoring.\n\n`PASS` is spelled upper-case like every other member in this module \u2014 that\nconvention, not the keyword collision, is why it is not written `pass`. Its\n*value* is still the reserved word `\"pass\"`, which is fine: only the bare name\n`pass` is a Python keyword, and nothing here ever writes one."
+      },
+      "ControlPage": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ControlRead"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "page": {
+            "type": "integer",
+            "title": "Page"
+          },
+          "pageSize": {
+            "type": "integer",
+            "title": "Pagesize"
+          },
+          "totalPages": {
+            "type": "integer",
+            "title": "Totalpages"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items",
+          "total",
+          "page",
+          "pageSize",
+          "totalPages"
+        ],
+        "title": "ControlPage"
+      },
+      "ControlRead": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "standardId": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Standardid"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "slug": {
+            "type": "string",
+            "title": "Slug"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "category": {
+            "type": "string",
+            "title": "Category"
+          },
+          "severity": {
+            "$ref": "#/components/schemas/Severity"
+          },
+          "autonomy": {
+            "$ref": "#/components/schemas/Autonomy"
+          },
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled"
+          },
+          "parameters": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Parameters"
+          },
+          "definition": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Definition"
+          },
+          "requires": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Requires"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Createdat"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updatedat"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "standardId",
+          "name",
+          "slug",
+          "category",
+          "severity",
+          "autonomy",
+          "enabled",
+          "parameters",
+          "definition",
+          "requires",
+          "createdAt",
+          "updatedAt"
+        ],
+        "title": "ControlRead",
+        "description": "`GET /standards/{id}/controls` item, and the result of\n`PATCH /standards/{id}/controls/{ruleId}` (`Control` in\n`frontend/src/types/standards.ts`). A straight projection of the\n`DetectionRule` that is this control, plus `requires` \u2014 the predicates its\n`match`/`where`/`expect` clauses read, derived from `definition` itself\n(spec \u00a76.2) rather than hand-maintained so it cannot drift from the\nexpression it describes."
+      },
+      "Autonomy": {
+        "type": "string",
+        "enum": [
+          "suggest_only",
+          "document_only",
+          "one_click",
+          "change_ticket",
+          "auto_fix_low_risk"
+        ],
+        "title": "Autonomy",
+        "description": "The autonomy ladder, ordered least to most autonomous. See ``core/autonomy.py``\nfor the ordering helper \u2014 do not reorder these members, code depends on declaration\norder matching the ladder."
+      },
+      "StandardRead": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "tenantId": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Tenantid"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "slug": {
+            "type": "string",
+            "title": "Slug"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled"
+          },
+          "isSystem": {
+            "type": "boolean",
+            "title": "Issystem"
+          },
+          "version": {
+            "type": "integer",
+            "title": "Version"
+          },
+          "controlCount": {
+            "type": "integer",
+            "title": "Controlcount"
+          },
+          "manualCheckCount": {
+            "type": "integer",
+            "title": "Manualcheckcount",
+            "default": 0
+          },
+          "organizationCount": {
+            "type": "integer",
+            "title": "Organizationcount"
+          },
+          "rollup": {
+            "$ref": "#/components/schemas/EvaluationRunStatusCounts"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Createdat"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updatedat"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "tenantId",
+          "name",
+          "slug",
+          "enabled",
+          "isSystem",
+          "version",
+          "controlCount",
+          "organizationCount",
+          "rollup",
+          "createdAt",
+          "updatedAt"
+        ],
+        "title": "StandardRead",
+        "description": "`GET /standards`, `GET /standards/{id}`, `PATCH /standards/{id}`,\n`POST /standards/{id}/copy` (`Standard` in `frontend/src/types/standards.ts`).\n\n`controlCount`/`organizationCount` are not columns \u2014 `controlCount` is this\nstandard's own control count, and `organizationCount` is how many organisations\nhave actually had a control from this standard evaluated at least once (a\nfreshly created or copied standard is legitimately `0`, per the Clients tab's\nown \"not applied to any organization yet\" empty state \u2014 it is not the tenant's\ntotal organisation count, which every standard would then share and which\nwould never legitimately answer `0`).\n\n`rollup` is the five-status breakdown across every organisation's latest\nevaluation of every control belonging to this standard \u2014 the Standards list\npage's five-segment status bar, computed the same way\n`control_evaluation_service.rollup_statuses` already computes it for one\nevaluation run, just over `latest_evaluations(standard_id=...)` instead."
+      },
+      "EvaluationRunStatusCounts": {
+        "properties": {
+          "pass": {
+            "type": "integer",
+            "title": "Pass",
+            "default": 0
+          },
+          "fail": {
+            "type": "integer",
+            "title": "Fail",
+            "default": 0
+          },
+          "noData": {
+            "type": "integer",
+            "title": "Nodata",
+            "default": 0
+          },
+          "notCovered": {
+            "type": "integer",
+            "title": "Notcovered",
+            "default": 0
+          },
+          "notApplicable": {
+            "type": "integer",
+            "title": "Notapplicable",
+            "default": 0
+          }
+        },
+        "type": "object",
+        "title": "EvaluationRunStatusCounts",
+        "description": "The five `control_status` values' counts, aggregated over a set of\nevaluations. Unlike `ComplianceGridRead.rollup` (a single worst-case status\nfor one organisation, per `frontend/src/features/organization-detail/\ncompliance/ComplianceTab.tsx`'s own note), this is the literal breakdown a\n\"rollup\"/\"statusCounts\" name promises \u2014 used both by\n`EvaluationRunRead.statusCounts` (one run) and `StandardRead.rollup` /\n`StandardOrganizationRead.rollup` (the latest evaluation per control, across\na standard's organisations or one organisation's controls respectively)."
+      },
+      "StandardPage": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/StandardRead"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "page": {
+            "type": "integer",
+            "title": "Page"
+          },
+          "pageSize": {
+            "type": "integer",
+            "title": "Pagesize"
+          },
+          "totalPages": {
+            "type": "integer",
+            "title": "Totalpages"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items",
+          "total",
+          "page",
+          "pageSize",
+          "totalPages"
+        ],
+        "title": "StandardPage"
+      },
+      "OrgHealth": {
+        "type": "string",
+        "enum": [
+          "good",
+          "watch",
+          "risk"
+        ],
+        "title": "OrgHealth"
+      }
+    }
+  }
+}

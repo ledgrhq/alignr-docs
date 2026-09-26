@@ -1,0 +1,132 @@
+---
+title: "MCP tools"
+description: "Tool names, arguments and scopes generated from the Alignr server."
+---
+
+This catalogue is generated from Alignr’s tool registry. Confirm deployment availability using the [live reference](/api-reference/live-schema). Tool identifiers retain their API spelling.
+
+## Tool catalogue
+
+| Tool | Required scope | Access |
+| --- | --- | --- |
+| `search_documentation` | `search:read` | Read |
+| `get_asset` | `asset:read` | Read |
+| `get_organization` | `organization:read` | Read |
+| `list_detections` | `detection:read` | Read |
+| `ask_ledgr` | `ask:use` | Read |
+| `create_detection_note` | `detection:write` | Write |
+| `get_organization_compliance` | `compliance:read` | Read |
+| `explain_control_status` | `compliance:explain` | Read |
+| `list_organizations_by_control_status` | `compliance:rollup` | Read |
+| `get_standard_rollup` | `compliance:standard_rollup` | Read |
+
+## search_documentation
+
+Full-text and semantic search over document bodies, asset fields and attachment text (no OCR — images are not indexed).
+
+Required scope: `search:read`. Underlying permissions: `document.read`, `asset.read`.
+
+| Argument | Required | Default |
+| --- | --- | --- |
+| `query` | Yes | — |
+| `organization_id` | No | `null` |
+| `limit` | No | `8` |
+
+## get_asset
+
+Fetch one asset's non-vaulted field values by ID.
+
+Required scope: `asset:read`. Underlying permissions: `asset.read`.
+
+| Argument | Required | Default |
+| --- | --- | --- |
+| `asset_id` | Yes | — |
+
+## get_organization
+
+Fetch summary details for one organization (MSP client).
+
+Required scope: `organization:read`. Underlying permissions: `organization.read`.
+
+| Argument | Required | Default |
+| --- | --- | --- |
+| `organization_id` | Yes | — |
+
+## list_detections
+
+List detections for the calling tenant, most recently seen first.
+
+Required scope: `detection:read`. Underlying permissions: `detection.read`.
+
+| Argument | Required | Default |
+| --- | --- | --- |
+| `organization_id` | No | `null` |
+| `status` | No | `"open"` |
+| `limit` | No | `10` |
+
+## ask_ledgr
+
+Ask a natural-language question over the governed corpus, with citations.
+
+Required scope: `ask:use`. Underlying permissions: `document.read`, `asset.read`, `organization.read`, `fact.read`, `detection.read`.
+
+| Argument | Required | Default |
+| --- | --- | --- |
+| `question` | Yes | — |
+| `organization_id` | No | `null` |
+
+## create_detection_note
+
+Attach a note to a detection as an evidence row.
+
+Required scope: `detection:write`. Underlying permissions: `detection.write`.
+
+| Argument | Required | Default |
+| --- | --- | --- |
+| `detection_ref` | Yes | — |
+| `note` | Yes | — |
+
+<Warning>This tool writes a detection note. Confirm the target and note text before allowing the call.</Warning>
+
+## get_organization_compliance
+
+One organization's compliance grid: every control it has been evaluated against, its current status, effective parameters, and when it was last evaluated.
+
+Required scope: `compliance:read`. Underlying permissions: `detection.read`.
+
+| Argument | Required | Default |
+| --- | --- | --- |
+| `organization_id` | Yes | — |
+
+## explain_control_status
+
+Why one control has the status it has for one organization — the detections raised for a fail, or the specific reason behind a no_data, not_covered or not_applicable.
+
+Required scope: `compliance:explain`. Underlying permissions: `detection.read`.
+
+| Argument | Required | Default |
+| --- | --- | --- |
+| `organization_id` | Yes | — |
+| `control` | Yes | — |
+
+## list_organizations_by_control_status
+
+Which organizations sit at each status for one control, tenant-wide.
+
+Required scope: `compliance:rollup`. Underlying permissions: `detection.read`.
+
+| Argument | Required | Default |
+| --- | --- | --- |
+| `control` | Yes | — |
+| `status` | No | `null` |
+| `limit` | No | `50` |
+
+## get_standard_rollup
+
+How every organization currently stands against one Standard.
+
+Required scope: `compliance:standard_rollup`. Underlying permissions: `detection.read`.
+
+| Argument | Required | Default |
+| --- | --- | --- |
+| `standard` | Yes | — |

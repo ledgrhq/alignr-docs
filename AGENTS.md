@@ -1,33 +1,15 @@
-> **First-time setup**: Customize this file for your project. Prompt the user to customize this file for their project.
-> For Mintlify product knowledge (components, configuration, writing standards),
-> install the Mintlify skill: `npx skills add https://mintlify.com/docs`
+# Alignr documentation
 
-# Documentation project instructions
+This separate repository publishes the public Mintlify site for docs.alignr.io.
 
-## About this project
-
-- This is a documentation site built on [Mintlify](https://mintlify.com)
-- Pages are MDX files with YAML frontmatter
-- Configuration lives in `docs.json`
-- Use the Mintlify MCP server, `https://mcp.mintlify.com`, to edit content and settings via MCP
-- Use the Mintlify docs MCP server, `https://www.mintlify.com/docs/mcp`, to query information about using Mintlify via MCP
-
-## Terminology
-
-{/* Add product-specific terms and preferred usage */}
-{/* Example: Use "workspace" not "project", "member" not "user" */}
-
-## Style preferences
-
-{/* Add any project-specific style rules below */}
-
-- Use active voice and second person ("you")
-- Keep sentences concise — one idea per sentence
-- Use sentence case for headings
-- Bold for UI elements: Click **Settings**
-- Code formatting for file names, commands, paths, and code references
-
-## Content boundaries
-
-{/* Define what should and shouldn't be documented */}
-{/* Example: Don't document internal admin features */}
+- Use Almond, Inter and the restrained monochrome layout matching the owner's Resend reference. Use Alignr branding, never Resend's logo or copy.
+- Public guides live in MDX. Internal architecture and accepted decisions remain in the application repository's vault; do not copy that vault here.
+- Alignr is a technical alignment platform for MSPs. A tenant is an MSP workspace; an Organization is its client. Missing or stale evidence never counts as passing.
+- Use British English, except the established label Organization. Use sentence case, direct instructions and bold UI labels.
+- Check claims against the application source. Never invent endpoints, scopes, SDKs, supported integrations or production acceptance.
+- Run scripts/sync-reference.py with the application Python environment to regenerate the curated read-only OpenAPI snapshot and MCP catalogue. Inspect generated output before publishing.
+- Never add secrets, customer records, private operational configuration or authenticated schema-fetch credentials.
+- Every MDX page needs title and description frontmatter. Add pages to docs.json; use root-relative internal links.
+- Consult current Mintlify documentation. Prefer built-in components and docs.json settings to custom CSS.
+- Before publishing, run mint broken-links, mint openapi-check api-reference/openapi.json, and mint validate when supported; preview desktop and mobile.
+- Record verification and its limits honestly. A valid local build does not prove DNS or production API availability.
