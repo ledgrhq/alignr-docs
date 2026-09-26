@@ -13,3 +13,6 @@ This separate repository publishes the public Mintlify site for docs.alignr.io.
 - Consult current Mintlify documentation. Prefer built-in components and docs.json settings to custom CSS.
 - Before publishing, run mint broken-links, mint openapi-check api-reference/openapi.json, and mint validate when supported; preview desktop and mobile.
 - Record verification and its limits honestly. A valid local build does not prove DNS or production API availability.
+- Explain predicates using a readable label, what is observed, and what the observation cannot establish. Registration is not enforcement; product presence is not health or successful recovery.
+- Maintain `reference-data/predicates.json` and run `python3 scripts/build-predicate-reference.py /path/to/ledgr` when the fact vocabulary changes. Keep missing/false/zero distinctions and set-valued semantics accurate.
+- Diagrams use Mermaid code fences and must have an adjacent prose explanation. Check their rendered desktop/mobile layout, not just their syntax.

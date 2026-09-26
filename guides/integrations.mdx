@@ -27,3 +27,32 @@ Inspect the connection’s collection status and the evidence it produces. Check
 - **Evidence stale:** check recent collection failures and credential validity.
 
 [Understand evidence and coverage](/guides/evidence).
+
+## Connection, mapping, collection and coverage
+
+These are four separate milestones:
+
+| Milestone | What it establishes | What it does not establish |
+| --- | --- | --- |
+| Connected | Alignr can use the configured source connection. | Every client or source feature is accessible. |
+| Mapped | A source record is linked to the intended client. | Collection has produced all required observations. |
+| Collected | A collection run produced or refreshed evidence. | Every predicate needed by every control is present. |
+| Covered | The control's evidence requirements are supported in the client's context. | The available observations satisfy the control. |
+
+```mermaid
+flowchart TD
+    A["Authorise source"] --> B["Review client mappings"]
+    B --> C["Collect observations"]
+    C --> D["Inspect source and timestamps"]
+    D --> E["Evaluate supported controls"]
+```
+
+## Why one source cannot answer every question
+
+An RMM may report device check-ins and pending patches. An identity source may report roles and MFA registration. Those sources describe different subjects and properties. A source's product category is not enough to promise a particular observation: check the exact [predicate](/guides/predicates) and the client's coverage explanation.
+
+Some sources deliberately withhold a field when they cannot supply it reliably. Connecting more integrations does not automatically fill every gap.
+
+## Reconnect without assuming recovery
+
+After renewing credentials or fixing access, check that collection actually resumes, that the client mapping remains correct and that the relevant evidence has a new observation time. Then inspect a fresh evaluation. A successful credential save alone is not proof that assessments have recovered.

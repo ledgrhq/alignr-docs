@@ -47,3 +47,27 @@ For control results, add the relevant `compliance:*` scopes using a replacement 
 - **Tool denied:** check both the assigned scope and the key owner’s current permissions.
 - **Not found:** confirm the endpoint, server availability and Organization ID.
 - **No tools:** confirm Streamable HTTP support and that the server is enabled using the [live reference](/api-reference/live-schema).
+
+## Ask a question the evidence can answer
+
+After connecting, begin with a bounded read request such as:
+
+> For this Organization ID, retrieve its compliance results and explain one failing control. Include the control identifier and the evidence behind the explanation. Do not make changes.
+
+Grant only the scopes required by the tools involved. For this workflow, consult `get_organization_compliance` and `explain_control_status` in the [tool catalogue](/mcp/tools).
+
+A useful answer identifies the client, the expectation, the actual observation and what remains unknown. If the answer says “MFA registered”, do not read that as “MFA enforced everywhere”. Use the [predicate guide](/guides/predicates) to check the claim.
+
+## Choose the tool for the question
+
+| Question | Tool to inspect |
+| --- | --- |
+| Which client is this ID? | `get_organization` |
+| What is this client's control posture? | `get_organization_compliance` |
+| Why does one control have this result? | `explain_control_status` |
+| Which clients have a particular control status? | `list_organizations_by_control_status` |
+| How do clients stand against a standard? | `get_standard_rollup` |
+| What findings are open? | `list_detections` |
+| Can I add an agreed note to a finding? | `create_detection_note` — requires write access. |
+
+Tool availability and permission checks remain server-side. A client's ability to discover a tool is not permission to execute it.

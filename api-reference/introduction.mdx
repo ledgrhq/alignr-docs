@@ -29,3 +29,23 @@ The response contains an `items` array and pagination metadata. Use an Organizat
   <Card title="Authentication" icon="key" href="/api-reference/authentication">Understand API keys and permissions.</Card>
   <Card title="Live API schema" icon="code" href="/api-reference/live-schema">Retrieve the reference for your running deployment.</Card>
 </Columns>
+
+## Understand the data you retrieve
+
+Organizations provide client context. Facts describe observations. Standards and controls describe expectations. Detections describe findings. These objects answer different questions; listing no detections does not prove that all controls passed.
+
+```mermaid
+flowchart TD
+    O["Identify the Organization"] --> F["Inspect its facts and evidence"]
+    O --> C["Read its compliance results"]
+    C --> D["Investigate findings and gaps"]
+    F --> D
+```
+
+When working with facts, translate the predicate using the [reference](/guides/predicate-reference), then check subject identity, source and observation time. Preserve technical identifiers in your integration; readable labels are for presentation.
+
+## Build a useful client integration
+
+Start with read-only requests and least-privilege scopes. Handle pagination, distinguish permission errors from empty data, and keep the Organization context explicit across requests. Follow the generated operation's documented query parameters rather than guessing a common filter name.
+
+For a recurring report, retain the evaluation time and evidence context alongside each status. A report without those details can make an old or incomplete assessment look current.

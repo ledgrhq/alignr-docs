@@ -18,3 +18,25 @@ Mapping establishes where evidence belongs. Incorrect mapping can produce mislea
 The [API quickstart](/api-reference/introduction) lists the Organizations visible to your key. Use the returned `id` when an API operation or MCP tool asks for `organization_id`.
 
 A key does not gain access to another MSP’s data by supplying its identifiers.
+
+## Example: one MSP, two clients
+
+```mermaid
+flowchart TD
+    T["Your MSP workspace"] --> A["Client A"]
+    T --> B["Client B"]
+    S["Source company A"] --> A
+    U["Source company B"] --> B
+    A --> EA["Client A evidence and results"]
+    B --> EB["Client B evidence and results"]
+```
+
+The diagram shows explicit source-to-client mapping. Your workspace can contain multiple clients, but a source record must be attached to the correct one before its evidence can support that client's assessment.
+
+## Names are not identifiers
+
+“Example Ltd” may exist in more than one source, with different spelling or ownership. Review stable source identifiers and the expected environment as well as display names. In API and MCP requests, use the returned Organization ID rather than substituting its name.
+
+## Before reviewing a client
+
+Confirm the selected client, mapped source records, applied standards and effective overrides. If evidence appears in an unexpected assessment, investigate the mapping and subject identity before changing the control.

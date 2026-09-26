@@ -69,9 +69,19 @@
           {
             "group": "Learn",
             "pages": [
+              "guides/predicates",
               "guides/evidence",
+              "guides/control-conditions",
               "guides/control-status",
-              "guides/remediation"
+              "guides/remediation",
+              "guides/troubleshooting"
+            ]
+          },
+          {
+            "group": "Reference",
+            "pages": [
+              "guides/predicate-reference",
+              "guides/glossary"
             ]
           }
         ]

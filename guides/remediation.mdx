@@ -18,3 +18,31 @@ The autonomy levels are `suggest_only`, `document_only`, `one_click`, `change_ti
 A completed action is not proof that the problem is resolved. Review post-action verification and fresh evidence. Where a supported reversal is available, check the run’s rollback information and window before relying on it.
 
 Only use remediation actions supported by the specific finding and connected source.
+
+## From finding to verified outcome
+
+```mermaid
+flowchart TD
+    F["Evidence-backed finding"] --> P["Review a supported plan"]
+    P --> A["Check approval and autonomy"]
+    A --> R["Execute the authorised run"]
+    R --> V["Collect and verify the outcome"]
+    V --> C["Resolve only when evidence supports resolution"]
+```
+
+A queued request, an accepted action and a verified fix are different outcomes. Follow the run's reported state and supporting evidence rather than treating submission as success.
+
+## What to review in a plan
+
+| Question | Why it matters |
+| --- | --- |
+| Is this the correct client and target? | A technically correct change on the wrong target is still wrong. |
+| Does the evidence support this action? | A plan must address the observed finding rather than a similar-looking symptom. |
+| Is the action supported by the connected source? | Read access and evidence coverage do not imply write capability. |
+| Who or what authorises execution? | Effective autonomy and required approval both apply. |
+| What can be reversed, and when? | Reversal depends on the particular action and available rollback window. |
+| What will prove the outcome? | A successful API response alone may not prove the control is now satisfied. |
+
+## When the outcome is uncertain
+
+Do not immediately repeat a change after a timeout or partial failure. Inspect the run and target state first: the action may have taken effect despite the missing acknowledgement. Escalate with the run identifier and safe diagnostic details, and use a supported rollback only after reviewing its effect.

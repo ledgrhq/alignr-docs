@@ -1,22 +1,69 @@
 ---
-title: "Evidence and freshness"
-description: "Understand what a result is based on."
+title: "Facts, evidence and freshness"
+description: "Follow an observation from its source to a result you can explain."
 ---
 
-## Facts
+A **fact** records something observed. **Evidence** is the set of facts supporting a particular result or claim. The difference is the job the observation is doing: an observation becomes supporting evidence when you use it to explain a conclusion.
 
-Integrations normalise observations into facts: a subject, a predicate and a value, together with their Organization, source system, source reference, observation time and confidence.
+## From a source to a result
 
-## Trace a result
+```mermaid
+flowchart TD
+    V["Source system"] --> C["Native connector collects observations"]
+    C --> M["Source records mapped to a client"]
+    M --> F["Facts with source and observation time"]
+    F --> R["Control checks its expectation"]
+    R --> O["Result with supporting evidence"]
+    O --> H["Human review or supported remediation"]
+```
 
-When reviewing a finding, check the cited evidence. Confirm that the source describes the intended client and subject, and that its observation is recent enough for the control.
+A working connection is only the first part of this process. The observations must belong to the correct client, answer the control's question and be suitable for evaluation.
 
-## Missing and stale evidence
+## Read an evidence record
 
-No evidence is not evidence of a healthy environment. Missing or stale observations cannot count as passing. Check collection and mapping before assuming a client meets a standard.
+The following is an illustrative explanation, not an API response:
 
-Coverage is specific to the evidence a control requires. A connected integration may support some controls and leave others uncovered.
+| Field | Example | Why it matters |
+| --- | --- | --- |
+| Organization | Example client | Identifies whose environment this describes. |
+| Subject | `alex@example.com` | Identifies the person, device or other thing observed. |
+| Predicate | `mfa_registered` | Names the property being observed. |
+| Value | `true` | Records what the source reported. |
+| Source system | Identity provider | Tells you who made the observation. |
+| Source reference | The source's user identifier | Helps trace it to the original record. |
+| Observed at | A UTC timestamp | Tells you when the observation was made. |
+| Confidence | A recorded confidence value | Describes confidence in the observation; not a compliance score. |
 
-## Agent answers
+See [Understanding predicates](/guides/predicates) for how to turn technical field names into readable statements.
 
-Alignr’s agent claims require supporting citations. Review the cited source before acting on an answer, especially where a change affects a client’s environment.
+## Observation time versus event time
+
+These answer different questions. A connector may collect evidence today that a device **last checked in three weeks ago**. The observation is fresh; the device's check-in is old.
+
+Conversely, an old observation saying a device checked in recently at the time of collection does not prove the device is still reporting today. Inspect both the observation timestamp and any timestamp stored in the value.
+
+## Freshness and source health
+
+A source error does not erase every observation it previously supplied. Existing suitable evidence can still explain a result, with degraded source coverage reported separately. Once evidence is too old to support a pass, it must not continue presenting a clean assessment.
+
+Check the control's detailed reason and source state rather than assuming that all facts have one universal freshness period. A historical failing observation may remain useful evidence of a problem even where stale evidence can no longer establish a pass.
+
+## Disagreement and multiple values
+
+Two sources can report different values for the same property. Investigate source identity, timing and meaning before accepting a convenient answer. One source saying an agent is installed and another saying it last checked in yesterday are different properties, not a conflict.
+
+Some predicates legitimately have several values: a user can hold multiple roles and a device can be protected by multiple products. See the “Multiple values” notes in the [reference](/guides/predicate-reference).
+
+## Missing evidence checklist
+
+<Steps>
+  <Step title="Check the client">Confirm the selected Organization and the source mapping. Similar names do not prove identity.</Step>
+  <Step title="Check the source">Confirm credentials, collection state and the scope of the connected source.</Step>
+  <Step title="Check the property">Confirm that the connector actually produces the required predicate. A related property is not equivalent.</Step>
+  <Step title="Check timing">Inspect observation time and relevant event timestamps. A successful old collection is not proof of current posture.</Step>
+  <Step title="Reassess">After resolving the cause, collect and evaluate again. Confirm the result is backed by the intended evidence.</Step>
+</Steps>
+
+## Using evidence in an assistant answer
+
+Agent claims require citations. Open the cited evidence, confirm the client and subject, and check whether the observation supports the exact claim being made. A fluent answer without usable evidence is not a reason to change a client's environment.

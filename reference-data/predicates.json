@@ -1,0 +1,618 @@
+[
+  {
+    "group": "Identity and access",
+    "name": "has_role",
+    "label": "Directory role",
+    "description": "A role held by the subject, such as Global Administrator.",
+    "interpretation": "One person can hold several roles. Match the exact observed role name."
+  },
+  {
+    "group": "Identity and access",
+    "name": "account_enabled",
+    "label": "Account enabled",
+    "description": "Whether the directory reports the account enabled.",
+    "interpretation": "Enabled does not prove the person can successfully sign in or that access is appropriate."
+  },
+  {
+    "group": "Identity and access",
+    "name": "last_sign_in",
+    "label": "Last interactive sign-in",
+    "description": "When the identity source reports the last interactive sign-in.",
+    "interpretation": "A fresh collection can report an old sign-in. Do not substitute a different vendor authentication event."
+  },
+  {
+    "group": "Identity and access",
+    "name": "last_non_interactive_sign_in",
+    "label": "Last non-interactive sign-in",
+    "description": "When the source reports the last non-interactive sign-in.",
+    "interpretation": "Background activity is different from a person actively signing in."
+  },
+  {
+    "group": "Identity and access",
+    "name": "user_type",
+    "label": "User type",
+    "description": "The type of directory user reported by the source.",
+    "interpretation": "Use actual source values when distinguishing members and guests."
+  },
+  {
+    "group": "Identity and access",
+    "name": "directory_synced",
+    "label": "Directory synchronised",
+    "description": "Whether the account is reported as synchronised from another directory.",
+    "interpretation": "This describes its directory origin, not the health of the whole synchronisation service."
+  },
+  {
+    "group": "Identity and access",
+    "name": "mfa_registered",
+    "label": "MFA registered",
+    "description": "Whether the user has registered multi-factor authentication.",
+    "interpretation": "Registration does not establish enforcement on every sign-in."
+  },
+  {
+    "group": "Identity and access",
+    "name": "sspr_registered",
+    "label": "Password reset registered",
+    "description": "Whether self-service password reset registration is reported.",
+    "interpretation": "Registration does not prove every recovery path is configured safely."
+  },
+  {
+    "group": "Identity and access",
+    "name": "member_of",
+    "label": "Group membership",
+    "description": "A group the subject belongs to.",
+    "interpretation": "Membership can have several values. Review which group is actually relevant."
+  },
+  {
+    "group": "Identity and access",
+    "name": "mfa_method",
+    "label": "Registered MFA method",
+    "description": "A second-factor method associated with the subject.",
+    "interpretation": "Several methods can coexist; a strong method does not erase a weaker one."
+  },
+  {
+    "group": "Identity and access",
+    "name": "mfa_bypass_enabled",
+    "label": "MFA bypass enabled",
+    "description": "Whether the MFA source reports bypass enabled for the user.",
+    "interpretation": "A bypass setting is a separate observation from having registered a factor."
+  },
+  {
+    "group": "Licensing",
+    "name": "has_licence",
+    "label": "Licence or entitlement",
+    "description": "A licence associated with the subject.",
+    "interpretation": "The subject may be a user or a company. Assignment and purchased entitlement are different contexts."
+  },
+  {
+    "group": "Licensing",
+    "name": "licence_seats_purchased",
+    "label": "Purchased seats",
+    "description": "The reported number of purchased or entitled seats for a product.",
+    "interpretation": "Compare like-for-like products and subjects; it is not a count of active users."
+  },
+  {
+    "group": "Licensing",
+    "name": "licence_seats_assigned",
+    "label": "Assigned seats",
+    "description": "The reported number of seats assigned for a product.",
+    "interpretation": "Assigned seats do not prove active usage or contractual entitlement."
+  },
+  {
+    "group": "Licensing",
+    "name": "licence_renewal_date",
+    "label": "Next licence renewal",
+    "description": "The reported next renewal date for a product commitment.",
+    "interpretation": "A date, not an assurance that cancellation or quantity changes remain possible."
+  },
+  {
+    "group": "Conditional Access",
+    "name": "ca_policy_scope",
+    "label": "Policy scope",
+    "description": "The normalised scope reported for a Conditional Access policy.",
+    "interpretation": "Inspect the policy context; a scope label is not proof that every relevant sign-in is protected."
+  },
+  {
+    "group": "Conditional Access",
+    "name": "ca_policy_state",
+    "label": "Policy state",
+    "description": "Whether and how a Conditional Access policy is enabled, as reported by the source.",
+    "interpretation": "Report-only and enforced behaviour differ. Compare actual state values."
+  },
+  {
+    "group": "Conditional Access",
+    "name": "ca_policy_grant_controls",
+    "label": "Policy grant requirements",
+    "description": "The grant controls configured on a Conditional Access policy.",
+    "interpretation": "A policy can contain several controls. Their presence alone does not prove effective coverage."
+  },
+  {
+    "group": "Conditional Access",
+    "name": "ca_policy_modified_at",
+    "label": "Policy last changed",
+    "description": "When the source reports the policy was modified.",
+    "interpretation": "A timestamp establishes timing, not authorisation or the safety of the change."
+  },
+  {
+    "group": "Conditional Access",
+    "name": "ca_policy_last_modified_by",
+    "label": "Policy changed by",
+    "description": "The reported actor associated with the policy modification.",
+    "interpretation": "An actor identity is not itself approval evidence."
+  },
+  {
+    "group": "Conditional Access",
+    "name": "policy_scope_narrowed",
+    "label": "Policy scope reduced",
+    "description": "An observation that the policy scope narrowed.",
+    "interpretation": "Review the affected scope and approved change context before deciding whether the change is wrong."
+  },
+  {
+    "group": "Mailboxes and directory domains",
+    "name": "mailbox_type",
+    "label": "Mailbox type",
+    "description": "The type of mailbox reported by the source.",
+    "interpretation": "Use it to distinguish mailbox kinds, not to infer security configuration."
+  },
+  {
+    "group": "Mailboxes and directory domains",
+    "name": "mailbox_timezone",
+    "label": "Mailbox time zone",
+    "description": "The time zone configured for the mailbox.",
+    "interpretation": "This is a mailbox setting; Alignr evidence timestamps remain UTC."
+  },
+  {
+    "group": "Mailboxes and directory domains",
+    "name": "mailbox_auto_reply",
+    "label": "Automatic reply setting",
+    "description": "The automatic-reply setting reported for the mailbox.",
+    "interpretation": "Interpret the source value; it does not prove a message was delivered."
+  },
+  {
+    "group": "Mailboxes and directory domains",
+    "name": "verified_domain",
+    "label": "Verified directory domain",
+    "description": "A domain verified in the source tenant.",
+    "interpretation": "Domain ownership verification does not establish mail protection or DNS policy correctness."
+  },
+  {
+    "group": "Mailboxes and directory domains",
+    "name": "default_domain",
+    "label": "Default directory domain",
+    "description": "The default domain reported by the directory.",
+    "interpretation": "A default designation is different from the complete set of verified domains."
+  },
+  {
+    "group": "Mailboxes and directory domains",
+    "name": "domain_auth_type",
+    "label": "Domain authentication type",
+    "description": "The authentication type reported for the directory domain.",
+    "interpretation": "Review its actual source value and policy context before drawing an access conclusion."
+  },
+  {
+    "group": "Endpoint management and patching",
+    "name": "device_managed_by",
+    "label": "Device management",
+    "description": "The reported management relationship for an endpoint.",
+    "interpretation": "RMM management is different from MDM enrolment and EDR protection."
+  },
+  {
+    "group": "Endpoint management and patching",
+    "name": "device_last_checkin",
+    "label": "Last management check-in",
+    "description": "When the device last reported to the management source.",
+    "interpretation": "Compare the event time with your reporting expectation, and check when it was collected."
+  },
+  {
+    "group": "Endpoint management and patching",
+    "name": "device_online",
+    "label": "Device online",
+    "description": "Whether the source reports the device online.",
+    "interpretation": "Online does not imply patched, encrypted or free of threats."
+  },
+  {
+    "group": "Endpoint management and patching",
+    "name": "os_platform",
+    "label": "Operating system",
+    "description": "The reported operating-system platform.",
+    "interpretation": "Match actual normalised values; a platform name alone does not prove a supported version."
+  },
+  {
+    "group": "Endpoint management and patching",
+    "name": "patch_status",
+    "label": "Patch state",
+    "description": "The patching state reported by the management source.",
+    "interpretation": "State vocabularies and source coverage matter; do not assume every vendor means the same thing."
+  },
+  {
+    "group": "Endpoint management and patching",
+    "name": "patches_pending",
+    "label": "Pending patch count",
+    "description": "The source-reported number of pending patches.",
+    "interpretation": "A zero count is meaningful within the reporting source’s scope, not proof of a complete vulnerability scan."
+  },
+  {
+    "group": "Endpoint management and patching",
+    "name": "antivirus_product",
+    "label": "Antivirus product",
+    "description": "The antivirus product reported on the endpoint.",
+    "interpretation": "Product presence does not establish protection health or recent updates."
+  },
+  {
+    "group": "Endpoint management and patching",
+    "name": "agent_health",
+    "label": "Management agent health",
+    "description": "The reported health of the endpoint management agent.",
+    "interpretation": "This is distinct from the health of an EDR agent."
+  },
+  {
+    "group": "Endpoint detection and threats",
+    "name": "edr_agent_installed",
+    "label": "EDR installed",
+    "description": "Whether the source reports endpoint detection and response agent installation.",
+    "interpretation": "Check health and check-in evidence separately."
+  },
+  {
+    "group": "Endpoint detection and threats",
+    "name": "edr_agent_health",
+    "label": "EDR health",
+    "description": "The EDR source’s reported agent-health state.",
+    "interpretation": "Read the actual state and source; installed, healthy and recently seen are separate questions."
+  },
+  {
+    "group": "Endpoint detection and threats",
+    "name": "edr_last_checkin",
+    "label": "Last EDR check-in",
+    "description": "When the EDR agent last reported activity.",
+    "interpretation": "Use the event timestamp as well as evidence freshness."
+  },
+  {
+    "group": "Endpoint detection and threats",
+    "name": "edr_agent_version",
+    "label": "EDR version",
+    "description": "The reported EDR agent version.",
+    "interpretation": "A version string needs a supported-version expectation before it can establish alignment."
+  },
+  {
+    "group": "Endpoint detection and threats",
+    "name": "edr_policy_group",
+    "label": "EDR policy group",
+    "description": "The policy group reported for the EDR agent.",
+    "interpretation": "Group membership does not prove the effective policy settings are correct."
+  },
+  {
+    "group": "Endpoint detection and threats",
+    "name": "threat_detected",
+    "label": "Reported threat",
+    "description": "An individual threat observation, such as its classification.",
+    "interpretation": "Multiple threats can exist. Review the source record before interpreting severity or current status."
+  },
+  {
+    "group": "Endpoint detection and threats",
+    "name": "threat_open_count",
+    "label": "Open threat count",
+    "description": "The source’s per-device count of open threats.",
+    "interpretation": "A vendor rollup can differ from counting individual fact rows; do not silently equate them."
+  },
+  {
+    "group": "Vulnerabilities",
+    "name": "vulnerability_detected",
+    "label": "Reported vulnerability",
+    "description": "An individual vulnerability observation associated with the subject.",
+    "interpretation": "There may be several findings; check the identifier and source context."
+  },
+  {
+    "group": "Vulnerabilities",
+    "name": "vulnerability_max_severity",
+    "label": "Highest vulnerability severity",
+    "description": "The highest reported severity band for the subject.",
+    "interpretation": "A severity band is not a count, and does not describe every finding."
+  },
+  {
+    "group": "Vulnerabilities",
+    "name": "vulnerability_open_count",
+    "label": "Open vulnerability count",
+    "description": "The source-reported count of open vulnerabilities.",
+    "interpretation": "Scanner scope and counting methods differ; avoid adding unlike rollups together."
+  },
+  {
+    "group": "Vulnerabilities",
+    "name": "missing_patch",
+    "label": "Missing patch",
+    "description": "An individual patch reported missing from the subject.",
+    "interpretation": "Several patches can be missing. This differs from the total pending-patch count."
+  },
+  {
+    "group": "Networks and firewalls",
+    "name": "network_device_role",
+    "label": "Network device role",
+    "description": "A role the device performs, such as switching or wireless access.",
+    "interpretation": "One appliance can have several roles."
+  },
+  {
+    "group": "Networks and firewalls",
+    "name": "network_device_model",
+    "label": "Hardware model",
+    "description": "The reported network-device model.",
+    "interpretation": "Model identity does not establish firmware support or configuration safety."
+  },
+  {
+    "group": "Networks and firewalls",
+    "name": "network_device_firmware",
+    "label": "Firmware version",
+    "description": "The reported network-device firmware version.",
+    "interpretation": "Compare with the relevant expectation for that device and source."
+  },
+  {
+    "group": "Networks and firewalls",
+    "name": "network_device_ip",
+    "label": "Management address",
+    "description": "The reported network-device IP address.",
+    "interpretation": "An address is not evidence that the device is publicly reachable."
+  },
+  {
+    "group": "Networks and firewalls",
+    "name": "network_device_uplink",
+    "label": "Upstream connection",
+    "description": "The reported upstream connection for a network device.",
+    "interpretation": "Use it as topology evidence, not a complete network diagram."
+  },
+  {
+    "group": "Networks and firewalls",
+    "name": "firmware_update_available",
+    "label": "Firmware update available",
+    "description": "Whether the source reports an available firmware update.",
+    "interpretation": "Availability is distinct from approval, urgency and safe scheduling."
+  },
+  {
+    "group": "Networks and firewalls",
+    "name": "vpn_tunnel",
+    "label": "VPN tunnel membership",
+    "description": "A reported VPN tunnel or topology relationship.",
+    "interpretation": "Several tunnels can exist. Membership alone does not prove current tunnel health."
+  },
+  {
+    "group": "Networks and firewalls",
+    "name": "network_segment_type",
+    "label": "Network segment type",
+    "description": "The reported type of a network segment, such as a VLAN or routed network.",
+    "interpretation": "The presence of a VLAN does not prove isolation between networks."
+  },
+  {
+    "group": "Networks and firewalls",
+    "name": "firewall_policy_count",
+    "label": "Firewall rule count",
+    "description": "The reported number of firewall policies.",
+    "interpretation": "A count cannot prove which traffic is allowed or whether the rulebase is safe."
+  },
+  {
+    "group": "Networks and firewalls",
+    "name": "firewall_l3_rules_fingerprint",
+    "label": "Firewall rule fingerprint",
+    "description": "A versioned fingerprint of supported Layer 3 rule configuration.",
+    "interpretation": "A changed fingerprint shows configuration identity changed; it does not establish approval or safety."
+  },
+  {
+    "group": "Remote access",
+    "name": "remote_access_resource",
+    "label": "Accessible resource",
+    "description": "A remote-access resource associated with a group.",
+    "interpretation": "A group can reach several resources. Combine with relevant membership evidence when reviewing access."
+  },
+  {
+    "group": "Remote access",
+    "name": "remote_access_address",
+    "label": "Resource destination",
+    "description": "The address reported for a remote-access resource.",
+    "interpretation": "A destination is distinct from the users and groups entitled to reach it."
+  },
+  {
+    "group": "MDM and policy baselines",
+    "name": "mdm_enrolled_by",
+    "label": "MDM enrolment",
+    "description": "The management product in which the device is enrolled.",
+    "interpretation": "Co-management can produce several valid enrolments; enrolment alone is not compliance."
+  },
+  {
+    "group": "MDM and policy baselines",
+    "name": "device_compliance_state",
+    "label": "MDM compliance state",
+    "description": "The device-compliance result reported by the MDM source.",
+    "interpretation": "This reflects that source’s policy evaluation, not every Alignr control."
+  },
+  {
+    "group": "MDM and policy baselines",
+    "name": "device_encryption_enabled",
+    "label": "Device encryption",
+    "description": "Whether the management source reports encryption enabled.",
+    "interpretation": "This does not prove recovery-key availability or successful recovery."
+  },
+  {
+    "group": "MDM and policy baselines",
+    "name": "policy_baseline_state",
+    "label": "Baseline state",
+    "description": "The reported state of a managed policy baseline.",
+    "interpretation": "Normalised states include enforced, not_applied, drifted and error. Unknown source states must not be guessed."
+  },
+  {
+    "group": "Mail protection and external DNS",
+    "name": "mail_protected_by",
+    "label": "Mail protection provider",
+    "description": "A mail security gateway reported for the domain.",
+    "interpretation": "Several providers can coexist during migration; provider presence is not proof of every protection."
+  },
+  {
+    "group": "Mail protection and external DNS",
+    "name": "mail_protection_feature",
+    "label": "Mail protection feature",
+    "description": "A reported protection feature for the mail domain.",
+    "interpretation": "Several features can coexist. Check the feature and source rather than assuming full mail security."
+  },
+  {
+    "group": "Mail protection and external DNS",
+    "name": "external_spf_present",
+    "label": "SPF record present",
+    "description": "Whether the bounded DNS check observed an SPF record for the approved target.",
+    "interpretation": "Presence is not a full SPF correctness or deliverability assessment."
+  },
+  {
+    "group": "Mail protection and external DNS",
+    "name": "external_dmarc_enforced",
+    "label": "DMARC enforcement policy",
+    "description": "Whether the DNS check reports an enforcing DMARC policy for the approved target.",
+    "interpretation": "A policy observation does not establish message alignment or delivery outcomes."
+  },
+  {
+    "group": "Mail protection and external DNS",
+    "name": "external_mx_present",
+    "label": "Mail routing records present",
+    "description": "Whether MX records were observed for the approved domain.",
+    "interpretation": "MX presence does not prove that a mailbox exists or mail will be accepted."
+  },
+  {
+    "group": "Mail protection and external DNS",
+    "name": "external_nameserver_count",
+    "label": "Name server count",
+    "description": "The number of name servers reported by the DNS check.",
+    "interpretation": "A count does not prove independent hosting or resilience."
+  },
+  {
+    "group": "Configuration monitoring",
+    "name": "monitored_system",
+    "label": "Monitored system",
+    "description": "A system reported by the configuration-monitoring source.",
+    "interpretation": "Being listed does not establish successful or recent inspection."
+  },
+  {
+    "group": "Configuration monitoring",
+    "name": "inspection_status",
+    "label": "Inspection state",
+    "description": "The reported state of a configuration inspection.",
+    "interpretation": "Read the actual source state alongside the inspection time."
+  },
+  {
+    "group": "Configuration monitoring",
+    "name": "inspection_last_run_at",
+    "label": "Last inspection",
+    "description": "When the source reports its last inspection run.",
+    "interpretation": "A recent run timestamp is different from a successful result."
+  },
+  {
+    "group": "Tickets, contracts and credential signals",
+    "name": "leaver_ticket",
+    "label": "Leaver ticket",
+    "description": "A ticket associated with an offboarding process.",
+    "interpretation": "A ticket’s existence does not establish that all access has been removed."
+  },
+  {
+    "group": "Tickets, contracts and credential signals",
+    "name": "leaver_ticket_status",
+    "label": "Leaver ticket state",
+    "description": "The reported state of an offboarding ticket.",
+    "interpretation": "A closed ticket is workflow evidence, not proof that directory access is disabled."
+  },
+  {
+    "group": "Tickets, contracts and credential signals",
+    "name": "ticket_closed_at",
+    "label": "Ticket closure time",
+    "description": "When the source reports a ticket was closed.",
+    "interpretation": "Use it for timing; verify the technical outcome separately."
+  },
+  {
+    "group": "Tickets, contracts and credential signals",
+    "name": "ticket_contains_secret",
+    "label": "Secret-in-ticket signal",
+    "description": "An observation that ticket content contains a secret.",
+    "interpretation": "The signal is not an instruction to publish or retrieve the secret itself."
+  },
+  {
+    "group": "Tickets, contracts and credential signals",
+    "name": "secret_reuse_count",
+    "label": "Secret reuse count",
+    "description": "A reported count associated with reuse of a credential.",
+    "interpretation": "Interpret within the producer’s scope. The count does not reveal the credential value."
+  },
+  {
+    "group": "Tickets, contracts and credential signals",
+    "name": "change_ticket_ref",
+    "label": "Change ticket reference",
+    "description": "A change-ticket reference associated with the subject.",
+    "interpretation": "Several references may exist. A reference alone is not evidence of approval."
+  },
+  {
+    "group": "Tickets, contracts and credential signals",
+    "name": "ticket_status",
+    "label": "Ticket state",
+    "description": "The status reported for a general ticket.",
+    "interpretation": "Use the actual workflow state; similarly named statuses can have different meanings across sources."
+  },
+  {
+    "group": "Tickets, contracts and credential signals",
+    "name": "contract_type",
+    "label": "Contract type",
+    "description": "The contract classification reported by the PSA source.",
+    "interpretation": "A type label does not establish the full terms or technical requirements."
+  },
+  {
+    "group": "Backup",
+    "name": "backup_protected_by",
+    "label": "Backup protection provider",
+    "description": "A product reporting backup protection for the subject.",
+    "interpretation": "Product presence does not prove a successful backup or a tested restore."
+  },
+  {
+    "group": "Backup",
+    "name": "backup_last_successful_at",
+    "label": "Last successful backup",
+    "description": "When the source reports the last successful backup.",
+    "interpretation": "Review the relevant job/workload and required recovery-point expectation."
+  },
+  {
+    "group": "Backup",
+    "name": "backup_job_state",
+    "label": "Backup job state",
+    "description": "The source-reported result or state of a backup job.",
+    "interpretation": "Review the exact normalised state and timing, not the label alone."
+  },
+  {
+    "group": "Backup",
+    "name": "backup_protected_workload",
+    "label": "Protected workload",
+    "description": "A workload associated with a backup job.",
+    "interpretation": "A job can protect several workloads; membership is distinct from successful recovery."
+  },
+  {
+    "group": "Derived records and certificates",
+    "name": "document_references_asset",
+    "label": "Document asset reference",
+    "description": "An asset referenced by a retained evidence document.",
+    "interpretation": "This describes an evidence relationship; it does not make documentation a separate product library."
+  },
+  {
+    "group": "Derived records and certificates",
+    "name": "referenced_asset_last_seen",
+    "label": "Referenced asset last seen",
+    "description": "When a referenced asset was last observed.",
+    "interpretation": "Check its producer and observation time before interpreting it as current inventory."
+  },
+  {
+    "group": "Derived records and certificates",
+    "name": "referenced_asset_decommissioned",
+    "label": "Referenced asset retired",
+    "description": "An observation that a referenced asset is decommissioned.",
+    "interpretation": "A missing observation does not prove that the asset is still active."
+  },
+  {
+    "group": "Derived records and certificates",
+    "name": "certificate_expires_on",
+    "label": "Certificate expiry",
+    "description": "The expiry date or time reported for a certificate.",
+    "interpretation": "Expiry evidence needs its producer and target context; not every integration collects certificates."
+  },
+  {
+    "group": "Derived records and certificates",
+    "name": "certificate_issuer",
+    "label": "Certificate issuer",
+    "description": "The issuer reported for a certificate.",
+    "interpretation": "The issuer name alone does not prove trust, validity or correct deployment."
+  }
+]

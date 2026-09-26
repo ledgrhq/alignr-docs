@@ -1,0 +1,65 @@
+---
+title: "Glossary"
+description: "The words you will meet in Alignr, explained in everyday language."
+---
+
+## Your environment
+
+| Term | Meaning |
+| --- | --- |
+| Tenant / workspace | Your MSP's account boundary in Alignr. |
+| Organization / client | One of the clients managed by your MSP. APIs use the name Organization. |
+| Integration | A connection to a source system. |
+| Connector | The native code that reads a particular source and turns its responses into observations Alignr understands. |
+| Mapping | An explicit link between a source's company or tenant and the corresponding Alignr client. |
+| Collection / sweep | A run that gathers a batch of observations from a source. |
+| Subject | The person, device, policy, domain or other thing a fact is about. |
+
+## Evidence and results
+
+| Term | Meaning |
+| --- | --- |
+| Predicate | The named property being observed, such as “MFA registered”. |
+| Fact | An observation combining a subject, predicate and value with source and timing information. |
+| Value / object | The answer the source reported: a boolean, count, state, timestamp or relationship, for example. |
+| Provenance | Where an observation came from and how to trace it to its source. |
+| Evidence | The particular facts supporting a result or claim. |
+| Citation | A reference to the evidence supporting a claim. |
+| Freshness | Whether an observation is recent enough to support its intended use. |
+| Coverage | Whether the required kinds of evidence can be supplied in this client's context. |
+| Detection / issue | A finding that something is wrong, supported by evidence. |
+| Drift | An observed change that can leave previously recorded information out of date. |
+
+## Standards and controls
+
+| Term | Meaning |
+| --- | --- |
+| Standard | A collection of expectations applied to clients. |
+| Control | One expectation evaluated against a selected population and evidence. |
+| Population | The subjects a control selects for evaluation. |
+| Predicate condition | A comparison using a named observation, an operator and, where needed, an expected value. |
+| Operator | How values are compared: equals, greater than, older than a number of days, and so on. |
+| Parameter | A named value, such as a threshold, that can be configured without rewriting the condition. |
+| Override | A client-specific setting that changes the effective expectation or enabled state. |
+| Evaluation | One assessment of a control using effective settings and available evidence. |
+| Manual check | A human assessment used when the expectation needs evidence or judgement that an automated control cannot supply. |
+
+## Taking action
+
+| Term | Meaning |
+| --- | --- |
+| Remediation plan | The proposed ordered steps for addressing a finding. |
+| Remediation run | One execution of a plan. |
+| Autonomy ceiling | The maximum level of action permitted by the applicable controls. |
+| Approval | A recorded authorisation for a proposed action; irreversible actions require a named human approver. |
+| Rollback | A supported reversal of a run, subject to the particular action and its available window. |
+| Verification | Checking fresh evidence to establish whether the intended outcome occurred. |
+| API key scope | A permission granted to a credential. |
+| MCP tool | A server-provided operation an authorised assistant client can call. |
+| Step-up authentication | Additional, short-lived human verification required for protected operations such as secret reveal. |
+
+## Put the terms together
+
+**A connector collects facts about a client's subjects. A control selects a population, checks an expectation and returns a result supported by evidence. A supported remediation may address a failure; verification checks the outcome.**
+
+[Follow the evidence flow](/guides/evidence) or [walk through a control](/guides/control-conditions).

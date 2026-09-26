@@ -55,3 +55,19 @@ Local browser review covered the introduction at desktop and 390px mobile,
 the MCP catalogue and an API endpoint page. Mobile introduction document width
 matched the viewport (390px). Production search indexing, domain configuration
 and authenticated API/MCP requests require hosted acceptance.
+
+## Maintain predicate explanations
+
+Human-written labels, descriptions and interpretation notes live in
+`reference-data/predicates.json`. After an application vocabulary change, update
+that file and run:
+
+```sh
+python3 scripts/build-predicate-reference.py /path/to/ledgr
+```
+
+The generator refuses missing, duplicate or removed predicate names, derives
+set-valued markers from the application, and writes `guides/predicate-reference.mdx`.
+It does not infer meanings from identifiers. Review descriptions against the
+connector semantics and distinguish a registered name from a live producer.
+Keep conceptual guides, worked examples and diagrams aligned with the evaluator.

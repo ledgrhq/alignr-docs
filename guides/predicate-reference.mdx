@@ -1,0 +1,1030 @@
+---
+title: "Predicate reference"
+description: "Plain-English meanings and interpretation notes for every registered fact predicate."
+---
+
+Use this reference when choosing evidence for a control or reading a technical result. Start with [Understanding predicates](/guides/predicates) if these names are unfamiliar.
+
+## How to use this reference
+
+This catalogue covers **88 registered predicates** in the application vocabulary. Registration means a name is recognised; it does **not** promise that your connected sources supply it or that your deployment currently produces it. Check client-specific coverage and actual observations.
+
+Expand an entry to see its readable label, the exact technical identifier, its meaning and an interpretation limit. **Multiple values** means several values can legitimately coexist for a subject; it does not change a control operator into an automatic check of every member.
+
+Boolean values distinguish true, false and missing evidence. Counts, state strings, dates and relationships must be interpreted in their source context. These descriptions are not a replacement for inspecting the observed value.
+
+## Identity and access
+
+<AccordionGroup>
+
+<Accordion title="Directory role">
+
+`has_role`
+
+A role held by the subject, such as Global Administrator.
+
+**Interpretation:** One person can hold several roles. Match the exact observed role name.
+
+**Multiple values:** several values can legitimately coexist for one subject.
+
+</Accordion>
+
+<Accordion title="Account enabled">
+
+`account_enabled`
+
+Whether the directory reports the account enabled.
+
+**Interpretation:** Enabled does not prove the person can successfully sign in or that access is appropriate.
+
+</Accordion>
+
+<Accordion title="Last interactive sign-in">
+
+`last_sign_in`
+
+When the identity source reports the last interactive sign-in.
+
+**Interpretation:** A fresh collection can report an old sign-in. Do not substitute a different vendor authentication event.
+
+</Accordion>
+
+<Accordion title="Last non-interactive sign-in">
+
+`last_non_interactive_sign_in`
+
+When the source reports the last non-interactive sign-in.
+
+**Interpretation:** Background activity is different from a person actively signing in.
+
+</Accordion>
+
+<Accordion title="User type">
+
+`user_type`
+
+The type of directory user reported by the source.
+
+**Interpretation:** Use actual source values when distinguishing members and guests.
+
+</Accordion>
+
+<Accordion title="Directory synchronised">
+
+`directory_synced`
+
+Whether the account is reported as synchronised from another directory.
+
+**Interpretation:** This describes its directory origin, not the health of the whole synchronisation service.
+
+</Accordion>
+
+<Accordion title="MFA registered">
+
+`mfa_registered`
+
+Whether the user has registered multi-factor authentication.
+
+**Interpretation:** Registration does not establish enforcement on every sign-in.
+
+</Accordion>
+
+<Accordion title="Password reset registered">
+
+`sspr_registered`
+
+Whether self-service password reset registration is reported.
+
+**Interpretation:** Registration does not prove every recovery path is configured safely.
+
+</Accordion>
+
+<Accordion title="Group membership">
+
+`member_of`
+
+A group the subject belongs to.
+
+**Interpretation:** Membership can have several values. Review which group is actually relevant.
+
+**Multiple values:** several values can legitimately coexist for one subject.
+
+</Accordion>
+
+<Accordion title="Registered MFA method">
+
+`mfa_method`
+
+A second-factor method associated with the subject.
+
+**Interpretation:** Several methods can coexist; a strong method does not erase a weaker one.
+
+**Multiple values:** several values can legitimately coexist for one subject.
+
+</Accordion>
+
+<Accordion title="MFA bypass enabled">
+
+`mfa_bypass_enabled`
+
+Whether the MFA source reports bypass enabled for the user.
+
+**Interpretation:** A bypass setting is a separate observation from having registered a factor.
+
+</Accordion>
+
+</AccordionGroup>
+
+## Licensing
+
+<AccordionGroup>
+
+<Accordion title="Licence or entitlement">
+
+`has_licence`
+
+A licence associated with the subject.
+
+**Interpretation:** The subject may be a user or a company. Assignment and purchased entitlement are different contexts.
+
+**Multiple values:** several values can legitimately coexist for one subject.
+
+</Accordion>
+
+<Accordion title="Purchased seats">
+
+`licence_seats_purchased`
+
+The reported number of purchased or entitled seats for a product.
+
+**Interpretation:** Compare like-for-like products and subjects; it is not a count of active users.
+
+</Accordion>
+
+<Accordion title="Assigned seats">
+
+`licence_seats_assigned`
+
+The reported number of seats assigned for a product.
+
+**Interpretation:** Assigned seats do not prove active usage or contractual entitlement.
+
+</Accordion>
+
+<Accordion title="Next licence renewal">
+
+`licence_renewal_date`
+
+The reported next renewal date for a product commitment.
+
+**Interpretation:** A date, not an assurance that cancellation or quantity changes remain possible.
+
+</Accordion>
+
+</AccordionGroup>
+
+## Conditional Access
+
+<AccordionGroup>
+
+<Accordion title="Policy scope">
+
+`ca_policy_scope`
+
+The normalised scope reported for a Conditional Access policy.
+
+**Interpretation:** Inspect the policy context; a scope label is not proof that every relevant sign-in is protected.
+
+</Accordion>
+
+<Accordion title="Policy state">
+
+`ca_policy_state`
+
+Whether and how a Conditional Access policy is enabled, as reported by the source.
+
+**Interpretation:** Report-only and enforced behaviour differ. Compare actual state values.
+
+</Accordion>
+
+<Accordion title="Policy grant requirements">
+
+`ca_policy_grant_controls`
+
+The grant controls configured on a Conditional Access policy.
+
+**Interpretation:** A policy can contain several controls. Their presence alone does not prove effective coverage.
+
+**Multiple values:** several values can legitimately coexist for one subject.
+
+</Accordion>
+
+<Accordion title="Policy last changed">
+
+`ca_policy_modified_at`
+
+When the source reports the policy was modified.
+
+**Interpretation:** A timestamp establishes timing, not authorisation or the safety of the change.
+
+</Accordion>
+
+<Accordion title="Policy changed by">
+
+`ca_policy_last_modified_by`
+
+The reported actor associated with the policy modification.
+
+**Interpretation:** An actor identity is not itself approval evidence.
+
+</Accordion>
+
+<Accordion title="Policy scope reduced">
+
+`policy_scope_narrowed`
+
+An observation that the policy scope narrowed.
+
+**Interpretation:** Review the affected scope and approved change context before deciding whether the change is wrong.
+
+</Accordion>
+
+</AccordionGroup>
+
+## Mailboxes and directory domains
+
+<AccordionGroup>
+
+<Accordion title="Mailbox type">
+
+`mailbox_type`
+
+The type of mailbox reported by the source.
+
+**Interpretation:** Use it to distinguish mailbox kinds, not to infer security configuration.
+
+</Accordion>
+
+<Accordion title="Mailbox time zone">
+
+`mailbox_timezone`
+
+The time zone configured for the mailbox.
+
+**Interpretation:** This is a mailbox setting; Alignr evidence timestamps remain UTC.
+
+</Accordion>
+
+<Accordion title="Automatic reply setting">
+
+`mailbox_auto_reply`
+
+The automatic-reply setting reported for the mailbox.
+
+**Interpretation:** Interpret the source value; it does not prove a message was delivered.
+
+</Accordion>
+
+<Accordion title="Verified directory domain">
+
+`verified_domain`
+
+A domain verified in the source tenant.
+
+**Interpretation:** Domain ownership verification does not establish mail protection or DNS policy correctness.
+
+**Multiple values:** several values can legitimately coexist for one subject.
+
+</Accordion>
+
+<Accordion title="Default directory domain">
+
+`default_domain`
+
+The default domain reported by the directory.
+
+**Interpretation:** A default designation is different from the complete set of verified domains.
+
+</Accordion>
+
+<Accordion title="Domain authentication type">
+
+`domain_auth_type`
+
+The authentication type reported for the directory domain.
+
+**Interpretation:** Review its actual source value and policy context before drawing an access conclusion.
+
+</Accordion>
+
+</AccordionGroup>
+
+## Endpoint management and patching
+
+<AccordionGroup>
+
+<Accordion title="Device management">
+
+`device_managed_by`
+
+The reported management relationship for an endpoint.
+
+**Interpretation:** RMM management is different from MDM enrolment and EDR protection.
+
+</Accordion>
+
+<Accordion title="Last management check-in">
+
+`device_last_checkin`
+
+When the device last reported to the management source.
+
+**Interpretation:** Compare the event time with your reporting expectation, and check when it was collected.
+
+</Accordion>
+
+<Accordion title="Device online">
+
+`device_online`
+
+Whether the source reports the device online.
+
+**Interpretation:** Online does not imply patched, encrypted or free of threats.
+
+</Accordion>
+
+<Accordion title="Operating system">
+
+`os_platform`
+
+The reported operating-system platform.
+
+**Interpretation:** Match actual normalised values; a platform name alone does not prove a supported version.
+
+</Accordion>
+
+<Accordion title="Patch state">
+
+`patch_status`
+
+The patching state reported by the management source.
+
+**Interpretation:** State vocabularies and source coverage matter; do not assume every vendor means the same thing.
+
+</Accordion>
+
+<Accordion title="Pending patch count">
+
+`patches_pending`
+
+The source-reported number of pending patches.
+
+**Interpretation:** A zero count is meaningful within the reporting source’s scope, not proof of a complete vulnerability scan.
+
+</Accordion>
+
+<Accordion title="Antivirus product">
+
+`antivirus_product`
+
+The antivirus product reported on the endpoint.
+
+**Interpretation:** Product presence does not establish protection health or recent updates.
+
+</Accordion>
+
+<Accordion title="Management agent health">
+
+`agent_health`
+
+The reported health of the endpoint management agent.
+
+**Interpretation:** This is distinct from the health of an EDR agent.
+
+</Accordion>
+
+</AccordionGroup>
+
+## Endpoint detection and threats
+
+<AccordionGroup>
+
+<Accordion title="EDR installed">
+
+`edr_agent_installed`
+
+Whether the source reports endpoint detection and response agent installation.
+
+**Interpretation:** Check health and check-in evidence separately.
+
+</Accordion>
+
+<Accordion title="EDR health">
+
+`edr_agent_health`
+
+The EDR source’s reported agent-health state.
+
+**Interpretation:** Read the actual state and source; installed, healthy and recently seen are separate questions.
+
+</Accordion>
+
+<Accordion title="Last EDR check-in">
+
+`edr_last_checkin`
+
+When the EDR agent last reported activity.
+
+**Interpretation:** Use the event timestamp as well as evidence freshness.
+
+</Accordion>
+
+<Accordion title="EDR version">
+
+`edr_agent_version`
+
+The reported EDR agent version.
+
+**Interpretation:** A version string needs a supported-version expectation before it can establish alignment.
+
+</Accordion>
+
+<Accordion title="EDR policy group">
+
+`edr_policy_group`
+
+The policy group reported for the EDR agent.
+
+**Interpretation:** Group membership does not prove the effective policy settings are correct.
+
+</Accordion>
+
+<Accordion title="Reported threat">
+
+`threat_detected`
+
+An individual threat observation, such as its classification.
+
+**Interpretation:** Multiple threats can exist. Review the source record before interpreting severity or current status.
+
+**Multiple values:** several values can legitimately coexist for one subject.
+
+</Accordion>
+
+<Accordion title="Open threat count">
+
+`threat_open_count`
+
+The source’s per-device count of open threats.
+
+**Interpretation:** A vendor rollup can differ from counting individual fact rows; do not silently equate them.
+
+</Accordion>
+
+</AccordionGroup>
+
+## Vulnerabilities
+
+<AccordionGroup>
+
+<Accordion title="Reported vulnerability">
+
+`vulnerability_detected`
+
+An individual vulnerability observation associated with the subject.
+
+**Interpretation:** There may be several findings; check the identifier and source context.
+
+**Multiple values:** several values can legitimately coexist for one subject.
+
+</Accordion>
+
+<Accordion title="Highest vulnerability severity">
+
+`vulnerability_max_severity`
+
+The highest reported severity band for the subject.
+
+**Interpretation:** A severity band is not a count, and does not describe every finding.
+
+</Accordion>
+
+<Accordion title="Open vulnerability count">
+
+`vulnerability_open_count`
+
+The source-reported count of open vulnerabilities.
+
+**Interpretation:** Scanner scope and counting methods differ; avoid adding unlike rollups together.
+
+</Accordion>
+
+<Accordion title="Missing patch">
+
+`missing_patch`
+
+An individual patch reported missing from the subject.
+
+**Interpretation:** Several patches can be missing. This differs from the total pending-patch count.
+
+**Multiple values:** several values can legitimately coexist for one subject.
+
+</Accordion>
+
+</AccordionGroup>
+
+## Networks and firewalls
+
+<AccordionGroup>
+
+<Accordion title="Network device role">
+
+`network_device_role`
+
+A role the device performs, such as switching or wireless access.
+
+**Interpretation:** One appliance can have several roles.
+
+**Multiple values:** several values can legitimately coexist for one subject.
+
+</Accordion>
+
+<Accordion title="Hardware model">
+
+`network_device_model`
+
+The reported network-device model.
+
+**Interpretation:** Model identity does not establish firmware support or configuration safety.
+
+</Accordion>
+
+<Accordion title="Firmware version">
+
+`network_device_firmware`
+
+The reported network-device firmware version.
+
+**Interpretation:** Compare with the relevant expectation for that device and source.
+
+</Accordion>
+
+<Accordion title="Management address">
+
+`network_device_ip`
+
+The reported network-device IP address.
+
+**Interpretation:** An address is not evidence that the device is publicly reachable.
+
+</Accordion>
+
+<Accordion title="Upstream connection">
+
+`network_device_uplink`
+
+The reported upstream connection for a network device.
+
+**Interpretation:** Use it as topology evidence, not a complete network diagram.
+
+</Accordion>
+
+<Accordion title="Firmware update available">
+
+`firmware_update_available`
+
+Whether the source reports an available firmware update.
+
+**Interpretation:** Availability is distinct from approval, urgency and safe scheduling.
+
+</Accordion>
+
+<Accordion title="VPN tunnel membership">
+
+`vpn_tunnel`
+
+A reported VPN tunnel or topology relationship.
+
+**Interpretation:** Several tunnels can exist. Membership alone does not prove current tunnel health.
+
+**Multiple values:** several values can legitimately coexist for one subject.
+
+</Accordion>
+
+<Accordion title="Network segment type">
+
+`network_segment_type`
+
+The reported type of a network segment, such as a VLAN or routed network.
+
+**Interpretation:** The presence of a VLAN does not prove isolation between networks.
+
+</Accordion>
+
+<Accordion title="Firewall rule count">
+
+`firewall_policy_count`
+
+The reported number of firewall policies.
+
+**Interpretation:** A count cannot prove which traffic is allowed or whether the rulebase is safe.
+
+</Accordion>
+
+<Accordion title="Firewall rule fingerprint">
+
+`firewall_l3_rules_fingerprint`
+
+A versioned fingerprint of supported Layer 3 rule configuration.
+
+**Interpretation:** A changed fingerprint shows configuration identity changed; it does not establish approval or safety.
+
+</Accordion>
+
+</AccordionGroup>
+
+## Remote access
+
+<AccordionGroup>
+
+<Accordion title="Accessible resource">
+
+`remote_access_resource`
+
+A remote-access resource associated with a group.
+
+**Interpretation:** A group can reach several resources. Combine with relevant membership evidence when reviewing access.
+
+**Multiple values:** several values can legitimately coexist for one subject.
+
+</Accordion>
+
+<Accordion title="Resource destination">
+
+`remote_access_address`
+
+The address reported for a remote-access resource.
+
+**Interpretation:** A destination is distinct from the users and groups entitled to reach it.
+
+</Accordion>
+
+</AccordionGroup>
+
+## MDM and policy baselines
+
+<AccordionGroup>
+
+<Accordion title="MDM enrolment">
+
+`mdm_enrolled_by`
+
+The management product in which the device is enrolled.
+
+**Interpretation:** Co-management can produce several valid enrolments; enrolment alone is not compliance.
+
+**Multiple values:** several values can legitimately coexist for one subject.
+
+</Accordion>
+
+<Accordion title="MDM compliance state">
+
+`device_compliance_state`
+
+The device-compliance result reported by the MDM source.
+
+**Interpretation:** This reflects that source’s policy evaluation, not every Alignr control.
+
+</Accordion>
+
+<Accordion title="Device encryption">
+
+`device_encryption_enabled`
+
+Whether the management source reports encryption enabled.
+
+**Interpretation:** This does not prove recovery-key availability or successful recovery.
+
+</Accordion>
+
+<Accordion title="Baseline state">
+
+`policy_baseline_state`
+
+The reported state of a managed policy baseline.
+
+**Interpretation:** Normalised states include enforced, not_applied, drifted and error. Unknown source states must not be guessed.
+
+</Accordion>
+
+</AccordionGroup>
+
+## Mail protection and external DNS
+
+<AccordionGroup>
+
+<Accordion title="Mail protection provider">
+
+`mail_protected_by`
+
+A mail security gateway reported for the domain.
+
+**Interpretation:** Several providers can coexist during migration; provider presence is not proof of every protection.
+
+**Multiple values:** several values can legitimately coexist for one subject.
+
+</Accordion>
+
+<Accordion title="Mail protection feature">
+
+`mail_protection_feature`
+
+A reported protection feature for the mail domain.
+
+**Interpretation:** Several features can coexist. Check the feature and source rather than assuming full mail security.
+
+**Multiple values:** several values can legitimately coexist for one subject.
+
+</Accordion>
+
+<Accordion title="SPF record present">
+
+`external_spf_present`
+
+Whether the bounded DNS check observed an SPF record for the approved target.
+
+**Interpretation:** Presence is not a full SPF correctness or deliverability assessment.
+
+</Accordion>
+
+<Accordion title="DMARC enforcement policy">
+
+`external_dmarc_enforced`
+
+Whether the DNS check reports an enforcing DMARC policy for the approved target.
+
+**Interpretation:** A policy observation does not establish message alignment or delivery outcomes.
+
+</Accordion>
+
+<Accordion title="Mail routing records present">
+
+`external_mx_present`
+
+Whether MX records were observed for the approved domain.
+
+**Interpretation:** MX presence does not prove that a mailbox exists or mail will be accepted.
+
+</Accordion>
+
+<Accordion title="Name server count">
+
+`external_nameserver_count`
+
+The number of name servers reported by the DNS check.
+
+**Interpretation:** A count does not prove independent hosting or resilience.
+
+</Accordion>
+
+</AccordionGroup>
+
+## Configuration monitoring
+
+<AccordionGroup>
+
+<Accordion title="Monitored system">
+
+`monitored_system`
+
+A system reported by the configuration-monitoring source.
+
+**Interpretation:** Being listed does not establish successful or recent inspection.
+
+</Accordion>
+
+<Accordion title="Inspection state">
+
+`inspection_status`
+
+The reported state of a configuration inspection.
+
+**Interpretation:** Read the actual source state alongside the inspection time.
+
+</Accordion>
+
+<Accordion title="Last inspection">
+
+`inspection_last_run_at`
+
+When the source reports its last inspection run.
+
+**Interpretation:** A recent run timestamp is different from a successful result.
+
+</Accordion>
+
+</AccordionGroup>
+
+## Tickets, contracts and credential signals
+
+<AccordionGroup>
+
+<Accordion title="Leaver ticket">
+
+`leaver_ticket`
+
+A ticket associated with an offboarding process.
+
+**Interpretation:** A ticket’s existence does not establish that all access has been removed.
+
+</Accordion>
+
+<Accordion title="Leaver ticket state">
+
+`leaver_ticket_status`
+
+The reported state of an offboarding ticket.
+
+**Interpretation:** A closed ticket is workflow evidence, not proof that directory access is disabled.
+
+</Accordion>
+
+<Accordion title="Ticket closure time">
+
+`ticket_closed_at`
+
+When the source reports a ticket was closed.
+
+**Interpretation:** Use it for timing; verify the technical outcome separately.
+
+</Accordion>
+
+<Accordion title="Secret-in-ticket signal">
+
+`ticket_contains_secret`
+
+An observation that ticket content contains a secret.
+
+**Interpretation:** The signal is not an instruction to publish or retrieve the secret itself.
+
+</Accordion>
+
+<Accordion title="Secret reuse count">
+
+`secret_reuse_count`
+
+A reported count associated with reuse of a credential.
+
+**Interpretation:** Interpret within the producer’s scope. The count does not reveal the credential value.
+
+</Accordion>
+
+<Accordion title="Change ticket reference">
+
+`change_ticket_ref`
+
+A change-ticket reference associated with the subject.
+
+**Interpretation:** Several references may exist. A reference alone is not evidence of approval.
+
+**Multiple values:** several values can legitimately coexist for one subject.
+
+</Accordion>
+
+<Accordion title="Ticket state">
+
+`ticket_status`
+
+The status reported for a general ticket.
+
+**Interpretation:** Use the actual workflow state; similarly named statuses can have different meanings across sources.
+
+</Accordion>
+
+<Accordion title="Contract type">
+
+`contract_type`
+
+The contract classification reported by the PSA source.
+
+**Interpretation:** A type label does not establish the full terms or technical requirements.
+
+</Accordion>
+
+</AccordionGroup>
+
+## Backup
+
+<AccordionGroup>
+
+<Accordion title="Backup protection provider">
+
+`backup_protected_by`
+
+A product reporting backup protection for the subject.
+
+**Interpretation:** Product presence does not prove a successful backup or a tested restore.
+
+**Multiple values:** several values can legitimately coexist for one subject.
+
+</Accordion>
+
+<Accordion title="Last successful backup">
+
+`backup_last_successful_at`
+
+When the source reports the last successful backup.
+
+**Interpretation:** Review the relevant job/workload and required recovery-point expectation.
+
+</Accordion>
+
+<Accordion title="Backup job state">
+
+`backup_job_state`
+
+The source-reported result or state of a backup job.
+
+**Interpretation:** Review the exact normalised state and timing, not the label alone.
+
+</Accordion>
+
+<Accordion title="Protected workload">
+
+`backup_protected_workload`
+
+A workload associated with a backup job.
+
+**Interpretation:** A job can protect several workloads; membership is distinct from successful recovery.
+
+**Multiple values:** several values can legitimately coexist for one subject.
+
+</Accordion>
+
+</AccordionGroup>
+
+## Derived records and certificates
+
+<AccordionGroup>
+
+<Accordion title="Document asset reference">
+
+`document_references_asset`
+
+An asset referenced by a retained evidence document.
+
+**Interpretation:** This describes an evidence relationship; it does not make documentation a separate product library.
+
+**Multiple values:** several values can legitimately coexist for one subject.
+
+</Accordion>
+
+<Accordion title="Referenced asset last seen">
+
+`referenced_asset_last_seen`
+
+When a referenced asset was last observed.
+
+**Interpretation:** Check its producer and observation time before interpreting it as current inventory.
+
+</Accordion>
+
+<Accordion title="Referenced asset retired">
+
+`referenced_asset_decommissioned`
+
+An observation that a referenced asset is decommissioned.
+
+**Interpretation:** A missing observation does not prove that the asset is still active.
+
+</Accordion>
+
+<Accordion title="Certificate expiry">
+
+`certificate_expires_on`
+
+The expiry date or time reported for a certificate.
+
+**Interpretation:** Expiry evidence needs its producer and target context; not every integration collects certificates.
+
+</Accordion>
+
+<Accordion title="Certificate issuer">
+
+`certificate_issuer`
+
+The issuer reported for a certificate.
+
+**Interpretation:** The issuer name alone does not prove trust, validity or correct deployment.
+
+</Accordion>
+
+</AccordionGroup>
+
+## Choosing the right observation
+
+Write the question you need to answer, identify its subject, then choose the predicate that directly addresses it. Confirm your source supplies that predicate and inspect an actual value before choosing an operator.
+
+For example, “is a backup product present?”, “did a backup succeed recently?” and “can we restore this system?” are three different questions. The first two have separate observations; neither replaces a restore test.
+
+[Build a control condition](/guides/control-conditions) or [troubleshoot missing evidence](/guides/troubleshooting).

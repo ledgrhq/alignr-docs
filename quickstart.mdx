@@ -34,3 +34,19 @@ Sign in to [Alignr](https://app.alignr.io) with a workspace account. You need pe
 You can identify the client, the standard being assessed, and the evidence behind each result. An incomplete assessment is useful when it makes its gaps visible.
 
 [Understand control statuses](/guides/control-status).
+
+## A worked first assessment
+
+Use a built-in identity standard as an example, after reviewing its controls and connecting a source that supplies the necessary observations.
+
+1. Confirm the source's directory maps to the intended client.
+2. Inspect an observed administrator's `has_role` fact and its source.
+3. Inspect the same subject's `mfa_registered` observation.
+4. Review the administrator MFA control and its selected population.
+5. Read the result: an observed `false` can prove failure; a missing observation cannot prove a pass.
+
+This checks registration, not every aspect of MFA enforcement. The [control walkthrough](/guides/control-conditions) explains the definition and the difference between passing, failing and unknown subjects.
+
+## Learn the language as you go
+
+You do not need to memorise technical names. A **predicate** names what is observed; a **fact** records a value for a subject; a **control** compares evidence with an expectation. Keep the [glossary](/guides/glossary) and [predicate reference](/guides/predicate-reference) available when reviewing unfamiliar results.

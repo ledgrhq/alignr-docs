@@ -1,22 +1,59 @@
 ---
 title: "Standards and controls"
-description: "Define expectations and apply them to your clients."
+description: "Turn your technical expectations into assessments that can be explained."
 ---
 
-## Standards
+A **standard** groups expectations you want clients to meet. A **control** checks one expectation. For example, an identity standard might include a control requiring observed Global Administrators to have MFA registered.
 
-A standard groups controls describing the technical posture you expect. Review the controls and their parameters before enabling or applying the standard.
+## Separate the question from the evidence
 
-## Controls
+Before creating a control, write the expectation in plain English and identify the observations needed to answer it.
 
-A control evaluates evidence against an expectation. Automated checks depend on the facts a connector supplies; manual checks let your team assess conditions that need human confirmation.
+| Expectation | Relevant evidence | What else needs a separate check? |
+| --- | --- | --- |
+| Administrators have MFA registered. | Role membership and MFA registration. | Effective sign-in enforcement and acceptable methods. |
+| Managed devices report within an agreed period. | Management relationship and last check-in. | Patching, encryption and EDR health. |
+| A recent backup succeeded. | Relevant backup job/workload and last success. | Successful restoration of the required data. |
 
-## Client overrides
+The [predicate reference](/guides/predicate-reference) helps you choose the right observation rather than a nearby concept.
 
-Use a client-specific override when a client’s agreed requirement differs from the global standard. Review the effective parameters for that client rather than assuming the global values still apply.
+## Global expectations and client settings
 
-## Review results
+```mermaid
+flowchart TD
+    S["Standard defaults"] --> E["Effective expectation for this client"]
+    O["Client overrides"] --> E
+    F["Client evidence"] --> R["Control evaluation"]
+    E --> R
+    R --> V["Result and explanation"]
+```
 
-Check the result, supporting evidence and evaluation time together. A connector’s presence alone does not establish coverage, and missing evidence cannot establish a pass.
+The effective expectation combines the standard's settings with the client's overrides. A result must be explained using that effective setting, not a default that no longer applies.
 
-[Read the status guide](/guides/control-status) before treating results as a complete assessment.
+For example, one client may have an agreed reporting threshold that differs from the default. Review the override's reason and the effective threshold when interpreting a result. A disabled control is not proof that the underlying environment meets the expectation.
+
+## Apply a standard deliberately
+
+<Steps>
+  <Step title="Choose the client outcome">Identify the technical expectations you want to assess and who owns the follow-up.</Step>
+  <Step title="Review the controls">Read each population, required fact, comparison and default parameter. Use the built-in standard as a starting point, not evidence of client compliance.</Step>
+  <Step title="Check coverage">Confirm which observations connected and mapped sources can supply for this client. Plan suitable manual checks for expectations that need human assessment.</Step>
+  <Step title="Review exceptions">Check client-specific parameters and enabled states. An exception should be deliberate and explainable.</Step>
+  <Step title="Evaluate and inspect">Read the results, evidence and evaluation time. Investigate both failures and gaps.</Step>
+</Steps>
+
+## Automated and manual checks
+
+An automated control compares observations. A manual check records a human assessment where the question needs judgement or evidence not available through the supported source.
+
+For example, an observed successful backup is useful, but a restore exercise answers a different question. Keep the manual evidence, conclusion and follow-up clear. Do not disguise unavailable automation as a pass.
+
+## Changing a standard
+
+Changing a threshold changes the question being asked. Review affected clients and overrides, then evaluate again. Historical evaluations describe the settings/version used at the time; a later edit does not make an earlier result evidence for the new expectation.
+
+## Read next
+
+- [How control conditions work](/guides/control-conditions): population, operators and worked examples.
+- [Understanding control results](/guides/control-status): pass, fail, missing evidence and exemptions.
+- [Troubleshoot an assessment](/guides/troubleshooting): work backwards from an unexpected result.
