@@ -69,6 +69,24 @@ Some sources deliberately withhold a field when they cannot supply it reliably. 
 
 After renewing credentials or fixing access, check that collection actually resumes, that the client mapping remains correct and that the relevant evidence has a new observation time. Then inspect a fresh evaluation. A successful credential save alone is not proof that assessments have recovered.
 
+## Microsoft partner access and staff invitations
+
+In workspace setup, prepare a dedicated account in your MSP’s own Microsoft partner tenant and keep MFA enabled. Use Microsoft’s authorisation screen; do not enter the account’s password into an Alignr form. Choose **Partner Center** as your workspace default and select the partner connection.
+
+The partner authorisation also requests delegated Graph `User.Read` and `User.Read.All` for the optional staff-directory preview. An existing connection may need to be authorised again to grant these permissions. Customer GDAP access does not substitute for consent to read your MSP’s own directory.
+
+Alignr prepares key protection for each MSP workspace automatically. You can create an account and work on other setup steps while it is pending, but new connection credentials and Microsoft authorisation wait until that protection is verified. If the connection step says setup needs attention, a workspace administrator can select **Retry setup** there.
+
+After connecting and selecting the partner connection as the workspace Microsoft default, open **Invite your teammates** and choose **Preview my directory**. Review each selected person’s email and Alignr role before submitting the invitation. Existing workspace users, guests and disabled accounts cannot be invited through this preview. A preview may be limited; it explicitly reports when it does not contain the whole directory.
+
+The preview reads your partner tenant only; it does not read customer directories or create Alignr users. An administrator needs both `integration.manage` and `user.manage` to run it. For an API client, call `POST /api/v1/integrations/{integration_id}/microsoft-directory-users` with an authenticated user who has both permissions. The response contains `tenantId`, `truncated`, and `users`; each user includes an identifier, display name, email when available, user principal name, account status, user type, `eligibleForInvite`, and `alreadyInWorkspace`. A preview stops after a bounded number of users, so use the `truncated` flag before treating it as a complete directory list. Invitations still require separate review and submission in Alignr.
+
+Staff invitations use your MSP’s own tenant. Customer organisations are imported through the separate client import and matching workflow. Importing staff does not enable Microsoft single sign-on or copy Microsoft administrator roles into Alignr.
+
+For invitation delivery and access checks after selecting a person, follow [Your account and team](/guides/account-and-team).
+
+After returning from Microsoft authorisation, use **Return to setup** to continue the wizard.
+
 ## Continue
 
 [Map the source to your clients](/guides/organizations), then [choose a standard](/guides/standards).

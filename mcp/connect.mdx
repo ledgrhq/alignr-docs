@@ -5,7 +5,7 @@ description: "Configure a remote client with a scoped Alignr API key."
 
 ## Before you begin
 
-You need a client supporting remote Streamable HTTP servers and an [Alignr API key](/guides/api-keys). Start with the `organization:read` scope to test a read-only tool. Obtain an Organization ID by [listing Organizations through the REST API](/api-reference/introduction). An Organization represents one of your MSP’s clients.
+You need a client supporting remote Streamable HTTP servers and an [Alignr API key](/guides/api-keys). In the app, open **MCP → + Generate token** and create a user key with the `organization:read` scope to test a read-only tool. Copy it when shown; Alignr does not display its value again. Obtain an Organization ID by [listing Organizations through the REST API](/api-reference/introduction). An Organization represents one of your MSP’s clients.
 
 ## 1. Add the server
 
@@ -64,6 +64,38 @@ A useful answer identifies the client, the expectation, the actual observation a
 | Can I add an agreed note to a finding? | `create_detection_note` — requires write access. |
 
 Tool availability and permission checks remain server-side. A client's ability to discover a tool is not permission to execute it.
+
+## Codex
+
+Set `ALIGNR_MCP_TOKEN` through your local secret-management environment, then add this entry to `~/.codex/config.toml`:
+
+```toml
+[mcp_servers.alignr]
+url = "https://api.alignr.io/mcp/"
+bearer_token_env_var = "ALIGNR_MCP_TOKEN"
+```
+
+Codex reads the token from that environment variable and sends it as a bearer token. See the [Codex MCP configuration reference](https://learn.chatgpt.com/docs/extend/mcp?surface=cli) for current client settings.
+
+## Claude Code
+
+Set `ALIGNR_MCP_TOKEN` in Claude Code's environment and add this entry to a project `.mcp.json` or your user-level Claude Code MCP configuration:
+
+```json
+{
+  "mcpServers": {
+    "alignr": {
+      "type": "http",
+      "url": "https://api.alignr.io/mcp/",
+      "headers": { "Authorization": "Bearer ${ALIGNR_MCP_TOKEN}" }
+    }
+  }
+}
+```
+
+Claude Code expands the variable in HTTP headers. See the [Claude Code MCP configuration guide](https://code.claude.com/docs/en/mcp) for configuration scopes and current client settings.
+
+These examples use user-owned bearer keys. They do not imply support for clients that require an OAuth authorisation flow. Alignr rechecks the key and its owner’s current permissions on each request, including requests made through an already connected client.
 
 ## Troubleshoot
 

@@ -8,6 +8,8 @@ Source inspection reconciled all 46 staff route declarations (including index/fa
 
 Concurrent quickstart, integrations and MCP connection drafts were excluded from the published baseline and preserved. App code was unchanged during the inspected target; concurrent infrastructure/delivery work is outside this audit. New docs must still verify exact permissions, edge cases and live provider instructions before publication.
 
+The subsequent signup and developer-entry update reviews those three drafts against application `b844f92` and adds the token navigation correction. It covers the welcome message's setup link, automatic connection-key preparation, own-directory staff preview and manual invitation, and bearer-key MCP client setup. The dated baseline audit above remains historical; these source-backed additions do not certify production email delivery, Microsoft consent, or a live MCP session.
+
 ## Evidence
 
 - [Daily operations audit](Review%20Evidence/Daily%20Operations%20Audit.md): Overview, Issues, approvals, fixes, Ask, search, Activity and audit.

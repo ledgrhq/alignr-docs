@@ -3,11 +3,24 @@ title: "Quickstart"
 description: "Connect a source and work towards your first client assessment."
 ---
 
-## Start with the setup wizard
+## Start with workspace setup
 
-Open **Settings → Setup checklist** to return to the in-app wizard. Follow [Use the setup wizard](/guides/setup-wizard) for its connection, teammate and standards steps. Completing the wizard does not mean client checks have passed.
+Creating an account opens the setup wizard. You can skip any step and return from **Settings → Setup checklist**. The help icon opens this documentation.
 
-For ongoing administration, see [workspace settings](/guides/settings) and [Workspace health](/guides/workspace-health).
+You are signed in as soon as account creation succeeds. Alignr also queues a welcome email with a **Set up your workspace** link to [the setup wizard](https://app.alignr.io/setup). You do not need to verify your email before starting. If the email has not arrived, open the wizard directly after signing in.
+
+1. **Microsoft partner access:** prepare a dedicated account in your MSP’s Microsoft tenant, keep MFA enabled, and authorise the partner connection. Customer consent and GDAP relationships remain separate requirements.
+2. **Connect your PSA:** choose Datto Autotask or HaloPSA. Datto RMM is also available for device evidence; it is a separate product, not a PSA.
+3. **Invite teammates:** invite people manually, or preview your MSP’s own Microsoft directory and review each invitation and Alignr role. Previewing a directory does not create users or send invitations. Customer users and guests are not imported as MSP teammates.
+4. **Set up standards:** build a guided baseline or import an existing checklist, then review it before enabling checks.
+
+Alignr prepares secure connection storage automatically. If preparation is still running, continue with another step; the connection form becomes available when protection has been verified. You never need to provision an AWS key yourself.
+
+If setup needs attention, a workspace administrator can use **Retry setup** on the connection step or contact [Alignr support](mailto:support@alignr.io). Your account and the other setup steps remain available.
+
+Completing or skipping wizard steps does not mean your clients have passed their checks. Use **Review setup readiness** to inspect actual connection health and assessment coverage.
+
+For a walkthrough of each setup step, follow [Use the setup wizard](/guides/setup-wizard). For ongoing administration, see [workspace settings](/guides/settings) and [Workspace health](/guides/workspace-health).
 
 ## Before you begin
 

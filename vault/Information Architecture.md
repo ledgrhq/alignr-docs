@@ -41,6 +41,8 @@ Keep client-directory import separate from evidence collection, and collection s
 
 The wizard is the first configuration path. Readiness checks actual coverage, and Workspace health monitors collection, assessment freshness and follow-up. Keep these distinct from passing controls. Manage your workspace contains a Settings directory, accounts/team access and health. Client Microsoft connections belong beside client mapping, explaining workspace defaults, per-client overrides and direct access for clients outside Partner Center. Link detailed guides instead of making Quickstart a second reference catalogue.
 
+The signup path leads to the wizard immediately and the welcome message links back to it; neither email delivery nor wizard navigation proves a working connection. Explain automatic connection-key preparation and its retry state in setup and integration guidance. The main app navigation exposes **MCP** as the token entry point; the MCP tab in these docs explains client configuration and the bounded available tools.
+
 ## Continuing after the first result
 
 Daily review → triage → supported remediation or client review → risk/roadmap → fixed report or authorised portal sharing. Vendor setup is grouped by category with per-product accordions; UniFi and SonicWall have dedicated mode guides. Keep API recipes in the developer tab and link them from task guidance.
