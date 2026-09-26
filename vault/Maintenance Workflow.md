@@ -63,3 +63,5 @@ The application repository has its own Public Documentation Maintenance guide. K
 ## Operational workflow coverage
 
 Changes to review queues, reports, portal permissions, risk decisions, roadmap delivery, Ask drafts, recovery or domain lifecycle must update their task guides and Documentation Coverage. Connector changes require checking the catalogue, category credentials/mapping/observations, dedicated mode guides and maintenance consequences. Recheck provider contracts separately from local implementation: Pax8 delegated OAuth, Huntress credential compatibility and ConnectSecure pod discovery remain explicit follow-ups. Never convert implementation presence into a production acceptance claim.
+
+Assistant capability changes must update guides/ask-alignr.mdx: verify the actual read/draft tool set, permissions, context precedence, creation defaults, global versus client scope and apply recovery. Keep in-app Ask, documentation search/AI and external MCP clients distinct.

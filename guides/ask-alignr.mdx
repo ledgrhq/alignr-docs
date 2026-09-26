@@ -1,9 +1,35 @@
 ---
-title: "Use Ask Alignr"
-description: "Ask about evidence and review proposed changes without losing the client context."
+title: "Use the AI assistant"
+description: "Use Ask Alignr to understand results, investigate coverage and draft standards or client-specific changes."
 ---
 
+**Ask Alignr** is Alignr’s built-in AI assistant. Use it to understand what your collected evidence says and to prepare configuration changes you can review before saving.
+
 Select **Ask Alignr** in the app header to open the assistant beside your current page. Your role needs `ask.use`. This is the in-app assistant; connecting an external assistant uses the separate [MCP setup](/mcp/connect).
+
+## What you can do
+
+| Your task | Try asking | What to review |
+| --- | --- | --- |
+| Prepare for your daily review | “Which client failures need attention first? Separate failures from missing evidence.” | Client scope, severity, coverage and cited results. |
+| Understand one result | “Explain the administrator MFA result for Acme. Which observations support it?” | The relevant accounts, values and observation times. |
+| Investigate coverage | “Which controls lack evidence for this client, and which required observations are missing?” | Whether the source can supply the observation, then its mapping and collection history. |
+| Compare a standard across clients | “Which clients fail this standard, and which have no current result?” | Each client’s status; an absent result is not a pass. |
+| Understand a definition | “Explain this control’s population, expectation and parameters in plain English.” | The saved definition and any effective client overrides. |
+| Prepare a new standard | “Draft an inactive security baseline using supported observations, with manual checks where evidence is unavailable.” | Every proposed control and manual instruction before saving. |
+| Tune one client | “Draft a backup-window override for Acme only. Keep the global default unchanged.” | The named client, parameter, Before and After values. |
+
+These are example prompts, not guaranteed answers or automatic actions. The assistant uses the records available to your role. Name the client, standard or control when there could be ambiguity.
+
+## Send your first question
+
+1. Open the client or standard you want to work on, then select **Ask Alignr**.
+2. Check the scope chips before asking. For a workspace-wide question, check that the panel says **All clients**.
+3. Choose a suggested question or type your own. Press **Enter** or select **Send message**; **Shift+Enter** adds a new line.
+4. Read the answer and inspect its citations. Follow up with a narrower question, such as “Which observation is missing?” or “What does this result not establish?”
+5. Use the relevant app workflow to collect evidence, run checks or review a proposed change.
+
+A useful prompt gives **scope + question + desired output**: “For Acme, explain the failed backup check, list the supporting observations and separate confirmed findings from missing evidence.”
 
 ## Check the scope first
 
@@ -27,9 +53,30 @@ In the fictional Acme journey, an MFA registration observation cannot establish 
 
 Use [control results](/guides/control-status) to interpret statuses, and [troubleshooting](/guides/troubleshooting) when the evidence path needs investigation.
 
+## Changes the assistant can draft
+
+- **New standards:** create an inactive global standard containing automated controls and/or manual checks.
+- **Existing standards:** change the name, description or enabled state. These are global changes, even when you started from a client page.
+- **Controls:** add an inactive control to an editable standard, or propose edits to its definition, parameters, severity, category and enabled state.
+- **Client overrides:** adjust declared parameters or evidence-source choices for one client, exclude a control with a reason, re-enable it, or restore inherited settings.
+
+New automated controls are inactive and use **suggest only** autonomy. Review and enable them separately before running checks. The assistant cannot raise a control’s autonomy ceiling. Copy a system standard before changing its content or controls.
+
+Restoring inheritance removes that client’s overrides and exclusions for the control. Ask to see the effective setting before applying. An exclusion and a parameter change need separate drafts.
+
+## Example: adjust a backup window for one client
+
+For fictional Acme, open the client and ask:
+
+> Find the backup recency control and show its current effective window. If it has a configurable days parameter, draft a change to two days for Acme only. Do not change the global standard.
+
+First establish that the parameter exists and that two days is permitted. In the draft, confirm **Acme** is the scope and check the old and proposed values. If the card changes a global default, dismiss it and clarify the request. After saving, run the affected checks and compare the new result with the collected evidence.
+
+The two-day value is illustrative, not a recommended backup policy. A more permissive window can change a result without making backups more recent.
+
 ## Review a proposed configuration change
 
-With `detection_rule.write` as well as `ask.use`, you can describe a change to standards or client control settings. For example:
+With `ask.use`, `detection_rule.read` and `detection_rule.write` (plus `organization.read` for client-specific changes), you can describe a change to standards or client control settings. For example:
 
 > Draft a change to this client's backup window. Show me the current and proposed setting before applying it.
 
@@ -52,9 +99,19 @@ This is a request for a reviewable proposal; supported changes appear as a **Con
 
 A configuration draft is different from a remediation plan that acts on a client system. Follow the [remediation workflow](/guides/remediation) for supported operational changes and their approvals.
 
+## What an answer does not do
+
+An answer does not collect fresh vendor data, complete a manual review or run an assessment merely because you asked about it. Use [integration collection](/guides/maintain-integrations), [client reviews](/guides/client-reviews) and [Run checks](/guides/standards) for those steps. Configuration drafts change Alignr’s expectations; supported changes to client systems follow the separate remediation workflow.
+
+Citations let you inspect the basis of an answer. Check that they support the claim and refer to the intended client and time. If evidence is missing or the assistant cannot substantiate an answer, investigate the source rather than treating the response as confirmation of health.
+
+The **Ask a question** assistant on this documentation site answers documentation questions. **Ask Alignr** in the app works with your workspace context. External AI clients connect through MCP and have their own available tools and credentials.
+
 ## If a draft cannot be applied
 
 A stale draft, changed permissions or an interrupted response can prevent a confirmed outcome. Read the error, inspect the current configuration, then ask for a **fresh draft** before applying again. Do not assume a failed response means nothing was saved.
+
+If the panel is missing, ask your workspace administrator to check `ask.use`. If an answer reports denied access, the underlying records may require additional read permissions. If a request fails, read its error and retry once access or service availability has been restored.
 
 If the button is unavailable, check your current editing permissions. A useful read-only answer does not imply authority to change the standard.
 
