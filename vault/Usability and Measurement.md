@@ -13,7 +13,7 @@ This was an agent-led walkthrough, not a study with independent humans. No conve
 | Task | Observation | Change / next verification |
 | --- | --- | --- |
 | Find setup for a non-GDAP client | Live search `non gdap` returned the partner-delegated entry first and the client connection guide second. | Added explicit Direct (non-GDAP) wording to the existing client guide; preserve its anchor. Recheck indexing after publication. |
-| Find teammate invitations | Live search `invite teammates` returned general journeys/setup before the account/team page, which was absent from the six shown results. | Renamed the page to Manage your account and invite teammates. Recheck ranking after indexing; wording cannot guarantee rank. |
+| Find teammate invitations | Live search `invite teammates` returned general journeys/setup before the account/team page, which was absent from the six shown results. | Renamed the page to Manage your account and invite teammates. After release 5502799, the same live query returned it first. This is one query observation, not a general search-quality or conversion claim. |
 | Find report preparation in the app | Client More menu exposes Review reports; report screen has name + Prepare review. | Added real screen and textual callouts to visual tour. No report created. |
 | Recognise incomplete setup | Demo has no shared Microsoft app, unverified evidence and never-run controls. | Captions explain these states; no simulated passing assessment. |
 | Run a write recipe with an API key | Endpoint depends on human JWT rather than API-key dependency. | New recipe explicitly requires human access, defaults to dry run and makes one POST only. |
