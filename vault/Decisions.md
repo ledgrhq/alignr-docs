@@ -49,3 +49,12 @@ Use fictional Acme consistently in the first-assessment journey. Provide checkpo
 Require agents to read the docs vault before editing, update affected notes alongside public pages, and record decisions and validation. Exclude the vault from publishing and check its index and publication boundary in CI.
 
 **Reason:** design intent and lessons must survive individual editing sessions. The requirement is a working practice backed by structural checks, not a claim of autonomous background synchronisation.
+
+
+## DOC-007 — Match application typography
+
+**Status:** Accepted. **Recorded:** 2026-09-26. **Basis:** explicit owner request to align application and documentation font weight, with either surface allowed to change.
+
+Supersedes only DOC-002's Inter font choice. Use the application's Geist family for documentation body and headings, body weight 400 and heading weight 500. Retain Almond, restrained monochrome presentation, native Mintlify components and exact Alignr logo/wordmark styling. This records the owner-approved implementation already present in `docs.json` and Information architecture; it does not change the historical DOC-002 record.
+
+**Reason:** consistent reading and heading weight across the app and its help site. The logo wordmark remains its established brand asset and does not inherit body typography.
