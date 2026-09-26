@@ -35,7 +35,7 @@ Viewing requires `approval.read`; deciding requires `remediation.approve`. The p
 2. Select **Approve**, then **Approve & run** to queue the proposed fix under your name as approver. Approval cannot be withdrawn from this screen once submitted.
 3. Alternatively, select **Decline**. Add the optional note to explain the decision to the requester. Declining closes the pending run as failed without executing it. An authorised requester may decline their own request.
 
-**Approved — run enqueued** confirms queueing for that request, not successful execution. If refreshed review details show a changed plan or target, the confirmation closes and you must review it again. The server checks the target again when the approval is submitted. Follow the run in Fix history. If approval fails because the plan, target or limits changed, review the current state before requesting a fresh action.
+**Approved — run enqueued** confirms queueing for that request, not successful execution. If refreshed review details show a changed plan or target, the confirmation closes and you must review it again. The server checks the plan fingerprint and target before execution; an approved, queued run may still refuse to act if they changed. Follow the run in Fix history. If approval or execution fails because the plan, target or limits changed, review the current state before requesting a fresh action.
 
 ## Read fix history
 
