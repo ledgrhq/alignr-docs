@@ -13,10 +13,13 @@ Scopes specify what a key may do. REST and MCP use different names:
 | --- | --- | --- |
 | REST API | `organization.read` | Read Organizations through the API. |
 | MCP client | `organization:read` | Call the `get_organization` tool. |
+| MCP client | `organization:write` | Call `create_organization` or `update_organization` with a user-owned key. |
 
 Choose the exact scopes listed for your endpoint or [MCP tool](/mcp/tools).
 
 A scope is necessary but does not make every REST route accept a key. A **user key** with `organization.write` can [create, update and archive clients](/api-reference/manage-clients-recipe) while its owner retains that permission. Service keys cannot perform these client writes. Other REST writes may still require a signed-in human session, even if a similarly named write scope appears. Check [authentication](/api-reference/authentication) before automating a write.
+
+For MCP client creation and updates, use the separate `organization:write` scope on a **user key**. The owner must retain `organization.write` permission. Service keys are refused for those tools. See [Manage clients with MCP](/mcp/manage-clients).
 
 The form offers **Select all** and **Clear** for bulk selection. **Select all** adds every currently offered scope that you are allowed to issue, including scopes hidden by a text filter; it does not mean “select only these search results”. Review the complete selection before creating the key, or choose individual scopes for a narrower client. Scopes you cannot issue and historical scopes that the form no longer offers are excluded.
 

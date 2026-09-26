@@ -5,7 +5,7 @@ description: "Configure a remote client with a scoped Alignr API key."
 
 ## Before you begin
 
-You need a client supporting remote Streamable HTTP servers and an [Alignr API key](/guides/api-keys). In the app, open **MCP → + Generate token** and create a user key with the `organization:read` scope to test a read-only tool. Copy it when shown; Alignr does not display its value again. Obtain an Organization ID by [listing Organizations through the REST API](/api-reference/introduction). An Organization represents one of your MSP’s clients.
+You need a client supporting remote Streamable HTTP servers and an [Alignr API key](/guides/api-keys). In the app, open **MCP → + Generate token** and create a user key with the `organization:read` scope to test a read-only tool. Copy it when shown; Alignr does not display its value again. You can call `list_organizations` to find a client ID. An Organization represents one of your MSP’s clients.
 
 ## 1. Add the server
 
@@ -56,6 +56,7 @@ A useful answer identifies the client, the expectation, the actual observation a
 | Question | Tool to inspect |
 | --- | --- |
 | Which client is this ID? | `get_organization` |
+| Which clients do I manage? | `list_organizations` |
 | What is this client's control posture? | `get_organization_compliance` |
 | Why does one control have this result? | `explain_control_status` |
 | Which clients have a particular control status? | `list_organizations_by_control_status` |
@@ -64,6 +65,8 @@ A useful answer identifies the client, the expectation, the actual observation a
 | Can I add an agreed note to a finding? | `create_detection_note` — requires write access. |
 
 Tool availability and permission checks remain server-side. A client's ability to discover a tool is not permission to execute it.
+
+For client creation and updates, follow [Manage clients with MCP](/mcp/manage-clients) and issue a separate user-owned key with the required write scope.
 
 ## Codex
 

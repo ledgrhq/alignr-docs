@@ -16,7 +16,10 @@ The catalogue includes retained server tools. The current token-creation form do
 | Task | Tool | Required scope |
 | --- | --- | --- |
 | [Get an Organization](#get-an-organization) | `get_organization` | `organization:read` |
+| [List clients](#list-clients) | `list_organizations` | `organization:read` |
 | [Get an asset](#get-an-asset) | `get_asset` | `asset:read` |
+| [Create a client](#create-a-client) | `create_organization` | `organization:write` |
+| [Update a client](#update-a-client) | `update_organization` | `organization:write` |
 | [Read client control results](#read-client-control-results) | `get_organization_compliance` | `compliance:read` |
 | [Explain a control result](#explain-a-control-result) | `explain_control_status` | `compliance:explain` |
 | [Find clients by control status](#find-clients-by-control-status) | `list_organizations_by_control_status` | `compliance:rollup` |
@@ -44,6 +47,26 @@ Fetch summary details for one organization (MSP client).
 
 - **`organization_id`:** Organization UUID.
 
+### List clients
+
+`list_organizations`
+
+List a bounded page of clients in the calling MSP workspace.
+
+**Required scope:** `organization:read`
+
+**User permissions:** `organization.read`.
+
+| Argument | Required | Default |
+| --- | --- | --- |
+| `limit` | No | `20` |
+| `offset` | No | `0` |
+| `q` | No | `null` |
+
+- **`limit`:** Clients per page, from 1 to 100 (default 20).
+- **`offset`:** Zero-based offset for the next bounded client page.
+- **`q`:** Optional name or slug search, up to 200 characters.
+
 ### Get an asset
 
 `get_asset`
@@ -59,6 +82,58 @@ Fetch one asset's non-vaulted field values by ID.
 | `asset_id` | Yes | — |
 
 - **`asset_id`:** UUID of the asset to retrieve.
+
+## Client actions
+
+### Create a client
+
+`create_organization`
+
+Create one client with a user-owned key; look up an uncertain write before retry.
+
+**Required scope:** `organization:write`
+
+**User permissions:** `organization.write`.
+
+| Argument | Required | Default |
+| --- | --- | --- |
+| `name` | Yes | — |
+| `slug` | Yes | — |
+| `seats` | No | `0` |
+| `psa_ref` | No | `null` |
+
+- **`name`:** Client display name, 1–200 characters.
+- **`slug`:** Unique client slug, 1–200 characters. Record it before creation so an uncertain result can be looked up.
+- **`seats`:** Non-negative integer seat count (up to 2,147,483,647).
+- **`psa_ref`:** Optional PSA client reference, up to 200 characters.
+
+<Warning>This creates a client. There is no idempotency key or automatic retry; if the result is uncertain, look up the recorded slug before trying again. A user-owned key and its owner’s current `organization.write` permission are required. Service keys cannot perform this write.</Warning>
+
+### Update a client
+
+`update_organization`
+
+Update a client's name, seats or PSA reference with a user-owned key.
+
+**Required scope:** `organization:write`
+
+**User permissions:** `organization.write`.
+
+| Argument | Required | Default |
+| --- | --- | --- |
+| `organization_id` | Yes | — |
+| `name` | No | `null` |
+| `seats` | No | `null` |
+| `psa_ref` | No | `null` |
+| `clear_psa_ref` | No | `false` |
+
+- **`organization_id`:** Organization UUID.
+- **`name`:** Client display name, 1–200 characters.
+- **`seats`:** Non-negative integer seat count (up to 2,147,483,647).
+- **`psa_ref`:** Optional PSA client reference, up to 200 characters.
+- **`clear_psa_ref`:** Set true to remove the current PSA reference; do not also supply `psa_ref`.
+
+<Warning>This changes a client. Confirm the exact Organization ID and intended fields before calling it. A user-owned key and its owner’s current `organization.write` permission are required. Service keys cannot perform this write.</Warning>
 
 ## Control results
 

@@ -1,0 +1,42 @@
+---
+title: "Manage clients with MCP"
+description: "List, create and update client records through scoped MCP tools."
+---
+
+An Organization is one client in your MSP workspace. These tools manage client records; they do not connect an integration, collect evidence or run checks. Check the [live reference](/api-reference/live-schema) for availability on your deployment.
+
+## Prepare a user key
+
+In **MCP → + Generate token**, choose **User key — bound to my account**. Grant `organization:read` to call `list_organizations` or `get_organization`, and `organization:write` to call `create_organization` or `update_organization`. These are MCP scopes; the [REST API](/api-reference/manage-clients-recipe) uses differently named scopes.
+
+The owner must retain the corresponding `organization.read` or `organization.write` permission at call time. A revoked key, deactivated owner or lost permission stops the call. Service keys cannot perform these client writes, even if assigned `organization:write`. The server limits every result and write to your MSP workspace and records writes in the audit log with the owner and key attribution.
+
+## Find a client
+
+Use `list_organizations` to find an existing client and its `id`. This example requests the first 20 clients whose name or slug matches `acme`:
+
+```json
+{"limit":20,"offset":0,"q":"acme"}
+```
+
+The tool returns `items`, `total`, `limit` and `offset` for current, unarchived clients. Each item includes `id`, `name`, `slug`, `seats`, `psaRef` and `archivedAt`. `limit` defaults to 20 and accepts 1–100; `offset` defaults to 0. Results are ordered by name and then ID, so equal names have a stable tie-breaker. Increase `offset` by the page size to continue. Changes to client records between calls can still shift offset pages; this is not a point-in-time snapshot.
+
+## Create a client
+
+Choose and record a unique slug before calling `create_organization`. Required arguments are `name` and `slug`; `seats` defaults to 0 and `psa_ref` is optional. This fictional example creates a record if you run it:
+
+```json
+{"name":"Acme Services","slug":"acme-services","seats":25,"psa_ref":"acme-123"}
+```
+
+The tool returns the new client's `id`, `name`, `slug`, `seats`, `psaRef` and `archivedAt`. Save the `id` for later updates. The slug must be unique within your workspace. If a timeout or lost response leaves the outcome uncertain, use `list_organizations` with the recorded slug (or check the app) before considering another create. The tool has no idempotency key or automatic retry; a missing response does not prove creation failed.
+
+## Update the intended client
+
+Pass the exact `organization_id` and at least one field to `update_organization`. This fictional example changes the display name and seat count:
+
+```json
+{"organization_id":"11111111-1111-4111-8111-111111111111","name":"Acme Managed Services","seats":30}
+```
+
+The optional fields are `name`, `seats` and `psa_ref`. Set `clear_psa_ref` to `true` to remove a PSA reference; do not pass `psa_ref` in the same call. Review the target ID and intended fields before sending a write. A foreign-workspace client ID returns not found. Consult the [tool catalogue](/mcp/tools) for argument defaults and the current scope contract.

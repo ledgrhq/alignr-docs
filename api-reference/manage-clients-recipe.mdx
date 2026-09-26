@@ -54,4 +54,4 @@ curl --fail-with-body \
 
 Success returns HTTP 204 with no response body. Reconcile the client's state if a response is lost before repeating a write.
 
-Client writes are tenant-scoped and audit-logged. A user-key write is attributed to its owner as an agent action, with the key ID recorded for traceability. A key cannot satisfy human approval or step-up requirements on other operations. The [MCP server](/mcp/introduction) has no client-write tool; these actions use REST. Check the [live schema](/api-reference/live-schema) for the contract available on your deployment.
+Client writes are tenant-scoped and audit-logged. A user-key write is attributed to its owner as an agent action, with the key ID recorded for traceability. A key cannot satisfy human approval or step-up requirements on other operations. MCP also offers [client creation and updates](/mcp/manage-clients) with the separate `organization:write` scope. Check the [live schema](/api-reference/live-schema) for the contract available on your deployment.

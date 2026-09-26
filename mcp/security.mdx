@@ -5,7 +5,7 @@ description: "Understand the access granted to an MCP client."
 
 ## Least privilege
 
-Grant only the tool scopes the client needs. Read scopes do not imply permission to add detection notes. `detection:write` enables the note-writing tool and should be an explicit choice.
+Grant only the tool scopes the client needs. Read scopes do not imply permission to write. `organization:write` enables client creation and updates, while `detection:write` enables detection notes. Choose either only when the workflow needs it.
 
 In the token form, **Select all** selects every currently issuable API and MCP scope, even while you are filtering the list. For a single assistant workflow, choose the scopes in the [tool catalogue](/mcp/tools) individually and review the selection before creating the key.
 
@@ -13,7 +13,7 @@ In the token form, **Select all** selects every currently issuable API and MCP s
 
 A user-scoped key cannot exceed its owner’s current permissions. Tenant scoping is enforced by the server; a prompt or supplied identifier cannot override it.
 
-The same key may also be used with supported REST operations. `organization.write` lets a user-owned key create, update and archive clients through the [REST API](/api-reference/manage-clients-recipe), but does not add client-write tools to MCP. The current [MCP tool catalogue](/mcp/tools) remains the limit of MCP actions. Service keys cannot perform those REST client writes.
+REST and MCP scopes use different names. A user-owned key needs `organization:write` for MCP `create_organization` and `update_organization`; the owner must still have `organization.write` at call time. Service keys cannot perform these MCP writes. The REST client actions instead require the distinct `organization.write` key scope; see the [REST recipe](/api-reference/manage-clients-recipe) or the [MCP client-management guide](/mcp/manage-clients). The [MCP tool catalogue](/mcp/tools) defines the available MCP actions.
 
 ## Secrets
 

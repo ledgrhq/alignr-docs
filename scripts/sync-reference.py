@@ -61,13 +61,21 @@ config['api'] = {'playground': {'display': 'none'}}
 (ROOT/'docs.json').write_text(json.dumps(config,indent=2)+'\n')
 # Human explanations complement generated names, scopes and defaults.
 TOOL_GROUPS = {
-    'Client context': [('get_organization', 'Get an Organization'), ('get_asset', 'Get an asset')],
+    'Client context': [('get_organization', 'Get an Organization'), ('list_organizations', 'List clients'), ('get_asset', 'Get an asset')],
+    'Client actions': [('create_organization', 'Create a client'), ('update_organization', 'Update a client')],
     'Control results': [('get_organization_compliance', 'Read client control results'), ('explain_control_status', 'Explain a control result'), ('list_organizations_by_control_status', 'Find clients by control status'), ('get_standard_rollup', 'Review a standard across clients')],
     'Findings': [('list_detections', 'List detections'), ('create_detection_note', 'Add a detection note')],
     'Search and questions': [('search_documentation', 'Search indexed content'), ('ask_ledgr', 'Ask an evidence-backed question')],
 }
 ARGUMENT_HELP = {
     'organization_id': 'Organization UUID.',
+    'name': 'Client display name, 1–200 characters.',
+    'slug': 'Unique client slug, 1–200 characters. Record it before creation so an uncertain result can be looked up.',
+    'seats': 'Non-negative integer seat count (up to 2,147,483,647).',
+    'psa_ref': 'Optional PSA client reference, up to 200 characters.',
+    'clear_psa_ref': 'Set true to remove the current PSA reference; do not also supply `psa_ref`.',
+    'offset': 'Zero-based offset for the next bounded client page.',
+    'q': 'Optional name or slug search, up to 200 characters.',
     'asset_id': 'UUID of the asset to retrieve.',
     'query': 'Text to search for.',
     'question': 'The question you want answered from available evidence.',
@@ -102,10 +110,16 @@ for category, group in TOOL_GROUPS.items():
         lines += ['']
         for argument in parameters:
             help_text = ARGUMENT_HELP[argument]
+            if name == 'list_organizations' and argument == 'limit':
+                help_text = 'Clients per page, from 1 to 100 (default 20).'
             if argument == 'organization_id' and parameters[argument].default is not inspect.Parameter.empty:
                 help_text += ' Omit it to use the tool’s workspace-wide scope.'
             lines.append(f'- **`{argument}`:** {help_text}')
-        if spec.mutating:
+        if name == 'create_organization':
+            lines += ['', '<Warning>This creates a client. There is no idempotency key or automatic retry; if the result is uncertain, look up the recorded slug before trying again. A user-owned key and its owner’s current `organization.write` permission are required. Service keys cannot perform this write.</Warning>']
+        elif name == 'update_organization':
+            lines += ['', '<Warning>This changes a client. Confirm the exact Organization ID and intended fields before calling it. A user-owned key and its owner’s current `organization.write` permission are required. Service keys cannot perform this write.</Warning>']
+        elif name == 'create_detection_note':
             lines += ['', '<Warning>This tool writes a detection note. Confirm the target and note text before allowing the call.</Warning>']
 lines += ['', '## Understand the answer', '', 'A missing result is not proof that a control passed. Read [control statuses](/guides/control-status), retain the client and evidence context, and review [MCP permissions](/mcp/security).']
 (ROOT/'mcp/tools.mdx').write_text('\n'.join(lines)+'\n')

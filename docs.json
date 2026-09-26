@@ -274,7 +274,8 @@
             "group": "Get started",
             "pages": [
               "mcp/introduction",
-              "mcp/connect"
+              "mcp/connect",
+              "mcp/manage-clients"
             ]
           },
           {
