@@ -95,7 +95,8 @@
                     "group": "Control recipes",
                     "pages": [
                       "controls/recipes/overview",
-                      "controls/recipes/vulnerability-limit"
+                      "controls/recipes/vulnerability-limit",
+                      "controls/recipes/backup-confidence"
                     ]
                   },
                   {

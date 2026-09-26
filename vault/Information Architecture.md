@@ -28,3 +28,7 @@ The path uses Acme throughout. It starts with administrator MFA registration and
 Journeys teach one task end to end. How-to guides describe actions. Concept pages explain reasoning. References supply exact names, defaults and limits. Link between them; do not duplicate entire sections. A page should end with a completion checkpoint and an appropriate next step when it teaches a workflow.
 
 Existing URLs are retained. New pages must appear in navigation or have a documented reason to be intentionally hidden. Hidden pages are still public; internal records use `.mintignore`.
+
+## Recovery paths
+
+Troubleshooting starts from the visible symptom and gives a recovery check for each path. The backup recipe connects automated protection/job/recency observations with a separate restore review. Keep its future-timestamp caveat beside the recency example; never imply the current within_days operator is past-only.

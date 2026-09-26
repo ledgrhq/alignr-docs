@@ -16,3 +16,7 @@ Added a four-page Acme assessment journey, a recipe index and vulnerability thre
 - Observe real first-time users completing the journey and record where they hesitate. No usability study or completion-time claim has been made.
 - Extend recipes only when each has a distinct useful question and source-verified outcome.
 - Review the new journey when source collection, control evaluation or UI labels change; updating the catalogue alone is insufficient.
+
+## 2026-09-26 — Troubleshooting and backup recipe
+
+Reworked troubleshooting into symptom-led investigations with recovery checkpoints. Added a backup recipe combining source-verified template settings, illustrative timestamp cases and a separate restore review. Clarified the false-versus-missing wording in the results guide. Validation: build, broken-link, whitespace and vault checks passed. Template defaults (1 day, range 1–30; restore cadence 30 days) and 12-hour, 36-hour, future and exact-boundary timestamp comparisons passed against application source with a fixed evaluation clock. Browser checks covered symptom-anchor navigation, opening the missing-observation branch and its mobile layout. No client assessment or vendor recovery operation was performed.

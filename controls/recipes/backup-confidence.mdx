@@ -1,0 +1,97 @@
+---
+title: "Assess backup and recovery"
+description: "Combine protection, job health, recency and a restore review without confusing what each proves."
+---
+
+**Question:** what evidence do we have that Acme's workload is protected, has backed up successfully, and can be recovered?
+
+Answer this with several focused checks. A product association, a successful job, a recent success timestamp and a restore exercise each establish something different.
+
+## Choose the right evidence
+
+| Question | Evidence or review | Limit |
+| --- | --- | --- |
+| Is a backup product recorded? | **Backup protected by** (`backup_protected_by`). | Product presence does not prove a job succeeded. |
+| Did the observed job report success? | **Backup job state** (`backup_job_state`) equals `ok`. | One job's status does not establish every workload's recovery state. |
+| Is a successful backup within our window? | **Last successful backup** (`backup_last_successful_at`). | Recency does not establish retention or restoration. |
+| Can we recover the required data? | A documented restore exercise. | Its conclusion is bounded by what was actually restored and verified. |
+
+Check workload and job identity before combining observations. Two records with similar names are not automatically evidence about the same system.
+
+## Start with the supplied template
+
+<Steps>
+  <Step title="Copy BIOS Backup Health">
+    Open **Standards → More → Browse library** and copy **BIOS Backup Health**. Review the disabled draft before enabling it.
+
+    The template includes **Backup jobs report healthy**, **Protected workloads back up daily**, and the manual check **Test a representative restore**.
+  </Step>
+  <Step title="Review coverage and scope">
+    Confirm the connected source supplies the required observations for the client. Inspect which workloads and jobs appear, their identifiers and observation times.
+
+    **Checkpoint:** you can name the workloads being assessed and identify any that are not represented.
+  </Step>
+  <Step title="Review the recency setting">
+    The supplied recency control defaults to **one day**, with an allowed range of **1–30 days**. Check the effective client setting before interpreting the result. Review the window against the client's requirements.
+
+    **Checkpoint:** you can state the actual threshold used, including any override.
+  </Step>
+  <Step title="Run checks and inspect the evidence">
+    Use **Run checks**, review the selected clients and settings, and inspect the resulting assessments. Follow a failure back to the workload or job and the cited observation.
+
+    **Checkpoint:** you can explain the result using the observed value and effective expectation.
+  </Step>
+</Steps>
+
+[Review the full backup definitions](/controls/baselines/backup) when you need exact predicates, settings and source-specific entries.
+
+## Work through a recency example
+
+Assume a fixed evaluation time of **26 September at 12:00 UTC**, an effective window of **one day**, and current eligible observations for a selected protected workload. These are illustrative comparisons, not client records.
+
+<Tabs sync={false}>
+  <Tab title="Within the window">
+    Last successful backup: **26 September at 00:00 UTC**.
+
+    The timestamp is 12 hours before the evaluation time, so it satisfies the one-day comparison. Check job scope and source freshness before using that comparison to explain the overall result.
+  </Tab>
+  <Tab title="Outside the window">
+    Last successful backup: **25 September at 00:00 UTC**.
+
+    The timestamp is 36 hours before evaluation, so it fails the one-day comparison. Investigate the relevant workload and job rather than assuming that all of the client's backups have failed.
+  </Tab>
+  <Tab title="No observation">
+    The workload has a recorded backup product but no successful-backup timestamp.
+
+    The required observation is missing. This simplified example cannot pass and produces **No data**. Investigate collection, coverage and identity matching before drawing a conclusion about the backup itself.
+  </Tab>
+</Tabs>
+
+<Note>
+The `within_days` operator also accepts timestamps within the configured window **after** evaluation time. A timestamp 12 hours in the future can satisfy a one-day comparison. Investigate clock or source-data problems; a future “last success” is not evidence that a future backup has happened.
+</Note>
+
+The window is inclusive at its boundary. In a live run, evaluation time continues moving, so a timestamp exactly one day old will cross that boundary as time passes.
+
+## Add the recovery question
+
+Open **Test a representative restore** in the client's manual checks and follow an approved restore procedure. The template's default review interval is **30 days**; review whether that cadence suits the client.
+
+Record the workload, recovery point, restore procedure, data checks, elapsed recovery time and any limitations. Compare the outcome with the client's agreed recovery objectives. Enter the conclusion and supporting evidence using the [manual assessment workflow](/controls/manual-checks).
+
+A restore of one file does not establish that an entire server or application can be recovered. Describe the scope precisely.
+
+## Explain the whole picture
+
+An illustrative handover might read:
+
+> Acme's selected workload has a recorded backup product and a successful-backup timestamp within the agreed window. We still need a current restore exercise before concluding that the required recovery process works.
+
+In a real handover, include actual identifiers, observation times and evidence references. Keep automated results and the human review distinct.
+
+**You should now have:** an explained assessment of backup observations, a visible list of coverage gaps, and a separate recovery review with an owner and next review date.
+
+<CardGroup cols={2}>
+  <Card title="Investigate an unexpected result" icon="magnifying-glass" href="/guides/troubleshooting">Work backwards through configuration, scope and evidence.</Card>
+  <Card title="Record the restore assessment" icon="clipboard-check" href="/controls/manual-checks">Capture the human conclusion and supporting evidence.</Card>
+</CardGroup>
