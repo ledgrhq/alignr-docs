@@ -3,17 +3,23 @@ title: "API introduction"
 description: "Make your first request to the Alignr REST API."
 ---
 
+Use the REST API to build scripts, reports and integrations with Alignr data. You can use Alignr in the app without creating an API key.
+
+## Before you begin
+
+[Create an API key](/guides/api-keys) with `organization.read`, then store it in the `ALIGNR_API_KEY` environment variable through your secret manager or shell environment.
+
 ## Base URL
 
 ```text
 https://api.alignr.io/api/v1
 ```
 
-The REST API uses JSON and bearer authentication. Start with a key granting `organization.read`.
+The REST API uses JSON and bearer authentication.
 
 ## List your Organizations
 
-Store your API key in the `ALIGNR_API_KEY` environment variable through your secret manager or shell environment, then run:
+Run this read-only request to find the clients in your MSP workspace:
 
 ```bash
 curl --fail-with-body \
@@ -22,13 +28,6 @@ curl --fail-with-body \
 ```
 
 The response contains an `items` array and pagination metadata. Use an Organization’s `id` in requests that require a client identifier. An empty `items` array can be a valid result; it does not prove the workspace is fully configured.
-
-## Next steps
-
-<Columns cols={2}>
-  <Card title="Authentication" icon="key" href="/api-reference/authentication">Understand API keys and permissions.</Card>
-  <Card title="Live API schema" icon="code" href="/api-reference/live-schema">Retrieve the reference for your running deployment.</Card>
-</Columns>
 
 ## Understand the data you retrieve
 
@@ -49,3 +48,12 @@ When working with facts, translate the predicate using the [reference](/guides/p
 Start with read-only requests and least-privilege scopes. Handle pagination, distinguish permission errors from empty data, and keep the Organization context explicit across requests. Follow the generated operation's documented query parameters rather than guessing a common filter name.
 
 For a recurring report, retain the evaluation time and evidence context alongside each status. A report without those details can make an old or incomplete assessment look current.
+
+## Continue building
+
+<Columns cols={2}>
+  <Card title="Authentication" icon="key" href="/api-reference/authentication">Understand API keys and permissions.</Card>
+  <Card title="Pagination" icon="list" href="/api-reference/pagination">Retrieve more than the first page of results.</Card>
+  <Card title="Errors" icon="circle-exclamation" href="/api-reference/errors">Handle failed requests and retries.</Card>
+  <Card title="Live API schema" icon="code" href="/api-reference/live-schema">Find the full reference for your deployment.</Card>
+</Columns>

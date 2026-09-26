@@ -7,18 +7,6 @@ description: "Move from a supported finding to an authorised change."
 
 A remediation **plan** describes proposed steps. A **run** is one execution of a plan. Review the target, evidence, risk and available reversal before authorising a run.
 
-## Approval and autonomy
-
-The effective autonomy ceiling is the lowest of the rule, client contract, tenant and platform controls. An irreversible action requires a named human approver regardless of that ceiling.
-
-The autonomy levels are `suggest_only`, `document_only`, `one_click`, `change_ticket` and `auto_fix_low_risk`.
-
-## Verify the outcome
-
-A completed action is not proof that the problem is resolved. Review post-action verification and fresh evidence. Where a supported reversal is available, check the run’s rollback information and window before relying on it.
-
-Only use remediation actions supported by the specific finding and connected source.
-
 ## From finding to verified outcome
 
 ```mermaid
@@ -31,6 +19,26 @@ flowchart TD
 ```
 
 A queued request, an accepted action and a verified fix are different outcomes. Follow the run's reported state and supporting evidence rather than treating submission as success.
+
+## Approval and autonomy
+
+The effective autonomy ceiling is the lowest of the rule, client contract, tenant and platform controls. An irreversible action requires a named human approver regardless of that ceiling.
+
+| Autonomy level | What it permits for a supported action |
+| --- | --- |
+| Suggest only | Alignr suggests the fix; a person carries it out. |
+| Document only (legacy) | Prevents live changes. Review this legacy setting before relying on automation. |
+| One-click | Alignr can apply the fix after a person confirms it. |
+| Change ticket | Alignr can apply the fix after approval of a change ticket. |
+| Auto-fix low risk | Alignr can apply supported low-risk fixes without a separate confirmation for each one. |
+
+These levels limit permission; they do not add actions to a connector or guarantee that a finding has an automated fix.
+
+## Verify the outcome
+
+A completed action is not proof that the problem is resolved. Review post-action verification and fresh evidence. Where a supported reversal is available, check the run’s rollback information and window before relying on it.
+
+Only use remediation actions supported by the specific finding and connected source.
 
 ## What to review in a plan
 

@@ -15,19 +15,40 @@ Expand a control to see the exact population, expectation and defaults. A pass r
 
 <Accordion title="SPF record is present">
 
-**Source:** Email & domain protection. **Severity:** high. **Declared autonomy:** `suggest_only`.
+<Tabs sync={false}>
+<Tab title="Explanation">
 
-**Population:** subjects with an observation of **SPF record present** (`external_spf_present`).
+Each selected domain should have the expected SPF presence signal.
 
-**Expectation:** **SPF record present** (`external_spf_present`) equals `true`.
+Part of **Email & domain protection**.
 
-**Thresholds:** no configurable parameter is declared for this control.
+**Applies to**
 
-**Required observations:** `external_spf_present`.
+Subjects with a recorded spf record present observation.
 
-**Interpretation:** This is the bounded DNS presence check, not a full validation of authorised senders or every SPF include. Complete the manual SPF review.
+**What the result tells you**
 
-**Investigate:** confirm the client and subject, inspect source and observation time, then compare the actual value with the effective expectation. Review a supported change separately from the assessment.
+This is the bounded DNS presence check, not a full validation of authorised senders or every SPF include. Complete the manual SPF review.
+
+</Tab>
+<Tab title="Definition">
+
+| Setting | Value |
+| --- | --- |
+| Standard | Email & domain protection |
+| Severity | High |
+| Declared autonomy | Suggest only |
+
+**Population condition**
+
+**SPF record present** (`external_spf_present`) has an observation.
+
+
+**Expected evidence**
+
+- **SPF record present** (`external_spf_present`) equals `true`.
+
+**Required predicates:** `external_spf_present`.
 
 ```json
 {
@@ -49,23 +70,47 @@ Expand a control to see the exact population, expectation and defaults. A pass r
 }
 ```
 
+</Tab>
+</Tabs>
+
 </Accordion>
 
 <Accordion title="DMARC enforcement is enabled">
 
-**Source:** Email & domain protection. **Severity:** high. **Declared autonomy:** `suggest_only`.
+<Tabs sync={false}>
+<Tab title="Explanation">
 
-**Population:** subjects with an observation of **DMARC enforcement policy** (`external_dmarc_enforced`).
+Each selected domain should have the expected DMARC enforcement signal.
 
-**Expectation:** **DMARC enforcement policy** (`external_dmarc_enforced`) equals `true`.
+Part of **Email & domain protection**.
 
-**Thresholds:** no configurable parameter is declared for this control.
+**Applies to**
 
-**Required observations:** `external_dmarc_enforced`.
+Subjects with a recorded dmarc enforcement policy observation.
 
-**Interpretation:** This checks the collected DNS enforcement signal. It does not test actual message alignment, reporting operation or every mail flow.
+**What the result tells you**
 
-**Investigate:** confirm the client and subject, inspect source and observation time, then compare the actual value with the effective expectation. Review a supported change separately from the assessment.
+This checks the collected DNS enforcement signal. It does not test actual message alignment, reporting operation or every mail flow.
+
+</Tab>
+<Tab title="Definition">
+
+| Setting | Value |
+| --- | --- |
+| Standard | Email & domain protection |
+| Severity | High |
+| Declared autonomy | Suggest only |
+
+**Population condition**
+
+**DMARC enforcement policy** (`external_dmarc_enforced`) has an observation.
+
+
+**Expected evidence**
+
+- **DMARC enforcement policy** (`external_dmarc_enforced`) equals `true`.
+
+**Required predicates:** `external_dmarc_enforced`.
 
 ```json
 {
@@ -87,23 +132,47 @@ Expand a control to see the exact population, expectation and defaults. A pass r
 }
 ```
 
+</Tab>
+</Tabs>
+
 </Accordion>
 
 <Accordion title="Mail exchange is configured">
 
-**Source:** Email & domain protection. **Severity:** high. **Declared autonomy:** `suggest_only`.
+<Tabs sync={false}>
+<Tab title="Explanation">
 
-**Population:** subjects with an observation of **Mail routing records present** (`external_mx_present`).
+Each selected domain should have a usable MX observation.
 
-**Expectation:** **Mail routing records present** (`external_mx_present`) equals `true`.
+Part of **Email & domain protection**.
 
-**Thresholds:** no configurable parameter is declared for this control.
+**Applies to**
 
-**Required observations:** `external_mx_present`.
+Subjects with a recorded mail routing records present observation.
 
-**Interpretation:** A usable MX observation does not prove mail acceptance or correct routing for every sender. Null MX does not satisfy the source check.
+**What the result tells you**
 
-**Investigate:** confirm the client and subject, inspect source and observation time, then compare the actual value with the effective expectation. Review a supported change separately from the assessment.
+A usable MX observation does not prove mail acceptance or correct routing for every sender. Null MX does not satisfy the source check.
+
+</Tab>
+<Tab title="Definition">
+
+| Setting | Value |
+| --- | --- |
+| Standard | Email & domain protection |
+| Severity | High |
+| Declared autonomy | Suggest only |
+
+**Population condition**
+
+**Mail routing records present** (`external_mx_present`) has an observation.
+
+
+**Expected evidence**
+
+- **Mail routing records present** (`external_mx_present`) equals `true`.
+
+**Required predicates:** `external_mx_present`.
 
 ```json
 {
@@ -125,6 +194,9 @@ Expand a control to see the exact population, expectation and defaults. A pass r
 }
 ```
 
+</Tab>
+</Tabs>
+
 </Accordion>
 
 </AccordionGroup>
@@ -137,7 +209,7 @@ These are human reviews, not automated evidence. The interval below is the templ
 
 <Accordion title="Review SPF records">
 
-**Source:** Email & domain protection. **Default review interval:** 30 days.
+**Review every 30 days** · Email & domain protection
 
 For every sending domain, manually validate the public SPF record, authorised senders and DNS lookup budget. The automated control only proves that one SPF record is present; this review remains required for record validity, approved senders and the recursive lookup limit. Pass when the record is valid, contains only approved senders and stays within the agreed lookup budget. Fail when it is malformed, includes an unapproved sender or exceeds the lookup budget. Evidence: capture the DNS response, domain and review date.
 
@@ -147,7 +219,7 @@ For every sending domain, manually validate the public SPF record, authorised se
 
 <Accordion title="Review DKIM signing">
 
-**Source:** Email & domain protection. **Default review interval:** 30 days.
+**Review every 30 days** · Email & domain protection
 
 For every sending domain and provider, verify the published DKIM selector and send a test message where appropriate. Pass when approved outbound mail is signed and the public key validates. Fail when signing is disabled, the selector is absent or validation fails. Evidence: record the selector, provider result and a redacted test header.
 
@@ -157,7 +229,7 @@ For every sending domain and provider, verify the published DKIM selector and se
 
 <Accordion title="Review DMARC policy">
 
-**Source:** Email & domain protection. **Default review interval:** 30 days.
+**Review every 30 days** · Email & domain protection
 
 Inspect the public DMARC record and reporting destinations for every sending domain. Pass when an approved policy is published, aligned with the agreed enforcement level and reports go to monitored mailboxes. Fail when it is missing, set to monitoring only without an approved exception, or sends reports to an unowned destination. Evidence: capture the DNS response, policy and exception owner.
 
@@ -167,7 +239,7 @@ Inspect the public DMARC record and reporting destinations for every sending dom
 
 <Accordion title="Review domain registration and expiry">
 
-**Source:** Email & domain protection. **Default review interval:** 30 days.
+**Review every 30 days** · Email & domain protection
 
 Compare every business domain with the registrar account and renewal register. Pass when the registrant, registrar access, renewal owner and expiry date are recorded and auto-renewal or a dated renewal task is confirmed. Fail when ownership is unclear, expiry is within the agreed renewal window, or no recovery access is held. Evidence: attach the registrar record or renewal confirmation; do not store credentials.
 
@@ -177,7 +249,7 @@ Compare every business domain with the registrar account and renewal register. P
 
 <Accordion title="Review public TLS certificates">
 
-**Source:** Email & domain protection. **Default review interval:** 30 days.
+**Review every 30 days** · Email & domain protection
 
 Inventory public HTTPS endpoints and inspect each certificate chain, hostname coverage, issuer and expiry. Pass when each approved endpoint uses a trusted, hostname-matching certificate with a documented renewal owner and more than 30 days remaining. Fail when a certificate is expired, mismatched, untrusted or has 30 days or fewer remaining; record any approved exception separately. Evidence: record the endpoint, certificate subject, issuer, expiry and inspection date. Alignr does not run an external scanner for this check.
 
@@ -186,6 +258,10 @@ Inventory public HTTPS endpoints and inspect each certificate chain, hostname co
 </Accordion>
 
 </AccordionGroup>
+
+## Investigate a result
+
+Confirm the client and the account, device or other item being assessed. Check the source, observation time and effective settings, then compare the recorded evidence with the expectation. Missing evidence needs investigation; a change to the environment requires a separate review.
 
 ## Next steps
 

@@ -79,21 +79,61 @@ for key,(title,desc) in groups.items():
  for source,c,manual in entries[key]:
   if manual:continue
   d=c['definition'];parse_rule_definition(d)
-  lines += [f'<Accordion title="{c["name"]}">','',f'**Source:** {source}. **Severity:** {c["severity"]}. **Declared autonomy:** `{c["autonomy"]}`.','',f'**Population:** subjects with an observation of {fact(d["match"]["predicate"])}'+(' equal to '+value(d['match']['object']) if 'object' in d['match'] else '')+'.','']
-  for w in d.get('where',[]):lines+=['**Additional filter:** '+condition(w),'']
-  for e in d.get('expect',[]):lines+=['**Expectation:** '+condition(e),'']
+  population = {
+   'account_enabled': 'Accounts observed as enabled.' if d['match'].get('object') is True else 'Accounts with an enabled-state observation.',
+   'has_role': 'Accounts observed with the Global Administrator role.',
+   'ca_policy_scope': 'Conditional Access policies observed with an All users scope.',
+   'device_managed_by': 'Devices reported as managed by an RMM.',
+   'mdm_enrolled_by': 'Devices with an MDM enrolment observation.',
+   'backup_protected_by': 'Workloads with a recorded backup product.',
+   'backup_job_state': 'Backup jobs with a recorded status.',
+   'licence_seats_purchased': 'Licences with a purchased-seat observation.',
+  }.get(d['match']['predicate'], 'Subjects with a recorded '+labels[d['match']['predicate']].lower()+' observation.')
+  explanations = {
+   'mfa_registered': 'Each selected account should have MFA registered.',
+   'ca_policy_state': 'Each selected policy should be enabled.',
+   'mfa_bypass_enabled': 'MFA bypass should be off for each selected account.',
+   'account_enabled': 'Accounts selected by the inactivity filter should be disabled.',
+   'edr_agent_installed': 'Each selected device should report an installed EDR agent.',
+   'device_last_checkin': 'Each selected device should have a check-in timestamp within the configured day window.',
+   'patch_status': 'Each selected device should report a compliant patch status.',
+   'device_encryption_enabled': 'Each selected device should report encryption enabled.',
+   'device_compliance_state': 'Each selected device should report a compliant MDM state.',
+   'backup_protected_by': 'Each selected server should have a recorded backup product.',
+   'backup_job_state': 'Each selected job should report a healthy status.',
+   'backup_last_successful_at': 'Each selected workload should have a successful-backup timestamp within the configured day window.',
+   'vulnerability_max_severity': 'The recorded maximum vulnerability severity should not be critical.',
+   'vulnerability_open_count': 'The recorded open-vulnerability count should be at or below the configured limit.',
+   'missing_patch': 'The selected device needs an explicit null observation for missing patches to satisfy this comparison.',
+   'has_licence': 'Each selected account should have a recorded licence.',
+   'licence_renewal_date': 'Each selected licence should have a recorded renewal date.',
+   'firmware_update_available': 'Each selected device should report that no firmware update is available.',
+   'external_spf_present': 'Each selected domain should have the expected SPF presence signal.',
+   'external_dmarc_enforced': 'Each selected domain should have the expected DMARC enforcement signal.',
+   'external_mx_present': 'Each selected domain should have a usable MX observation.',
+   'external_nameserver_count': 'Each selected domain should have at least two observed name servers.',
+  }
+  lines += [f'<Accordion title="{c["name"]}">', '', '<Tabs sync={false}>', '<Tab title="Explanation">', '']
+  lines += [explanations[e['fact']] for e in d['expect']]
+  lines += ['', f'Part of **{source}**.', '', '**Applies to**', '', population, '']
+  for w in d.get('where',[]):
+   if w['fact']=='last_sign_in': lines += ['Only accounts whose recorded last sign-in is older than the configured inactivity limit are selected.', '']
+   elif w['fact']=='os_platform': lines += ['The operating-system name must also match the case-sensitive pattern `Server`.', '']
+   else: lines += [condition(w), '']
   params=c.get('parameters',{})
   if params:
-   lines+=['**Default parameters**','', '| Parameter | Default | Allowed range |','| --- | --- | --- |']
-   for n,p in params.items():lines.append(f'| {p.get("label",n)} (`{n}`) | {value(p["default"])} | {p.get("min","—")}–{p.get("max","—")} |')
-   lines.append('')
-  else:lines+=['**Thresholds:** no configurable parameter is declared for this control.','']
-  lines+=['**Required observations:** '+', '.join('`'+p+'`' for p in sorted(derive_requires(parse_rule_definition(d))))+'.','']
-  for e in d.get('expect',[]):
-   if e['fact'] in notes:lines+=['**Interpretation:** '+notes[e['fact']],'']
-   if e['op']=='within_days':lines+=['**Time comparison:** this operator accepts timestamps within the window on either side of now. Inspect unexpected future timestamps rather than assuming a past-only check.','']
-  if any(w['fact']=='os_platform' and w['op']=='matches' for w in d.get('where',[])):lines+=['**Population limit:** the Server pattern is case-sensitive and depends on the reported operating-system text; it is not a universal server inventory.','']
-  lines+=['**Investigate:** confirm the client and subject, inspect source and observation time, then compare the actual value with the effective expectation. Review a supported change separately from the assessment.','', '```json',json.dumps(d,indent=2),'```','','</Accordion>','']
+   lines+=['**Default settings**', '', '| Setting | Default | Allowed range |','| --- | --- | --- |']
+   for n,p in params.items():lines.append(f'| {p.get("label",n)} | {value(p["default"])} | {p.get("min","—")}–{p.get("max","—")} |')
+   lines += ['', 'Client overrides can change these values. [Check the effective settings](/controls/parameters) when interpreting a result.', '']
+  lines += ['**What the result tells you**', '']
+  for e in d['expect']:
+   if e['fact'] in notes:lines += [notes[e['fact']], '']
+   if e['op']=='within_days':lines += ['The time window includes timestamps before or after now. Investigate unexpected future timestamps.', '']
+  lines += ['</Tab>', '<Tab title="Definition">', '', '| Setting | Value |', '| --- | --- |', f'| Standard | {source} |', f'| Severity | {c["severity"].capitalize()} |', f'| Declared autonomy | {c["autonomy"].replace("_", " ").capitalize()} |', '', '**Population condition**', '', fact(d['match']['predicate'])+(' equals '+value(d['match']['object']) if 'object' in d['match'] else ' has an observation')+'.', '']
+  for w in d.get('where',[]):lines += ['- Filter: '+condition(w)]
+  lines += ['', '**Expected evidence**', '']
+  for e in d['expect']:lines += ['- '+condition(e)]
+  lines += ['', '**Required predicates:** '+', '.join('`'+p+'`' for p in sorted(derive_requires(parse_rule_definition(d))))+'.', '', '```json', json.dumps(d,indent=2), '```', '', '</Tab>', '</Tabs>', '', '</Accordion>', '']
  lines+=['</AccordionGroup>','','## Manual checks','']
  if not manual_count:lines+=['No manual checks are bundled in these catalogue entries. Add a separate manual check where the expectation needs human judgement.','']
  else:
@@ -106,9 +146,9 @@ for key,(title,desc) in groups.items():
    instructions=re.sub(r'using the WF-\d+ runbook','using your approved runbook',instructions)
    instructions=re.sub(r'full WF-\d+ configuration baseline','full configuration baseline',instructions)
    instructions=instructions.replace('these BIOS controls','the full set of expectations')
-   lines += [f'<Accordion title="{c["name"]}">','',f'**Source:** {source}. **Default review interval:** {c["review_interval_days"]} days.','',instructions,'','**Record:** who performed the review, when it was performed, the evidence, the conclusion and any follow-up or approved exception. A due review is not evidence of a completed review.','','</Accordion>','']
+   lines += [f'<Accordion title="{c["name"]}">','',f'**Review every {c["review_interval_days"]} days** · {source}','',instructions,'','**Record:** who performed the review, when it was performed, the evidence, the conclusion and any follow-up or approved exception. A due review is not evidence of a completed review.','','</Accordion>','']
   lines+=['</AccordionGroup>','']
- lines+=['## Next steps','','[Create a custom control](/controls/create-custom) · [Parameters and client overrides](/controls/parameters) · [Record a manual check](/controls/manual-checks)','']
+ lines+=['## Investigate a result', '', 'Confirm the client and the account, device or other item being assessed. Check the source, observation time and effective settings, then compare the recorded evidence with the expectation. Missing evidence needs investigation; a change to the environment requires a separate review.', '', '## Next steps','','[Create a custom control](/controls/create-custom) · [Parameters and client overrides](/controls/parameters) · [Record a manual check](/controls/manual-checks)','']
  page('controls/baselines/'+key,title,desc,'\n'.join(lines))
 counts={'seeded_controls':len(seed),'library_templates':len(TEMPLATES),'library_controls':sum(len(t['controls']) for t in TEMPLATES),'manual_checks':sum(len(t['manual_checks']) for t in TEMPLATES)}
 (root/'reference-data/control-catalogue.json').write_text(json.dumps({'counts':counts,'seeded_controls':seed,'templates':[{k:v for k,v in t.items() if k!='_source_label'} for t in TEMPLATES]},indent=2)+'\n')

@@ -15,19 +15,40 @@ Expand a control to see the exact population, expectation and defaults. A pass r
 
 <Accordion title="Network firmware has no update pending">
 
-**Source:** BIOS Network Health. **Severity:** medium. **Declared autonomy:** `suggest_only`.
+<Tabs sync={false}>
+<Tab title="Explanation">
 
-**Population:** subjects with an observation of **Firmware update available** (`firmware_update_available`).
+Each selected device should report that no firmware update is available.
 
-**Expectation:** **Firmware update available** (`firmware_update_available`) equals `false`.
+Part of **BIOS Network Health**.
 
-**Thresholds:** no configurable parameter is declared for this control.
+**Applies to**
 
-**Required observations:** `firmware_update_available`.
+Subjects with a recorded firmware update available observation.
 
-**Interpretation:** No reported update is not proof of supported firmware or full device hardening. An available update still needs risk review and scheduling.
+**What the result tells you**
 
-**Investigate:** confirm the client and subject, inspect source and observation time, then compare the actual value with the effective expectation. Review a supported change separately from the assessment.
+No reported update is not proof of supported firmware or full device hardening. An available update still needs risk review and scheduling.
+
+</Tab>
+<Tab title="Definition">
+
+| Setting | Value |
+| --- | --- |
+| Standard | BIOS Network Health |
+| Severity | Medium |
+| Declared autonomy | Suggest only |
+
+**Population condition**
+
+**Firmware update available** (`firmware_update_available`) has an observation.
+
+
+**Expected evidence**
+
+- **Firmware update available** (`firmware_update_available`) equals `false`.
+
+**Required predicates:** `firmware_update_available`.
 
 ```json
 {
@@ -49,6 +70,9 @@ Expand a control to see the exact population, expectation and defaults. A pass r
 }
 ```
 
+</Tab>
+</Tabs>
+
 </Accordion>
 
 </AccordionGroup>
@@ -61,7 +85,7 @@ These are human reviews, not automated evidence. The interval below is the templ
 
 <Accordion title="Review network device availability">
 
-**Source:** BIOS Network Health. **Default review interval:** 30 days.
+**Review every 30 days** · BIOS Network Health
 
 Check the firewall, switches and access points against the approved network inventory. Record missing or offline devices and confirm the source population excludes endpoints and unrelated resources.
 
@@ -71,7 +95,7 @@ Check the firewall, switches and access points against the approved network inve
 
 <Accordion title="Review firewall security baseline">
 
-**Source:** BIOS Network Health. **Default review interval:** 30 days.
+**Review every 30 days** · BIOS Network Health
 
 Review rules, management exposure, logging, subscriptions and approved exceptions. Current connector facts do not prove the full configuration baseline.
 
@@ -81,7 +105,7 @@ Review rules, management exposure, logging, subscriptions and approved exception
 
 <Accordion title="Test network configuration recovery">
 
-**Source:** BIOS Network Health. **Default review interval:** 90 days.
+**Review every 90 days** · BIOS Network Health
 
 Confirm a current configuration backup exists and perform the documented recovery validation. Firmware inventory does not prove backup recoverability.
 
@@ -90,6 +114,10 @@ Confirm a current configuration backup exists and perform the documented recover
 </Accordion>
 
 </AccordionGroup>
+
+## Investigate a result
+
+Confirm the client and the account, device or other item being assessed. Check the source, observation time and effective settings, then compare the recorded evidence with the expectation. Missing evidence needs investigation; a change to the environment requires a separate review.
 
 ## Next steps
 

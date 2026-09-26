@@ -15,19 +15,40 @@ Expand a control to see the exact population, expectation and defaults. A pass r
 
 <Accordion title="RMM-managed endpoints run EDR">
 
-**Source:** Alignr Baseline (seeded). **Severity:** medium. **Declared autonomy:** `one_click`.
+<Tabs sync={false}>
+<Tab title="Explanation">
 
-**Population:** subjects with an observation of **Device management** (`device_managed_by`) equal to `"rmm"`.
+Each selected device should report an installed EDR agent.
 
-**Expectation:** **EDR installed** (`edr_agent_installed`) equals `true`.
+Part of **Alignr Baseline (seeded)**.
 
-**Thresholds:** no configurable parameter is declared for this control.
+**Applies to**
 
-**Required observations:** `device_managed_by`, `edr_agent_installed`.
+Devices reported as managed by an RMM.
 
-**Interpretation:** Agent installation is not agent health or recent reporting. Correlate the same endpoint across sources.
+**What the result tells you**
 
-**Investigate:** confirm the client and subject, inspect source and observation time, then compare the actual value with the effective expectation. Review a supported change separately from the assessment.
+Agent installation is not agent health or recent reporting. Correlate the same endpoint across sources.
+
+</Tab>
+<Tab title="Definition">
+
+| Setting | Value |
+| --- | --- |
+| Standard | Alignr Baseline (seeded) |
+| Severity | Medium |
+| Declared autonomy | One click |
+
+**Population condition**
+
+**Device management** (`device_managed_by`) equals `"rmm"`.
+
+
+**Expected evidence**
+
+- **EDR installed** (`edr_agent_installed`) equals `true`.
+
+**Required predicates:** `device_managed_by`, `edr_agent_installed`.
 
 ```json
 {
@@ -51,27 +72,55 @@ Expand a control to see the exact population, expectation and defaults. A pass r
 }
 ```
 
+</Tab>
+</Tabs>
+
 </Accordion>
 
 <Accordion title="Managed endpoints check in regularly">
 
-**Source:** Alignr Baseline (seeded). **Severity:** medium. **Declared autonomy:** `suggest_only`.
+<Tabs sync={false}>
+<Tab title="Explanation">
 
-**Population:** subjects with an observation of **Device management** (`device_managed_by`) equal to `"rmm"`.
+Each selected device should have a check-in timestamp within the configured day window.
 
-**Expectation:** **Last management check-in** (`device_last_checkin`) is within this many days of now (past or future): parameter `checkin_days`.
+Part of **Alignr Baseline (seeded)**.
 
-**Default parameters**
+**Applies to**
 
-| Parameter | Default | Allowed range |
+Devices reported as managed by an RMM.
+
+**Default settings**
+
+| Setting | Default | Allowed range |
 | --- | --- | --- |
-| Must check in within (days) (`checkin_days`) | `2` | 1–30 |
+| Must check in within (days) | `2` | 1–30 |
 
-**Required observations:** `device_last_checkin`, `device_managed_by`.
+Client overrides can change these values. [Check the effective settings](/controls/parameters) when interpreting a result.
 
-**Time comparison:** this operator accepts timestamps within the window on either side of now. Inspect unexpected future timestamps rather than assuming a past-only check.
+**What the result tells you**
 
-**Investigate:** confirm the client and subject, inspect source and observation time, then compare the actual value with the effective expectation. Review a supported change separately from the assessment.
+The time window includes timestamps before or after now. Investigate unexpected future timestamps.
+
+</Tab>
+<Tab title="Definition">
+
+| Setting | Value |
+| --- | --- |
+| Standard | Alignr Baseline (seeded) |
+| Severity | Medium |
+| Declared autonomy | Suggest only |
+
+**Population condition**
+
+**Device management** (`device_managed_by`) equals `"rmm"`.
+
+
+**Expected evidence**
+
+- **Last management check-in** (`device_last_checkin`) is within this many days of now (past or future): parameter `checkin_days`.
+
+**Required predicates:** `device_last_checkin`, `device_managed_by`.
 
 ```json
 {
@@ -97,23 +146,47 @@ Expand a control to see the exact population, expectation and defaults. A pass r
 }
 ```
 
+</Tab>
+</Tabs>
+
 </Accordion>
 
 <Accordion title="Managed endpoints are patch-compliant">
 
-**Source:** Alignr Baseline (seeded). **Severity:** medium. **Declared autonomy:** `change_ticket`.
+<Tabs sync={false}>
+<Tab title="Explanation">
 
-**Population:** subjects with an observation of **Device management** (`device_managed_by`) equal to `"rmm"`.
+Each selected device should report a compliant patch status.
 
-**Expectation:** **Patch state** (`patch_status`) equals `"compliant"`.
+Part of **Alignr Baseline (seeded)**.
 
-**Thresholds:** no configurable parameter is declared for this control.
+**Applies to**
 
-**Required observations:** `device_managed_by`, `patch_status`.
+Devices reported as managed by an RMM.
 
-**Interpretation:** The expected state is the exact string compliant. Review the source’s patch scope; this does not prove absence of every vulnerability.
+**What the result tells you**
 
-**Investigate:** confirm the client and subject, inspect source and observation time, then compare the actual value with the effective expectation. Review a supported change separately from the assessment.
+The expected state is the exact string compliant. Review the source’s patch scope; this does not prove absence of every vulnerability.
+
+</Tab>
+<Tab title="Definition">
+
+| Setting | Value |
+| --- | --- |
+| Standard | Alignr Baseline (seeded) |
+| Severity | Medium |
+| Declared autonomy | Change ticket |
+
+**Population condition**
+
+**Device management** (`device_managed_by`) equals `"rmm"`.
+
+
+**Expected evidence**
+
+- **Patch state** (`patch_status`) equals `"compliant"`.
+
+**Required predicates:** `device_managed_by`, `patch_status`.
 
 ```json
 {
@@ -137,23 +210,47 @@ Expand a control to see the exact population, expectation and defaults. A pass r
 }
 ```
 
+</Tab>
+</Tabs>
+
 </Accordion>
 
 <Accordion title="MDM-enrolled devices are encrypted">
 
-**Source:** Alignr Baseline (seeded). **Severity:** high. **Declared autonomy:** `suggest_only`.
+<Tabs sync={false}>
+<Tab title="Explanation">
 
-**Population:** subjects with an observation of **MDM enrolment** (`mdm_enrolled_by`).
+Each selected device should report encryption enabled.
 
-**Expectation:** **Device encryption** (`device_encryption_enabled`) equals `true`.
+Part of **Alignr Baseline (seeded)**.
 
-**Thresholds:** no configurable parameter is declared for this control.
+**Applies to**
 
-**Required observations:** `device_encryption_enabled`, `mdm_enrolled_by`.
+Devices with an MDM enrolment observation.
 
-**Interpretation:** Reported encryption does not establish recovery-key custody or successful recovery.
+**What the result tells you**
 
-**Investigate:** confirm the client and subject, inspect source and observation time, then compare the actual value with the effective expectation. Review a supported change separately from the assessment.
+Reported encryption does not establish recovery-key custody or successful recovery.
+
+</Tab>
+<Tab title="Definition">
+
+| Setting | Value |
+| --- | --- |
+| Standard | Alignr Baseline (seeded) |
+| Severity | High |
+| Declared autonomy | Suggest only |
+
+**Population condition**
+
+**MDM enrolment** (`mdm_enrolled_by`) has an observation.
+
+
+**Expected evidence**
+
+- **Device encryption** (`device_encryption_enabled`) equals `true`.
+
+**Required predicates:** `device_encryption_enabled`, `mdm_enrolled_by`.
 
 ```json
 {
@@ -176,23 +273,47 @@ Expand a control to see the exact population, expectation and defaults. A pass r
 }
 ```
 
+</Tab>
+</Tabs>
+
 </Accordion>
 
 <Accordion title="MDM-enrolled devices are compliant">
 
-**Source:** Alignr Baseline (seeded). **Severity:** high. **Declared autonomy:** `suggest_only`.
+<Tabs sync={false}>
+<Tab title="Explanation">
 
-**Population:** subjects with an observation of **MDM enrolment** (`mdm_enrolled_by`).
+Each selected device should report a compliant MDM state.
 
-**Expectation:** **MDM compliance state** (`device_compliance_state`) equals `"compliant"`.
+Part of **Alignr Baseline (seeded)**.
 
-**Thresholds:** no configurable parameter is declared for this control.
+**Applies to**
 
-**Required observations:** `device_compliance_state`, `mdm_enrolled_by`.
+Devices with an MDM enrolment observation.
 
-**Interpretation:** Compliant means compliant with the MDM source’s configured policies, not every Alignr expectation.
+**What the result tells you**
 
-**Investigate:** confirm the client and subject, inspect source and observation time, then compare the actual value with the effective expectation. Review a supported change separately from the assessment.
+Compliant means compliant with the MDM source’s configured policies, not every Alignr expectation.
+
+</Tab>
+<Tab title="Definition">
+
+| Setting | Value |
+| --- | --- |
+| Standard | Alignr Baseline (seeded) |
+| Severity | High |
+| Declared autonomy | Suggest only |
+
+**Population condition**
+
+**MDM enrolment** (`mdm_enrolled_by`) has an observation.
+
+
+**Expected evidence**
+
+- **MDM compliance state** (`device_compliance_state`) equals `"compliant"`.
+
+**Required predicates:** `device_compliance_state`, `mdm_enrolled_by`.
 
 ```json
 {
@@ -215,27 +336,55 @@ Expand a control to see the exact population, expectation and defaults. A pass r
 }
 ```
 
+</Tab>
+</Tabs>
+
 </Accordion>
 
 <Accordion title="Managed devices check in">
 
-**Source:** BIOS Endpoint and Server Health. **Severity:** medium. **Declared autonomy:** `suggest_only`.
+<Tabs sync={false}>
+<Tab title="Explanation">
 
-**Population:** subjects with an observation of **Device management** (`device_managed_by`) equal to `"rmm"`.
+Each selected device should have a check-in timestamp within the configured day window.
 
-**Expectation:** **Last management check-in** (`device_last_checkin`) is within this many days of now (past or future): parameter `days`.
+Part of **BIOS Endpoint and Server Health**.
 
-**Default parameters**
+**Applies to**
 
-| Parameter | Default | Allowed range |
+Devices reported as managed by an RMM.
+
+**Default settings**
+
+| Setting | Default | Allowed range |
 | --- | --- | --- |
-| Check-in window (days) (`days`) | `2` | 1–30 |
+| Check-in window (days) | `2` | 1–30 |
 
-**Required observations:** `device_last_checkin`, `device_managed_by`.
+Client overrides can change these values. [Check the effective settings](/controls/parameters) when interpreting a result.
 
-**Time comparison:** this operator accepts timestamps within the window on either side of now. Inspect unexpected future timestamps rather than assuming a past-only check.
+**What the result tells you**
 
-**Investigate:** confirm the client and subject, inspect source and observation time, then compare the actual value with the effective expectation. Review a supported change separately from the assessment.
+The time window includes timestamps before or after now. Investigate unexpected future timestamps.
+
+</Tab>
+<Tab title="Definition">
+
+| Setting | Value |
+| --- | --- |
+| Standard | BIOS Endpoint and Server Health |
+| Severity | Medium |
+| Declared autonomy | Suggest only |
+
+**Population condition**
+
+**Device management** (`device_managed_by`) equals `"rmm"`.
+
+
+**Expected evidence**
+
+- **Last management check-in** (`device_last_checkin`) is within this many days of now (past or future): parameter `days`.
+
+**Required predicates:** `device_last_checkin`, `device_managed_by`.
 
 ```json
 {
@@ -261,23 +410,47 @@ Expand a control to see the exact population, expectation and defaults. A pass r
 }
 ```
 
+</Tab>
+</Tabs>
+
 </Accordion>
 
 <Accordion title="Managed devices are patch compliant">
 
-**Source:** BIOS Endpoint and Server Health. **Severity:** high. **Declared autonomy:** `suggest_only`.
+<Tabs sync={false}>
+<Tab title="Explanation">
 
-**Population:** subjects with an observation of **Device management** (`device_managed_by`) equal to `"rmm"`.
+Each selected device should report a compliant patch status.
 
-**Expectation:** **Patch state** (`patch_status`) equals `"compliant"`.
+Part of **BIOS Endpoint and Server Health**.
 
-**Thresholds:** no configurable parameter is declared for this control.
+**Applies to**
 
-**Required observations:** `device_managed_by`, `patch_status`.
+Devices reported as managed by an RMM.
 
-**Interpretation:** The expected state is the exact string compliant. Review the source’s patch scope; this does not prove absence of every vulnerability.
+**What the result tells you**
 
-**Investigate:** confirm the client and subject, inspect source and observation time, then compare the actual value with the effective expectation. Review a supported change separately from the assessment.
+The expected state is the exact string compliant. Review the source’s patch scope; this does not prove absence of every vulnerability.
+
+</Tab>
+<Tab title="Definition">
+
+| Setting | Value |
+| --- | --- |
+| Standard | BIOS Endpoint and Server Health |
+| Severity | High |
+| Declared autonomy | Suggest only |
+
+**Population condition**
+
+**Device management** (`device_managed_by`) equals `"rmm"`.
+
+
+**Expected evidence**
+
+- **Patch state** (`patch_status`) equals `"compliant"`.
+
+**Required predicates:** `device_managed_by`, `patch_status`.
 
 ```json
 {
@@ -301,23 +474,47 @@ Expand a control to see the exact population, expectation and defaults. A pass r
 }
 ```
 
+</Tab>
+</Tabs>
+
 </Accordion>
 
 <Accordion title="Managed endpoints run EDR">
 
-**Source:** BIOS Endpoint and Server Health. **Severity:** high. **Declared autonomy:** `suggest_only`.
+<Tabs sync={false}>
+<Tab title="Explanation">
 
-**Population:** subjects with an observation of **Device management** (`device_managed_by`) equal to `"rmm"`.
+Each selected device should report an installed EDR agent.
 
-**Expectation:** **EDR installed** (`edr_agent_installed`) equals `true`.
+Part of **BIOS Endpoint and Server Health**.
 
-**Thresholds:** no configurable parameter is declared for this control.
+**Applies to**
 
-**Required observations:** `device_managed_by`, `edr_agent_installed`.
+Devices reported as managed by an RMM.
 
-**Interpretation:** Agent installation is not agent health or recent reporting. Correlate the same endpoint across sources.
+**What the result tells you**
 
-**Investigate:** confirm the client and subject, inspect source and observation time, then compare the actual value with the effective expectation. Review a supported change separately from the assessment.
+Agent installation is not agent health or recent reporting. Correlate the same endpoint across sources.
+
+</Tab>
+<Tab title="Definition">
+
+| Setting | Value |
+| --- | --- |
+| Standard | BIOS Endpoint and Server Health |
+| Severity | High |
+| Declared autonomy | Suggest only |
+
+**Population condition**
+
+**Device management** (`device_managed_by`) equals `"rmm"`.
+
+
+**Expected evidence**
+
+- **EDR installed** (`edr_agent_installed`) equals `true`.
+
+**Required predicates:** `device_managed_by`, `edr_agent_installed`.
 
 ```json
 {
@@ -341,23 +538,47 @@ Expand a control to see the exact population, expectation and defaults. A pass r
 }
 ```
 
+</Tab>
+</Tabs>
+
 </Accordion>
 
 <Accordion title="MDM devices are encrypted">
 
-**Source:** BIOS Endpoint and Server Health. **Severity:** high. **Declared autonomy:** `suggest_only`.
+<Tabs sync={false}>
+<Tab title="Explanation">
 
-**Population:** subjects with an observation of **MDM enrolment** (`mdm_enrolled_by`).
+Each selected device should report encryption enabled.
 
-**Expectation:** **Device encryption** (`device_encryption_enabled`) equals `true`.
+Part of **BIOS Endpoint and Server Health**.
 
-**Thresholds:** no configurable parameter is declared for this control.
+**Applies to**
 
-**Required observations:** `device_encryption_enabled`, `mdm_enrolled_by`.
+Devices with an MDM enrolment observation.
 
-**Interpretation:** Reported encryption does not establish recovery-key custody or successful recovery.
+**What the result tells you**
 
-**Investigate:** confirm the client and subject, inspect source and observation time, then compare the actual value with the effective expectation. Review a supported change separately from the assessment.
+Reported encryption does not establish recovery-key custody or successful recovery.
+
+</Tab>
+<Tab title="Definition">
+
+| Setting | Value |
+| --- | --- |
+| Standard | BIOS Endpoint and Server Health |
+| Severity | High |
+| Declared autonomy | Suggest only |
+
+**Population condition**
+
+**MDM enrolment** (`mdm_enrolled_by`) has an observation.
+
+
+**Expected evidence**
+
+- **Device encryption** (`device_encryption_enabled`) equals `true`.
+
+**Required predicates:** `device_encryption_enabled`, `mdm_enrolled_by`.
 
 ```json
 {
@@ -380,6 +601,9 @@ Expand a control to see the exact population, expectation and defaults. A pass r
 }
 ```
 
+</Tab>
+</Tabs>
+
 </Accordion>
 
 </AccordionGroup>
@@ -392,7 +616,7 @@ These are human reviews, not automated evidence. The interval below is the templ
 
 <Accordion title="Review server hardening baseline">
 
-**Source:** BIOS Endpoint and Server Health. **Default review interval:** 30 days.
+**Review every 30 days** · BIOS Endpoint and Server Health
 
 Review local admin, service accounts, host firewall, secure protocols and approved exceptions using your approved runbook. Connector facts do not currently prove these settings.
 
@@ -401,6 +625,10 @@ Review local admin, service accounts, host firewall, secure protocols and approv
 </Accordion>
 
 </AccordionGroup>
+
+## Investigate a result
+
+Confirm the client and the account, device or other item being assessed. Check the source, observation time and effective settings, then compare the recorded evidence with the expectation. Missing evidence needs investigation; a change to the environment requires a separate review.
 
 ## Next steps
 

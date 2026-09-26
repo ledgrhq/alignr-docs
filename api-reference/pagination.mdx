@@ -15,6 +15,17 @@ curl --fail-with-body \
 
 Page-based responses include `items`, `total`, `page`, `pageSize` and `totalPages`. Start at page 1 and use the returned metadata to decide whether to continue.
 
+For example, this illustrative metadata excerpt means there is one more page to fetch:
+
+```json
+{
+  "total": 40,
+  "page": 1,
+  "pageSize": 20,
+  "totalPages": 2
+}
+```
+
 ## Cursor-based lists
 
 Endpoints that support cursor pagination return `nextCursor` and `hasMore`. Pass the returned cursor using that endpoint’s documented cursor parameter. Treat the cursor as opaque; do not parse or construct it.

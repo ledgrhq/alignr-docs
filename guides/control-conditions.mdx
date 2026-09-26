@@ -27,9 +27,27 @@ flowchart TD
 
 Each step narrows or evaluates the same client's evidence. The source coverage and freshness checks described in the [status guide](/guides/control-status) also apply.
 
+## Use the editor labels
+
+For a step-by-step example in the app, follow [Create a custom control](/controls/create-custom). These labels connect the editor to the concepts above.
+
+In the control editor:
+
+- **Population predicate** identifies the observation used to find subjects.
+- **Fact to verify** identifies the observation you want to check.
+- **Operator** chooses the comparison.
+- **Value source** selects a literal value or a parameter.
+- **Expected value** supplies the value that should satisfy the comparison.
+
+The simple creation form selects a population predicate; it does not expose every advanced `match.object` or `where` combination shown in JSON examples. Do not assume selecting `has_role` alone means only Global Administrators. Review the saved definition or use the suitable built-in control when you need a particular population.
+
 ## Worked example: administrator MFA
 
-This is a **control definition example**, not a complete API request body. It uses the same shape as the built-in administrator MFA control.
+Read it as: **“Find subjects observed holding the Global Administrator role. Check that each has an observed MFA registration value of true. Cite the role and registration observations.”**
+
+The definition below uses the same shape as the built-in administrator MFA control. It is a definition example, not a complete API request body.
+
+<Accordion title="View the control definition">
 
 ```json
 {
@@ -46,7 +64,7 @@ This is a **control definition example**, not a complete API request body. It us
 }
 ```
 
-Read it as: **“Find subjects observed holding the Global Administrator role. Check that each has an observed MFA registration value of true. Cite the role and registration observations.”**
+</Accordion>
 
 For a simplified evaluation with suitable source coverage and fresh evidence:
 
@@ -59,18 +77,6 @@ For a simplified evaluation with suitable source coverage and fresh evidence:
 This population produces a **fail** because Morgan's observed value proves the expectation is not met. Sam's unknown result must still be investigated; the failure does not make their evidence complete.
 
 If Alex were the only observed administrator, this example could pass. If Alex and Sam were the population, it would be `no_data`, because Sam's missing observation prevents a complete pass. An empty observed population is also `no_data`, not an automatic exemption.
-
-## Use the editor labels
-
-In the control editor:
-
-- **Population predicate** identifies the observation used to find subjects.
-- **Fact to verify** identifies the observation you want to check.
-- **Operator** chooses the comparison.
-- **Value source** selects a literal value or a parameter.
-- **Expected value** supplies the value that should satisfy the comparison.
-
-The simple creation form selects a population predicate; it does not expose every advanced `match.object` or `where` combination shown in JSON examples. Do not assume selecting `has_role` alone means only Global Administrators. Review the saved definition or use the suitable built-in control when you need a particular population.
 
 ## Operators in plain English
 
@@ -94,7 +100,7 @@ The simple creation form selects a population predicate; it does not expose ever
 
 In control evaluation, a missing observation is unknown even for `neq`, `not_in`, `exists` and `not_exists`. A negative comparison must not turn missing evidence into a pass.
 
-An anchor can match a particular value among a subject's observations. Conditions in `where` and `expect` compare the latest fact for the named predicate; they are not general “every set member” expressions. For set-valued predicates, verify that the rule expresses the intended question.
+The population condition (`match`) can select a particular value among a subject's observations. Conditions in `where` and `expect` compare the latest fact for the named predicate; they are not general “every set member” expressions. For set-valued predicates, verify that the rule expresses the intended question.
 
 Multiple filters are combined with **AND**, as are multiple expectations. A known-false filter excludes a subject; an unknown filter can prevent a complete pass. A known-false expectation proves failure.
 

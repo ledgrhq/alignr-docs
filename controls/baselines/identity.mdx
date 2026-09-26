@@ -15,19 +15,40 @@ Expand a control to see the exact population, expectation and defaults. A pass r
 
 <Accordion title="MFA required for active accounts">
 
-**Source:** Alignr Baseline (seeded). **Severity:** high. **Declared autonomy:** `document_only`.
+<Tabs sync={false}>
+<Tab title="Explanation">
 
-**Population:** subjects with an observation of **Account enabled** (`account_enabled`) equal to `true`.
+Each selected account should have MFA registered.
 
-**Expectation:** **MFA registered** (`mfa_registered`) equals `true`.
+Part of **Alignr Baseline (seeded)**.
 
-**Thresholds:** no configurable parameter is declared for this control.
+**Applies to**
 
-**Required observations:** `account_enabled`, `mfa_registered`.
+Accounts observed as enabled.
 
-**Interpretation:** This checks MFA registration, not effective enforcement at every sign-in. Review policy coverage, allowed methods and emergency exclusions separately.
+**What the result tells you**
 
-**Investigate:** confirm the client and subject, inspect source and observation time, then compare the actual value with the effective expectation. Review a supported change separately from the assessment.
+This checks MFA registration, not effective enforcement at every sign-in. Review policy coverage, allowed methods and emergency exclusions separately.
+
+</Tab>
+<Tab title="Definition">
+
+| Setting | Value |
+| --- | --- |
+| Standard | Alignr Baseline (seeded) |
+| Severity | High |
+| Declared autonomy | Document only |
+
+**Population condition**
+
+**Account enabled** (`account_enabled`) equals `true`.
+
+
+**Expected evidence**
+
+- **MFA registered** (`mfa_registered`) equals `true`.
+
+**Required predicates:** `account_enabled`, `mfa_registered`.
 
 ```json
 {
@@ -51,23 +72,47 @@ Expand a control to see the exact population, expectation and defaults. A pass r
 }
 ```
 
+</Tab>
+</Tabs>
+
 </Accordion>
 
 <Accordion title="Privileged roles require MFA">
 
-**Source:** Alignr Baseline (seeded). **Severity:** high. **Declared autonomy:** `change_ticket`.
+<Tabs sync={false}>
+<Tab title="Explanation">
 
-**Population:** subjects with an observation of **Directory role** (`has_role`) equal to `"Global Administrator"`.
+Each selected account should have MFA registered.
 
-**Expectation:** **MFA registered** (`mfa_registered`) equals `true`.
+Part of **Alignr Baseline (seeded)**.
 
-**Thresholds:** no configurable parameter is declared for this control.
+**Applies to**
 
-**Required observations:** `has_role`, `mfa_registered`.
+Accounts observed with the Global Administrator role.
 
-**Interpretation:** This checks MFA registration, not effective enforcement at every sign-in. Review policy coverage, allowed methods and emergency exclusions separately.
+**What the result tells you**
 
-**Investigate:** confirm the client and subject, inspect source and observation time, then compare the actual value with the effective expectation. Review a supported change separately from the assessment.
+This checks MFA registration, not effective enforcement at every sign-in. Review policy coverage, allowed methods and emergency exclusions separately.
+
+</Tab>
+<Tab title="Definition">
+
+| Setting | Value |
+| --- | --- |
+| Standard | Alignr Baseline (seeded) |
+| Severity | High |
+| Declared autonomy | Change ticket |
+
+**Population condition**
+
+**Directory role** (`has_role`) equals `"Global Administrator"`.
+
+
+**Expected evidence**
+
+- **MFA registered** (`mfa_registered`) equals `true`.
+
+**Required predicates:** `has_role`, `mfa_registered`.
 
 ```json
 {
@@ -91,29 +136,58 @@ Expand a control to see the exact population, expectation and defaults. A pass r
 }
 ```
 
+</Tab>
+</Tabs>
+
 </Accordion>
 
 <Accordion title="Dormant accounts are disabled">
 
-**Source:** Alignr Baseline (seeded). **Severity:** high. **Declared autonomy:** `change_ticket`.
+<Tabs sync={false}>
+<Tab title="Explanation">
 
-**Population:** subjects with an observation of **Account enabled** (`account_enabled`).
+Accounts selected by the inactivity filter should be disabled.
 
-**Additional filter:** **Last interactive sign-in** (`last_sign_in`) is more than this many days in the past: parameter `dormant_days`.
+Part of **Alignr Baseline (seeded)**.
 
-**Expectation:** **Account enabled** (`account_enabled`) equals `false`.
+**Applies to**
 
-**Default parameters**
+Accounts with an enabled-state observation.
 
-| Parameter | Default | Allowed range |
+Only accounts whose recorded last sign-in is older than the configured inactivity limit are selected.
+
+**Default settings**
+
+| Setting | Default | Allowed range |
 | --- | --- | --- |
-| Dormant after (days) (`dormant_days`) | `90` | 1–365 |
+| Dormant after (days) | `90` | 1–365 |
 
-**Required observations:** `account_enabled`, `last_sign_in`.
+Client overrides can change these values. [Check the effective settings](/controls/parameters) when interpreting a result.
 
-**Interpretation:** Review the selected account population and its business purpose before acting. An automated disabled-state expectation does not authorise disabling an account.
+**What the result tells you**
 
-**Investigate:** confirm the client and subject, inspect source and observation time, then compare the actual value with the effective expectation. Review a supported change separately from the assessment.
+Review the selected account population and its business purpose before acting. An automated disabled-state expectation does not authorise disabling an account.
+
+</Tab>
+<Tab title="Definition">
+
+| Setting | Value |
+| --- | --- |
+| Standard | Alignr Baseline (seeded) |
+| Severity | High |
+| Declared autonomy | Change ticket |
+
+**Population condition**
+
+**Account enabled** (`account_enabled`) has an observation.
+
+- Filter: **Last interactive sign-in** (`last_sign_in`) is more than this many days in the past: parameter `dormant_days`.
+
+**Expected evidence**
+
+- **Account enabled** (`account_enabled`) equals `false`.
+
+**Required predicates:** `account_enabled`, `last_sign_in`.
 
 ```json
 {
@@ -145,23 +219,47 @@ Expand a control to see the exact population, expectation and defaults. A pass r
 }
 ```
 
+</Tab>
+</Tabs>
+
 </Accordion>
 
 <Accordion title="Conditional access is enforced tenant-wide">
 
-**Source:** Alignr Baseline (seeded). **Severity:** medium. **Declared autonomy:** `suggest_only`.
+<Tabs sync={false}>
+<Tab title="Explanation">
 
-**Population:** subjects with an observation of **Policy scope** (`ca_policy_scope`) equal to `"All users"`.
+Each selected policy should be enabled.
 
-**Expectation:** **Policy state** (`ca_policy_state`) equals `"enabled"`.
+Part of **Alignr Baseline (seeded)**.
 
-**Thresholds:** no configurable parameter is declared for this control.
+**Applies to**
 
-**Required observations:** `ca_policy_scope`, `ca_policy_state`.
+Conditional Access policies observed with an All users scope.
 
-**Interpretation:** The title is broader than the measured condition: an observed All users policy being enabled does not establish all policy interactions, exclusions or sign-in enforcement.
+**What the result tells you**
 
-**Investigate:** confirm the client and subject, inspect source and observation time, then compare the actual value with the effective expectation. Review a supported change separately from the assessment.
+The title is broader than the measured condition: an observed All users policy being enabled does not establish all policy interactions, exclusions or sign-in enforcement.
+
+</Tab>
+<Tab title="Definition">
+
+| Setting | Value |
+| --- | --- |
+| Standard | Alignr Baseline (seeded) |
+| Severity | Medium |
+| Declared autonomy | Suggest only |
+
+**Population condition**
+
+**Policy scope** (`ca_policy_scope`) equals `"All users"`.
+
+
+**Expected evidence**
+
+- **Policy state** (`ca_policy_state`) equals `"enabled"`.
+
+**Required predicates:** `ca_policy_scope`, `ca_policy_state`.
 
 ```json
 {
@@ -185,23 +283,47 @@ Expand a control to see the exact population, expectation and defaults. A pass r
 }
 ```
 
+</Tab>
+</Tabs>
+
 </Accordion>
 
 <Accordion title="No MFA bypass in effect">
 
-**Source:** Alignr Baseline (seeded). **Severity:** high. **Declared autonomy:** `one_click`.
+<Tabs sync={false}>
+<Tab title="Explanation">
 
-**Population:** subjects with an observation of **MFA bypass enabled** (`mfa_bypass_enabled`).
+MFA bypass should be off for each selected account.
 
-**Expectation:** **MFA bypass enabled** (`mfa_bypass_enabled`) equals `false`.
+Part of **Alignr Baseline (seeded)**.
 
-**Thresholds:** no configurable parameter is declared for this control.
+**Applies to**
 
-**Required observations:** `mfa_bypass_enabled`.
+Subjects with a recorded mfa bypass enabled observation.
 
-**Interpretation:** A registered factor and an active bypass can coexist. Review approved emergency access and any temporary exception before changing the account.
+**What the result tells you**
 
-**Investigate:** confirm the client and subject, inspect source and observation time, then compare the actual value with the effective expectation. Review a supported change separately from the assessment.
+A registered factor and an active bypass can coexist. Review approved emergency access and any temporary exception before changing the account.
+
+</Tab>
+<Tab title="Definition">
+
+| Setting | Value |
+| --- | --- |
+| Standard | Alignr Baseline (seeded) |
+| Severity | High |
+| Declared autonomy | One click |
+
+**Population condition**
+
+**MFA bypass enabled** (`mfa_bypass_enabled`) has an observation.
+
+
+**Expected evidence**
+
+- **MFA bypass enabled** (`mfa_bypass_enabled`) equals `false`.
+
+**Required predicates:** `mfa_bypass_enabled`.
 
 ```json
 {
@@ -223,23 +345,47 @@ Expand a control to see the exact population, expectation and defaults. A pass r
 }
 ```
 
+</Tab>
+</Tabs>
+
 </Accordion>
 
 <Accordion title="MFA on active accounts">
 
-**Source:** BIOS Identity Assurance. **Severity:** high. **Declared autonomy:** `suggest_only`.
+<Tabs sync={false}>
+<Tab title="Explanation">
 
-**Population:** subjects with an observation of **Account enabled** (`account_enabled`) equal to `true`.
+Each selected account should have MFA registered.
 
-**Expectation:** **MFA registered** (`mfa_registered`) equals `true`.
+Part of **BIOS Identity Assurance**.
 
-**Thresholds:** no configurable parameter is declared for this control.
+**Applies to**
 
-**Required observations:** `account_enabled`, `mfa_registered`.
+Accounts observed as enabled.
 
-**Interpretation:** This checks MFA registration, not effective enforcement at every sign-in. Review policy coverage, allowed methods and emergency exclusions separately.
+**What the result tells you**
 
-**Investigate:** confirm the client and subject, inspect source and observation time, then compare the actual value with the effective expectation. Review a supported change separately from the assessment.
+This checks MFA registration, not effective enforcement at every sign-in. Review policy coverage, allowed methods and emergency exclusions separately.
+
+</Tab>
+<Tab title="Definition">
+
+| Setting | Value |
+| --- | --- |
+| Standard | BIOS Identity Assurance |
+| Severity | High |
+| Declared autonomy | Suggest only |
+
+**Population condition**
+
+**Account enabled** (`account_enabled`) equals `true`.
+
+
+**Expected evidence**
+
+- **MFA registered** (`mfa_registered`) equals `true`.
+
+**Required predicates:** `account_enabled`, `mfa_registered`.
 
 ```json
 {
@@ -263,23 +409,47 @@ Expand a control to see the exact population, expectation and defaults. A pass r
 }
 ```
 
+</Tab>
+</Tabs>
+
 </Accordion>
 
 <Accordion title="Global Administrators use MFA">
 
-**Source:** BIOS Identity Assurance. **Severity:** high. **Declared autonomy:** `suggest_only`.
+<Tabs sync={false}>
+<Tab title="Explanation">
 
-**Population:** subjects with an observation of **Directory role** (`has_role`) equal to `"Global Administrator"`.
+Each selected account should have MFA registered.
 
-**Expectation:** **MFA registered** (`mfa_registered`) equals `true`.
+Part of **BIOS Identity Assurance**.
 
-**Thresholds:** no configurable parameter is declared for this control.
+**Applies to**
 
-**Required observations:** `has_role`, `mfa_registered`.
+Accounts observed with the Global Administrator role.
 
-**Interpretation:** This checks MFA registration, not effective enforcement at every sign-in. Review policy coverage, allowed methods and emergency exclusions separately.
+**What the result tells you**
 
-**Investigate:** confirm the client and subject, inspect source and observation time, then compare the actual value with the effective expectation. Review a supported change separately from the assessment.
+This checks MFA registration, not effective enforcement at every sign-in. Review policy coverage, allowed methods and emergency exclusions separately.
+
+</Tab>
+<Tab title="Definition">
+
+| Setting | Value |
+| --- | --- |
+| Standard | BIOS Identity Assurance |
+| Severity | High |
+| Declared autonomy | Suggest only |
+
+**Population condition**
+
+**Directory role** (`has_role`) equals `"Global Administrator"`.
+
+
+**Expected evidence**
+
+- **MFA registered** (`mfa_registered`) equals `true`.
+
+**Required predicates:** `has_role`, `mfa_registered`.
 
 ```json
 {
@@ -303,6 +473,9 @@ Expand a control to see the exact population, expectation and defaults. A pass r
 }
 ```
 
+</Tab>
+</Tabs>
+
 </Accordion>
 
 </AccordionGroup>
@@ -315,7 +488,7 @@ These are human reviews, not automated evidence. The interval below is the templ
 
 <Accordion title="Review effective conditional access coverage">
 
-**Source:** BIOS Identity Assurance. **Default review interval:** 90 days.
+**Review every 90 days** · BIOS Identity Assurance
 
 Verify the intended account population is covered by enabled policies, required grant controls and approved emergency exclusions. Review policy interactions and test sign-in enforcement. Registration or an enabled policy alone does not prove MFA enforcement.
 
@@ -325,7 +498,7 @@ Verify the intended account population is covered by enabled policies, required 
 
 <Accordion title="Review break-glass account governance">
 
-**Source:** BIOS Identity Assurance. **Default review interval:** 90 days.
+**Review every 90 days** · BIOS Identity Assurance
 
 Confirm named emergency accounts, exclusions, monitoring and last access test against the approved policy.
 
@@ -335,7 +508,7 @@ Confirm named emergency accounts, exclusions, monitoring and last access test ag
 
 <Accordion title="Review OAuth consent governance">
 
-**Source:** BIOS Identity Assurance. **Default review interval:** 90 days.
+**Review every 90 days** · BIOS Identity Assurance
 
 Review consent policy, verified publishers, privileged grants and documented exceptions.
 
@@ -344,6 +517,10 @@ Review consent policy, verified publishers, privileged grants and documented exc
 </Accordion>
 
 </AccordionGroup>
+
+## Investigate a result
+
+Confirm the client and the account, device or other item being assessed. Check the source, observation time and effective settings, then compare the recorded evidence with the expectation. Missing evidence needs investigation; a change to the environment requires a separate review.
 
 ## Next steps
 

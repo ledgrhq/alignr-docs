@@ -51,76 +51,74 @@
         "icon": "book-open",
         "groups": [
           {
-            "group": "Get started",
+            "group": "Start here",
             "pages": [
               "introduction",
-              "quickstart",
-              "guides/api-keys"
+              "quickstart"
             ]
           },
           {
-            "group": "Set up Alignr",
+            "group": "Explore Alignr",
             "pages": [
-              "guides/integrations",
-              "guides/organizations",
-              "guides/standards"
-            ]
-          },
-          {
-            "group": "Learn",
-            "pages": [
-              "guides/predicates",
-              "guides/evidence",
-              "guides/remediation",
-              "guides/troubleshooting"
-            ]
-          },
-          {
-            "group": "Reference",
-            "pages": [
-              "guides/predicate-reference",
-              "guides/glossary"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "Controls",
-        "icon": "shield-check",
-        "groups": [
-          {
-            "group": "Understand controls",
-            "pages": [
-              "controls/overview",
-              "guides/control-conditions",
-              "guides/control-status"
-            ]
-          },
-          {
-            "group": "Build and manage",
-            "pages": [
-              "controls/create-custom",
-              "controls/parameters",
-              "controls/advanced-definitions",
-              "controls/manual-checks",
-              "controls/test-and-rollout"
-            ]
-          },
-          {
-            "group": "Baseline library",
-            "pages": [
-              "controls/baselines/overview",
               {
-                "group": "Browse by category",
+                "group": "Set up your workspace",
                 "pages": [
-                  "controls/baselines/identity",
-                  "controls/baselines/endpoints",
-                  "controls/baselines/backup",
-                  "controls/baselines/vulnerability",
-                  "controls/baselines/licensing",
-                  "controls/baselines/network",
-                  "controls/baselines/email",
-                  "controls/baselines/external"
+                  "guides/integrations",
+                  "guides/organizations",
+                  "guides/standards"
+                ]
+              },
+              {
+                "group": "Understand assessments",
+                "pages": [
+                  "guides/evidence",
+                  "guides/predicates",
+                  "guides/control-status",
+                  "guides/remediation"
+                ]
+              },
+              {
+                "group": "Controls",
+                "pages": [
+                  "controls/overview",
+                  "controls/baselines/overview",
+                  {
+                    "group": "Baseline categories",
+                    "pages": [
+                      "controls/baselines/identity",
+                      "controls/baselines/endpoints",
+                      "controls/baselines/backup",
+                      "controls/baselines/vulnerability",
+                      "controls/baselines/licensing",
+                      "controls/baselines/network",
+                      "controls/baselines/email",
+                      "controls/baselines/external"
+                    ]
+                  },
+                  {
+                    "group": "Build and manage controls",
+                    "pages": [
+                      "controls/create-custom",
+                      "controls/parameters",
+                      "controls/manual-checks",
+                      "controls/test-and-rollout"
+                    ]
+                  },
+                  {
+                    "group": "Control definitions",
+                    "pages": [
+                      "guides/control-conditions",
+                      "controls/advanced-definitions"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Help and reference",
+                "pages": [
+                  "guides/troubleshooting",
+                  "guides/glossary",
+                  "guides/predicate-reference"
                 ]
               }
             ]
@@ -135,6 +133,7 @@
             "group": "Overview",
             "pages": [
               "api-reference/introduction",
+              "guides/api-keys",
               "api-reference/authentication",
               "api-reference/pagination",
               "api-reference/errors"

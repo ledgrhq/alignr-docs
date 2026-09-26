@@ -1,33 +1,59 @@
 ---
 title: "Introduction"
-description: "Technical alignment for managed service providers."
+description: "Understand how Alignr fits together and find the right place to start."
 ---
 
-Alignr brings your client environments, standards and evidence together so you can see what needs attention and decide what to do next.
+Alignr helps managed service providers assess their clients' environments against technical standards. It brings together observations from connected systems, checks them against your expectations, and shows the evidence behind each result.
 
-To get started with Alignr, you’ll need:
+Your **workspace** belongs to your MSP. An **Organization** is one of your clients within that workspace.
 
-1. Access to your MSP’s [Alignr workspace](https://app.alignr.io).
-2. A client to assess and an integration you can authorise.
+## How to use these docs
 
-Then, connect a source, map its records to your clients, and apply a standard.
+Start with the [quickstart](/quickstart) if you are setting up Alignr for the first time. It takes you from connecting a source to reviewing your first client assessment.
 
-## Quickstart
+Everything you need to use the app is under **Documentation**. Expand a group in the left sidebar to find its guides:
 
-<Columns cols={2}>
-  <Card title="Set up your workspace" icon="rocket" href="/quickstart">Connect your first source and review a client’s alignment.</Card>
-  <Card title="Make an API request" icon="terminal" href="/api-reference/introduction">Read your Organization data with a scoped API key.</Card>
-</Columns>
+- **Set up your workspace** — connect sources, map client records and choose standards.
+- **Understand assessments** — learn how evidence becomes a result and what to do next.
+- **Controls** — browse baselines by category, create custom controls and manage manual checks. Open **Build and manage controls** for practical guides or **Control definitions** for technical details.
+- **Help and reference** — troubleshoot a result or look up an unfamiliar term or predicate.
 
-## Explore
+On mobile, open the navigation menu below the logo to see the same groups. Use search for a specific control name or technical identifier. Reference catalogues are there to look things up; you do not need to read them end to end.
 
-<Columns cols={2}>
-  <Card title="Connect integrations" icon="plug" href="/guides/integrations">Collect evidence from the systems you already use.</Card>
-  <Card title="Standards and controls" icon="list-check" href="/guides/standards">Define expectations and review the results.</Card>
-  <Card title="Connect an AI assistant" icon="message" href="/mcp/connect">Use the MCP server to work with authorised context.</Card>
-  <Card title="Understand evidence" icon="magnifying-glass" href="/guides/evidence">Trace results to their sources and observations.</Card>
-</Columns>
+**API reference** and **MCP** are separate tabs for developers and people connecting AI assistants. You do not need an API key or MCP connection to use the Alignr app.
 
-## Understand how Alignr reaches a result
+## How Alignr fits together
 
-Start with [predicates in plain English](/guides/predicates), follow [the evidence flow](/guides/evidence), then work through [a control example](/guides/control-conditions). The [predicate reference](/guides/predicate-reference) explains every registered observation and what it does — and does not — establish.
+```mermaid
+flowchart TD
+    S["Connect a source and map it to a client"] --> F["Collect observations as facts"]
+    F --> C["Compare evidence with controls"]
+    B["Standards and client settings"] --> C
+    C --> R["Review results and evidence gaps"]
+    R --> A["Review an action and verify the outcome"]
+```
+
+A connected source supplies **facts**: observations about an account, device or other item. A **predicate** names the observed property, such as whether MFA is registered.
+
+A **control** compares those observations with an expectation. A **standard** groups related controls, and client settings can adjust their thresholds. **Manual checks** capture human reviews where automated observations cannot answer the whole question.
+
+Results show whether an expectation is satisfied, contradicted or cannot yet be assessed. Missing or stale evidence does not count as passing. A supported remediation plan is reviewed separately before a change is made.
+
+## Follow one example
+
+For a client called Acme, a directory source reports that an account is a Global Administrator and has MFA registered. An identity control selects that administrator and checks the MFA observation.
+
+The observed registration satisfies that comparison. It does not establish that every sign-in enforces MFA; policy coverage needs its own review. If the registration observation is missing, Alignr needs more evidence to answer the question.
+
+This is the connection between the setup guides, evidence guides and control reference: **which client, which observation, which expectation, and what conclusion follows?**
+
+## Choose your path
+
+<CardGroup cols={2}>
+  <Card title="Set up your first client" icon="rocket" href="/quickstart">Connect a source, choose a standard and run your first assessment.</Card>
+  <Card title="Understand a result" icon="magnifying-glass" href="/guides/control-status">Read the outcome, inspect evidence and investigate gaps.</Card>
+  <Card title="Choose or build controls" icon="sliders" href="/controls/overview">Start with a baseline or define your own technical expectations.</Card>
+  <Card title="Build with the API" icon="terminal" href="/api-reference/introduction">Read workspace data from your own tools using a scoped key.</Card>
+</CardGroup>
+
+Connecting an AI assistant? Start with [MCP explained](/mcp/introduction), then follow the [connection guide](/mcp/connect).

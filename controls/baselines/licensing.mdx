@@ -15,19 +15,40 @@ Expand a control to see the exact population, expectation and defaults. A pass r
 
 <Accordion title="Enabled accounts hold a licence">
 
-**Source:** Alignr Baseline (seeded). **Severity:** medium. **Declared autonomy:** `document_only`.
+<Tabs sync={false}>
+<Tab title="Explanation">
 
-**Population:** subjects with an observation of **Account enabled** (`account_enabled`) equal to `true`.
+Each selected account should have a recorded licence.
 
-**Expectation:** **Licence or entitlement** (`has_licence`) has a non-null observed value.
+Part of **Alignr Baseline (seeded)**.
 
-**Thresholds:** no configurable parameter is declared for this control.
+**Applies to**
 
-**Required observations:** `account_enabled`, `has_licence`.
+Accounts observed as enabled.
 
-**Interpretation:** This checks that an observed licence value exists, not that the licence is paid, appropriate, actively used or required for every account type. Review exceptions for service and other special-purpose identities.
+**What the result tells you**
 
-**Investigate:** confirm the client and subject, inspect source and observation time, then compare the actual value with the effective expectation. Review a supported change separately from the assessment.
+This checks that an observed licence value exists, not that the licence is paid, appropriate, actively used or required for every account type. Review exceptions for service and other special-purpose identities.
+
+</Tab>
+<Tab title="Definition">
+
+| Setting | Value |
+| --- | --- |
+| Standard | Alignr Baseline (seeded) |
+| Severity | Medium |
+| Declared autonomy | Document only |
+
+**Population condition**
+
+**Account enabled** (`account_enabled`) equals `true`.
+
+
+**Expected evidence**
+
+- **Licence or entitlement** (`has_licence`) has a non-null observed value.
+
+**Required predicates:** `account_enabled`, `has_licence`.
 
 ```json
 {
@@ -50,23 +71,47 @@ Expand a control to see the exact population, expectation and defaults. A pass r
 }
 ```
 
+</Tab>
+</Tabs>
+
 </Accordion>
 
 <Accordion title="Licence renewal dates are on file">
 
-**Source:** Alignr Baseline (seeded). **Severity:** low. **Declared autonomy:** `suggest_only`.
+<Tabs sync={false}>
+<Tab title="Explanation">
 
-**Population:** subjects with an observation of **Purchased seats** (`licence_seats_purchased`).
+Each selected licence should have a recorded renewal date.
 
-**Expectation:** **Next licence renewal** (`licence_renewal_date`) has a non-null observed value.
+Part of **Alignr Baseline (seeded)**.
 
-**Thresholds:** no configurable parameter is declared for this control.
+**Applies to**
 
-**Required observations:** `licence_renewal_date`, `licence_seats_purchased`.
+Licences with a purchased-seat observation.
 
-**Interpretation:** This checks that a renewal value is present, not that the date is in the future or the commercial terms are suitable.
+**What the result tells you**
 
-**Investigate:** confirm the client and subject, inspect source and observation time, then compare the actual value with the effective expectation. Review a supported change separately from the assessment.
+This checks that a renewal value is present, not that the date is in the future or the commercial terms are suitable.
+
+</Tab>
+<Tab title="Definition">
+
+| Setting | Value |
+| --- | --- |
+| Standard | Alignr Baseline (seeded) |
+| Severity | Low |
+| Declared autonomy | Suggest only |
+
+**Population condition**
+
+**Purchased seats** (`licence_seats_purchased`) has an observation.
+
+
+**Expected evidence**
+
+- **Next licence renewal** (`licence_renewal_date`) has a non-null observed value.
+
+**Required predicates:** `licence_renewal_date`, `licence_seats_purchased`.
 
 ```json
 {
@@ -88,6 +133,9 @@ Expand a control to see the exact population, expectation and defaults. A pass r
 }
 ```
 
+</Tab>
+</Tabs>
+
 </Accordion>
 
 </AccordionGroup>
@@ -95,6 +143,10 @@ Expand a control to see the exact population, expectation and defaults. A pass r
 ## Manual checks
 
 No manual checks are bundled in these catalogue entries. Add a separate manual check where the expectation needs human judgement.
+
+## Investigate a result
+
+Confirm the client and the account, device or other item being assessed. Check the source, observation time and effective settings, then compare the recorded evidence with the expectation. Missing evidence needs investigation; a change to the environment requires a separate review.
 
 ## Next steps
 

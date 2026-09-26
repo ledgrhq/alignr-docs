@@ -54,21 +54,56 @@ while pending:
 spec = {'openapi': schema['openapi'], 'info': {'title': 'Alignr API', 'version': schema['info']['version'], 'description': 'Selected read operations. Generated from the Alignr application; no tenant data is included.'}, 'servers': [{'url': 'https://api.alignr.io'}], 'paths': paths, 'components': components}
 (ROOT/'api-reference/openapi.json').write_text(json.dumps(spec, indent=2)+'\n')
 config = json.loads((ROOT/'docs.json').read_text())
-config['navigation']['tabs'][1]['groups'] = config['navigation']['tabs'][1]['groups'][:2] + [{'group': group, 'openapi':'/api-reference/openapi.json','pages':['GET /api/v1'+suffix for suffix,_ in endpoints]} for group,endpoints in GROUPS.items()]
+api_tab = next(tab for tab in config['navigation']['tabs'] if tab['tab'] == 'API reference')
+api_tab['groups'] = [group for group in api_tab['groups'] if 'openapi' not in group] + [{'group': group, 'openapi':'/api-reference/openapi.json','pages':['GET /api/v1'+suffix for suffix,_ in endpoints]} for group,endpoints in GROUPS.items()]
 # Keep examples copyable without a hosted proxy accepting production credentials.
 config['api'] = {'playground': {'display': 'none'}}
 (ROOT/'docs.json').write_text(json.dumps(config,indent=2)+'\n')
-lines = ['---', 'title: "MCP tools"', 'description: "Tool names, arguments and scopes generated from the Alignr server."', '---', '', 'This catalogue is generated from Alignr’s tool registry. Confirm deployment availability using the [live reference](/api-reference/live-schema). Tool identifiers retain their API spelling.', '', '## Tool catalogue', '', '| Tool | Required scope | Access |', '| --- | --- | --- |']
-for spec in MCP_TOOL_SCOPES.values():
-    lines.append(f'| `{spec.tool}` | `{spec.scope}` | {"Write" if spec.mutating else "Read"} |')
-for spec in MCP_TOOL_SCOPES.values():
-    function = getattr(server, spec.tool)
-    lines += ['', f'## {spec.tool}', '', spec.summary, '', f'Required scope: `{spec.scope}`. Underlying permissions: '+', '.join(f'`{p}`' for p in spec.permissions)+'.', '', '| Argument | Required | Default |', '| --- | --- | --- |']
-    for name, param in inspect.signature(function).parameters.items():
-        required = param.default is inspect.Parameter.empty
-        default = '—' if required else f'`{json.dumps(param.default)}`'
-        lines.append(f'| `{name}` | {"Yes" if required else "No"} | {default} |')
-    if spec.mutating:
-        lines += ['', '<Warning>This tool writes a detection note. Confirm the target and note text before allowing the call.</Warning>']
+# Human explanations complement generated names, scopes and defaults.
+TOOL_GROUPS = {
+    'Client context': [('get_organization', 'Get an Organization'), ('get_asset', 'Get an asset')],
+    'Control results': [('get_organization_compliance', 'Read client control results'), ('explain_control_status', 'Explain a control result'), ('list_organizations_by_control_status', 'Find clients by control status'), ('get_standard_rollup', 'Review a standard across clients')],
+    'Findings': [('list_detections', 'List detections'), ('create_detection_note', 'Add a detection note')],
+    'Search and questions': [('search_documentation', 'Search indexed content'), ('ask_ledgr', 'Ask an evidence-backed question')],
+}
+ARGUMENT_HELP = {
+    'organization_id': 'Organization UUID. When optional, omit it to use the tool’s workspace-wide scope.',
+    'asset_id': 'UUID of the asset to retrieve.',
+    'query': 'Text to search for.',
+    'question': 'The question you want answered from available evidence.',
+    'limit': 'Maximum number of results requested.',
+    'control': 'Control UUID, name, or case-insensitive substring of its name or slug.',
+    'standard': 'Standard UUID, name, or case-insensitive substring of its name or slug.',
+    'status': 'Status to filter by; the default is shown below.',
+    'detection_ref': 'Reference identifying the detection to annotate.',
+    'note': 'Text to add to the detection.',
+}
+ordered_tools = [name for group in TOOL_GROUPS.values() for name, _ in group]
+registry = {spec.tool: spec for spec in MCP_TOOL_SCOPES.values()}
+if set(ordered_tools) != set(registry):
+    raise ValueError('Update TOOL_GROUPS when the MCP registry changes')
+lines = ['---', 'title: "MCP tools"', 'description: "Choose a tool by task, then check its arguments and required scope."', '---', '', 'Use this catalogue to choose the tool for your question. Names, scopes and defaults are generated from Alignr’s server; [connect your client](/mcp/connect) before making a call.', '', 'Confirm deployment availability using the [live reference](/api-reference/live-schema). An Organization is one client in your MSP workspace.', '', 'The required scope must be assigned to the key. For a user-scoped key, the owner must also retain the listed user permissions.', '', '## Choose a tool', '', '| Task | Tool | Required scope |', '| --- | --- | --- |']
+for group in TOOL_GROUPS.values():
+    for name, title in group:
+        spec = registry[name]
+        anchor = title.lower().replace(' ', '-')
+        lines.append(f'| [{title}](#{anchor}) | `{name}` | `{spec.scope}` |')
+for category, group in TOOL_GROUPS.items():
+    lines += ['', f'## {category}']
+    for name, title in group:
+        spec = registry[name]
+        function = getattr(server, name)
+        lines += ['', f'### {title}', '', f'`{name}`', '', spec.summary, '', f'**Required scope:** `{spec.scope}`', '', '**User permissions:** '+', '.join(f'`{permission}`' for permission in spec.permissions)+'.', '', '| Argument | Required | Default |', '| --- | --- | --- |']
+        parameters = inspect.signature(function).parameters
+        for argument, param in parameters.items():
+            required = param.default is inspect.Parameter.empty
+            default = '—' if required else f'`{json.dumps(param.default)}`'
+            lines.append(f'| `{argument}` | {"Yes" if required else "No"} | {default} |')
+        lines += ['']
+        for argument in parameters:
+            lines.append(f'- **`{argument}`:** {ARGUMENT_HELP[argument]}')
+        if spec.mutating:
+            lines += ['', '<Warning>This tool writes a detection note. Confirm the target and note text before allowing the call.</Warning>']
+lines += ['', '## Understand the answer', '', 'A missing result is not proof that a control passed. Read [control statuses](/guides/control-status), retain the client and evidence context, and review [MCP permissions](/mcp/security).']
 (ROOT/'mcp/tools.mdx').write_text('\n'.join(lines)+'\n')
 print(f'Generated {len(paths)} read endpoints and {len(MCP_TOOL_SCOPES)} MCP tools.')

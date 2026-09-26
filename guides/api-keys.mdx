@@ -3,6 +3,19 @@ title: "Create an API key"
 description: "Give scripts and MCP clients only the access they need."
 ---
 
+Create a key when connecting a script or MCP client. You do not need one for normal use of the Alignr app.
+
+## Choose the right scopes
+
+Scopes specify what a key may do. REST and MCP use different names:
+
+| Connection | Example scope | What it allows |
+| --- | --- | --- |
+| REST API | `organization.read` | Read Organizations through the API. |
+| MCP client | `organization:read` | Call the `get_organization` tool. |
+
+Choose the exact scopes listed for your endpoint or [MCP tool](/mcp/tools).
+
 ## Create a key
 
 <Steps>
@@ -28,3 +41,7 @@ Do not put keys in browser code, Git commits, URLs or screenshots. Examples in t
 ## Replace or revoke a key
 
 Scopes are fixed at creation. Create a replacement key to change its access, update the consuming client, verify it works, then revoke the old key. Revoke a suspected exposed key promptly.
+
+## Try the key
+
+Continue with your [first REST request](/api-reference/introduction) or [connect an MCP client](/mcp/connect).

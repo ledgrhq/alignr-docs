@@ -19,10 +19,15 @@ Sign in to [Alignr](https://app.alignr.io) with a workspace account. You need pe
     [Understand Organizations](/guides/organizations).
   </Step>
   <Step title="Review your standard">
-    Open **Standards** and review the controls you want to apply. Check their parameters, evidence requirements and client-specific overrides before enabling them.
+    Open **Standards → More → Browse library** and choose a suitable template. Copying it creates a disabled draft. Review its controls, parameters, evidence requirements and client-specific overrides before enabling it.
+
+    [Choose a baseline](/controls/baselines/overview).
   </Step>
   <Step title="Review collected evidence">
     Check that collection has completed for the intended client. Look at source and observation time. Missing or stale evidence must not be interpreted as passing.
+  </Step>
+  <Step title="Run the assessment">
+    From **Standards**, select **Run checks**. Review the standard, selected clients and settings, then confirm **Run checks for N clients**. Wait for the evaluation to complete before interpreting the results.
   </Step>
   <Step title="Review the results">
     Open the client’s alignment results. Investigate failures, distinguish missing data from unsupported coverage, and assign manual checks where needed. Review a supported remediation plan before approving a change.
@@ -37,11 +42,11 @@ You can identify the client, the standard being assessed, and the evidence behin
 
 ## A worked first assessment
 
-Use a built-in identity standard as an example, after reviewing its controls and connecting a source that supplies the necessary observations.
+Use a copy of the **BIOS Identity Assurance** library template after reviewing its draft controls and connecting a source that supplies the necessary observations.
 
 1. Confirm the source's directory maps to the intended client.
-2. Inspect an observed administrator's `has_role` fact and its source.
-3. Inspect the same subject's `mfa_registered` observation.
+2. Inspect an account's **Administrator role** observation (`has_role`) and its source.
+3. Inspect the same account's **MFA registered** observation (`mfa_registered`).
 4. Review the administrator MFA control and its selected population.
 5. Read the result: an observed `false` can prove failure; a missing observation cannot prove a pass.
 
@@ -50,3 +55,9 @@ This checks registration, not every aspect of MFA enforcement. The [control walk
 ## Learn the language as you go
 
 You do not need to memorise technical names. A **predicate** names what is observed; a **fact** records a value for a subject; a **control** compares evidence with an expectation. Keep the [glossary](/guides/glossary) and [predicate reference](/guides/predicate-reference) available when reviewing unfamiliar results.
+
+## Continue from your result
+
+- Missing evidence: [troubleshoot source coverage](/guides/troubleshooting).
+- A failing control: [review evidence and supported remediation](/guides/remediation).
+- A question needing human judgement: [record a manual check](/controls/manual-checks).

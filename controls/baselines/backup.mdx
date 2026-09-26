@@ -15,23 +15,43 @@ Expand a control to see the exact population, expectation and defaults. A pass r
 
 <Accordion title="Servers are protected by a backup product">
 
-**Source:** Alignr Baseline (seeded). **Severity:** high. **Declared autonomy:** `suggest_only`.
+<Tabs sync={false}>
+<Tab title="Explanation">
 
-**Population:** subjects with an observation of **Device management** (`device_managed_by`) equal to `"rmm"`.
+Each selected server should have a recorded backup product.
 
-**Additional filter:** **Operating system** (`os_platform`) matches the case-sensitive pattern `"Server"`.
+Part of **Alignr Baseline (seeded)**.
 
-**Expectation:** **Backup protection provider** (`backup_protected_by`) has a non-null observed value.
+**Applies to**
 
-**Thresholds:** no configurable parameter is declared for this control.
+Devices reported as managed by an RMM.
 
-**Required observations:** `backup_protected_by`, `device_managed_by`, `os_platform`.
+The operating-system name must also match the case-sensitive pattern `Server`.
 
-**Interpretation:** Recorded product presence is not a successful backup or a tested restore. Missing evidence must be investigated rather than treated as passing.
+**What the result tells you**
 
-**Population limit:** the Server pattern is case-sensitive and depends on the reported operating-system text; it is not a universal server inventory.
+Recorded product presence is not a successful backup or a tested restore. Missing evidence must be investigated rather than treated as passing.
 
-**Investigate:** confirm the client and subject, inspect source and observation time, then compare the actual value with the effective expectation. Review a supported change separately from the assessment.
+</Tab>
+<Tab title="Definition">
+
+| Setting | Value |
+| --- | --- |
+| Standard | Alignr Baseline (seeded) |
+| Severity | High |
+| Declared autonomy | Suggest only |
+
+**Population condition**
+
+**Device management** (`device_managed_by`) equals `"rmm"`.
+
+- Filter: **Operating system** (`os_platform`) matches the case-sensitive pattern `"Server"`.
+
+**Expected evidence**
+
+- **Backup protection provider** (`backup_protected_by`) has a non-null observed value.
+
+**Required predicates:** `backup_protected_by`, `device_managed_by`, `os_platform`.
 
 ```json
 {
@@ -62,23 +82,47 @@ Expand a control to see the exact population, expectation and defaults. A pass r
 }
 ```
 
+</Tab>
+</Tabs>
+
 </Accordion>
 
 <Accordion title="Backup jobs complete without error">
 
-**Source:** Alignr Baseline (seeded). **Severity:** high. **Declared autonomy:** `suggest_only`.
+<Tabs sync={false}>
+<Tab title="Explanation">
 
-**Population:** subjects with an observation of **Backup job state** (`backup_job_state`).
+Each selected job should report a healthy status.
 
-**Expectation:** **Backup job state** (`backup_job_state`) equals `"ok"`.
+Part of **Alignr Baseline (seeded)**.
 
-**Thresholds:** no configurable parameter is declared for this control.
+**Applies to**
 
-**Required observations:** `backup_job_state`.
+Backup jobs with a recorded status.
 
-**Interpretation:** The expected state is the normalised value ok. Review the job/workload identity and timing; this is not a restore test.
+**What the result tells you**
 
-**Investigate:** confirm the client and subject, inspect source and observation time, then compare the actual value with the effective expectation. Review a supported change separately from the assessment.
+The expected state is the normalised value ok. Review the job/workload identity and timing; this is not a restore test.
+
+</Tab>
+<Tab title="Definition">
+
+| Setting | Value |
+| --- | --- |
+| Standard | Alignr Baseline (seeded) |
+| Severity | High |
+| Declared autonomy | Suggest only |
+
+**Population condition**
+
+**Backup job state** (`backup_job_state`) has an observation.
+
+
+**Expected evidence**
+
+- **Backup job state** (`backup_job_state`) equals `"ok"`.
+
+**Required predicates:** `backup_job_state`.
 
 ```json
 {
@@ -100,29 +144,57 @@ Expand a control to see the exact population, expectation and defaults. A pass r
 }
 ```
 
+</Tab>
+</Tabs>
+
 </Accordion>
 
 <Accordion title="Backups complete within the retention window">
 
-**Source:** Alignr Baseline (seeded). **Severity:** high. **Declared autonomy:** `suggest_only`.
+<Tabs sync={false}>
+<Tab title="Explanation">
 
-**Population:** subjects with an observation of **Backup protection provider** (`backup_protected_by`).
+Each selected workload should have a successful-backup timestamp within the configured day window.
 
-**Expectation:** **Last successful backup** (`backup_last_successful_at`) is within this many days of now (past or future): parameter `max_age_days`.
+Part of **Alignr Baseline (seeded)**.
 
-**Default parameters**
+**Applies to**
 
-| Parameter | Default | Allowed range |
+Workloads with a recorded backup product.
+
+**Default settings**
+
+| Setting | Default | Allowed range |
 | --- | --- | --- |
-| Must have completed within (days) (`max_age_days`) | `1` | 1–30 |
+| Must have completed within (days) | `1` | 1–30 |
 
-**Required observations:** `backup_last_successful_at`, `backup_protected_by`.
+Client overrides can change these values. [Check the effective settings](/controls/parameters) when interpreting a result.
 
-**Interpretation:** This measures backup recency, despite any title mentioning a retention window. It does not inspect retention policy, recovery time or restored-data integrity.
+**What the result tells you**
 
-**Time comparison:** this operator accepts timestamps within the window on either side of now. Inspect unexpected future timestamps rather than assuming a past-only check.
+This measures backup recency, despite any title mentioning a retention window. It does not inspect retention policy, recovery time or restored-data integrity.
 
-**Investigate:** confirm the client and subject, inspect source and observation time, then compare the actual value with the effective expectation. Review a supported change separately from the assessment.
+The time window includes timestamps before or after now. Investigate unexpected future timestamps.
+
+</Tab>
+<Tab title="Definition">
+
+| Setting | Value |
+| --- | --- |
+| Standard | Alignr Baseline (seeded) |
+| Severity | High |
+| Declared autonomy | Suggest only |
+
+**Population condition**
+
+**Backup protection provider** (`backup_protected_by`) has an observation.
+
+
+**Expected evidence**
+
+- **Last successful backup** (`backup_last_successful_at`) is within this many days of now (past or future): parameter `max_age_days`.
+
+**Required predicates:** `backup_last_successful_at`, `backup_protected_by`.
 
 ```json
 {
@@ -147,23 +219,47 @@ Expand a control to see the exact population, expectation and defaults. A pass r
 }
 ```
 
+</Tab>
+</Tabs>
+
 </Accordion>
 
 <Accordion title="Backup jobs report healthy">
 
-**Source:** BIOS Backup Health. **Severity:** high. **Declared autonomy:** `suggest_only`.
+<Tabs sync={false}>
+<Tab title="Explanation">
 
-**Population:** subjects with an observation of **Backup job state** (`backup_job_state`).
+Each selected job should report a healthy status.
 
-**Expectation:** **Backup job state** (`backup_job_state`) equals `"ok"`.
+Part of **BIOS Backup Health**.
 
-**Thresholds:** no configurable parameter is declared for this control.
+**Applies to**
 
-**Required observations:** `backup_job_state`.
+Backup jobs with a recorded status.
 
-**Interpretation:** The expected state is the normalised value ok. Review the job/workload identity and timing; this is not a restore test.
+**What the result tells you**
 
-**Investigate:** confirm the client and subject, inspect source and observation time, then compare the actual value with the effective expectation. Review a supported change separately from the assessment.
+The expected state is the normalised value ok. Review the job/workload identity and timing; this is not a restore test.
+
+</Tab>
+<Tab title="Definition">
+
+| Setting | Value |
+| --- | --- |
+| Standard | BIOS Backup Health |
+| Severity | High |
+| Declared autonomy | Suggest only |
+
+**Population condition**
+
+**Backup job state** (`backup_job_state`) has an observation.
+
+
+**Expected evidence**
+
+- **Backup job state** (`backup_job_state`) equals `"ok"`.
+
+**Required predicates:** `backup_job_state`.
 
 ```json
 {
@@ -185,29 +281,57 @@ Expand a control to see the exact population, expectation and defaults. A pass r
 }
 ```
 
+</Tab>
+</Tabs>
+
 </Accordion>
 
 <Accordion title="Protected workloads back up daily">
 
-**Source:** BIOS Backup Health. **Severity:** high. **Declared autonomy:** `suggest_only`.
+<Tabs sync={false}>
+<Tab title="Explanation">
 
-**Population:** subjects with an observation of **Backup protection provider** (`backup_protected_by`).
+Each selected workload should have a successful-backup timestamp within the configured day window.
 
-**Expectation:** **Last successful backup** (`backup_last_successful_at`) is within this many days of now (past or future): parameter `days`.
+Part of **BIOS Backup Health**.
 
-**Default parameters**
+**Applies to**
 
-| Parameter | Default | Allowed range |
+Workloads with a recorded backup product.
+
+**Default settings**
+
+| Setting | Default | Allowed range |
 | --- | --- | --- |
-| Maximum backup age (days) (`days`) | `1` | 1–30 |
+| Maximum backup age (days) | `1` | 1–30 |
 
-**Required observations:** `backup_last_successful_at`, `backup_protected_by`.
+Client overrides can change these values. [Check the effective settings](/controls/parameters) when interpreting a result.
 
-**Interpretation:** This measures backup recency, despite any title mentioning a retention window. It does not inspect retention policy, recovery time or restored-data integrity.
+**What the result tells you**
 
-**Time comparison:** this operator accepts timestamps within the window on either side of now. Inspect unexpected future timestamps rather than assuming a past-only check.
+This measures backup recency, despite any title mentioning a retention window. It does not inspect retention policy, recovery time or restored-data integrity.
 
-**Investigate:** confirm the client and subject, inspect source and observation time, then compare the actual value with the effective expectation. Review a supported change separately from the assessment.
+The time window includes timestamps before or after now. Investigate unexpected future timestamps.
+
+</Tab>
+<Tab title="Definition">
+
+| Setting | Value |
+| --- | --- |
+| Standard | BIOS Backup Health |
+| Severity | High |
+| Declared autonomy | Suggest only |
+
+**Population condition**
+
+**Backup protection provider** (`backup_protected_by`) has an observation.
+
+
+**Expected evidence**
+
+- **Last successful backup** (`backup_last_successful_at`) is within this many days of now (past or future): parameter `days`.
+
+**Required predicates:** `backup_last_successful_at`, `backup_protected_by`.
 
 ```json
 {
@@ -232,6 +356,9 @@ Expand a control to see the exact population, expectation and defaults. A pass r
 }
 ```
 
+</Tab>
+</Tabs>
+
 </Accordion>
 
 </AccordionGroup>
@@ -244,7 +371,7 @@ These are human reviews, not automated evidence. The interval below is the templ
 
 <Accordion title="Test a representative restore">
 
-**Source:** BIOS Backup Health. **Default review interval:** 30 days.
+**Review every 30 days** · BIOS Backup Health
 
 Restore a representative workload, record recovery time and integrity evidence, and reconcile the result with the agreed RTO/RPO.
 
@@ -253,6 +380,10 @@ Restore a representative workload, record recovery time and integrity evidence, 
 </Accordion>
 
 </AccordionGroup>
+
+## Investigate a result
+
+Confirm the client and the account, device or other item being assessed. Check the source, observation time and effective settings, then compare the recorded evidence with the expectation. Missing evidence needs investigation; a change to the environment requires a separate review.
 
 ## Next steps
 

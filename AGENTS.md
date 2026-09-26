@@ -19,3 +19,6 @@ This separate repository publishes the public Mintlify site for docs.alignr.io.
 
 - When seeded controls, library templates, manual checks or parameter defaults change, run `scripts/build-control-reference.py /path/to/ledgr` using the application Python environment and `PYTHONPATH`. Review generated categories and the catalogue snapshot, then update hand-written controls guides and baseline overview counts. Keep seed availability distinct from copyable library drafts.
 - Changes to predicates, producer semantics, operators or overrides also require reviewing worked examples, interpretation limits and diagrams; regeneration alone is not sufficient.
+
+- Keep app setup, assessment and control guides together under Documentation using expandable sidebar groups. API reference and MCP are developer tabs. Explain this reading path on Introduction; never address navigation tabs by array index in generators.
+- Lead control entries with a plain-English explanation and applicability. Keep predicate identifiers, metadata and JSON in the Definition tab, with tabs independent per entry.
