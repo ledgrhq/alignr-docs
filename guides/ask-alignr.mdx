@@ -1,0 +1,61 @@
+---
+title: "Use Ask Alignr"
+description: "Ask about evidence and review proposed changes without losing the client context."
+---
+
+Select **Ask Alignr** in the app header to open the assistant beside your current page. Your role needs `ask.use`. This is the in-app assistant; connecting an external assistant uses the separate [MCP setup](/mcp/connect).
+
+## Check the scope first
+
+Read the context chips at the top of the panel. They identify the client scope and current page. A client's page or an explicit client filter on Issues, Remediations, Risk or Roadmap takes precedence over the global client selector. Otherwise, the selector supplies the client, or the scope is all clients.
+
+On a standard's page, the assistant also receives that standard's context. Switching to a different client or standard starts a different conversation context. Closing the panel and reopening it preserves the current session while the page remains mounted.
+
+**Checkpoint:** the visible scope matches the client or standard you mean to ask about.
+
+## Ask a focused evidence question
+
+Try a question such as:
+
+> For this client, which controls need evidence, and which observations are missing?
+
+Then narrow the follow-up:
+
+> Explain the evidence behind the administrator MFA result and what it does not prove.
+
+In the fictional Acme journey, an MFA registration observation cannot establish that every sign-in enforces MFA. Inspect the cited evidence, client, subject and observation time before acting on an answer. An assistant explanation does not fill a missing observation or establish a passing assessment.
+
+Use [control results](/guides/control-status) to interpret statuses, and [troubleshooting](/guides/troubleshooting) when the evidence path needs investigation.
+
+## Review a proposed configuration change
+
+With `detection_rule.write` as well as `ask.use`, you can describe a change to standards or client control settings. For example:
+
+> Draft a change to this client's backup window. Show me the current and proposed setting before applying it.
+
+This is a request for a reviewable proposal; supported changes appear as a **Configuration draft** card.
+
+<Steps>
+  <Step title="Read the scope and exact change">
+    Check the card's title and scope. Compare every **Before** and **After** value with your intended standard or client exception.
+  </Step>
+  <Step title="Apply or dismiss">
+    Select **Apply change** only when the draft is correct. **Dismiss** discards the draft without changing configuration.
+  </Step>
+  <Step title="Check the saved configuration">
+    After **Saved successfully**, use **View configuration** where offered and confirm the result.
+  </Step>
+  <Step title="Reassess">
+    Run the relevant checks and inspect the new result. Changing a threshold changes the question; it does not change the client's environment or collect new evidence.
+  </Step>
+</Steps>
+
+A configuration draft is different from a remediation plan that acts on a client system. Follow the [remediation workflow](/guides/remediation) for supported operational changes and their approvals.
+
+## If a draft cannot be applied
+
+A stale draft, changed permissions or an interrupted response can prevent a confirmed outcome. Read the error, inspect the current configuration, then ask for a **fresh draft** before applying again. Do not assume a failed response means nothing was saved.
+
+If the button is unavailable, check your current editing permissions. A useful read-only answer does not imply authority to change the standard.
+
+**You should now have:** an answer whose scope and evidence you can inspect, or a deliberately reviewed configuration change followed by a fresh assessment.

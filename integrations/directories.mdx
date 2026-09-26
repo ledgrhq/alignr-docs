@@ -1,0 +1,62 @@
+---
+title: "Import IT Glue and Hudu clients"
+description: "Choose credentials, map the right source records and understand what these connections can observe."
+---
+
+Use these connections to discover company names and identifiers, then explicitly link them to Alignr clients. They do not copy documentation, passwords or assets, supply assessment facts, or execute remediation.
+
+## Connect one source, then verify one client
+
+1. Open **Integrations** and add the intended product. Give the connection a name that identifies its account, controller or region.
+2. Enter the fields for that product below. Obtain credentials through the vendor administrator responsible for the intended account; a field list does not grant API entitlement or permissions.
+3. Review the saved connection outcome, then use **Clients & sites** to discover and explicitly assign the correct source records. Compare identifiers as well as names.
+4. For evidence sources, use **Sync now**, inspect **Sync history**, and check one client’s source and observation time. Directory sources instead use **Import clients** and **Refresh client records**.
+5. Compare the available observations with the control’s requirements before [running checks](/guides/standards).
+
+**Checkpoint:** one known source record maps to the intended client and the expected observations are present. A successful credential save alone is not a completed assessment.
+
+The tables show the current Alignr form. “Required” means the form requires a value; optional fields can still be necessary for your account or connection mode. Keep secrets in the credential fields.
+
+
+## Choose your product
+
+<AccordionGroup>
+<Accordion title="IT Glue">
+
+Choose the correct region: us, eu or au (default us). The key must be able to read the intended Organizations. Alignr reads company names and IDs only through this directory connector.
+
+**Map:** Each IT Glue Organization ID.
+
+| Alignr field | Required |
+| --- | --- |
+| **API key** | Yes |
+| **Region** | Depends on configuration |
+
+**Available observations:** None. This is a client-directory connection.
+
+</Accordion>
+
+<Accordion title="Hudu">
+
+Use the Hudu instance URL and an API key permitted to read the intended companies. This connector imports company names and IDs only; it does not migrate Hudu documentation or secrets.
+
+**Map:** Each Hudu company ID.
+
+| Alignr field | Required |
+| --- | --- |
+| **API key** | Yes |
+| **Hudu URL** | Yes |
+
+**Available observations:** None. This is a client-directory connection.
+
+Use the vendor’s current instructions for credential preparation: [Hudu REST API key setup](https://support.hudu.com/hc/en-us/articles/11422780787735-REST-API).
+
+</Accordion>
+
+</AccordionGroup>
+
+## If the expected evidence is missing
+
+Check the account or region, the discovered source ID and the completed collection outcome. Then compare the list above with the [predicate reference](/guides/predicate-reference). A supported product can still lack the particular observation your control needs. Do not turn an absent observation into a passing value.
+
+[Maintain or reconnect a source](/guides/maintain-integrations), or [trace a coverage gap](/guides/troubleshooting).

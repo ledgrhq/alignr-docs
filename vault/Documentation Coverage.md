@@ -15,27 +15,25 @@ Concurrent quickstart, integrations and MCP connection drafts were excluded from
 - [Assessments and sharing audit](Review%20Evidence/Assessments%20and%20Sharing%20Audit.md): standards/intake/import, manual review work, risk, roadmap, reports, staff/external portal.
 - [API and MCP audit](Review%20Evidence/API%20and%20MCP%20Audit.md): tokens, developer console, generated references and retained backend boundaries.
 
-## What to write next
+## Delivered coverage — 2026-09-26
 
-P1 means the missing guidance blocks a major task or conceals a consequential distinction. P2 deepens an already usable path. These are documentation priorities, not product incident severity. Each row is open unless explicitly marked complete below.
+All thirteen audited documentation gaps now have source-backed guides. This closes the writing backlog, not production acceptance of every workflow. See [implementation review](Review%20Evidence/Implementation%20Review.md) for verification and remaining product limitations.
 
-| Order | Priority | Deliverable | Reader outcome and acceptance checkpoint |
-| --- | --- | --- | --- |
-| 1 | P1 | Triage issues + expand remediation guide | Find an issue, inspect evidence, explain Snooze versus Dismiss, request a supported fix, locate approval, understand requester/approver separation, inspect execution/verification and eligible rollback. |
-| 2 | P1 | Run a client review | Schedule/assign manual work, start and resume a batch, handle changed items with reasons, complete pending work, follow up failures and reassess. Progress must never be described as pass rate. |
-| 3 | P1 | Risk and roadmap | Accept a risk with reason/expiry or propose work, compare one-off/recurring costs, record decisions and delivery. Proposal approval/work completion do not prove verified resolution. |
-| 4 | P1 | Client reports and portal handoff | Prepare and inspect a fixed report snapshot; print/JSON export. Configure portal sign-in, views and independent proposal-response permission; verify external audience. Report, internal preview and external portal are different outputs. |
-| 5 | P1 | Integration index + first vendor guides | Catalogue 38 connector-backed types (including 2 directory-only) and 8 unavailable entries by task. State credential mode, scope, matching unit and evidence limitations; verify vendor-console instructions using official sources. Start Microsoft-adjacent PSA/RMM, then network, identity and backup. |
-| 6 | P1 | Maintain a connection | Rotate the whole required credential bundle, reconnect, inspect successful collection, replace/retire a source and understand mappings/history. Dedicated UniFi/SonicWall mode decisions. |
-| 7 | P1 | Ask Alignr | Open the rail, verify client/standard context, ask an evidence question, inspect citations, review Before/After and apply a configuration draft. Explain fresh assessment and uncertain-response recovery. |
-| 8 | P1 | Sign-in and recovery | Self-service reset, used/expired token and second-factor challenge recovery. Verify exact backend expiry and session consequences before publishing numbers. |
-| 9 | P2 | Build or import a standard | Choose guided intake/library/spreadsheet/blank. Explain local draft versus saved inactive standard, row review/split/skip and manual definitions versus completed assessments. Add a fictional validated CSV. |
-| 10 | P2 | Daily review and app wayfinding | Interpret Overview score alongside coverage; Refresh evidence scope versus Run checks; search/shortcuts, client scope, Activity and filtered audit export. |
-| 11 | P2 | Domain-check operations | Microsoft/manual targets, 50-domain limit, enabled/scheduled/paused states, saved settings and Check now, evidence boundaries. |
-| 12 | P2 | Standalone rule boundary | Explain that standalone match/where identifies a candidate violation, whereas control match/where selects a population and expect defines the requirement. Confirm discoverability before adding a tutorial. |
-| 13 | P2 | API/MCP worked recipe | Produce a read-only client assessment summary with exact scopes, paging, timestamps and missing-evidence handling; reconcile retained-tool versus current UI scope selection. |
-
-Suggested composition: retain Documentation as the single app-user tab. Add expandable **Review and follow up** when the new operational guides exist. Keep vendor pages under a grouped integration catalogue. Extend existing guides when a section completes the task; do not create a page for every dialog. Do not add empty navigation entries in anticipation of this backlog.
+| Task | Delivered guide |
+| --- | --- |
+| Issue triage and remediation | [guides/triage-issues](../guides/triage-issues.mdx); [guides/remediation](../guides/remediation.mdx) |
+| Client reviews | [guides/client-reviews](../guides/client-reviews.mdx) |
+| Risk and roadmap | [guides/risk-and-roadmap](../guides/risk-and-roadmap.mdx) |
+| Reports and portal | [guides/client-reports](../guides/client-reports.mdx); [guides/client-portal](../guides/client-portal.mdx) |
+| Catalogue and vendor setup | [guides/integration-catalogue](../guides/integration-catalogue.mdx) |
+| Integration maintenance and modes | [guides/maintain-integrations](../guides/maintain-integrations.mdx) |
+| Ask Alignr | [guides/ask-alignr](../guides/ask-alignr.mdx) |
+| Sign-in recovery | [guides/sign-in-recovery](../guides/sign-in-recovery.mdx) |
+| Build/import standards | [guides/build-or-import-standard](../guides/build-or-import-standard.mdx) |
+| Daily review | [guides/daily-review](../guides/daily-review.mdx) |
+| Domain operations | [guides/domain-checks](../guides/domain-checks.mdx) |
+| Standalone rules | [controls/standalone-rules](../controls/standalone-rules.mdx) |
+| API/MCP assessment recipe | [api-reference/client-assessment-recipe](../api-reference/client-assessment-recipe.mdx) |
 
 ## Immediate corrections completed in this audit
 
@@ -50,22 +48,9 @@ Suggested composition: retain Documentation as the single app-user tab. Add expa
 
 ## Route reconciliation
 
-| Route family / surface | Audit owner | Coverage disposition |
-| --- | --- | --- |
-| `/login`, `/signup`, `/accept-invite`, `/forgot-password`, `/reset-password` | Setup | Signup/invitation basics covered; recovery missing. |
-| `/setup`, `/setup/readiness`, `/health` | Setup | Recently added guides largely complete for intended tasks. |
-| `/setup/baseline`, `/standards`, `/standards/library`, `/standards/import`, `/standards/deploy`, `/standards/:id` | Assessments | Library/custom definition/run covered; intake/import task gaps. |
-| `/organizations`, `/organizations/import`, `/organizations/:id`, connection/domain/check tabs | Setup + Assessments | Creation/mapping/Microsoft well covered; domain depth and review work need follow-up. |
-| `/assessments/work` | Assessments | Review batches, queue and follow-up guide missing. |
-| `/organizations/:id/reports`, `/organizations/:id/reports/:reportId` | Assessments | Fixed snapshot/export workflow missing. |
-| `/risk`, `/roadmap`, corresponding client tabs | Assessments | Operational workflows missing. |
-| `/organizations/:id/portal`, `/settings/client-portal`, separate portal SPA routes | Assessments | Settings basics covered; sharing/view/decision/external journey incomplete. |
-| `/`, `/detections`, `/remediations`, `/approvals`, `/activity`, `/logs` | Daily operations | Concepts covered; action-oriented daily guidance missing. |
-| `/monitoring`, `/monitoring/rules/new`, `/monitoring/rules/:ruleId` | Assessments | Routed but not linked in current shell; clarify standalone violation predicates versus control expectations before promoting an editor tutorial. |
-| `/settings`, `/settings/microsoft`, `/account`, `/users`, `/users/:id`, `/roles`, `/roles/:id` | Setup | New admin guides largely cover primary actions; recovery extends them. |
-| `/integrations`, `/integrations/:id`, all offered connector types/modes | Setup | Generic/Microsoft guide present; catalogue/vendor and maintenance gaps. |
-| `/api-keys`, `/api-keys/:id`, `/developer`, API/MCP | Coordinator | Narrow inaccuracies corrected; recipe and product-boundary backlog retained. |
-| Shell Ask rail, command search, mobile navigation, notices; fallback | Daily operations | Ask/navigation undocumented; health notice has destination guide; fallback needs no standalone guide. |
+The historical audit notes retain the complete route inventory. Recovery now covers authentication; build/import covers standards intake; domain operations and client reviews cover client tabs and `/assessments/work`; reports/portal cover sharing; risk/roadmap covers decisions and delivery; daily review, triage, remediation and Ask cover operational routes and shell actions. The catalogue and maintenance guides cover all 38 implemented connector types and distinguish eight unavailable entries. The API recipe completes the developer task gap.
+
+Standalone `/monitoring` remains directly routed but absent from the main shell. Its advanced guide states that boundary explicitly. Portal contact access currently needs administrator/support setup because the current People & views screen lacks the required editor; do not invent a self-service screen.
 
 ## Deliberately excluded from new public promises
 

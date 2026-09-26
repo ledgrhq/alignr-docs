@@ -1,0 +1,81 @@
+---
+title: "Build or import a standard"
+description: "Turn your managed areas or existing questionnaire into a reviewed, inactive standard."
+---
+
+Choose the starting point that matches the material you already have. All of these paths still need a review of source coverage and client exceptions before use.
+
+| Starting point | Use it when | Where to begin |
+| --- | --- | --- |
+| Guided baseline | You want questions about the areas you manage. | **Standards → Guided setup**. |
+| Standard library | A supplied checklist matches your topic. | [Choose a baseline](/controls/baselines/overview). |
+| Existing questionnaire | Your team already has an Excel or CSV checklist. | **Settings → Setup checklist → Set up your standards → Use an existing checklist → Import checklist**. |
+| Blank standard | You want to define the structure yourself. | **Standards → More → Create a blank standard**. |
+
+Creating or importing standards requires `detection_rule.write`. A saved draft is shared standard content; it is not a completed client assessment.
+
+## Build a guided baseline
+
+<Steps>
+  <Step title="Choose the areas you manage">
+    Select automated areas such as **People & access**, **Devices & protection** and **Backup & recovery**. Add manual review areas where human judgement is needed, such as governance or incident response.
+  </Step>
+  <Step title="Answer each question">
+    Review the MFA population and time windows. For manual areas, write useful **Review instructions** and choose a cadence in days. These are expectations for your clients, not observations about their current state.
+  </Step>
+  <Step title="Review the proposed checks">
+    Name the standard and inspect the selected checks. Each identifies whether it is automated or manual. Deselect checks you do not intend to include and review the evidence needed by automated ones.
+  </Step>
+  <Step title="Save and inspect the draft">
+    Select **Save baseline**, then **Review & enable baseline**. The saved standard starts inactive. Inspect it before enabling it; enabling a standard applies it across the workspace, with deliberate client exceptions where needed.
+  </Step>
+</Steps>
+
+If you return with a saved browser draft, choose **Resume draft** or **Start again**. A browser draft is not a saved standard. If the page cannot save a draft locally, keep it open while finishing.
+
+**Checkpoint:** a named inactive standard contains the intended automated controls and manual checks. No client result has been inferred from your answers.
+
+## Prepare a questionnaire
+
+Use an `.xlsx` workbook or UTF-8 `.csv`, up to **3 MB** and **1,000 question rows**. Include a **Question** column; **Explanation**, **Category**, **Responses** and **Notes** can retain supporting source material. Use values only: spreadsheet formulas are not evaluated and formula cells are rejected. Question and explanation text must each fit within 10,000 characters.
+
+This fictional CSV is a minimal example you can save as `acme-review.csv`:
+
+```csv
+Question,Explanation,Category,Responses
+Can a representative workload be restored?,Record the recovery point and verify restored data.,Backup,Yes / No
+```
+
+“Responses” describes the source questionnaire's response choices. Importing it does not answer the question or record a pass.
+
+## Review the imported questions
+
+<Steps>
+  <Step title="Upload the file">
+    Open **Import checklist** and select **Choose questionnaire**. Check that the original questions and their source rows are present.
+  </Step>
+  <Step title="Turn each question into a clear check">
+    Choose **Include as a manual check** or **Skip this source question**. For included checks, review the name, instructions, domain, review interval and **Expected passing outcome**. Add a **Review note** explaining scope or interpretation. Skipped questions need an exclusion reason and review note.
+
+    Use **Split into another check** when one question contains separate expectations. A “Yes” answer may mean success or failure depending on the wording; define the intended outcome explicitly.
+  </Step>
+  <Step title="Resolve review cadence">
+    Set **Review every (days)** from 1–730. Bulk cadence mapping can help with groups of source questions, but still needs review. If the source says **Bi-Annual**, explicitly choose its meaning before applying a cadence.
+  </Step>
+  <Step title="Save progress or create the standard">
+    Select **Save progress** to preserve the review. When all rows are reviewed and at least one is included, select **Create inactive standard**. Included check names must be distinct. Open the created standard to inspect it before activation.
+  </Step>
+</Steps>
+
+The import preserves source lineage and creates **manual check definitions**. It does not create automated predicates or infer client assessment answers.
+
+## If you cannot continue
+
+| Symptom | Recovery |
+| --- | --- |
+| File rejected | Check format, size, Question header, row count and formulas. Export a values-only copy if needed. |
+| Create inactive standard unavailable | Review every row, include at least one check and enter a standard name. Check required outcome, instructions, domain, cadence and review notes. |
+| Duplicate check names | Give included checks distinct names that describe their separate scope. |
+| Saved import will not load | Use **Retry**. Start a new questionnaire only if you intend a separate import. |
+
+**You should now have:** an inspectable standard with clear expectations and preserved source context. Review [standards and activation](/guides/standards), then [schedule the manual reviews](/guides/client-reviews).

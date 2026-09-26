@@ -1,56 +1,85 @@
 ---
 title: "Review remediation"
-description: "Move from a supported finding to an authorised change."
+description: "Follow a supported plan through approval, execution, verification and rollback."
 ---
 
-## Plans and runs
+A remediation **plan** describes proposed steps. A **run** is one execution. Start from an open [issue](/guides/triage-issues), review the target and evidence, then follow the outcome in **Activity → Fix history**.
 
-A remediation **plan** describes proposed steps. A **run** is one execution of a plan. Review the target, evidence, risk and available reversal before authorising a run.
+## Review and request a fix
 
-## From finding to verified outcome
+You need `remediation.execute` to request execution. Open the issue and inspect the plan's steps, client, target integration, risk note and effective authority. Where a step asks you to choose its target, verify the source and subject before saving the selection.
+
+Select the issue's primary action, whose label describes the supported fix, then review the confirmation before proceeding. A disabled action includes a reason: a closed or snoozed issue, an unsupported plan, incomplete target selection, authority limits or pending verification can prevent another run.
+
+**Checkpoint:** the request has a visible run state. Submission is not proof that the action executed or that the finding was fixed.
 
 ```mermaid
 flowchart TD
-    F["Evidence-backed finding"] --> P["Review a supported plan"]
-    P --> A["Check approval and autonomy"]
-    A --> R["Execute the authorised run"]
-    R --> V["Collect and verify the outcome"]
-    V --> C["Resolve only when evidence supports resolution"]
+    P["Review plan and target"] --> A["Check authority and required approval"]
+    A --> R["Follow execution"]
+    R --> V["Inspect verification and fresh evidence"]
+    V --> N["Confirm outcome or investigate remaining work"]
 ```
 
-A queued request, an accepted action and a verified fix are different outcomes. Follow the run's reported state and supporting evidence rather than treating submission as success.
+Approval, execution and verification answer different questions. Keep all three visible in your handover.
 
-## Approval and autonomy
+## Decide an approval
 
-The effective autonomy ceiling is the lowest of the rule, client contract, tenant and platform controls. An irreversible action requires a named human approver regardless of that ceiling.
+A run awaiting approval has not started its actions. Open **Activity → Approvals**, select **Pending**, then **Review** the request.
 
-| Autonomy level | What it permits for a supported action |
+Viewing requires `approval.read`; deciding requires `remediation.approve`. The person who requested the run cannot approve their own request. Ask a different authorised approver to review it.
+
+1. Confirm the client, finding, proposed steps and risk.
+2. Select **Approve**, then **Approve & run** to queue the proposed fix under your name as approver. Approval cannot be withdrawn from this screen once submitted.
+3. Alternatively, select **Decline**. Add the optional note to explain the decision to the requester. Declining closes the pending run as failed without executing it. An authorised requester may decline their own request.
+
+**Approved — run enqueued** confirms queueing, not successful execution. Follow the run in Fix history. If approval fails because the plan, target or limits changed, review the current state before requesting a fresh action.
+
+## Read fix history
+
+Open **Activity → Fix history**; the page is titled **Remediations** and requires `remediation.read`. Filter by Organization and result to find the relevant run.
+
+| Run state | What to check |
 | --- | --- |
-| Suggest only | Alignr suggests the fix; a person carries it out. |
-| Document only (legacy) | Prevents live changes. Review this legacy setting before relying on automation. |
-| One-click | Alignr can apply the fix after a person confirms it. |
-| Change ticket | Alignr can apply the fix after approval of a change ticket. |
-| Auto-fix low risk | Alignr can apply supported low-risk fixes without a separate confirmation for each one. |
+| Awaiting approval | The decision is still outstanding. |
+| Running | Execution is in progress; closing the confirmation window does not stop it. |
+| Completed | Read the separate verification result before claiming resolution. |
+| Partial | Some steps did not complete. Investigate what was applied and what remains. |
+| Failed | Inspect the outcome before attempting another action. |
+| Rolled back | A supported reversal was performed; review the current environment and evidence. |
 
-These levels limit permission; they do not add actions to a connector or guarantee that a finding has an automated fix.
+Completed runs also show a verification label:
 
-## Verify the outcome
+- **Verified fixed:** post-action verification supports resolution.
+- **Control still failing:** the action did not establish the expected outcome.
+- **Awaiting verification:** do not yet claim a verified fix.
+- **Manual verification needed:** complete an appropriate human check.
+- **Includes simulated steps:** review the scope carefully. Other steps in the same run may have changed live client systems.
 
-A completed action is not proof that the problem is resolved. Review post-action verification and fresh evidence. Where a supported reversal is available, check the run’s rollback information and window before relying on it.
+For example, a fictional Acme run may complete its action while fresh evidence still shows a failing setting. Report “action completed; control still failing”, rather than “fixed”.
 
-Only use remediation actions supported by the specific finding and connected source.
+## Roll back a supported change
 
-## What to review in a plan
+With `remediation.rollback`, find the run in Fix history and select **Roll back** where available. Review the confirmation, then confirm **Roll back** to reverse the changes where supported.
 
-| Question | Why it matters |
+Availability depends on the run's actual eligibility and rollback window. A disabled button explains the block; the workspace's default window alone does not guarantee that every action is reversible. Inspect the resulting status and current target state after requesting reversal.
+
+## Understand authority limits
+
+Effective autonomy is the lowest of the control, client contract, tenant and platform limits. Irreversible actions require a named human approver regardless of that ceiling.
+
+| Level | Meaning for a supported action |
 | --- | --- |
-| Is this the correct client and target? | A technically correct change on the wrong target is still wrong. |
-| Does the evidence support this action? | A plan must address the observed finding rather than a similar-looking symptom. |
-| Is the action supported by the connected source? | Read access and evidence coverage do not imply write capability. |
-| Who or what authorises execution? | Effective autonomy and required approval both apply. |
-| What can be reversed, and when? | Reversal depends on the particular action and available rollback window. |
-| What will prove the outcome? | A successful API response alone may not prove the control is now satisfied. |
+| Suggest only | A person carries out the suggested change. |
+| Document only (legacy) | Prevents live changes. |
+| One-click | Execution follows a person's confirmation. |
+| Change ticket | Execution requires the approval workflow. |
+| Auto-fix low risk | Supported low-risk actions may run without separate confirmation each time. |
 
-## When the outcome is uncertain
+These limits do not add write capabilities to a connector. A control that can detect a failure may have no supported automatic fix.
 
-Do not immediately repeat a change after a timeout or partial failure. Inspect the run and target state first: the action may have taken effect despite the missing acknowledgement. Escalate with the run identifier and safe diagnostic details, and use a supported rollback only after reviewing its effect.
+## Recover from an uncertain outcome
+
+After a timeout or partial failure, inspect the run and target before repeating the action. Some changes may already have taken effect. Keep the run identifier, applied steps, verification status and safe diagnostic details in the handover.
+
+Collect fresh evidence and reassess as appropriate. If no supported action or verification exists, use your approved operational process and record its scope and outcome. See [Activity and audit history](/guides/daily-review#inspect-activity-and-export-audit-history) to investigate recorded actions.

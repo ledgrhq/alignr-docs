@@ -1,0 +1,57 @@
+---
+title: "Sign in and recover access"
+description: "Recover your password, complete a security-key challenge and know when to ask your administrator for help."
+---
+
+Sign in at [app.alignr.io/login](https://app.alignr.io/login) with your workspace email and password. If you have an invitation, open that link first and choose your password; an invitation and a password-reset link serve different purposes.
+
+## Reset a forgotten password
+
+<Steps>
+  <Step title="Request a link">
+    Select **Forgot password?** on the sign-in page, or [open password recovery](https://app.alignr.io/forgot-password). Enter your account's **Email**. If that email belongs to more than one workspace, enter the intended **Workspace code** as well; ask your administrator if you do not know it.
+
+    Select **Send reset link**. The confirmation deliberately does not disclose whether an account exists. It is not proof that a message reached your inbox.
+  </Step>
+  <Step title="Open the current email">
+    Check your inbox and spam folder. The link is single-use and expires after 30 minutes. Use the newest message if you requested another link.
+
+    If it does not arrive, choose **Request another link** after checking the address and workspace. Repeated rapid requests may be rate-limited.
+  </Step>
+  <Step title="Choose a new password">
+    Enter **New password** and **Confirm password**, using at least 12 characters, then select **Update password**.
+
+    Keep the page open while completing the form. The app removes the reset token from the address bar; if reloading produces **This reset link is incomplete**, reopen the email link or request a new one.
+  </Step>
+  <Step title="Sign in again">
+    After **Password updated**, select **Go to sign in** and use the new password. Existing password sessions are revoked. Any registered security-key or MFA requirement still applies.
+  </Step>
+</Steps>
+
+Password recovery is for eligible active password accounts. It does not activate a disabled account, redeem an outstanding invitation or replace your organisation's SSO recovery process. Contact your workspace administrator when one of those applies.
+
+## Complete a security-key challenge
+
+When **Security key required** appears, your password has been accepted but sign-in is not yet complete. Select **Touch your security key**, then follow the browser's prompt, including a PIN or touch where requested.
+
+| What happens | What to do |
+| --- | --- |
+| You cancelled, the prompt timed out, or the key was not available. | Make the registered authenticator available and select **Try again** when offered. |
+| The sign-in challenge expired. | Select **Back to sign in** and start a fresh sign-in. |
+| The browser does not support the requested authenticator flow. | Use a supported browser/device that can access your registered authenticator. |
+| The key is refused or is no longer registered. | Follow the displayed message and ask your workspace administrator to review access. Repeatedly presenting the same refused key is not a recovery procedure. |
+| You lost your only authenticator. | Contact your workspace administrator. A password reset does not bypass the second factor. |
+
+Once signed in, [register and manage your authenticators](/guides/account-and-team#add-a-security-key) under **Account → Security**. Register a replacement before removing a key you still rely on.
+
+## When recovery does not complete
+
+| Message or symptom | Next check |
+| --- | --- |
+| Invalid, expired or already-used reset link. | Request a fresh link and use the latest email. |
+| Passwords do not match or do not meet requirements. | Correct both fields and resubmit. |
+| Email recovery is unavailable. | Try again later or contact your workspace administrator. |
+| Too many attempts. | Stop retrying repeatedly and try again later. |
+| No email, despite the generic confirmation. | Check email/workspace spelling, spam and whether the account uses an invitation or SSO. An administrator can check account status. |
+
+**Checkpoint:** you can sign in to the intended workspace and complete its required authentication steps. If you can sign in but cannot access a page, review [roles and permissions](/guides/account-and-team#review-and-change-access) rather than resetting the password again.

@@ -1,0 +1,108 @@
+---
+title: "Network source setup"
+description: "Choose credentials, map the right source records and understand what these connections can observe."
+---
+
+Choose the source that sees the network property you need. Firmware, connectivity, firewall policy counts and public DNS answer different questions.
+
+## Connect one source, then verify one client
+
+1. Open **Integrations** and add the intended product. Give the connection a name that identifies its account, controller or region.
+2. Enter the fields for that product below. Obtain credentials through the vendor administrator responsible for the intended account; a field list does not grant API entitlement or permissions.
+3. Review the saved connection outcome, then use **Clients & sites** to discover and explicitly assign the correct source records. Compare identifiers as well as names.
+4. For evidence sources, use **Sync now**, inspect **Sync history**, and check one client’s source and observation time. Directory sources instead use **Import clients** and **Refresh client records**.
+5. Compare the available observations with the control’s requirements before [running checks](/guides/standards).
+
+**Checkpoint:** one known source record maps to the intended client and the expected observations are present. A successful credential save alone is not a completed assessment.
+
+The tables show the current Alignr form. “Required” means the form requires a value; optional fields can still be necessary for your account or connection mode. Keep secrets in the credential fields.
+
+
+## Choose your product
+
+<AccordionGroup>
+<Accordion title="Cisco Meraki">
+
+Enable API access for the relevant Meraki organization and use a key with the needed read access. Confirm organization versus network mapping before linking. A firewall-rule fingerprint detects change; it does not prove rule quality.
+
+**Map:** Meraki organization IDs by default; a connection configured for network scope exposes individual network IDs. Review the displayed organization/network context.
+
+| Alignr field | Required |
+| --- | --- |
+| **API key** | Yes |
+
+**Available observations:** Network device role, Hardware model, Firmware version, Management address, Device online, Firmware update available, Licence or entitlement, VPN tunnel membership, Firewall rule fingerprint.
+
+Use the vendor’s current instructions for credential preparation: [Meraki API authentication](https://developer.cisco.com/meraki/api-v1/authorization/).
+
+</Accordion>
+
+<Accordion title="Auvik">
+
+Use the account login, API key and correct regional endpoint suffix. Reachability and network segments do not establish patching or firewall policy compliance.
+
+**Map:** Each Auvik client tenant ID.
+
+| Alignr field | Required |
+| --- | --- |
+| **Auvik login** | Yes |
+| **API key** | Yes |
+| **Region** | Yes |
+
+**Available observations:** Device online, Management address, Network device role, Network segment type.
+
+</Accordion>
+
+<Accordion title="Fortinet FortiGate">
+
+Use an HTTPS appliance management URL and a dedicated REST API token restricted appropriately for your environment. One connection reads one appliance. A policy count is not an assessment of policy correctness.
+
+**Map:** The appliance serial number. Use a separate connection for each appliance.
+
+| Alignr field | Required |
+| --- | --- |
+| **API token** | Yes |
+| **Appliance URL** | Yes |
+
+**Available observations:** Network device role, Firmware version, VPN tunnel membership, Licence or entitlement, Firewall rule count.
+
+</Accordion>
+
+<Accordion title="Twingate">
+
+Use the API key and network subdomain for the intended account. Resource/address observations describe configured access destinations; they do not prove every access path is appropriately restricted.
+
+**Map:** One Twingate account/network subdomain. Remote Networks are locations, not separate client tenants.
+
+| Alignr field | Required |
+| --- | --- |
+| **API key** | Yes |
+| **Network subdomain** | Yes |
+
+**Available observations:** Directory role, Group membership, Device online, Accessible resource, Resource destination.
+
+Vendor preparation: [Twingate API preparation](https://www.twingate.com/docs/api-overview).
+
+</Accordion>
+
+<Accordion title="Alignr Domain Checks">
+
+No vendor API key is needed. The connection accepts up to 50 public domains. Prefer the client Domains tab for normal setup. Public DNS checks do not perform port scanning or a restore test.
+
+**Map:** Each configured domain.
+
+| Alignr field | Required |
+| --- | --- |
+| **Domains** | Yes |
+
+**Available observations:** SPF record present, DMARC enforcement policy, Mail routing records present, Name server count.
+
+</Accordion>
+
+</AccordionGroup>
+
+## If the expected evidence is missing
+
+Check the account or region, the discovered source ID and the completed collection outcome. Then compare the list above with the [predicate reference](/guides/predicate-reference). A supported product can still lack the particular observation your control needs. Do not turn an absent observation into a passing value.
+
+[Maintain or reconnect a source](/guides/maintain-integrations), or [trace a coverage gap](/guides/troubleshooting).

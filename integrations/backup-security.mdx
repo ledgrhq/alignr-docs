@@ -1,0 +1,147 @@
+---
+title: "Backup, EDR and vulnerability setup"
+description: "Choose credentials, map the right source records and understand what these connections can observe."
+---
+
+Choose a source for the specific check: backup recency, agent presence and vulnerability severity are separate observations. Follow up with human review where the source cannot prove the outcome.
+
+## Connect one source, then verify one client
+
+1. Open **Integrations** and add the intended product. Give the connection a name that identifies its account, controller or region.
+2. Enter the fields for that product below. Obtain credentials through the vendor administrator responsible for the intended account; a field list does not grant API entitlement or permissions.
+3. Review the saved connection outcome, then use **Clients & sites** to discover and explicitly assign the correct source records. Compare identifiers as well as names.
+4. For evidence sources, use **Sync now**, inspect **Sync history**, and check one client’s source and observation time. Directory sources instead use **Import clients** and **Refresh client records**.
+5. Compare the available observations with the control’s requirements before [running checks](/guides/standards).
+
+**Checkpoint:** one known source record maps to the intended client and the expected observations are present. A successful credential save alone is not a completed assessment.
+
+The tables show the current Alignr form. “Required” means the form requires a value; optional fields can still be necessary for your account or connection mode. Keep secrets in the credential fields.
+
+
+## Choose your product
+
+<AccordionGroup>
+<Accordion title="Veeam">
+
+This connection targets Veeam Service Provider Console, not an arbitrary Veeam Backup & Replication server. Supply a read-only VSPC account and reachable console URL; the connector assumes port 1280. A successful backup is not proof of successful restoration.
+
+**Map:** Each VSPC client company instanceUid.
+
+| Alignr field | Required |
+| --- | --- |
+| **Username** | Yes |
+| **Password** | Yes |
+| **VSPC console URL** | Yes |
+
+**Available observations:** Backup protection provider, Last successful backup, Backup job state, Protected workload.
+
+Use the vendor’s current instructions for credential preparation: [VSPC authentication reference](https://helpcenter.veeam.com/references/vac/9.3/rest/3.7/tag/SectionOverview/index.html).
+
+</Accordion>
+
+<Accordion title="Acronis Cyber Protect Cloud">
+
+Use the datacentre URL associated with the API client. An optional Root tenant ID restricts traversal; blank traverses accessible customer tenants. Verify the resulting client list. Protection and successful-backup observations do not prove recoverability.
+
+**Map:** Each accessible Acronis customer tenant UUID.
+
+| Alignr field | Required |
+| --- | --- |
+| **Client ID** | Yes |
+| **Client secret** | Yes |
+| **Datacenter URL** | Yes |
+| **Root tenant ID** | Depends on configuration |
+
+**Available observations:** Backup protection provider, Last successful backup, Backup job state.
+
+</Accordion>
+
+<Accordion title="SentinelOne">
+
+Use a token for the intended management console and site access. The connector reports EDR presence/health; RMM management is a separate observation.
+
+**Map:** Each SentinelOne site ID.
+
+| Alignr field | Required |
+| --- | --- |
+| **API token** | Yes |
+| **Management console** | Depends on configuration |
+
+**Available observations:** EDR installed, EDR health, EDR version, EDR policy group, Reported threat, Open threat count.
+
+</Accordion>
+
+<Accordion title="Huntress">
+
+The current Alignr connector uses the public/private API key pair for Huntress API v1. Huntress has announced newer user-based credentials; confirm that the issued credentials support this path before rollout. Inspect organization mappings. See [Huntress’s credential update](https://www.huntress.com/blog/huntress-api-automation-platform). Health is derived from callback recency. Agent version is deliberately not emitted; absence of that predicate is not a setup failure.
+
+**Map:** Each Huntress organization ID.
+
+| Alignr field | Required |
+| --- | --- |
+| **API public key** | Yes |
+| **API private key** | Yes |
+
+**Available observations:** EDR installed, Last EDR check-in, EDR health, Reported threat.
+
+Vendor preparation: [Huntress current API reference](https://api.huntress.io/docs).
+
+</Accordion>
+
+<Accordion title="CrowdStrike Falcon">
+
+This connector uses Flight Control child CIDs. Prepare credentials able to enumerate the intended children and use the correct cloud region. It does not supply RMM management, EDR version or EDR check-in observations.
+
+**Map:** Each Flight Control child CID.
+
+| Alignr field | Required |
+| --- | --- |
+| **Client ID** | Yes |
+| **Client secret** | Yes |
+| **Cloud region** | Depends on configuration |
+
+**Available observations:** EDR installed, EDR health, Reported threat.
+
+</Accordion>
+
+<Accordion title="ConnectSecure">
+
+Use the V4 tenant/application credentials and correct pod. The current company-discovery endpoint requires validation against your pod’s API documentation; do not treat saving credentials as production acceptance. Confirm one company mapping and real findings before broad rollout.
+
+**Map:** Each discovered company ID.
+
+| Alignr field | Required |
+| --- | --- |
+| **Tenant name** | Yes |
+| **Client ID** | Yes |
+| **Client secret** | Yes |
+| **Pod number** | Depends on configuration |
+
+**Available observations:** Missing patch, Reported vulnerability, Highest vulnerability severity, Open vulnerability count.
+
+</Accordion>
+
+<Accordion title="Tenable Vulnerability Management">
+
+This connector is designed for an MSSP Portal container and discovers child containers. Its parent credential needs the ability to mint read-only child keys. It supplies vulnerability findings and maximum severity, not open-count or missing-patch observations.
+
+**Map:** Each MSSP child container UUID.
+
+| Alignr field | Required |
+| --- | --- |
+| **Access key** | Yes |
+| **Secret key** | Yes |
+
+**Available observations:** Reported vulnerability, Highest vulnerability severity.
+
+Vendor preparation: [Tenable MSSP child-key requirements](https://developer.tenable.com/reference/io-mssp-child-containers-generate-keys).
+
+</Accordion>
+
+</AccordionGroup>
+
+## If the expected evidence is missing
+
+Check the account or region, the discovered source ID and the completed collection outcome. Then compare the list above with the [predicate reference](/guides/predicate-reference). A supported product can still lack the particular observation your control needs. Do not turn an absent observation into a passing value.
+
+[Maintain or reconnect a source](/guides/maintain-integrations), or [trace a coverage gap](/guides/troubleshooting).

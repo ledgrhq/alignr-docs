@@ -1,0 +1,70 @@
+---
+title: "Your daily review"
+description: "Find your next task, read the dashboard and follow work through issues and activity."
+---
+
+Start at **Overview** to decide what needs attention. Use **Workspace health** for collection and coverage problems, **Issues** for observed findings, and **Reviews** for human assessment work.
+
+## Read the dashboard together
+
+Overview requires `dashboard.read`. Its **Next step** points towards unfinished setup or assessment work.
+
+| Card | What it answers |
+| --- | --- |
+| **Live alignment** | What proportion of checks with a current live result are passing? |
+| **Checks completed** | What proportion of applicable checks have current live results? |
+| **Open issues** | Which observed findings need investigation? |
+| **Fix history** | What has been proposed or attempted, and with what outcome? |
+
+Read alignment alongside coverage. In an illustrative example, ten passing results and ten checks without usable evidence do not establish that all twenty expectations are met. **Not assessed yet** means there are no current verified results to score; it is not a score of zero.
+
+Open a client in **Client checks** to inspect individual results. The **Needs attention** queue links to issue evidence. **Tool health** is workspace-wide; open **Workspace health** for detailed collection and coverage checks.
+
+## Refresh evidence deliberately
+
+Select **Refresh evidence** when you need a discovery sweep. This requires both `sweep.execute` and `sweep.read`. It requests workspace collection; the global client selector does not turn this action into a single-client sync.
+
+Review the sweep outcome and each source's result. A finished attempt with no facts is not proof of a healthy environment: a source may have failed or supplied no usable observations.
+
+Evidence collection and evaluation are distinct milestones. After confirming the intended evidence is available, use the relevant **Run checks** workflow and inspect its evaluation time. Refreshing the dashboard alone does not establish a fresh assessment.
+
+## Choose your next task
+
+1. **Missing or stale evidence:** open [Workspace health](/guides/workspace-health), fix the source or mapping problem and confirm fresh observations.
+2. **An observed failure:** open [Issues](/guides/triage-issues), inspect evidence and decide the follow-up.
+3. **A question requiring human judgement:** open **Reviews** or the client's manual checks and record the review evidence.
+4. **A proposed or attempted fix:** open **Activity** for approvals and fix history.
+
+**Checkpoint:** the next action has a client, a reason and an owner. A quiet issue queue is useful only alongside an understood coverage picture.
+
+## Find your way around
+
+The main navigation separates daily work—**Overview**, **Clients**, **Issues**, **Reviews**, **Activity**—from workspace configuration such as **Standards**, **Integrations**, **MCP** and **Settings**. On a narrow screen, open **Main navigation** for the same permitted destinations.
+
+Use the client selector and the page's own scope labels together. A page reached from a specific client or control may carry an explicit filter. Check that scope before interpreting its counts or asking the assistant to explain it.
+
+Press **⌘K** on macOS or **Ctrl+K** to open search. It offers page shortcuts immediately and searches clients and issues after at least two characters. Use the arrow keys and Enter to open a result. This app search is separate from the documentation site's search.
+
+The header also provides **Documentation and help**, **Ask Alignr**, theme switching and the **Account menu**, including **Account settings** and **Sign out**. Permission-dependent pages and actions may be hidden.
+
+## Inspect Activity and export audit history
+
+Open **Activity** to choose:
+
+| Destination | Purpose | Permission |
+| --- | --- | --- |
+| **Approvals** | Review proposed actions before execution. | `approval.read` to view; `remediation.approve` to decide. |
+| **Fix history** | Review runs, verification and supported rollback. | `remediation.read`; `remediation.rollback` to reverse eligible runs. |
+| **Audit trail** | Inspect recorded actors, actions and affected records. | `audit.read`. |
+
+The Audit trail destination opens **Logs**. Filter by **Actor kind**, **Action**, **Record type**, **Record id**, **From** and **To**. A closed issue's **view audit trail** action opens its record-specific history.
+
+Select **Export filtered CSV** to export the matching records, or **Export CSV** without filters. Export uses the whole matching result set rather than only the displayed page, up to **50,000 rows**. If the export message says the row limit was reached, narrow the date range and export the remaining periods. Do not treat a truncated file as the complete trail.
+
+Filters are reflected in the page URL, so an authorised colleague can open the same filtered view. Exported files should follow your organisation's handling rules for operational records.
+
+## Distinguish alerts from completed work
+
+The workspace-health banner points to underlying operational warnings. Read success and error messages after an action, then confirm the saved state or resulting record. Dismissing a message does not resolve its underlying issue.
+
+If a page shows last-known data after a refresh error, restore access and refresh before describing it as current. Follow [troubleshooting](/guides/troubleshooting) when an action or result does not match your expectation.

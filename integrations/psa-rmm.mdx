@@ -1,0 +1,167 @@
+---
+title: "PSA and RMM setup"
+description: "Choose credentials, map the right source records and understand what these connections can observe."
+---
+
+A PSA supplies service context; an RMM supplies selected device observations. An RMM connection does not automatically cover every endpoint control.
+
+## Connect one source, then verify one client
+
+1. Open **Integrations** and add the intended product. Give the connection a name that identifies its account, controller or region.
+2. Enter the fields for that product below. Obtain credentials through the vendor administrator responsible for the intended account; a field list does not grant API entitlement or permissions.
+3. Review the saved connection outcome, then use **Clients & sites** to discover and explicitly assign the correct source records. Compare identifiers as well as names.
+4. For evidence sources, use **Sync now**, inspect **Sync history**, and check one client’s source and observation time. Directory sources instead use **Import clients** and **Refresh client records**.
+5. Compare the available observations with the control’s requirements before [running checks](/guides/standards).
+
+**Checkpoint:** one known source record maps to the intended client and the expected observations are present. A successful credential save alone is not a completed assessment.
+
+The tables show the current Alignr form. “Required” means the form requires a value; optional fields can still be necessary for your account or connection mode. Keep secrets in the credential fields.
+
+
+## Choose your product
+
+<AccordionGroup>
+<Accordion title="HaloPSA">
+
+The resource server is your HaloPSA base URL. This connector assumes the authorisation and API server share that origin unless deployment configuration explicitly overrides them. Ticket context is not direct proof of the target account state.
+
+**Map:** Each HaloPSA client ID.
+
+| Alignr field | Required |
+| --- | --- |
+| **Resource server URL** | Yes |
+| **Client ID** | Yes |
+| **Client secret** | Yes |
+
+**Available observations:** Leaver ticket state, Secret-in-ticket signal, Secret reuse count, Change ticket reference.
+
+</Accordion>
+
+<Accordion title="ConnectWise Manage">
+
+The integrator client ID is distinct from the MSP Company ID. Supply both, with the public/private API key pair and correct instance site. A closed ticket does not prove remediation succeeded.
+
+**Map:** Each company numeric ID, not its renameable company identifier.
+
+| Alignr field | Required |
+| --- | --- |
+| **Instance site** | Yes |
+| **Integrator client ID** | Yes |
+| **Company ID** | Yes |
+| **Public key** | Yes |
+| **Private key** | Yes |
+
+**Available observations:** Ticket state, Ticket closure time, Leaver ticket state, Change ticket reference, Contract type.
+
+</Accordion>
+
+<Accordion title="Autotask">
+
+Supply the complete HTTPS zone URL for this account. A valid key sent to the wrong zone fails. Ticket and contract observations do not replace device or directory collection.
+
+**Map:** Each Autotask company numeric ID.
+
+| Alignr field | Required |
+| --- | --- |
+| **API integration code** | Yes |
+| **API username** | Yes |
+| **API secret** | Yes |
+| **Zone URL** | Yes |
+
+**Available observations:** Ticket state, Ticket closure time, Leaver ticket state, Change ticket reference, Contract type.
+
+</Accordion>
+
+<Accordion title="Datto RMM">
+
+Check Platform region before saving; the connector defaults to concord. Antivirus product information is not third-party EDR coverage: use an EDR source for agent presence.
+
+**Map:** Each Datto RMM site UID.
+
+| Alignr field | Required |
+| --- | --- |
+| **API key** | Yes |
+| **API secret key** | Yes |
+| **Platform region** | Depends on configuration |
+
+**Available observations:** Device management, Last management check-in, Device online, Operating system, Patch state, Antivirus product.
+
+Use the vendor’s current instructions for credential preparation: [Datto RMM API key setup](https://rmm.datto.com/help/en/Content/2SETUP/APIv2.htm).
+
+</Accordion>
+
+<Accordion title="NinjaOne">
+
+Use an API Services machine-to-machine application. Region values supported by the form are app, eu, oc, ca and us2. The connector supplies management, reachability and backup-product presence, not backup success or patch compliance.
+
+**Map:** Each NinjaOne organization ID.
+
+| Alignr field | Required |
+| --- | --- |
+| **Client ID** | Yes |
+| **Client secret** | Yes |
+| **Instance region** | Depends on configuration |
+
+**Available observations:** Device management, Device online, Backup protection provider.
+
+Use the vendor’s current instructions for credential preparation: [NinjaOne OAuth configuration](https://www.ninjaone.com/docs/application-programming-interface-api/oauth-token-configuration/).
+
+</Accordion>
+
+<Accordion title="N-able N-central">
+
+Use the N-central User-API Token and your own server URL. The current connector only supplies RMM management presence; it does not supply patch status, online state or check-in time.
+
+**Map:** Each customer ID; parent service-organization records are not clients.
+
+| Alignr field | Required |
+| --- | --- |
+| **API token** | Yes |
+| **N-central server URL** | Yes |
+
+**Available observations:** Device management.
+
+Vendor preparation: [N-central token authentication](https://developer.n-able.com/n-central/reference/authenticate).
+
+</Accordion>
+
+<Accordion title="Syncro">
+
+Use a key with customer and asset read access and the correct MSP subdomain. The current connector supplies RMM management presence only; it does not supply patch compliance or check-in time.
+
+**Map:** Each Syncro customer numeric ID.
+
+| Alignr field | Required |
+| --- | --- |
+| **API key** | Yes |
+| **Subdomain** | Yes |
+
+**Available observations:** Device management.
+
+</Accordion>
+
+<Accordion title="Liongard">
+
+Use the access key/secret and instance subdomain. Inspection status and recency show monitoring activity; they are not a universal copy of each inspector’s underlying configuration.
+
+**Map:** Each Liongard environment ID.
+
+| Alignr field | Required |
+| --- | --- |
+| **Access key** | Yes |
+| **Access secret** | Yes |
+| **Instance subdomain** | Yes |
+
+**Available observations:** Monitored system, Inspection state, Last inspection.
+
+Vendor preparation: [Liongard API access](https://docs.liongard.com/docs/accessing-the-liongard-api).
+
+</Accordion>
+
+</AccordionGroup>
+
+## If the expected evidence is missing
+
+Check the account or region, the discovered source ID and the completed collection outcome. Then compare the list above with the [predicate reference](/guides/predicate-reference). A supported product can still lack the particular observation your control needs. Do not turn an absent observation into a passing value.
+
+[Maintain or reconnect a source](/guides/maintain-integrations), or [trace a coverage gap](/guides/troubleshooting).

@@ -1,0 +1,125 @@
+---
+title: "Build a client assessment summary"
+description: "Page through clients, retrieve their current control grids and preserve evidence gaps in a read-only report."
+---
+
+This recipe produces a JSON summary of the automated control results returned for each client. It uses only reads. It does not collect fresh evidence, run checks or replace the app's [saved review reports](/guides/client-reports), which include a broader review context.
+
+## Prepare a scoped token
+
+[Create a token](/guides/api-keys) with both permissions:
+
+| Request | REST scope |
+| --- | --- |
+| `GET /api/v1/organizations` | `organization.read` |
+| `GET /api/v1/organizations/{organization_id}/compliance` | `detection.read` |
+
+For a user key, its owner must retain those permissions. Store the token in the `ALIGNR_API_KEY` environment variable through your secret manager or shell environment; keep the token out of source files and report output.
+
+## Fetch all pages and preserve the grid
+
+Save the following as `assessment_summary.py` and run it with Python 3. It uses the standard library and prints a complete result only after all requests succeed.
+
+```python
+import json
+import os
+import sys
+from collections import Counter
+from datetime import datetime, timezone
+from urllib.error import HTTPError, URLError
+from urllib.parse import urlencode
+from urllib.request import Request, urlopen
+from uuid import UUID
+
+BASE = "https://api.alignr.io/api/v1"
+TOKEN = os.environ["ALIGNR_API_KEY"]
+
+
+def get(path, params=None):
+    query = "?" + urlencode(params) if params else ""
+    request = Request(
+        BASE + path + query,
+        headers={"Authorization": "Bearer " + TOKEN},
+    )
+    with urlopen(request, timeout=30) as response:
+        return json.load(response)
+
+
+def build_summary():
+    clients = []
+    page = 1
+    while True:
+        batch = get("/organizations", {"page": page, "pageSize": 100})
+        for client in batch["items"]:
+            client_id = str(UUID(client["id"]))
+            grid = get("/organizations/" + client_id + "/compliance")
+            if grid["organizationId"] != client_id:
+                raise ValueError("Response client does not match the request")
+            clients.append({
+                "organizationId": client_id,
+                "organizationName": grid["organizationName"],
+                "statusCounts": dict(Counter(row["status"] for row in grid["items"])),
+                "hasControlRows": bool(grid["items"]),
+                "assessment": grid,
+            })
+        if page >= batch["totalPages"]:
+            break
+        page += 1
+    return {
+        "retrievedAt": datetime.now(timezone.utc).isoformat(),
+        "clients": clients,
+    }
+
+
+try:
+    result = build_summary()
+except HTTPError as error:
+    sys.exit("Request failed: HTTP " + str(error.code) + ". No summary produced.")
+except (URLError, TimeoutError):
+    sys.exit("Network request failed. No summary produced.")
+except (KeyError, ValueError, TypeError):
+    sys.exit("Unexpected response shape. Check the live API reference.")
+else:
+    print(json.dumps(result, indent=2))
+```
+
+Run:
+
+```bash
+python3 assessment_summary.py
+```
+
+The grid is kept intact under `assessment`, including per-control evaluation time, effective parameters, required predicates and coverage detail. `retrievedAt` is when the script assembled the export, **not** when the environment was observed or evaluated.
+
+The requests are sequential, not a transaction across the whole workspace. Client records and assessments can change during collection; for a dated review deliverable, use [the app's saved report workflow](/guides/client-reports).
+
+## Read the outcome honestly
+
+| Returned status | Report it as |
+| --- | --- |
+| `pass` | The evaluated expectation was satisfied by the available evidence. |
+| `fail` | The evidence contradicted the expectation. |
+| `no_data` | More usable evidence is needed. |
+| `not_covered` | The required coverage is unavailable. |
+| `not_applicable` | The control is outside the effective assessment scope. |
+
+For a fictional client with two passing rows, one failing row and one `no_data` row, the counts should retain all three categories. Do not turn “three assessed rows” into “four passing rows”, or call an empty `items` list a clean bill of health.
+
+Check each row's `evaluatedAt` and source/coverage details. A successful HTTP response says the request succeeded; it does not establish freshness or complete client coverage. Keep [status interpretation](/guides/control-status) alongside any dashboard built from the export.
+
+## Handle a failed request
+
+- **401:** check whether the token expired, was revoked or belongs to a deactivated owner.
+- **403:** check both assigned scopes and the user's current permissions. A missing permission is not an empty result set.
+- **404:** verify the client ID and workspace; it may have changed or no longer be accessible.
+- **429 or a transient network/server error:** use bounded backoff and any retry guidance in the response. This example stops so a failed client cannot silently disappear from a partial “complete” report.
+
+Consult [errors and retries](/api-reference/errors) and [pagination](/api-reference/pagination) before turning the example into a scheduled integration.
+
+## Explain one result with MCP
+
+An assistant can use `get_organization_compliance` with `compliance:read`, then `explain_control_status` with `compliance:explain`. A user key also needs the backing `detection.read` permission. These colon-delimited MCP scopes are separate from the REST scopes above.
+
+For example: “For this Organization ID, explain the administrator MFA control. Show the evidence gaps and evaluation time; do not change anything.” Give the assistant the exact client ID and prefer the control UUID where names could be ambiguous. Read its cited context before drawing a conclusion.
+
+**Checkpoint:** the summary includes every retrieved client, keeps gaps and exclusions distinct, retains the grid's timestamps, and does not claim the script performed a fresh assessment.

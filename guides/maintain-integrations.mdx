@@ -1,0 +1,72 @@
+---
+title: "Maintain and retire integrations"
+description: "Rotate credentials, check recovery and remove old connections without confusing saved history with fresh evidence."
+---
+
+A connection needs ongoing care when credentials expire, endpoints change or clients move between tools. Start by identifying the named connection and the clients mapped to it. These actions require integration-management permission.
+
+## Rotate credentials
+
+<Steps>
+  <Step title="Prepare the replacement bundle">
+    Obtain the replacement credentials for the same intended vendor account. Check its region, endpoint and scope before changing Alignr. Review the [product setup guide](/guides/integration-catalogue) for fields that depend on the connection mode.
+  </Step>
+  <Step title="Edit the named connection">
+    Open **Integrations → select connection → Edit**. Stored secrets are not displayed. Leaving the credential fields blank keeps the current bundle.
+
+    Once you change a credential or destination, enter **every required field** needed to replace the bundle. Do not enter only a new secret and assume the old fields will be combined with it.
+  </Step>
+  <Step title="Save and verify access">
+    Select **Save changes** and read the outcome. Use **Test connection** where offered. For Microsoft, complete the relevant **Authorise Microsoft**, **Reconnect** or **Check access** workflow.
+
+    **Checkpoint:** the saved configuration can access the intended account. If saving fails, read the error and inspect the saved configuration before assuming the replacement took effect.
+  </Step>
+  <Step title="Verify collection recovery">
+    Review **Clients & sites** so the source still maps to the intended clients. For evidence sources, use **Sync now**, inspect **Sync history** and confirm relevant observations have a fresh time. Then run the affected checks again.
+
+    For directory-only sources, use **Import clients** and **Refresh client records**; these sources do not collect control evidence.
+  </Step>
+</Steps>
+
+Revoke an old credential according to your vendor's rotation process once the replacement has been verified. If the old credential is compromised, follow your incident process instead of waiting for a routine rotation window.
+
+## Change a destination or account
+
+An endpoint edit can point the same connection at a different account or appliance. Treat it as an identity change: review credentials and all affected mappings together. A similar site name in the new account is not proof it is the same client.
+
+For a replacement Microsoft application or tenant, use [the client Microsoft replacement workflow](/guides/client-microsoft-connections#replace-an-existing-connection). It retains history while requiring the replacement to be authorised and synced.
+
+For another vendor, a separately named new connection can make the replacement easier to inspect. Link the intended source records deliberately, collect evidence, and review the old source's continued contribution before retiring it. Do not assume that adding a second source automatically establishes priority between contradictory observations.
+
+## Review the collection interval
+
+The connection editor exposes **Sync interval** for evidence sources. Change it to the appropriate offered interval and save. Directory-only sources use explicit directory refresh rather than an evidence schedule.
+
+A saved interval is not proof that the scheduler is running. Check [Workspace health](/guides/workspace-health), recent collection history and observation times. If scheduled collection is paused, investigate the reported cause; repeatedly saving the interval does not repair scheduler health.
+
+## Delete a connection deliberately
+
+Open the connection and select **Delete**, review the confirmation, then **Delete integration** when you intend to retire it.
+
+| Connection type | What deletion does | What it preserves |
+| --- | --- | --- |
+| Evidence source | Prevents future scheduled collection for the deleted connection and removes its remote-company mappings. | Previously written facts remain; deletion does not itself retract them or immediately remove their contribution to results. |
+| Client-directory source | Stops directory refresh and removes its remote-company mappings. | Existing Alignr clients remain. |
+
+Retained facts are not a promise of continuing coverage. Revisit affected client results and source health after deletion; historical observations must not be mistaken for fresh evidence from a working connection.
+
+```mermaid
+flowchart TD
+    A["Identify affected clients"] --> B["Prepare replacement if required"]
+    B --> C["Verify mappings and fresh evidence"]
+    C --> D["Retire the old connection"]
+    D --> E["Review remaining coverage and results"]
+```
+
+The diagram describes a planned replacement. Deletion is a separate explicit action, not an automatic result of adding a new connection.
+
+## A useful recovery record
+
+Record the connection name, vendor region or account identifier, affected clients, last successful collection time, visible error and the result of your last check. Keep API keys, secrets and full credential responses out of the record.
+
+**Finish when:** you can trace current client evidence to the intended active source, explain any remaining coverage gaps and distinguish retained history from new observations.

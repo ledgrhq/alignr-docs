@@ -59,3 +59,7 @@ Preview changed journeys at desktop and 390px mobile widths. Test tabs, expandab
 Publishing main triggers Mintlify. Confirm GitHub validation and Mintlify deployment for the intended commit, then inspect changed hosted URLs. When changing exclusions, verify vault URLs are unavailable and public indexing contains no vault entries. `.mintignore` prevents publication; repository visibility remains separate.
 
 The application repository has its own Public Documentation Maintenance guide. Keep its pointer to this vault current, but keep detailed docs design governance here to avoid competing copies.
+
+## Operational workflow coverage
+
+Changes to review queues, reports, portal permissions, risk decisions, roadmap delivery, Ask drafts, recovery or domain lifecycle must update their task guides and Documentation Coverage. Connector changes require checking the catalogue, category credentials/mapping/observations, dedicated mode guides and maintenance consequences. Recheck provider contracts separately from local implementation: Pax8 delegated OAuth, Huntress credential compatibility and ConnectSecure pod discovery remain explicit follow-ups. Never convert implementation presence into a production acceptance claim.

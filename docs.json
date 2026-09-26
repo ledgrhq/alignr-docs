@@ -73,11 +73,33 @@
               {
                 "group": "Set up your workspace",
                 "pages": [
-                  "guides/integrations",
                   "guides/configure-client",
                   "guides/organizations",
                   "guides/client-microsoft-connections",
-                  "guides/standards"
+                  "guides/standards",
+                  "guides/build-or-import-standard"
+                ]
+              },
+              {
+                "group": "Connect your tools",
+                "pages": [
+                  "guides/integrations",
+                  "guides/integration-catalogue",
+                  {
+                    "group": "Integration setup guides",
+                    "pages": [
+                      "integrations/identity",
+                      "integrations/psa-rmm",
+                      "integrations/network",
+                      "integrations/unifi-network",
+                      "integrations/sonicwall-nsm",
+                      "integrations/backup-security",
+                      "integrations/email-licensing",
+                      "integrations/directories"
+                    ]
+                  },
+                  "guides/maintain-integrations",
+                  "guides/domain-checks"
                 ]
               },
               {
@@ -85,7 +107,26 @@
                 "pages": [
                   "guides/settings",
                   "guides/account-and-team",
+                  "guides/sign-in-recovery",
                   "guides/workspace-health"
+                ]
+              },
+              {
+                "group": "Day-to-day work",
+                "pages": [
+                  "guides/daily-review",
+                  "guides/triage-issues",
+                  "guides/remediation",
+                  "guides/ask-alignr",
+                  "guides/client-reviews",
+                  "guides/risk-and-roadmap"
+                ]
+              },
+              {
+                "group": "Reports and client portal",
+                "pages": [
+                  "guides/client-reports",
+                  "guides/client-portal"
                 ]
               },
               {
@@ -93,8 +134,7 @@
                 "pages": [
                   "guides/evidence",
                   "guides/predicates",
-                  "guides/control-status",
-                  "guides/remediation"
+                  "guides/control-status"
                 ]
               },
               {
@@ -136,7 +176,8 @@
                     "group": "Control definitions",
                     "pages": [
                       "guides/control-conditions",
-                      "controls/advanced-definitions"
+                      "controls/advanced-definitions",
+                      "controls/standalone-rules"
                     ]
                   }
                 ]
@@ -164,7 +205,8 @@
               "guides/api-keys",
               "api-reference/authentication",
               "api-reference/pagination",
-              "api-reference/errors"
+              "api-reference/errors",
+              "api-reference/client-assessment-recipe"
             ]
           },
           {

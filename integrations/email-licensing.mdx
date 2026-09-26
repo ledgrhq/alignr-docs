@@ -1,0 +1,131 @@
+---
+title: "Email protection and licensing setup"
+description: "Choose credentials, map the right source records and understand what these connections can observe."
+---
+
+An email-protection entitlement is not proof of policy effectiveness. Purchased seats are not the same as seats assigned inside a client directory.
+
+<Warning>
+Pax8 requires a supported delegated OAuth path for third-party platforms. Its current Alignr form is not an approved partner-credential onboarding guide. Read the Pax8 entry before attempting setup.
+</Warning>
+
+## Connect one source, then verify one client
+
+1. Open **Integrations** and add the intended product. Give the connection a name that identifies its account, controller or region.
+2. Enter the fields for that product below. Obtain credentials through the vendor administrator responsible for the intended account; a field list does not grant API entitlement or permissions.
+3. Review the saved connection outcome, then use **Clients & sites** to discover and explicitly assign the correct source records. Compare identifiers as well as names.
+4. For evidence sources, use **Sync now**, inspect **Sync history**, and check one client’s source and observation time. Directory sources instead use **Import clients** and **Refresh client records**.
+5. Compare the available observations with the control’s requirements before [running checks](/guides/standards).
+
+**Checkpoint:** one known source record maps to the intended client and the expected observations are present. A successful credential save alone is not a completed assessment.
+
+The tables show the current Alignr form. “Required” means the form requires a value; optional fields can still be necessary for your account or connection mode. Keep secrets in the credential fields.
+
+
+## Choose your product
+
+<AccordionGroup>
+<Accordion title="Mimecast">
+
+Use an API 2.0 application in the intended account. Protection/features describe the email-security service; they do not prove SPF, DKIM or DMARC are correctly configured.
+
+**Map:** One Mimecast accountCode per connection.
+
+| Alignr field | Required |
+| --- | --- |
+| **Client ID** | Yes |
+| **Client secret** | Yes |
+
+**Available observations:** Mail protection provider, Mail protection feature.
+
+</Accordion>
+
+<Accordion title="Proofpoint Essentials">
+
+Use an Essentials administrator credential, the partner primary domain and correct regional shard. Domains are mapping identifiers here; review links after a primary-domain change. This is not the enterprise Proofpoint product API.
+
+**Map:** Each organization primary domain. A primary-domain change requires reviewing the mapping.
+
+| Alignr field | Required |
+| --- | --- |
+| **Username** | Yes |
+| **Password** | Yes |
+| **Partner domain** | Yes |
+| **Regional shard URL** | Depends on configuration |
+
+**Available observations:** Mail protection provider, Mail protection feature.
+
+</Accordion>
+
+<Accordion title="Pax8">
+
+The current Alignr form exposes Client ID and Client secret, but Pax8 requires third-party platforms to use delegated OAuth and says partner API credentials must not be shared with them. Do not enter a partner credential to work around this requirement. Confirm an approved delegated integration is available with Alignr support before connecting. The current connector’s licence, purchased-seat and renewal observations describe its implementation; they do not establish that production onboarding is ready.
+
+**Map:** Each Pax8 company UUID.
+
+| Alignr field | Required |
+| --- | --- |
+| **Client ID** | Yes |
+| **Client secret** | Yes |
+
+**Available observations:** Licence or entitlement, Purchased seats, Next licence renewal.
+
+Use the vendor’s current instructions for credential preparation: [Pax8 authentication](https://devx.pax8.com/docs/authentication).
+
+</Accordion>
+
+<Accordion title="Microsoft Partner Center">
+
+Use the Partner Center application credentials for customer subscriptions. This connector does not grant delegated Microsoft Graph access or report each user’s assigned licence. Use Microsoft client connections for identity assessments.
+
+**Map:** Each customer Microsoft tenant GUID.
+
+| Alignr field | Required |
+| --- | --- |
+| **Tenant ID** | Yes |
+| **Client ID** | Yes |
+| **Client secret** | Yes |
+
+**Available observations:** Licence or entitlement, Purchased seats, Next licence renewal.
+
+</Accordion>
+
+<Accordion title="Ingram Micro">
+
+Use the SimpleAPI credentials, subscription key, actual API URL and marketplace code from your account. This connector reports licence presence and renewal; it does not supply purchased or assigned seat counts.
+
+**Map:** Each Ingram customer platform ID.
+
+| Alignr field | Required |
+| --- | --- |
+| **Username** | Yes |
+| **Password** | Yes |
+| **Subscription key** | Yes |
+| **API URL** | Yes |
+| **Marketplace** | Yes |
+
+**Available observations:** Licence or entitlement, Next licence renewal.
+
+</Accordion>
+
+<Accordion title="CloudBlue Connect">
+
+Use a Connect API token for the customer accounts to inspect. This connector reports purchased reservation quantities, not assigned-user seats or a guessed renewal date.
+
+**Map:** Each customer tier-account ID (TA-…), excluding reseller tier accounts.
+
+| Alignr field | Required |
+| --- | --- |
+| **API token** | Yes |
+
+**Available observations:** Licence or entitlement, Purchased seats.
+
+</Accordion>
+
+</AccordionGroup>
+
+## If the expected evidence is missing
+
+Check the account or region, the discovered source ID and the completed collection outcome. Then compare the list above with the [predicate reference](/guides/predicate-reference). A supported product can still lack the particular observation your control needs. Do not turn an absent observation into a passing value.
+
+[Maintain or reconnect a source](/guides/maintain-integrations), or [trace a coverage gap](/guides/troubleshooting).

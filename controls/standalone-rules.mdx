@@ -1,0 +1,53 @@
+---
+title: "Standalone detection rules"
+description: "Understand the advanced rule editor and avoid confusing a violation with a control population."
+---
+
+For a technical expectation with passing, failing and missing-evidence results, start with a [standard and its controls](/controls/create-custom). A standalone detection rule instead identifies observations that should become candidate findings.
+
+The advanced [Monitoring page](https://app.alignr.io/monitoring) remains directly accessible while signed in; it is not a destination in the current main navigation. Reading rules requires rule-read permission, and creating or changing them requires `detection_rule.write`. Controls shown there lead back to their owning standard.
+
+## Understand the difference first
+
+| Definition | Meaning of a match |
+| --- | --- |
+| Control in a standard | `match` and `where` select who to assess; `expect` defines what should hold. |
+| Standalone detection rule | `match` and `where` select the candidate violation itself. |
+
+Selecting all enabled accounts makes sense as a control population. Used alone as a standalone rule, that same selection would make healthy enabled accounts candidates for findings. Read [advanced control definitions](/controls/advanced-definitions) before transferring any definition between the two models.
+
+## Prepare a deterministic rule
+
+Open Monitoring and select **+ New rule**. Turn **Enabled** off before drafting; new rules start enabled. Keep **LLM-assisted** off for this deterministic walkthrough.
+
+1. Enter **Name**, **Slug**, **Description**, **Severity** and **Category**. The slug is a stable identifier and cannot be changed after creation.
+2. Select **Every organization** to include current and future clients, or **Selected clients only** and explicitly review the selected clients. A filter narrows the displayed choices; it is not an assessment of the whole estate.
+3. Keep **Autonomy** at **Suggest only** while reviewing the intended behaviour. The setting is bounded by client, workspace and platform limits; it does not add remediation capabilities.
+4. Under **Match — the anchor fact**, select **Predicate**. Use **Require a specific value** when the value itself identifies the concerning observation, and select the correct **Value type**.
+5. Add only the necessary **Where — additional conditions**. Review **What this will match** before saving.
+6. Under **Advanced**, review **Detection title template** and **Evidence fields**. Save the rule, reopen it and confirm its definition, scope and disabled state before enabling it deliberately.
+
+The form offers **LLM-assisted** only as a creation choice; its live operation depends on the deployment's configured capabilities. This deterministic walkthrough does not require that mode.
+
+## Worked example: a known missing registration
+
+For a fictional pilot client, the question is: “Which enabled accounts are observed as not registered for MFA?”
+
+| Part | Intended definition |
+| --- | --- |
+| Anchor | **MFA registered** (`mfa_registered`). |
+| Specific anchor value | True / false, **False**. |
+| Additional condition | **Account enabled** (`account_enabled`) equals `true`. |
+| Scope | Explicit pilot client. |
+
+An account observed as enabled with MFA registered `false` matches this candidate condition. An account with registered `true` does not. An absent registration observation does not become a match for `false`; use a control to track the missing-evidence result.
+
+This example concerns registration, not enforcement at every sign-in. Candidates still follow the detection engine's verification path before being shown as findings. A saved rule is not proof that a finding has been evaluated or verified.
+
+## Check the result and maintain the rule
+
+After deliberately enabling a reviewed rule, inspect its resulting [Issues](/guides/triage-issues), source evidence and client scope through the normal collection and detection workflow. Do not use a standard's **Run checks** as if it were a standalone-rule test button.
+
+If too many subjects match, disable the rule while reviewing its scope and conditions. If nothing appears, inspect whether the anchor observation actually exists, whether its type and value match, and whether collection and verification completed. An empty issue list does not prove that clients comply.
+
+**Checkpoint:** the rule expresses a specific candidate violation, stays within an understood client scope and authority, and is not being used as a substitute for a control's coverage and status model.

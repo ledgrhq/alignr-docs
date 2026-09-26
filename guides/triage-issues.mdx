@@ -1,0 +1,60 @@
+---
+title: "Review and triage issues"
+description: "Investigate a finding, choose the right follow-up and keep the reason visible."
+---
+
+Open **Issues** to investigate observed findings. A finding is different from an incomplete assessment: missing evidence needs investigation, but does not by itself establish that the underlying setting is wrong.
+
+You need `detection.read` to view issues, `detection.write` to snooze or dismiss them, and `remediation.execute` to request a supported fix.
+
+## Investigate before deciding
+
+<Steps>
+  <Step title="Confirm the scope">
+    Check the client and any control filter carried into the page. Use the category filters and **Status** selector to narrow the list. The default status is **Open**; **Snoozed**, **Resolved** and **Dismissed** are separate views.
+  </Step>
+  <Step title="Open the issue">
+    Select a finding to open its details. Confirm the client, subject and finding reference, then read the explanation and cited evidence. Check observation times and whether the evidence still describes the intended account or device.
+  </Step>
+  <Step title="Choose a follow-up">
+    Review a supported remediation plan, snooze work awaiting a known event, or dismiss a finding you have established is not a problem. Keep the decision distinct from the automated control result.
+  </Step>
+</Steps>
+
+**Checkpoint:** you can explain what was observed, why it matters, which client and subject it concerns, and what action follows.
+
+## Choose the appropriate outcome
+
+| Your conclusion | Action | What it means |
+| --- | --- | --- |
+| The finding is supported and a suitable change is available. | Review [remediation](/guides/remediation). | Review the plan, authority and target before execution. |
+| The finding needs attention, but work is waiting on a known event. | **Snooze**. | Temporarily remove it from the open queue until the chosen date. |
+| You have established that this finding is not a problem. | **Not a problem**, then **Dismiss detection**. | Record the decision and suppress this finding for the same subject. |
+| You cannot yet establish what happened. | Investigate evidence and source context. | Uncertainty is not grounds for calling the environment healthy. |
+
+### Snooze with a reason
+
+Select **Snooze**, choose **Come back in**, and explain **Why is this being parked?** before confirming. Options include tomorrow, one week, two weeks, 30 days and 90 days.
+
+For example, in a fictional Acme case: “The client approved a maintenance window next week; Morgan owns the change.” Choose a review date that corresponds to that plan.
+
+The finding leaves the Open view and returns when the snooze expires. The engine does not re-raise it while snoozed. Find it under **Status → Snoozed**; **Re-snooze** lets you record a revised wait. Snoozing does not fix the underlying condition or establish a passing control result.
+
+### Dismiss deliberately
+
+Select **Not a problem**, explain **Why is this not a problem?**, and confirm **Dismiss detection**. The reason is required and remains part of the record.
+
+Dismissal suppresses re-raising the finding for that subject. Use it for a supported triage conclusion, not simply to clear the queue. A dismissed finding is not the same as a verified fix, nor does dismissal change the standard's expectation.
+
+Find previous decisions under **Status → Dismissed**. Open a closed finding and select **Dismissed — view audit trail** or **Resolved — view audit trail** to inspect its recorded history. Closed findings cannot be snoozed or dismissed again.
+
+## If the next action is unavailable
+
+- A missing triage action may reflect your write permission or a closed finding.
+- A disabled remediation action has a reason: inspect the plan, target, effective authority and whether verification is already pending.
+- A snoozed issue is not open for remediation. Check its status rather than repeatedly trying the action.
+- If an issue seems to disappear, check client/control filters and the Status selector before assuming it was fixed.
+
+For a handover, retain the finding reference, evidence, decision, reason, owner and next review date. Share only with colleagues authorised to access that client.
+
+<Card title="Next: review a supported fix" icon="arrow-right" href="/guides/remediation">Follow the plan through approval, execution and verified outcome.</Card>

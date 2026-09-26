@@ -27,6 +27,8 @@ This is the source of truth for **how the public docs are designed, written and 
 - [Assessments and sharing evidence](Review%20Evidence/Assessments%20and%20Sharing%20Audit.md).
 - [API and MCP evidence](Review%20Evidence/API%20and%20MCP%20Audit.md).
 
+- [Implementation review](Review%20Evidence/Implementation%20Review.md) — delivered gap coverage, independent review and verification limits.
+
 ## Publication boundary
 
 `vault/` is excluded from Mintlify through `.mintignore`, together with agent instructions and maintainer scripts. Never add vault pages to public navigation or link to them from public MDX. This is a publication boundary, not a secret store: repository readers can still see these notes. Do not store credentials or customer data here.

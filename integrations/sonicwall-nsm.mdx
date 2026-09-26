@@ -1,0 +1,58 @@
+---
+title: "Connect SonicWall NSM"
+description: "Configure SaaS or on-prem NSM access and map the correct firewall tenants."
+---
+
+SonicWall NSM supplies firewall inventory, firmware, reachability, reported update availability, licence and VPN-topology observations. Its SaaS and on-prem authentication paths use different credentials.
+
+## Choose the authentication path
+
+<Tabs sync={false}>
+  <Tab title="NSM SaaS via MySonicWall">
+    Prepare a **MySonicWall API key** with access to the intended NSM tenants. SonicWall describes generating this key through My Workspace, User Groups and the user list. Follow [SonicWall's MySonicWall API instructions](https://www.sonicwall.com/pt-br/blog/utilize-apis-to-scale-your-mysonicwall-operation) and [API guide](https://www.sonicwall.com/techdocs/pdf/msw-api_guide.pdf).
+
+    Enter the regional **NSM endpoint URL** and **MySonicWall API key**. If the key sees several tenants, enter **NSM tenant ID** using the intended tenant's productGroupID. A single visible tenant can be discovered automatically. **NSM tenant serial** can be discovered from its NSM service when omitted.
+  </Tab>
+  <Tab title="On-prem NSM">
+    Enter the reachable **NSM endpoint URL**, **NSM admin username** and **NSM admin password**. Leave **MySonicWall API key** blank to select this path.
+
+    For multi-tenant NSM, enter **NSM on-prem tenant**; leave it blank for a single-tenant instance. The current connector's username/password flow cannot complete an interactive second-factor challenge. Confirm an approved API access arrangement with your administrator before using this route; do not remove MFA from a personal administrator account to make it work.
+  </Tab>
+</Tabs>
+
+## Field checklist
+
+| Alignr field | Purpose |
+| --- | --- |
+| **NSM endpoint URL** | SaaS regional host or your on-prem NSM base URL, including `https://`. Alignr appends `/api/manager`. |
+| **MySonicWall API key** | Selects SaaS MySonicWall authentication when populated. |
+| **NSM admin username**, **NSM admin password** | On-prem direct authentication when the MySonicWall key is absent. |
+| **NSM tenant ID** | SaaS tenant selection when discovery is ambiguous. |
+| **NSM tenant serial** | Optional SaaS NSM service identity when it cannot be discovered. |
+| **NSM on-prem tenant** | On-prem multi-tenant login context. |
+
+## Connect and verify
+
+1. Open **Integrations**, add **SonicWall NSM** and give it a name that identifies the account or deployment.
+2. Enter the fields for one authentication path and review the connection outcome.
+3. Open **Clients & sites**, refresh the tenant list and assign each intended source tenant to the correct client. Compare tenant identifiers, not just display names.
+4. Use **Sync now** and inspect **Sync history**. Confirm a known firewall appears in the intended client with the expected source and observation time.
+5. Compare the observations with a [network baseline](/controls/baselines/network) before running checks.
+
+For SaaS, discovery may list several tenants, but this connection collects the **selected NSM tenant**. Configure separate connections for other tenant scopes. Mapping every discovered tenant does not make one tenant-scoped credential collect them all.
+
+**Checkpoint:** the credential reaches the intended NSM service, tenant assignments are correct and one client's firewall evidence matches its environment.
+
+## Recover from a setup problem
+
+| Symptom | Next check |
+| --- | --- |
+| Authentication uses the wrong path. | A populated MySonicWall key selects SaaS mode. Clear it only when deliberately configuring the on-prem credential bundle. |
+| More than one tenant is available. | Confirm the intended SaaS productGroupID rather than choosing a tenant by a similar name. |
+| NSM service cannot be identified. | Verify the endpoint region and the tenant's NSM service/serial. |
+| On-prem sign-in requests a second factor. | The connector cannot answer an interactive challenge. Review a supported API access arrangement. |
+| A firewall observation is missing. | Confirm the selected tenant, completed collection and the fields actually returned for that firewall. |
+
+An inventory observation does not prove a firewall rule set is safe, and a VPN topology does not establish that access is appropriately restricted. Treat policy quality, recovery and remote-access governance as separate checks.
+
+[Rotate or replace the connection](/guides/maintain-integrations) when its credentials or endpoint change.

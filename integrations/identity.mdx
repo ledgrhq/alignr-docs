@@ -1,0 +1,171 @@
+---
+title: "Identity and device management"
+description: "Choose credentials, map the right source records and understand what these connections can observe."
+---
+
+Start with the identity system that can answer your control. Account state, MFA registration, licence usage and device compliance are different observations.
+
+## Connect one source, then verify one client
+
+1. Open **Integrations** and add the intended product. Give the connection a name that identifies its account, controller or region.
+2. Enter the fields for that product below. Obtain credentials through the vendor administrator responsible for the intended account; a field list does not grant API entitlement or permissions.
+3. Review the saved connection outcome, then use **Clients & sites** to discover and explicitly assign the correct source records. Compare identifiers as well as names.
+4. For evidence sources, use **Sync now**, inspect **Sync history**, and check one client’s source and observation time. Directory sources instead use **Import clients** and **Refresh client records**.
+5. Compare the available observations with the control’s requirements before [running checks](/guides/standards).
+
+**Checkpoint:** one known source record maps to the intended client and the expected observations are present. A successful credential save alone is not a completed assessment.
+
+The tables show the current Alignr form. “Required” means the form requires a value; optional fields can still be necessary for your account or connection mode. Keep secrets in the credential fields.
+
+
+## Choose your product
+
+<AccordionGroup>
+<Accordion title="Microsoft 365 / Entra ID">
+
+Use the client Microsoft setup flow for the shared Alignr application; Client ID and Client secret are only entered when using a custom application. Registration is not sign-in enforcement. Employment/offboarding status needs a separate source.
+
+**Map:** The Microsoft tenant GUID returned by the directory.
+
+| Alignr field | Required |
+| --- | --- |
+| **Tenant ID** | Yes |
+| **Client ID** | Custom application only |
+| **Client secret** | Custom application only |
+
+**Available observations:** Directory role, Account enabled, Last interactive sign-in, Last non-interactive sign-in, User type, Directory synchronised, Licence or entitlement, MFA registered, Password reset registered, Policy scope, Policy state, Policy grant requirements, Policy last changed, Mailbox type, Mailbox time zone, Automatic reply setting, Domain authentication type, Verified directory domain.
+
+[Follow the Microsoft default and client override guide](/guides/client-microsoft-connections).
+
+</Accordion>
+
+<Accordion title="Microsoft 365 (Partner delegated)">
+
+Use the workspace partner authorisation and client-access workflow. Customer consent, GDAP roles and mapping are separate requirements. This is not the Partner Center subscription connector. Intune device checks use Direct.
+
+**Map:** Each reviewed customer Microsoft tenant GUID.
+
+| Alignr field | Required |
+| --- | --- |
+| **Partner tenant ID** | Yes |
+| **Client ID** | Custom application only |
+| **Client secret** | Custom application only |
+
+**Available observations:** Directory role, Account enabled, Last interactive sign-in, Last non-interactive sign-in, User type, Directory synchronised, Licence or entitlement, MFA registered, Password reset registered, Policy scope, Policy state, Policy grant requirements, Policy last changed, Mailbox type, Mailbox time zone, Automatic reply setting, Domain authentication type, Verified directory domain.
+
+[Follow the Microsoft default and client override guide](/guides/client-microsoft-connections).
+
+</Accordion>
+
+<Accordion title="Microsoft Intune">
+
+Use the Direct client Microsoft setup flow. Compliance and encryption observations need accessible managed-device data; neither means an unmanaged device is protected.
+
+**Map:** The Microsoft tenant GUID.
+
+| Alignr field | Required |
+| --- | --- |
+| **Tenant ID** | Yes |
+| **Client ID** | Custom application only |
+| **Client secret** | Custom application only |
+
+**Available observations:** MDM enrolment, MDM compliance state, Device encryption, Baseline state.
+
+[Follow the Microsoft default and client override guide](/guides/client-microsoft-connections).
+
+</Accordion>
+
+<Accordion title="Google Workspace">
+
+Prepare a service account with domain-wide delegation and the required API scopes, plus the delegated administrator identity. Paste the complete JSON key into the secret field. Use a connection per intended customer and confirm its returned customer ID.
+
+**Map:** One Google Workspace customer ID; the primary domain is used as its displayed name.
+
+| Alignr field | Required |
+| --- | --- |
+| **Service account key** | Yes |
+| **Delegated admin email** | Yes |
+
+**Available observations:** Account enabled, MFA registered, Last interactive sign-in, Directory role, Licence or entitlement, Group membership, Verified directory domain, Default directory domain.
+
+Use the vendor’s current instructions for credential preparation: [Google: create delegated credentials](https://developers.google.com/workspace/guides/create-credentials).
+
+</Accordion>
+
+<Accordion title="Duo Security">
+
+Use accounts mode for MSP Accounts API credentials. For a single Admin API account, use a non-accounts mode value such as admin. Inspect the user identifier against your directory: an email and a short username may represent separate subjects. Duo bypass is not the directory account-enabled setting.
+
+**Map:** In accounts mode, each child account ID. In single-account mode, the API hostname identifies the one source account.
+
+| Alignr field | Required |
+| --- | --- |
+| **Integration key** | Yes |
+| **Secret key** | Yes |
+| **API hostname** | Yes |
+| **Mode** | Depends on configuration |
+
+**Available observations:** MFA registered, MFA bypass enabled, Registered MFA method.
+
+Use the vendor’s current instructions for credential preparation: [Duo Admin API](https://duo.com/docs/adminapi).
+
+</Accordion>
+
+<Accordion title="JumpCloud">
+
+Use the API region where the key was issued: us or eu. Inspect organization IDs when the credential can see multiple managed clients. MFA registration is not proof that all sign-ins enforce MFA.
+
+**Map:** Each accessible JumpCloud organization ID.
+
+| Alignr field | Required |
+| --- | --- |
+| **API key** | Yes |
+| **Region** | Depends on configuration |
+
+**Available observations:** Account enabled, Directory role, Group membership, MFA bypass enabled, MFA registered.
+
+</Accordion>
+
+<Accordion title="Keeper Security (MSP)">
+
+This connector observes MSP licensing and usage. It does not read stored vault passwords or prove an account has MFA. Confirm the data centre for the credential.
+
+**Map:** Each active managed account, using its vendorInternalId.
+
+| Alignr field | Required |
+| --- | --- |
+| **Partner name** | Yes |
+| **Partner key** | Yes |
+| **Secret** | Yes |
+| **Data centre** | Depends on configuration |
+
+**Available observations:** Licence or entitlement, Purchased seats, Assigned seats.
+
+</Accordion>
+
+<Accordion title="CIPP">
+
+Provide your own reachable CIPP instance URL and its application credentials. This connector supplies policy-baseline observations; it does not substitute for full Entra identity or Intune device evidence.
+
+**Map:** Each managed Microsoft customer tenant GUID.
+
+| Alignr field | Required |
+| --- | --- |
+| **Tenant ID** | Yes |
+| **Client ID** | Yes |
+| **Client secret** | Yes |
+| **CIPP instance URL** | Yes |
+
+**Available observations:** Baseline state.
+
+Vendor preparation: [CIPP API setup and authentication](https://docs.cipp.app/api-documentation/setup-and-authentication).
+
+</Accordion>
+
+</AccordionGroup>
+
+## If the expected evidence is missing
+
+Check the account or region, the discovered source ID and the completed collection outcome. Then compare the list above with the [predicate reference](/guides/predicate-reference). A supported product can still lack the particular observation your control needs. Do not turn an absent observation into a passing value.
+
+[Maintain or reconnect a source](/guides/maintain-integrations), or [trace a coverage gap](/guides/troubleshooting).

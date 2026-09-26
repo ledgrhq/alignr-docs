@@ -51,3 +51,9 @@ Three subagents and the coordinator compared committed docs 0bf7785 with current
 Immediate fixes: token location/ownership/expiry/revocation, live explorer workflow and filtered-schema wording, retained MCP UI-scope boundary, optional argument text and manual-library count scope. Reference generation produced ten read endpoints (no schema diff) and ten tools; existing environment deprecation/email-validator warnings were recorded in evidence. An independent reviewer found the full-schema overstatement; corrected against developer.py. Remaining guides are deliberately recorded as open, not claimed complete.
 
 Release verification: exact staged Mintlify build passed; vault guard checks all 12 notes recursively and rejected an intentionally unindexed nested probe. Desktop token and 390px advanced-definition previews inspected. No new endpoint schema changes.
+
+## 2026-09-26 — Close application documentation gaps
+
+Delivered 22 new pages and expanded remediation, organised under task-based Documentation groups. All thirteen audited writing gaps are covered. Three subagents supplied source-backed implementations and independent cross-review; see [implementation evidence](Review%20Evidence/Implementation%20Review.md). Corrected domain withdrawal, integration fact retention, SonicWall scope, portal setup and standalone-rule defaults. Provider limitations remain explicit, especially Pax8 delegated OAuth.
+
+Validation: 73-page build, broken links, API schema command, accessibility media-attribute check, whitespace and 13-note vault guard passed. Representative desktop and mobile previews inspected; fictional parser/evaluator/API fixture checks passed. This is documentation verification, not authenticated app/vendor acceptance. Concurrent signup/integration/MCP drafts are excluded from this release.

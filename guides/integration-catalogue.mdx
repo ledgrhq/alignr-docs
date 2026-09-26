@@ -1,0 +1,52 @@
+---
+title: "Integration catalogue"
+description: "Choose a source by the question you need to answer, with setup guides and clear capability limits."
+---
+
+Start with the observation your control needs. Alignr has 38 connector-backed types in its current catalogue, including two client-directory connectors. Availability of a connector does not prove your credentials, vendor subscription or production connection are ready.
+
+## Find your source
+
+<CardGroup cols={2}>
+<Card title="Identity and device management" href="/integrations/identity">Microsoft 365 / Entra ID, Microsoft 365 (Partner delegated), Microsoft Intune, Google Workspace, Duo Security, JumpCloud, Keeper Security (MSP), CIPP.</Card>
+<Card title="PSA and RMM setup" href="/integrations/psa-rmm">HaloPSA, ConnectWise Manage, Autotask, Datto RMM, NinjaOne, N-able N-central, Syncro, Liongard.</Card>
+<Card title="Network source setup" href="/integrations/network">Cisco Meraki, Auvik, Fortinet FortiGate, Twingate, Alignr Domain Checks.</Card>
+<Card title="Backup, EDR and vulnerability setup" href="/integrations/backup-security">Veeam, Acronis Cyber Protect Cloud, SentinelOne, Huntress, CrowdStrike Falcon, ConnectSecure, Tenable Vulnerability Management.</Card>
+<Card title="Email protection and licensing setup" href="/integrations/email-licensing">Mimecast, Proofpoint Essentials, Pax8, Microsoft Partner Center, Ingram Micro, CloudBlue Connect.</Card>
+<Card title="Import IT Glue and Hudu clients" href="/integrations/directories">IT Glue, Hudu.</Card>
+<Card title="UniFi Network" href="/integrations/unifi-network">Choose cloud or local-console access and the matching API key.</Card>
+<Card title="SonicWall NSM" href="/integrations/sonicwall-nsm">Choose MySonicWall SaaS or on-prem NSM authentication.</Card>
+</CardGroup>
+
+<Warning>
+Pax8 is present in the connector catalogue, but its current credential form does not establish an approved third-party onboarding path. Read the [Pax8 setup limitation](/integrations/email-licensing) before supplying credentials.
+</Warning>
+
+## Three questions before connecting
+
+| Question | Why it matters |
+| --- | --- |
+| Does it discover clients or collect evidence? | IT Glue and Hudu import client names and IDs; they do not populate control facts. |
+| Which account, tenant, site or appliance does it represent? | A shared product name does not establish which client owns its data. |
+| Does it supply the required observation? | N-central and Syncro currently report management presence; that alone does not supply patch compliance. |
+
+Microsoft also has distinct identity, Intune and subscription connections. Use [client Microsoft settings](/guides/client-microsoft-connections) to choose Direct or Partner access deliberately.
+
+## Catalogue entries that are unavailable
+
+The following products do not currently have an Alignr connector. They are not promised release dates. Use the explanation shown in the integration picker for the current limitation.
+
+| Product | Current status |
+| --- | --- |
+| TD SYNNEX StreamOne Ion | No connector available. |
+| Sherweb | No connector available. |
+| Datto BCDR | No connector available. |
+| Inforcer | No connector available. |
+| Domotz | No connector available. |
+| Atera | No connector available. |
+| Dropsuite | No connector available. |
+| Datto SaaS Protection | No connector available. |
+
+## Finish the connection
+
+Use [connection and collection setup](/guides/integrations), [client mapping](/guides/organizations), then [run a reviewed standard](/guides/standards). For expiring credentials or a replacement source, follow [integration maintenance](/guides/maintain-integrations).
