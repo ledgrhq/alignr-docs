@@ -3,9 +3,9 @@ title: "MCP introduction"
 description: "Give an AI assistant governed access to Alignr context."
 ---
 
-The Model Context Protocol (MCP) lets a compatible client discover and call Alignr tools. Use it to list and manage clients, retrieve context, inspect detections and explain control results.
+The Model Context Protocol (MCP) lets a compatible client discover Alignr tools and help resources. Use its tools to list and manage clients, retrieve context, inspect detections and explain control results.
 
-<Tip>Open the [Developer Console](https://app.alignr.io/developer) while signed in to inspect the current MCP tool and scope reference alongside the REST API. Its request console can try REST operations using your session or, where the endpoint supports it, a scoped API key. **Those requests act on your real workspace**, not an isolated test environment. Connect an MCP client with a scoped API key to call the listed tools.</Tip>
+<Tip>Open the [Developer Console](https://app.alignr.io/developer) while signed in to inspect the deployment's MCP tool and scope reference alongside the REST API. Its **Try it** console executes REST requests using your session or, where supported, a scoped API key. **Those requests act on your real workspace**, not an isolated test environment. Connect an MCP client with a scoped API key to read MCP resources or call MCP tools.</Tip>
 
 ## Connection
 
@@ -16,6 +16,12 @@ The Model Context Protocol (MCP) lets a compatible client discover and call Alig
 | Authentication | `Authorization: Bearer <Alignr API key>` |
 
 Your deployment must have the MCP server enabled. The trailing slash addresses the mounted transport directly.
+
+## Discover help and tools
+
+After connecting, use your MCP client's resource browser or `resources/list` to find `alignr://help/getting-started` and `alignr://help/tools-and-scopes`. Read either resource with `resources/read`. The first gives connection and workflow guidance; the second lists registered tool names, MCP scopes and required owner permissions from the server's registry. Both return product guidance, not client data, and require a valid bearer key. Reading them grants no tool scope or permission.
+
+Use `tools/list` for the connected server's tool definitions and input schemas. A tool appearing in either list does not mean your key can call it: execution checks its scope and, for user-owned keys, the owner's current permissions. See [Connect an MCP client](/mcp/connect) for Claude Code and Codex examples.
 
 ## What you can do
 

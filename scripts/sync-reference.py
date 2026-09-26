@@ -145,6 +145,15 @@ for category, group in TOOL_GROUPS.items():
             lines += ['', '<Note>The detail returns the same fixed fields as each list item. A run marked `completed` means execution reached that state; it does not prove the control was fixed. Check `verificationStatus` and fresh source evidence. `simulated: true` means at least one step was rehearsed rather than applied. Neither this tool nor the list reports rollback eligibility: status alone cannot establish that a rollback window is open or an eligible token remains.</Note>']
         elif name == 'get_remediation_plan_outline':
             lines += ['', 'This is a metadata-only outline, not an execution preview. `previewKind` is `metadata_only`; `executionReadiness` and `targetReadiness` are `not_checked`; `simulationMode` is `unknown`. The result gives plan, detection and Organization UUIDs, required autonomy and reversibility, plus at most 50 steps ordered by position and ID. Each step contains only its UUID, position, allowlisted `actionType` (or `unsupported`), reversibility and `requiresApproval`. `stepsTruncated: true` means more steps exist; never treat the displayed page as the whole plan.', '', '<Warning>No step parameters, target binding or eligible targets, credentials, descriptions, result payloads or plan fingerprint are returned. Reversibility and approval metadata do not establish that the action is ready, permitted or safe to run. Use the signed-in [remediation workflow](/guides/remediation) to inspect current targets and authority and request or approve an action.</Warning>']
-lines += ['', '## Understand the answer', '', 'A missing result is not proof that a control passed. Read [control statuses](/guides/control-status), retain the client and evidence context, and review [MCP permissions](/mcp/security).']
+lines += [
+    '', '## Authenticated help resources', '',
+    'These are MCP resources, not tools. Use `resources/list` to discover them and `resources/read` to open them in a connected client. Both require a valid bearer key, but reading them grants no tool scope or permission. Use `tools/list` for the deployed tool definitions and input schemas.', '',
+    '| Resource URI | What it contains |', '| --- | --- |',
+    '| `alignr://help/getting-started` | Connection, discovery, common read workflows and capability limits. |',
+    '| `alignr://help/tools-and-scopes` | Registered tool names, MCP scopes, required owner permissions and summaries from the server registry. |', '',
+    'The signed-in [Developer Console](https://app.alignr.io/developer) shows the current MCP reference. Its **Try it** console executes REST requests against the real workspace; use an MCP client to read these resources or call MCP tools.',
+    '', '## Understand the answer', '',
+    'A missing result is not proof that a control passed. Read [control statuses](/guides/control-status), retain the client and evidence context, and review [MCP permissions](/mcp/security).',
+]
 (ROOT/'mcp/tools.mdx').write_text('\n'.join(lines)+'\n')
 print(f'Generated {len(paths)} read endpoints and {len(MCP_TOOL_SCOPES)} MCP tools.')

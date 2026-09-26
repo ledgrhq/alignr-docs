@@ -35,9 +35,11 @@ Clients use different configuration formats and secret-storage mechanisms. If yo
 
 Replace the placeholder using your client’s protected credential mechanism. Do not commit a configuration containing a real key. Clients that support only local stdio processes cannot connect directly with this configuration.
 
-## 2. Verify a read
+## 2. Discover help and verify a read
 
-Reconnect the server in your client and inspect its discovered tools. Ask it to call `get_organization` with the ID of an Organization you can access. Confirm the returned client matches your intended target.
+Reconnect the server in your client. If it supports MCP resources, open its resource browser or ask it to list resources and read `alignr://help/getting-started` with `resources/read`. Read `alignr://help/tools-and-scopes` for the server's registered tools, scopes and required owner permissions. A valid bearer key is required for both resources, but they need no extra tool scope. If your client does not expose resources, use this guide and the [tool catalogue](/mcp/tools) instead.
+
+Inspect the discovered tools with `tools/list`, then ask the client to call `get_organization` with the ID of an Organization you can access. Confirm the returned client matches your intended target. Resource discovery and tool discovery do not authorise a tool call; its scope and the key owner's current permissions are checked when it runs.
 
 For the control-results example below, create a replacement key with `compliance:read` and `compliance:explain`. Keep `organization:read` if you also want to look up the client. Scopes are fixed when a key is created.
 

@@ -354,6 +354,17 @@ Ask a natural-language question over the governed corpus, with citations.
 - **`question`:** The question you want answered from available evidence.
 - **`organization_id`:** Organization UUID. Omit it to use the tool’s workspace-wide scope.
 
+## Authenticated help resources
+
+These are MCP resources, not tools. Use `resources/list` to discover them and `resources/read` to open them in a connected client. Both require a valid bearer key, but reading them grants no tool scope or permission. Use `tools/list` for the deployed tool definitions and input schemas.
+
+| Resource URI | What it contains |
+| --- | --- |
+| `alignr://help/getting-started` | Connection, discovery, common read workflows and capability limits. |
+| `alignr://help/tools-and-scopes` | Registered tool names, MCP scopes, required owner permissions and summaries from the server registry. |
+
+The signed-in [Developer Console](https://app.alignr.io/developer) shows the current MCP reference. Its **Try it** console executes REST requests against the real workspace; use an MCP client to read these resources or call MCP tools.
+
 ## Understand the answer
 
 A missing result is not proof that a control passed. Read [control statuses](/guides/control-status), retain the client and evidence context, and review [MCP permissions](/mcp/security).
