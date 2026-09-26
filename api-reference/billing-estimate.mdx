@@ -1,0 +1,54 @@
+---
+title: "Get a billing estimate"
+description: "Read a tenant-scoped USD Standard plan estimate without starting checkout."
+---
+
+Use `GET /api/v1/billing/estimate` to price the current non-archived Organizations in your MSP workspace. Billing must be configured in test or live mode, and the caller needs `billing.read`. A user-owned API key can carry that REST scope only while its owner retains the permission; a signed-in session with the same permission can also call the route.
+
+The server chooses the fixed catalogue price and counts clients within the authenticated workspace. You send an offer code, **not** a client quantity, item price, amount or customer ID. The billable quantity is `max(actualClientCount, 10)`. More than 100,000 billable clients requires a tailored estimate.
+
+| `offer` | USD unit amount | `billingPeriod` |
+| --- | --- | --- |
+| `monthly` (default) | $29.00 per client | `month` |
+| `annual_commit_monthly` | $26.10 per client | `month` |
+| `annual_upfront` | $295.80 per client | `year` |
+
+## Request an estimate
+
+After [creating a key](/guides/api-keys) with `billing.read` and storing it as `ALIGNR_API_KEY`, request one of the three offers:
+
+```bash
+curl --fail-with-body \
+  'https://api.alignr.io/api/v1/billing/estimate?offer=monthly' \
+  --header "Authorization: Bearer $ALIGNR_API_KEY"
+```
+
+For an illustrative workspace with three non-archived clients, the response shape is:
+
+```json
+{
+  "offer": "monthly",
+  "mode": "test",
+  "actualClientCount": 3,
+  "billableQuantity": 10,
+  "currencyCode": "USD",
+  "unitAmountMinor": 2900,
+  "subtotalMinor": 29000,
+  "billingPeriod": "month",
+  "estimateOnly": true
+}
+```
+
+Amounts are **integer USD cents**: `subtotalMinor: 29000` means a $290.00 pre-tax monthly estimate. `mode` identifies the configured test or live billing site; a test estimate does not establish a live payment. `actualClientCount` excludes archived clients, while `billableQuantity` applies the ten-client floor. The response does not include tax, a contract, a checkout URL or a payment result. The endpoint returns `Cache-Control: no-store` on a successful estimate.
+
+<Warning>Calculating an estimate does not create a customer, checkout session, subscription, invoice or charge. The annual-commit offer name and monthly price do not prove that a twelve-month contractual term is enforced. Agreements, activation, taxes and final billing are arranged separately.</Warning>
+
+## Handle unavailable estimates
+
+- **403:** the caller lacks `billing.read`; inspect the key owner's current role and issued scope.
+- **409:** billing is not configured for the workspace, or the quantity needs a tailored estimate. Contact support for the next step.
+- **422:** the `offer` value is not one of the three fixed codes.
+- **429:** the per-actor estimate limit was reached; wait before requesting again.
+- **503:** the provider estimate is temporarily unavailable. The response contains no quoted amount and carries `Cache-Control: no-store`; retry later rather than treating an older estimate as current.
+
+The service allows up to 12 estimate requests per actor in a 60-second fixed window when its rate-limit store is available. This is a best-effort throttle, not a contractual usage limit. For the account view and support path, see [Billing and support](/guides/billing-and-support). The [generated endpoint reference](/api-reference/openapi.json) records the request and response schema; check the [live schema](/api-reference/live-schema) for your deployment.

@@ -215,6 +215,7 @@
               "api-reference/errors",
               "api-reference/client-assessment-recipe",
               "api-reference/manage-clients-recipe",
+              "api-reference/billing-estimate",
               "api-reference/create-standard-recipe"
             ]
           },
@@ -262,6 +263,13 @@
             "openapi": "/api-reference/openapi.json",
             "pages": [
               "GET /api/v1/facts"
+            ]
+          },
+          {
+            "group": "Billing",
+            "openapi": "/api-reference/openapi.json",
+            "pages": [
+              "GET /api/v1/billing/estimate"
             ]
           }
         ]

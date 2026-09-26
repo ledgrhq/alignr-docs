@@ -38,6 +38,20 @@ Plans and custom subscriptions are arranged separately. Connecting a billing pro
 
 The app shows the subscription records received for this workspace, including identifiers and statuses where available. It is a saved billing view, not a fresh provider query on every page load. Confirm invoices, payments and commercial questions through the portal or support rather than inferring them from a stale status.
 
+## Calculate a Standard plan estimate
+
+When billing is configured in test or live mode, anyone with `billing.read` can choose an offer under **Standard plan estimate** and select **Calculate estimate**. The server counts this MSP workspace's non-archived Organizations. It prices at least ten clients, so a workspace with three current clients shows **3 active clients · 10 billed**. Select **Refresh estimate** after the client count or offer changes; the calculator does not update a displayed amount automatically.
+
+| Offer | USD rate | Estimate period |
+| --- | --- | --- |
+| Monthly | $29.00 per billed client | Month |
+| Annual commitment, paid monthly | $26.10 per billed client | Month |
+| Annual upfront | $295.80 per billed client | Year |
+
+For three non-archived clients, the ten-client minimum makes the illustrative subtotals $290.00 per month, $261.00 per month and $2,958.00 per year respectively. These are **pre-tax estimates**, not invoices or final payment amounts. The estimate is checked against the configured test or live Chargebee catalogue, and no customer, checkout, subscription, invoice or charge is created by calculating it. An annual-commit estimate does not establish or enforce a twelve-month agreement; terms and activation are arranged separately. Scale/Enterprise pricing remains quote-only.
+
+If the calculator is absent, billing may not be configured for the workspace or your role may lack `billing.read`. If it says **Estimate unavailable**, select **Try again** later or contact support; do not treat the last displayed amount as current. Workspaces above 100,000 billable clients need a tailored estimate. Scripts can use the [read-only estimate API](/api-reference/billing-estimate) with the same workspace and permission boundary.
+
 ## Arrange or change your agreement
 
 Contact [support@alignr.io](mailto:support@alignr.io) to discuss pricing, plan changes, custom subscriptions or cancellation. Include the workspace name and the change you want. For a billing-record query, include the subscription or invoice reference if you have one.

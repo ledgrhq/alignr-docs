@@ -12,6 +12,7 @@ Scopes specify what a key may do. REST and MCP use different names:
 | Connection | Example scope | What it allows |
 | --- | --- | --- |
 | REST API | `organization.read` | Read Organizations through the API. |
+| REST API | `billing.read` | Request a read-only USD workspace billing estimate, where the owner holds billing access. |
 | MCP client | `organization:read` | Call the `get_organization` tool. |
 | MCP client | `organization:write` | Call `create_organization` or `update_organization` with a user-owned key. |
 | MCP client | `remediation:read` | List remediation run statuses or inspect one run; it does not authorise an action. |

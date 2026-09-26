@@ -19,6 +19,7 @@ GROUPS = {
     'Alignment': [('/organizations/{organization_id}/compliance', 'Get client compliance'), ('/organizations/{organization_id}/compliance/trend', 'Get compliance trend')],
     'Detections': [('/detections', 'List detections'), ('/detections/{detection_id}', 'Get a detection')],
     'Evidence': [('/facts', 'List facts')],
+    'Billing': [('/billing/estimate', 'Get a billing estimate')],
 }
 schema = app.openapi()
 permissions = {path: _permission_for_route(route) for path, route in _api_routes(app.routes) if 'GET' in route.methods}
@@ -32,6 +33,14 @@ for group, endpoints in GROUPS.items():
             raise ValueError(f'Expected an explicit permission for {path}')
         operation.update(summary=title, tags=[group], security=[{'BearerAuth': []}])
         operation['description'] = f'Requires `{permission}`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability.'
+        if suffix == '/billing/estimate':
+            operation['description'] += ' Optional USD pre-tax catalogue estimate only. Uses this tenant’s non-archived Organization count with a minimum billable quantity of ten; it does not create a checkout, subscription, invoice or charge. Annual commitment terms are arranged separately.'
+            operation['responses'].update({
+                '403': {'description': 'The actor does not hold billing.read.'},
+                '409': {'description': 'Billing is not configured, or the client count needs a tailored estimate.'},
+                '429': {'description': 'The estimate request rate limit was reached.'},
+                '503': {'description': 'The provider estimate is temporarily unavailable; no amount is returned.'},
+            })
         operation['x-ledgr-permission'] = permission
         paths[path] = {'get': operation}
 # Include only components reached by selected operations.
