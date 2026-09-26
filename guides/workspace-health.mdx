@@ -1,0 +1,76 @@
+---
+title: "Workspace health"
+description: "Use Alignr's health page to check evidence collection, client coverage and outstanding follow-up work."
+---
+
+Open **Settings → Workspace health** or [go to the health page](https://app.alignr.io/health). The page asks **Is Alignr working?** and brings together collection, assessment coverage, overdue manual reviews and remediation follow-up across your workspace. Your role needs dashboard access.
+
+Use this page when you want to know whether Alignr has current information to work with. Use a client's assessment to find out whether that client meets your standards.
+
+## Start with the summary
+
+Select **Check health** to refresh the health report. This reads the current operational state; it does not start source collection, run an assessment or repair a connection.
+
+Check **Last checked** and the automatic evidence check message. If health cannot be checked, any results still visible are last-known information. They are not a current all-clear.
+
+| Summary | How to read it |
+| --- | --- |
+| No operational warnings detected | No warnings were detected in this report. Continue to inspect the scope and timestamps; this is not a claim that all client controls pass. |
+| Client coverage | Clients with current live results and no outstanding automated evidence or coverage gaps. A failing control still counts as assessed. |
+| Manual reviews | Overdue human reviews. Follow **Review assigned work** to complete the relevant review. |
+| Remediation | Runs awaiting verification and unresolved failures. Follow **Review runs** to inspect the outcome and next action. |
+
+The **What needs attention** section links to recovery work. Warnings clear when the underlying condition clears; refreshing the page does not dismiss them.
+
+## Check the sources
+
+The **Sources** table shows each source's state, last successful collection, latest attempt, next expected collection and client links.
+
+| State | Meaning and next step |
+| --- | --- |
+| Current | A successful collection is within the source's expected cadence. Inspect client coverage next. |
+| Collecting | A recent collection is running. Review its progress before starting another. |
+| Overdue | A collection is late or has run longer than expected. Open the source and inspect its history and recovery hint. |
+| Needs attention | The source has an error. Review its connection and collection history. |
+| Not configured | Setup or a first successful collection is still needed. Follow the source's recovery hint. |
+| Disabled | The source is disabled. Decide whether it should be active for this workspace. |
+| Simulated | This source uses simulated data. It does not establish live coverage. |
+| Client directory | This source supplies client records; it is not an assessment evidence source. |
+
+**Last success** is more useful than the latest attempt alone: an attempted collection may have failed. **Next expected collection** describes the cadence, not a guaranteed completion time.
+
+Use **Manage sources** to review connections. If client links are awaiting matching, [map the source records](/guides/organizations) to the correct clients. For a Microsoft-specific access gap, check the client's [Microsoft connection choice](/guides/client-microsoft-connections).
+
+## Read client coverage
+
+Search for a client in **Client coverage**, then open it to inspect individual controls and evidence requirements.
+
+| Column | What it tells you |
+| --- | --- |
+| Current results | Assessed outcomes, including passing and failing controls. Read alongside the last evaluation and readiness label. |
+| Need evidence | Controls whose evidence is insufficient to establish an outcome. |
+| No coverage | Controls without the required coverage. Review sources and supported observations. |
+| Excluded | Controls outside the client's assessment scope. Exclusion is not a pass. |
+| Last evaluation | When the client's assessment was last evaluated. |
+
+The **Current assessment** label requires live evidence, at least one assessed outcome, an evaluation within the last 24 hours, and no outstanding need-evidence or no-coverage results. An old result count alone does not satisfy that check.
+
+For example, Acme can have current assessment coverage while an administrator's MFA check is failing. Alignr has enough evidence to answer the question; the answer still needs attention. A missing MFA observation is an evidence gap instead.
+
+## Recover in the right order
+
+1. **Restore collection.** Open a source with an error or overdue collection, review its hint and history, and correct the connection or permissions as needed.
+2. **Check client mapping.** Confirm the collected records belong to the intended client.
+3. **Collect and assess.** Verify fresh evidence, then run the relevant standard. Refreshing health alone does neither.
+4. **Complete follow-up work.** Review failed controls, overdue manual checks and remediation verification separately.
+5. **Check health again.** Confirm the timestamps, coverage and underlying warnings have changed as expected.
+
+If automatic evidence checks are paused, stale, unavailable or report a configuration issue, you can still refresh connected tools manually. Contact [Alignr support](mailto:support@alignr.io) for help with the automatic check service.
+
+## Keep the three questions separate
+
+- **What remains to configure?** Use [the setup wizard and readiness page](/guides/setup-wizard).
+- **Is collection and follow-up working?** Use Workspace health.
+- **Does this client meet the expectation?** Open its [control results](/guides/control-status) and inspect the evidence.
+
+**Your checkpoint:** every operational warning has an understood next action, and you can distinguish healthy collection from passing client controls.

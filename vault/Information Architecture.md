@@ -9,7 +9,7 @@
 
 ## Public navigation
 
-Documentation contains Start here (Introduction, Quickstart, Your first assessment) and expandable groups for workspace setup, assessment concepts, controls, and help/reference. Controls contains the overview, baseline selection, recipes, category references, build/manage guides and advanced definitions.
+Documentation contains Start here (Introduction, Setup wizard, Quickstart, Your first assessment) and expandable groups for workspace setup, workspace management, assessment concepts, controls, and help/reference. Controls contains the overview, baseline selection, recipes, category references, build/manage guides and advanced definitions.
 
 API reference contains key setup, authentication, interface guidance and curated read operations. MCP contains connection, task-based tool reference and security guidance. Neither is a prerequisite for using the app.
 
@@ -36,3 +36,7 @@ Troubleshooting starts from the visible symptom and gives a recovery check for e
 ## Setup milestones
 
 Keep client-directory import separate from evidence collection, and collection separate from running checks. Setup guides use actual Import clients / Clients & sites entry points. Library draft activation is an explicit prerequisite to evaluation. The evidence guide separates observation time from timestamps carried as values.
+
+## Workspace administration
+
+The wizard is the first configuration path. Readiness checks actual coverage, and Workspace health monitors collection, assessment freshness and follow-up. Keep these distinct from passing controls. Manage your workspace contains a Settings directory, accounts/team access and health. Client Microsoft connections belong beside client mapping, explaining workspace defaults, per-client overrides and direct access for clients outside Partner Center. Link detailed guides instead of making Quickstart a second reference catalogue.

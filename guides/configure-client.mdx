@@ -1,0 +1,90 @@
+---
+title: "Configure a client"
+description: "Create a client, connect its tools and find the settings that govern its assessments and access."
+---
+
+A client brings together one business's source records, checks, exceptions and follow-up. Start with its identity, then configure the evidence and expectations you will use to assess it.
+
+This guide covers the current app workflow. If your source already contains the client, [import and link its record](/guides/organizations) instead of creating a duplicate.
+
+## Add a client
+
+Open **Clients → + New client**. Creating a client requires `organization.write`.
+
+| Field | What to enter |
+| --- | --- |
+| **Name** | The client name your team should recognise. |
+| **Seats** | The seat count you want recorded for this client. Enter zero or a positive number. |
+| **Remediation limit** | The client's permitted level of action. New clients start at **Suggest only**. |
+| **Advanced options → Slug** | The short identifier initially derived from the name; review it before saving. |
+| **Advanced options → PSA reference** | An optional matching record ID from your PSA. |
+
+Select **Create client**, then open the client from the list. Entering a PSA reference does not connect the PSA or establish its source mapping; [link the source records](/guides/organizations) separately.
+
+**Checkpoint:** you have one client for the intended business. The record's existence does not mean evidence has been collected or checks have passed.
+
+## Find the right setting
+
+The available tabs and actions depend on your permissions.
+
+| What you want to do | Where to go |
+| --- | --- |
+| Link tools and their client sites. | Client → **Connections**. |
+| Choose inherited, Partner Center or Direct Microsoft access. | Client → **Connections → Microsoft setup**. |
+| Configure public DNS checks for client domains. | Client → **Domains**. |
+| Inspect control results and coverage gaps. | Client → **Checks**. |
+| Review recorded risks and planned improvements. | Client → **Risk register** or **Roadmap**. |
+| Change control parameters or client exceptions. | [Standards and client overrides](/controls/parameters). |
+| Review what changes Alignr may make. | **Standards → Run checks**, in the client approval-limit step. |
+| Prepare external client access and presentation. | Client → **Client portal**. |
+| Open reports, manual reviews or remediation history. | Client → **More**. |
+
+The current client page does not expose a general **Edit client** form for changing its name, seats or PSA reference after creation. Review those fields when creating the client; use the specific settings below for connection, assessment and portal changes.
+
+## Connect the client's tools
+
+Under **Connections → Tools serving this client**:
+
+1. Select **Link existing connection** to reuse a configured source, or **Add connection** to set up a new one.
+2. For an existing source, choose the named connection and use **Refresh sites** where available.
+3. Compare each site's name and identifier with the client's environment, then select **Link site** for the appropriate unassigned record.
+4. Confirm **Assigned to this client**. If a site already belongs to another client, review its existing mapping before changing it through the integration's **Clients & sites** tab.
+
+A shared connection can serve several clients through separate mappings. Several sites can belong to one client. The [mapping guide](/guides/organizations) explains how to keep those identities straight.
+
+For Microsoft, use **Microsoft setup** in the same tab. Your workspace can default to Partner Center while one client uses Direct because it has no suitable partner relationship. Follow [Microsoft connections for each client](/guides/client-microsoft-connections) to save and authorise the correct method.
+
+## Choose domains to check
+
+Open the client's **Domains** tab. Review **Domains from Microsoft**, which uses verified custom domains from the selected Microsoft connection, and untick any you want to leave out. Add other client-owned domains under **Other domains**, one per line.
+
+Review **Enable domain checks**, then select **Save domain settings**. When enabled, with saved domains and no unsaved changes, use **Check now** to request a check.
+
+These checks inspect public DNS for SPF, DMARC, MX and nameservers. They do not perform port scanning or prove that every aspect of email security is correctly configured. Use the [email and domain baseline](/controls/baselines/email) to understand the automated observations and separate human reviews.
+
+## Set expectations and approval limits
+
+Choose a reviewed standard, check the client's coverage and record deliberate [client overrides](/controls/parameters) when its agreed thresholds differ. A connection preference chooses the source of evidence; a control parameter chooses the expectation applied to it.
+
+The **Run checks** wizard also lets you review **Changes Alignr may make** for each selected client. Changing this option saves immediately; it does not wait for the final run confirmation. You need `organization.write` to change the client limit.
+
+The client limit is one input to the effective permission to act. The control's limit, workspace limit and platform safety limit can reduce it. Alignr uses the most restrictive level, and irreversible work still requires a named human approver. See [remediation](/guides/remediation) before increasing it.
+
+## Prepare the client portal separately
+
+Open **Client portal** from the client page. This is an internal preview; it does not prove that an external person can sign in.
+
+- **Sign-in access:** confirm the client's Microsoft tenant and choose the **Sign-in policy**, then **Save access settings**.
+- **People & views:** configure each person's access and assigned view.
+- **Content & presentation:** review what you will share.
+- **Overview:** inspect the internal preview.
+
+The sign-in choices are **Off — nobody can sign in**, **Only people explicitly granted access**, and **Everyone in this Microsoft tenant**. Under the last option, removing one person's explicit grant does not prevent them from signing in through the tenant-wide policy.
+
+Viewing the portal requires client and portal access; changing the sign-in policy requires `organization.write`. Portal sign-in settings and Microsoft evidence connections are separate: authorising evidence collection does not automatically grant the client's people portal access.
+
+## Your client is ready for an assessment when
+
+You can identify its source mappings, explain the selected Microsoft method if applicable, inspect current observations and name the standard you intend to evaluate. Any client overrides or approval limits should be deliberate and understood.
+
+<Card title="Next: your first client assessment" icon="arrow-right" href="/journeys/first-assessment">Follow one client from evidence collection to an explained result and next action.</Card>

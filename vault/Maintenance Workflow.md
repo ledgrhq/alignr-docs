@@ -13,6 +13,7 @@ Read AGENTS.md, this vault's MOC and relevant decisions. Check branch and workin
 | Predicates or producer semantics | Human predicate data, generated reference, examples, diagrams and affected controls |
 | Baselines/templates/manual checks | Control generator/reference, overview counts, recipes, source limitations and guided examples |
 | API/MCP contracts | Curated generator output plus setup/authentication/error prose |
+| Setup, account, settings or Microsoft connection behaviour | Wizard, settings directory, account/team guide, health guide and client connection instructions; check actual labels, permissions, selection precedence and completion signals |
 | Learning example | Worked data, evaluator checks, links and Editorial Standards if conventions change |
 
 Update the relevant living note in the same change. Append a numbered decision when changing an accepted principle. Add new notes to MOC. Record the implementation commit, source revision, checks, publication and remaining gaps in Review Log.

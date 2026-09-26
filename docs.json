@@ -54,6 +54,7 @@
             "group": "Start here",
             "pages": [
               "introduction",
+              "guides/setup-wizard",
               "quickstart",
               {
                 "group": "Your first assessment",
@@ -73,8 +74,18 @@
                 "group": "Set up your workspace",
                 "pages": [
                   "guides/integrations",
+                  "guides/configure-client",
                   "guides/organizations",
+                  "guides/client-microsoft-connections",
                   "guides/standards"
+                ]
+              },
+              {
+                "group": "Manage your workspace",
+                "pages": [
+                  "guides/settings",
+                  "guides/account-and-team",
+                  "guides/workspace-health"
                 ]
               },
               {
