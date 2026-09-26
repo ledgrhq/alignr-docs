@@ -1,0 +1,53 @@
+---
+title: "Manual checks"
+description: "Capture human judgement with clear instructions, evidence and review dates."
+---
+
+Use a manual check when the desired conclusion needs human judgement or evidence beyond supported automated observations. A successful backup job and a successful restore exercise are different checks.
+
+Manual assessments have their own status and do not change the automated live score.
+
+## Define a useful check
+
+Open an editable standard and select **Add manual check**. Complete:
+
+| Field | What to write |
+| --- | --- |
+| Expected outcome | One specific conclusion, such as “A representative workload can be restored”. |
+| Instructions and evidence guidance | What to inspect, what satisfies the check, what would fail it and what evidence to retain. |
+| Category | A topic that helps the reviewer find related checks. |
+| Review cadence | Choose 30, 90, 180 or 365 days, or a custom interval of 1–730 days. |
+| Enabled | Whether the check should be available for assessment under the enabled standard. |
+
+Protected system content needs an editable copy. Client-local checks are also available when the requirement belongs to one client rather than your shared standard.
+
+## Example: restore testing
+
+**Expected outcome:** a representative workload is restored and its required data is usable.
+
+**Instructions:** identify the workload and recovery point, follow an approved restore procedure, verify the restored data and record elapsed recovery time. Compare the outcome with the client's agreed recovery objectives. Record limitations, failures and follow-up ownership.
+
+**Evidence:** an approved test record or ticket, the recovery point used, verification performed and the conclusion. Keep credentials and sensitive recovered data out of assessment notes.
+
+The baseline backup template supplies a 30-day review interval. That is a template default to review against the client's requirements, not a universal policy.
+
+## Record an assessment
+
+In the client's manual checks, select **Assess**. Choose **Pass**, **Fail** or **Not applicable**, enter the required **Evidence note**, and add an evidence URL when appropriate.
+
+A meaningful note explains what was checked and why the result follows. “Done” is not enough to distinguish a tested restore from a review of the backup dashboard. Explain the scope reason for **Not applicable**; it is not a passing result.
+
+Recording an assessment requires edit permission and an enabled check under an enabled standard. Previous assessments remain available in history.
+
+## Understand the review status
+
+| Status | Meaning |
+| --- | --- |
+| Pass / Fail | The recorded human conclusion while the assessment remains current. |
+| Not applicable | A recorded scope decision; review the reason. |
+| Needs review | No assessment yet, the review is overdue, or the check changed since assessment. |
+| Excluded | The check or its standard is switched off. |
+
+A previous pass is not permanently current. Changes to the check and review deadlines can require another assessment.
+
+Browse [baseline categories](/controls/baselines/overview) for all 19 supplied manual checks and their default instructions and intervals.

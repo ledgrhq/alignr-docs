@@ -71,3 +71,18 @@ set-valued markers from the application, and writes `guides/predicate-reference.
 It does not infer meanings from identifiers. Review descriptions against the
 connector semantics and distinguish a registered name from a live producer.
 Keep conceptual guides, worked examples and diagrams aligned with the evaluator.
+
+## Regenerate the control catalogue
+
+From the application checkout, using its installed dependencies:
+
+```bash
+PYTHONPATH=api api/.venv/bin/python /path/to/alignr-docs/scripts/build-control-reference.py /path/to/ledgr
+```
+
+This reads seed declarations without executing the seed and imports the standard
+library templates without database queries. It writes `reference-data/control-catalogue.json`
+and the eight `controls/baselines/` category pages. Update generator mappings and
+interpretation notes when definitions change; do not hand-edit generated pages.
+Review the hand-written baseline overview counts and all affected controls guides,
+examples and diagrams too. Seed availability and copied library drafts are distinct.

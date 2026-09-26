@@ -71,8 +71,6 @@
             "pages": [
               "guides/predicates",
               "guides/evidence",
-              "guides/control-conditions",
-              "guides/control-status",
               "guides/remediation",
               "guides/troubleshooting"
             ]
@@ -82,6 +80,49 @@
             "pages": [
               "guides/predicate-reference",
               "guides/glossary"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Controls",
+        "icon": "shield-check",
+        "groups": [
+          {
+            "group": "Understand controls",
+            "pages": [
+              "controls/overview",
+              "guides/control-conditions",
+              "guides/control-status"
+            ]
+          },
+          {
+            "group": "Build and manage",
+            "pages": [
+              "controls/create-custom",
+              "controls/parameters",
+              "controls/advanced-definitions",
+              "controls/manual-checks",
+              "controls/test-and-rollout"
+            ]
+          },
+          {
+            "group": "Baseline library",
+            "pages": [
+              "controls/baselines/overview",
+              {
+                "group": "Browse by category",
+                "pages": [
+                  "controls/baselines/identity",
+                  "controls/baselines/endpoints",
+                  "controls/baselines/backup",
+                  "controls/baselines/vulnerability",
+                  "controls/baselines/licensing",
+                  "controls/baselines/network",
+                  "controls/baselines/email",
+                  "controls/baselines/external"
+                ]
+              }
             ]
           }
         ]

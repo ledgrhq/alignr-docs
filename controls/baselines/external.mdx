@@ -1,0 +1,96 @@
+---
+title: "External exposure"
+description: "DNS resilience and human reviews of internet-facing assets and access."
+---
+
+This category contains **1 automated control definitions** and **3 manual checks** across the sources named below. Similar controls from different standards are listed separately because names, thresholds or severity can differ.
+
+The seeded Alignr Baseline is a reference from the seed catalogue, not a promise that every production workspace contains it. Library templates are copied as disabled drafts. See [Choose a baseline](/controls/baselines/overview) before enabling anything.
+
+## Automated controls
+
+Expand a control to see the exact population, expectation and defaults. A pass requires usable evidence for the selected population. A known contrary observation can prove failure; missing observations or an empty population must not become a pass.
+
+<AccordionGroup>
+
+<Accordion title="DNS nameserver count">
+
+**Source:** External exposure. **Severity:** medium. **Declared autonomy:** `suggest_only`.
+
+**Population:** subjects with an observation of **Name server count** (`external_nameserver_count`).
+
+**Expectation:** **Name server count** (`external_nameserver_count`) is at least `2`.
+
+**Thresholds:** no configurable parameter is declared for this control.
+
+**Required observations:** `external_nameserver_count`.
+
+**Interpretation:** Two or more name servers do not prove independent providers, fault domains or recovery readiness.
+
+**Investigate:** confirm the client and subject, inspect source and observation time, then compare the actual value with the effective expectation. Review a supported change separately from the assessment.
+
+```json
+{
+  "match": {
+    "predicate": "external_nameserver_count"
+  },
+  "expect": [
+    {
+      "fact": "external_nameserver_count",
+      "op": "gte",
+      "value": 2
+    }
+  ],
+  "severity": "medium",
+  "title": "Domain has fewer than two nameservers",
+  "evidence": [
+    "external_nameserver_count"
+  ]
+}
+```
+
+</Accordion>
+
+</AccordionGroup>
+
+## Manual checks
+
+These are human reviews, not automated evidence. The interval below is the template default; review ownership, evidence and suitability for the client.
+
+<AccordionGroup>
+
+<Accordion title="Review external asset inventory">
+
+**Source:** External exposure. **Default review interval:** 30 days.
+
+Reconcile the approved public asset register with current DNS, cloud and vendor records. Pass when every internet-facing hostname, address, service owner and business purpose is recorded, and retired assets are removed or blocked. Fail when an exposed asset is unknown, ownerless or no longer required. Evidence: attach the dated inventory export and record the source systems checked. Alignr does not run an external asset scanner for this check.
+
+**Record:** who performed the review, when it was performed, the evidence, the conclusion and any follow-up or approved exception. A due review is not evidence of a completed review.
+
+</Accordion>
+
+<Accordion title="Review exposed administration ports">
+
+**Source:** External exposure. **Default review interval:** 30 days.
+
+For each approved internet-facing asset, inspect firewall, cloud security group and service configuration for management ports and interfaces. Pass when administration is private or restricted to approved source networks with MFA and logging. Fail when RDP, SSH, database or appliance administration is exposed broadly, uses an unapproved source or lacks compensating controls. Evidence: record the asset, port, rule, allowed sources and owner; Alignr does not scan ports.
+
+**Record:** who performed the review, when it was performed, the evidence, the conclusion and any follow-up or approved exception. A due review is not evidence of a completed review.
+
+</Accordion>
+
+<Accordion title="Review remote access paths">
+
+**Source:** External exposure. **Default review interval:** 30 days.
+
+Review VPN, zero-trust and remote support services against the approved user, group, device and destination register. Pass when each path has an owner, MFA, least-privilege scope, logging and a current access review. Fail when a path is anonymous, stale, over-broad or lacks a recent owner review. Evidence: attach the access export and record the test of a representative path; Alignr does not perform an external reachability scan.
+
+**Record:** who performed the review, when it was performed, the evidence, the conclusion and any follow-up or approved exception. A due review is not evidence of a completed review.
+
+</Accordion>
+
+</AccordionGroup>
+
+## Next steps
+
+[Create a custom control](/controls/create-custom) · [Parameters and client overrides](/controls/parameters) · [Record a manual check](/controls/manual-checks)

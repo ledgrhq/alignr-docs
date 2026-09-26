@@ -16,3 +16,6 @@ This separate repository publishes the public Mintlify site for docs.alignr.io.
 - Explain predicates using a readable label, what is observed, and what the observation cannot establish. Registration is not enforcement; product presence is not health or successful recovery.
 - Maintain `reference-data/predicates.json` and run `python3 scripts/build-predicate-reference.py /path/to/ledgr` when the fact vocabulary changes. Keep missing/false/zero distinctions and set-valued semantics accurate.
 - Diagrams use Mermaid code fences and must have an adjacent prose explanation. Check their rendered desktop/mobile layout, not just their syntax.
+
+- When seeded controls, library templates, manual checks or parameter defaults change, run `scripts/build-control-reference.py /path/to/ledgr` using the application Python environment and `PYTHONPATH`. Review generated categories and the catalogue snapshot, then update hand-written controls guides and baseline overview counts. Keep seed availability distinct from copyable library drafts.
+- Changes to predicates, producer semantics, operators or overrides also require reviewing worked examples, interpretation limits and diagrams; regeneration alone is not sufficient.

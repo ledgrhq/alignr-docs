@@ -1,0 +1,46 @@
+---
+title: "Test and roll out a control"
+description: "Check that a control asks the right question before relying on its results."
+---
+
+A syntactically valid definition can still ask the wrong question. Test the population, comparison and explanation, then assess whether your connected sources can support the conclusion.
+
+## Use four evidence cases
+
+For the encryption example in [Create a custom control](/controls/create-custom):
+
+| Case | Evidence | What to verify |
+| --- | --- | --- |
+| Satisfying | MDM enrolment and encryption `true` on the same subject. | The comparison is satisfied using eligible current evidence. |
+| Contrary | MDM enrolment and encryption `false`. | The subject fails and the explanation cites the contrary observation. |
+| Unknown | MDM enrolment with no encryption observation. | It does not pass; the missing observation is visible. |
+| Empty population | No MDM enrolment observations. | No data is not presented as universal compliance. |
+
+Also inspect mixed populations: a known failure can make the control fail while other subjects remain unknown. Failure does not imply complete evidence coverage.
+
+## Check the boundaries
+
+- Try the threshold itself and values on either side. “At most five” includes five.
+- Confirm Boolean, numeric and text values are not being confused.
+- Inspect excluded and filtered-out subjects, not just the ones that remain.
+- Review observation time, source eligibility and stale evidence handling.
+- Check the same subject is used across sources; a similar display name is insufficient.
+- Review client overrides and the disabled state of the control and its parent standard.
+
+## Roll out in a reviewable sequence
+
+<Steps>
+  <Step title="Prepare an editable draft">Copy a suitable library template or create a standard. Library copies start disabled; clear Enabled when drafting an individual custom control.</Step>
+  <Step title="Check evidence coverage">Use a test workspace or an agreed representative client context. Confirm the relevant integrations are connected, mapped and supplying the required predicates.</Step>
+  <Step title="Inspect the definition and settings">Review scope, filters, expectations, thresholds and autonomy with the person responsible for the standard.</Step>
+  <Step title="Enable deliberately and run checks">Account for the standard's scope and client overrides before enabling it. Use Run checks and inspect the resulting assessments, evidence and evaluation time.</Step>
+  <Step title="Review the wider impact">Investigate unexpected failures and gaps before relying on the standard across clients. Document intentional exceptions and identify who handles follow-up.</Step>
+</Steps>
+
+These are review steps, not a promise of a sandbox or synthetic-evidence editor in the app. Do not create fabricated production evidence to make a control pass.
+
+## Recheck after changes
+
+Repeat the relevant cases when predicates, source normalisation, filters, operators, defaults or client overrides change. A past result answers the previous question using the evidence available then.
+
+Keep automated assessment and remediation separate. An enabled control does not guarantee a supported automatic fix. See [remediation and approvals](/guides/remediation).

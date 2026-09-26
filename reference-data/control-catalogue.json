@@ -1,0 +1,1288 @@
+{
+  "counts": {
+    "seeded_controls": 18,
+    "library_templates": 7,
+    "library_controls": 15,
+    "manual_checks": 19
+  },
+  "seeded_controls": [
+    {
+      "name": "MFA required for active accounts",
+      "slug": "mfa-required-for-active-accounts",
+      "description": "Every enabled directory account must have multi-factor authentication registered. An active account with no MFA is the single highest-leverage gap in an identity estate \u2014 it turns one leaked password into full access.",
+      "severity": "high",
+      "category": "Identity",
+      "autonomy": "document_only",
+      "definition": {
+        "match": {
+          "predicate": "account_enabled",
+          "object": true
+        },
+        "expect": [
+          {
+            "fact": "mfa_registered",
+            "op": "eq",
+            "value": true
+          }
+        ],
+        "severity": "high",
+        "title": "Active account has no MFA registered",
+        "evidence": [
+          "account_enabled",
+          "mfa_registered"
+        ]
+      }
+    },
+    {
+      "name": "Privileged roles require MFA",
+      "slug": "privileged-roles-require-mfa",
+      "description": "Accounts holding Global Administrator must have MFA registered \u2014 a privileged account with no second factor is one stolen password away from a full tenant compromise.",
+      "severity": "high",
+      "category": "Identity",
+      "autonomy": "change_ticket",
+      "definition": {
+        "match": {
+          "predicate": "has_role",
+          "object": "Global Administrator"
+        },
+        "expect": [
+          {
+            "fact": "mfa_registered",
+            "op": "eq",
+            "value": true
+          }
+        ],
+        "severity": "high",
+        "title": "Privileged role holder has no MFA registered",
+        "evidence": [
+          "has_role",
+          "mfa_registered"
+        ]
+      }
+    },
+    {
+      "name": "Dormant accounts are disabled",
+      "slug": "dormant-accounts-are-disabled",
+      "description": "An account with no sign-in for longer than the configured window should be disabled, not left enabled and unattended \u2014 the classic shape of an incomplete offboarding or a forgotten test account.",
+      "severity": "high",
+      "category": "Identity",
+      "autonomy": "change_ticket",
+      "definition": {
+        "match": {
+          "predicate": "account_enabled"
+        },
+        "where": [
+          {
+            "fact": "last_sign_in",
+            "op": "older_than_days",
+            "value": {
+              "param": "dormant_days"
+            }
+          }
+        ],
+        "expect": [
+          {
+            "fact": "account_enabled",
+            "op": "eq",
+            "value": false
+          }
+        ],
+        "severity": "high",
+        "title": "Dormant account is still enabled",
+        "evidence": [
+          "account_enabled",
+          "last_sign_in"
+        ]
+      },
+      "parameters": {
+        "dormant_days": {
+          "type": "integer",
+          "default": 90,
+          "min": 1,
+          "max": 365,
+          "label": "Dormant after (days)",
+          "help": "How long an account may go without an interactive sign-in before it should have been disabled."
+        }
+      }
+    },
+    {
+      "name": "Conditional access is enforced tenant-wide",
+      "slug": "conditional-access-enforced-tenant-wide",
+      "description": "A conditional access policy scoped to all users must actually be enabled, not left in report-only or disabled state \u2014 a baseline policy that is never enforced protects nobody.",
+      "severity": "medium",
+      "category": "Identity",
+      "autonomy": "suggest_only",
+      "definition": {
+        "match": {
+          "predicate": "ca_policy_scope",
+          "object": "All users"
+        },
+        "expect": [
+          {
+            "fact": "ca_policy_state",
+            "op": "eq",
+            "value": "enabled"
+          }
+        ],
+        "severity": "medium",
+        "title": "Tenant-wide conditional access policy is not enforced",
+        "evidence": [
+          "ca_policy_scope",
+          "ca_policy_state"
+        ]
+      }
+    },
+    {
+      "name": "No MFA bypass in effect",
+      "slug": "no-mfa-bypass-in-effect",
+      "description": "No account should carry an active MFA bypass. A bypass is sometimes granted for a genuine device-loss emergency, but one left switched on is a standing hole in the MFA policy it was meant to be a temporary exception to.",
+      "severity": "high",
+      "category": "Identity",
+      "autonomy": "one_click",
+      "definition": {
+        "match": {
+          "predicate": "mfa_bypass_enabled"
+        },
+        "expect": [
+          {
+            "fact": "mfa_bypass_enabled",
+            "op": "eq",
+            "value": false
+          }
+        ],
+        "severity": "high",
+        "title": "Account has an active MFA bypass",
+        "evidence": [
+          "mfa_bypass_enabled"
+        ]
+      }
+    },
+    {
+      "name": "RMM-managed endpoints run EDR",
+      "slug": "rmm-managed-endpoints-run-edr",
+      "description": "Every endpoint visible to RMM \u2014 and therefore known to exist and be in use \u2014 should also be running the EDR agent. A device active enough to appear in RMM is exactly the device most likely to need protection.",
+      "severity": "medium",
+      "category": "Endpoint",
+      "autonomy": "one_click",
+      "definition": {
+        "match": {
+          "predicate": "device_managed_by",
+          "object": "rmm"
+        },
+        "expect": [
+          {
+            "fact": "edr_agent_installed",
+            "op": "eq",
+            "value": true
+          }
+        ],
+        "severity": "medium",
+        "title": "RMM-managed endpoint has no EDR agent",
+        "evidence": [
+          "device_managed_by",
+          "edr_agent_installed"
+        ]
+      }
+    },
+    {
+      "name": "Managed endpoints check in regularly",
+      "slug": "managed-endpoints-check-in-regularly",
+      "description": "An RMM-managed endpoint that has stopped checking in is either offline, broken, or has fallen out of management \u2014 none of which a runbook should silently assume is fine.",
+      "severity": "medium",
+      "category": "Endpoint",
+      "autonomy": "suggest_only",
+      "definition": {
+        "match": {
+          "predicate": "device_managed_by",
+          "object": "rmm"
+        },
+        "expect": [
+          {
+            "fact": "device_last_checkin",
+            "op": "within_days",
+            "value": {
+              "param": "checkin_days"
+            }
+          }
+        ],
+        "severity": "medium",
+        "title": "Managed endpoint has not checked in recently",
+        "evidence": [
+          "device_managed_by",
+          "device_last_checkin"
+        ]
+      },
+      "parameters": {
+        "checkin_days": {
+          "type": "integer",
+          "default": 2,
+          "min": 1,
+          "max": 30,
+          "label": "Must check in within (days)",
+          "help": "How recently a managed endpoint must have checked in to RMM for it to count as active and monitored."
+        }
+      }
+    },
+    {
+      "name": "Managed endpoints are patch-compliant",
+      "slug": "managed-endpoints-are-patch-compliant",
+      "description": "An RMM-managed endpoint should report a compliant patch status, not a backlog of pending updates \u2014 unpatched endpoints are the most common way a known vulnerability turns into an incident.",
+      "severity": "medium",
+      "category": "Endpoint",
+      "autonomy": "change_ticket",
+      "definition": {
+        "match": {
+          "predicate": "device_managed_by",
+          "object": "rmm"
+        },
+        "expect": [
+          {
+            "fact": "patch_status",
+            "op": "eq",
+            "value": "compliant"
+          }
+        ],
+        "severity": "medium",
+        "title": "Managed endpoint is not patch-compliant",
+        "evidence": [
+          "device_managed_by",
+          "patch_status"
+        ]
+      }
+    },
+    {
+      "name": "MDM-enrolled devices are encrypted",
+      "slug": "mdm-enrolled-devices-are-encrypted",
+      "description": "A device enrolled in mobile device management should have disk encryption enabled \u2014 an unencrypted, MDM-managed laptop is a data-breach waiting for a lost bag.",
+      "severity": "high",
+      "category": "Endpoint",
+      "autonomy": "suggest_only",
+      "definition": {
+        "match": {
+          "predicate": "mdm_enrolled_by"
+        },
+        "expect": [
+          {
+            "fact": "device_encryption_enabled",
+            "op": "eq",
+            "value": true
+          }
+        ],
+        "severity": "high",
+        "title": "MDM-enrolled device is not encrypted",
+        "evidence": [
+          "mdm_enrolled_by",
+          "device_encryption_enabled"
+        ]
+      }
+    },
+    {
+      "name": "MDM-enrolled devices are compliant",
+      "slug": "mdm-enrolled-devices-are-compliant",
+      "description": "A device enrolled in mobile device management should report a compliant verdict, not `noncompliant` or `conflict` \u2014 a device the MDM itself flags as out of policy is a documented finding, not a silent one.",
+      "severity": "high",
+      "category": "Endpoint",
+      "autonomy": "suggest_only",
+      "definition": {
+        "match": {
+          "predicate": "mdm_enrolled_by"
+        },
+        "expect": [
+          {
+            "fact": "device_compliance_state",
+            "op": "eq",
+            "value": "compliant"
+          }
+        ],
+        "severity": "high",
+        "title": "MDM-enrolled device is not compliant",
+        "evidence": [
+          "mdm_enrolled_by",
+          "device_compliance_state"
+        ]
+      }
+    },
+    {
+      "name": "Servers are protected by a backup product",
+      "slug": "servers-are-protected-by-a-backup-product",
+      "description": "Every server should be covered by a named backup product \u2014 a server visible to RMM with no backup coverage on record is the single most expensive gap a BCDR runbook can have.",
+      "severity": "high",
+      "category": "Backup",
+      "autonomy": "suggest_only",
+      "definition": {
+        "match": {
+          "predicate": "device_managed_by",
+          "object": "rmm"
+        },
+        "where": [
+          {
+            "fact": "os_platform",
+            "op": "matches",
+            "value": "Server"
+          }
+        ],
+        "expect": [
+          {
+            "fact": "backup_protected_by",
+            "op": "exists"
+          }
+        ],
+        "severity": "high",
+        "title": "Server has no backup product recorded",
+        "evidence": [
+          "device_managed_by",
+          "os_platform",
+          "backup_protected_by"
+        ]
+      }
+    },
+    {
+      "name": "Backup jobs complete without error",
+      "slug": "backup-jobs-complete-without-error",
+      "description": "A backup job should report `ok`, not `warning`, `error` or `attention_required` \u2014 a job silently failing is worse than no backup at all, because nobody is looking for the gap until a restore is needed.",
+      "severity": "high",
+      "category": "Backup",
+      "autonomy": "suggest_only",
+      "definition": {
+        "match": {
+          "predicate": "backup_job_state"
+        },
+        "expect": [
+          {
+            "fact": "backup_job_state",
+            "op": "eq",
+            "value": "ok"
+          }
+        ],
+        "severity": "high",
+        "title": "Backup job is not reporting ok",
+        "evidence": [
+          "backup_job_state"
+        ]
+      }
+    },
+    {
+      "name": "Backups complete within the retention window",
+      "slug": "backups-complete-within-the-retention-window",
+      "description": "A protected workload's most recent successful backup should be no older than the configured window \u2014 a backup product that stopped succeeding days ago gives the same false confidence as no backup at all.",
+      "severity": "high",
+      "category": "Backup",
+      "autonomy": "suggest_only",
+      "definition": {
+        "match": {
+          "predicate": "backup_protected_by"
+        },
+        "expect": [
+          {
+            "fact": "backup_last_successful_at",
+            "op": "within_days",
+            "value": {
+              "param": "max_age_days"
+            }
+          }
+        ],
+        "severity": "high",
+        "title": "Protected workload's backup is overdue",
+        "evidence": [
+          "backup_protected_by",
+          "backup_last_successful_at"
+        ]
+      },
+      "parameters": {
+        "max_age_days": {
+          "type": "integer",
+          "default": 1,
+          "min": 1,
+          "max": 30,
+          "label": "Must have completed within (days)",
+          "help": "How long ago the most recent successful backup run may be before a protected workload counts as overdue."
+        }
+      }
+    },
+    {
+      "name": "No open critical vulnerabilities",
+      "slug": "no-open-critical-vulnerabilities",
+      "description": "A scanned host's worst open finding should never be `critical` \u2014 a critical vulnerability left open is an active, known route to compromise, not a backlog item.",
+      "severity": "high",
+      "category": "Vulnerability",
+      "autonomy": "suggest_only",
+      "definition": {
+        "match": {
+          "predicate": "vulnerability_max_severity"
+        },
+        "expect": [
+          {
+            "fact": "vulnerability_max_severity",
+            "op": "neq",
+            "value": "critical"
+          }
+        ],
+        "severity": "high",
+        "title": "Scanned host has an open critical vulnerability",
+        "evidence": [
+          "vulnerability_max_severity"
+        ]
+      }
+    },
+    {
+      "name": "Open vulnerability count stays within limits",
+      "slug": "open-vulnerability-count-stays-within-limits",
+      "description": "A scanned host's open-vulnerability count should stay under the agreed threshold \u2014 a rising count with nobody remediating it is the gap between running a scanner and actually managing vulnerabilities.",
+      "severity": "medium",
+      "category": "Vulnerability",
+      "autonomy": "suggest_only",
+      "definition": {
+        "match": {
+          "predicate": "vulnerability_open_count"
+        },
+        "expect": [
+          {
+            "fact": "vulnerability_open_count",
+            "op": "lte",
+            "value": {
+              "param": "max_open_vulnerabilities"
+            }
+          }
+        ],
+        "severity": "medium",
+        "title": "Scanned host exceeds the open-vulnerability limit",
+        "evidence": [
+          "vulnerability_open_count"
+        ]
+      },
+      "parameters": {
+        "max_open_vulnerabilities": {
+          "type": "integer",
+          "default": 5,
+          "min": 0,
+          "max": 1000,
+          "label": "Maximum open vulnerabilities",
+          "help": "The open-vulnerability count a scanned host may carry before this control counts it as failing."
+        }
+      }
+    },
+    {
+      "name": "Managed endpoints have no missing patches",
+      "slug": "managed-endpoints-have-no-missing-patches",
+      "description": "An RMM-managed endpoint should carry no outstanding missing-patch findings from the vulnerability scanner \u2014 a device that is both unpatched and unscanned-for-gaps is the pattern that precedes most ransomware incidents.",
+      "severity": "high",
+      "category": "Vulnerability",
+      "autonomy": "change_ticket",
+      "definition": {
+        "match": {
+          "predicate": "device_managed_by",
+          "object": "rmm"
+        },
+        "expect": [
+          {
+            "fact": "missing_patch",
+            "op": "not_exists"
+          }
+        ],
+        "severity": "high",
+        "title": "Managed endpoint has an outstanding missing-patch finding",
+        "evidence": [
+          "device_managed_by",
+          "missing_patch"
+        ]
+      }
+    },
+    {
+      "name": "Enabled accounts hold a licence",
+      "slug": "enabled-accounts-hold-a-licence",
+      "description": "An account left enabled should hold at least one paid licence \u2014 an enabled, unlicensed account is either a stale service identity that should be disabled or a licence assignment that quietly slipped.",
+      "severity": "medium",
+      "category": "Licensing",
+      "autonomy": "document_only",
+      "definition": {
+        "match": {
+          "predicate": "account_enabled",
+          "object": true
+        },
+        "expect": [
+          {
+            "fact": "has_licence",
+            "op": "exists"
+          }
+        ],
+        "severity": "medium",
+        "title": "Enabled account holds no licence",
+        "evidence": [
+          "account_enabled",
+          "has_licence"
+        ]
+      }
+    },
+    {
+      "name": "Licence renewal dates are on file",
+      "slug": "licence-renewal-dates-are-on-file",
+      "description": "A purchased licence SKU should have a known renewal date \u2014 without one, a renewal lapses or auto-renews with nobody having made the decision.",
+      "severity": "low",
+      "category": "Licensing",
+      "autonomy": "suggest_only",
+      "definition": {
+        "match": {
+          "predicate": "licence_seats_purchased"
+        },
+        "expect": [
+          {
+            "fact": "licence_renewal_date",
+            "op": "exists"
+          }
+        ],
+        "severity": "low",
+        "title": "Purchased licence has no renewal date on file",
+        "evidence": [
+          "licence_seats_purchased",
+          "licence_renewal_date"
+        ]
+      }
+    }
+  ],
+  "templates": [
+    {
+      "key": "bios-identity",
+      "name": "BIOS Identity Assurance",
+      "domain": "Cloud identity",
+      "summary": "Check account sign-in protection and privileged access.",
+      "source_workflows": [
+        "WF-09",
+        "WF-11",
+        "WF-15"
+      ],
+      "controls": [
+        {
+          "name": "MFA on active accounts",
+          "slug": "mfa-active",
+          "description": "Enabled accounts must have MFA registered.",
+          "category": "Identity",
+          "severity": "high",
+          "autonomy": "suggest_only",
+          "definition": {
+            "match": {
+              "predicate": "account_enabled",
+              "object": true
+            },
+            "expect": [
+              {
+                "fact": "mfa_registered",
+                "op": "eq",
+                "value": true
+              }
+            ],
+            "severity": "high",
+            "title": "Active account lacks MFA",
+            "evidence": [
+              "account_enabled",
+              "mfa_registered"
+            ]
+          },
+          "parameters": {},
+          "enabled": true,
+          "source_workflows": [
+            "WF-11"
+          ]
+        },
+        {
+          "name": "Global Administrators use MFA",
+          "slug": "privileged-mfa",
+          "description": "Observed Global Administrators must have MFA registered.",
+          "category": "Identity",
+          "severity": "high",
+          "autonomy": "suggest_only",
+          "definition": {
+            "match": {
+              "predicate": "has_role",
+              "object": "Global Administrator"
+            },
+            "expect": [
+              {
+                "fact": "mfa_registered",
+                "op": "eq",
+                "value": true
+              }
+            ],
+            "severity": "high",
+            "title": "Global Administrator lacks MFA",
+            "evidence": [
+              "has_role",
+              "mfa_registered"
+            ]
+          },
+          "parameters": {},
+          "enabled": true,
+          "source_workflows": [
+            "WF-15"
+          ]
+        }
+      ],
+      "manual_checks": [
+        {
+          "name": "Review effective conditional access coverage",
+          "instructions": "Verify the intended account population is covered by enabled policies, required grant controls and approved emergency exclusions. Review policy interactions and test sign-in enforcement. Registration or an enabled policy alone does not prove MFA enforcement.",
+          "category": "Identity",
+          "review_interval_days": 90,
+          "source_workflows": [
+            "WF-11"
+          ]
+        },
+        {
+          "name": "Review break-glass account governance",
+          "instructions": "Confirm named emergency accounts, exclusions, monitoring and last access test against the approved policy.",
+          "category": "Identity",
+          "review_interval_days": 90,
+          "source_workflows": [
+            "WF-13"
+          ]
+        },
+        {
+          "name": "Review OAuth consent governance",
+          "instructions": "Review consent policy, verified publishers, privileged grants and documented exceptions.",
+          "category": "Identity",
+          "review_interval_days": 90,
+          "source_workflows": [
+            "WF-16"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "bios-endpoint-server",
+      "name": "BIOS Endpoint and Server Health",
+      "domain": "Endpoint and server",
+      "summary": "Check device management, updates, encryption and endpoint protection.",
+      "source_workflows": [
+        "WF-01",
+        "WF-03",
+        "WF-26",
+        "WF-30",
+        "WF-31"
+      ],
+      "controls": [
+        {
+          "name": "Managed devices check in",
+          "slug": "managed-checkin",
+          "description": "RMM-managed devices must check in within the agreed window.",
+          "category": "Endpoint",
+          "severity": "medium",
+          "autonomy": "suggest_only",
+          "definition": {
+            "match": {
+              "predicate": "device_managed_by",
+              "object": "rmm"
+            },
+            "expect": [
+              {
+                "fact": "device_last_checkin",
+                "op": "within_days",
+                "value": {
+                  "param": "days"
+                }
+              }
+            ],
+            "severity": "medium",
+            "title": "Managed device has not checked in",
+            "evidence": [
+              "device_managed_by",
+              "device_last_checkin"
+            ]
+          },
+          "parameters": {
+            "days": {
+              "type": "integer",
+              "default": 2,
+              "min": 1,
+              "max": 30,
+              "label": "Check-in window (days)"
+            }
+          },
+          "enabled": true,
+          "source_workflows": [
+            "WF-29"
+          ]
+        },
+        {
+          "name": "Managed devices are patch compliant",
+          "slug": "patch-compliant",
+          "description": "RMM-managed devices must report a compliant patch state.",
+          "category": "Endpoint",
+          "severity": "high",
+          "autonomy": "suggest_only",
+          "definition": {
+            "match": {
+              "predicate": "device_managed_by",
+              "object": "rmm"
+            },
+            "expect": [
+              {
+                "fact": "patch_status",
+                "op": "eq",
+                "value": "compliant"
+              }
+            ],
+            "severity": "high",
+            "title": "Managed device is not patch compliant",
+            "evidence": [
+              "device_managed_by",
+              "patch_status"
+            ]
+          },
+          "parameters": {},
+          "enabled": true,
+          "source_workflows": [
+            "WF-30"
+          ]
+        },
+        {
+          "name": "Managed endpoints run EDR",
+          "slug": "managed-edr",
+          "description": "Known RMM endpoints must have an observed EDR agent.",
+          "category": "Endpoint",
+          "severity": "high",
+          "autonomy": "suggest_only",
+          "definition": {
+            "match": {
+              "predicate": "device_managed_by",
+              "object": "rmm"
+            },
+            "expect": [
+              {
+                "fact": "edr_agent_installed",
+                "op": "eq",
+                "value": true
+              }
+            ],
+            "severity": "high",
+            "title": "Managed endpoint lacks EDR",
+            "evidence": [
+              "device_managed_by",
+              "edr_agent_installed"
+            ]
+          },
+          "parameters": {},
+          "enabled": true,
+          "source_workflows": [
+            "WF-26"
+          ]
+        },
+        {
+          "name": "MDM devices are encrypted",
+          "slug": "mdm-encrypted",
+          "description": "MDM-enrolled devices must report encryption enabled.",
+          "category": "Endpoint",
+          "severity": "high",
+          "autonomy": "suggest_only",
+          "definition": {
+            "match": {
+              "predicate": "mdm_enrolled_by"
+            },
+            "expect": [
+              {
+                "fact": "device_encryption_enabled",
+                "op": "eq",
+                "value": true
+              }
+            ],
+            "severity": "high",
+            "title": "MDM device is not encrypted",
+            "evidence": [
+              "mdm_enrolled_by",
+              "device_encryption_enabled"
+            ]
+          },
+          "parameters": {},
+          "enabled": true,
+          "source_workflows": [
+            "WF-03"
+          ]
+        }
+      ],
+      "manual_checks": [
+        {
+          "name": "Review server hardening baseline",
+          "instructions": "Review local admin, service accounts, host firewall, secure protocols and approved exceptions using the WF-31 runbook. Connector facts do not currently prove these settings.",
+          "category": "Server",
+          "review_interval_days": 30,
+          "source_workflows": [
+            "WF-31"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "bios-network",
+      "name": "BIOS Network Health",
+      "domain": "Firewall and network",
+      "summary": "Check firmware updates and review your network equipment and settings.",
+      "source_workflows": [
+        "WF-19",
+        "WF-20",
+        "WF-21",
+        "WF-24"
+      ],
+      "controls": [
+        {
+          "name": "Network firmware has no update pending",
+          "slug": "firmware-current",
+          "description": "Managed network devices must not report an available firmware update.",
+          "category": "Network",
+          "severity": "medium",
+          "autonomy": "suggest_only",
+          "definition": {
+            "match": {
+              "predicate": "firmware_update_available"
+            },
+            "expect": [
+              {
+                "fact": "firmware_update_available",
+                "op": "eq",
+                "value": false
+              }
+            ],
+            "severity": "medium",
+            "title": "Network firmware update is available",
+            "evidence": [
+              "firmware_update_available"
+            ]
+          },
+          "parameters": {},
+          "enabled": true,
+          "source_workflows": [
+            "WF-20"
+          ]
+        }
+      ],
+      "manual_checks": [
+        {
+          "name": "Review network device availability",
+          "instructions": "Check the firewall, switches and access points against the approved network inventory. Record missing or offline devices and confirm the source population excludes endpoints and unrelated resources.",
+          "category": "Network",
+          "review_interval_days": 30,
+          "source_workflows": [
+            "WF-24"
+          ]
+        },
+        {
+          "name": "Review firewall security baseline",
+          "instructions": "Review rules, management exposure, logging, subscriptions and approved exceptions. Current connector facts do not prove the full WF-19 configuration baseline.",
+          "category": "Firewall",
+          "review_interval_days": 30,
+          "source_workflows": [
+            "WF-19"
+          ]
+        },
+        {
+          "name": "Test network configuration recovery",
+          "instructions": "Confirm a current configuration backup exists and perform the documented recovery validation. Firmware inventory does not prove backup recoverability.",
+          "category": "Network",
+          "review_interval_days": 90,
+          "source_workflows": [
+            "WF-21"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "bios-backup",
+      "name": "BIOS Backup Health",
+      "domain": "Backup and recovery",
+      "summary": "Check that backups are recent and successful, then review a restore test.",
+      "source_workflows": [
+        "WF-28",
+        "WF-32"
+      ],
+      "controls": [
+        {
+          "name": "Backup jobs report healthy",
+          "slug": "backup-job-health",
+          "description": "Observed backup jobs must report ok.",
+          "category": "Backup",
+          "severity": "high",
+          "autonomy": "suggest_only",
+          "definition": {
+            "match": {
+              "predicate": "backup_job_state"
+            },
+            "expect": [
+              {
+                "fact": "backup_job_state",
+                "op": "eq",
+                "value": "ok"
+              }
+            ],
+            "severity": "high",
+            "title": "Backup job is not healthy",
+            "evidence": [
+              "backup_job_state"
+            ]
+          },
+          "parameters": {},
+          "enabled": true,
+          "source_workflows": [
+            "WF-28"
+          ]
+        },
+        {
+          "name": "Protected workloads back up daily",
+          "slug": "backup-freshness",
+          "description": "Protected workloads need a recent successful backup.",
+          "category": "Backup",
+          "severity": "high",
+          "autonomy": "suggest_only",
+          "definition": {
+            "match": {
+              "predicate": "backup_protected_by"
+            },
+            "expect": [
+              {
+                "fact": "backup_last_successful_at",
+                "op": "within_days",
+                "value": {
+                  "param": "days"
+                }
+              }
+            ],
+            "severity": "high",
+            "title": "Protected workload backup is overdue",
+            "evidence": [
+              "backup_protected_by",
+              "backup_last_successful_at"
+            ]
+          },
+          "parameters": {
+            "days": {
+              "type": "integer",
+              "default": 1,
+              "min": 1,
+              "max": 30,
+              "label": "Maximum backup age (days)"
+            }
+          },
+          "enabled": true,
+          "source_workflows": [
+            "WF-32"
+          ]
+        }
+      ],
+      "manual_checks": [
+        {
+          "name": "Test a representative restore",
+          "instructions": "Restore a representative workload, record recovery time and integrity evidence, and reconcile the result with the agreed RTO/RPO.",
+          "category": "Backup",
+          "review_interval_days": 30,
+          "source_workflows": [
+            "WF-28",
+            "WF-32"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "bios-vulnerability-governance",
+      "name": "BIOS Vulnerability and Governance",
+      "domain": "Security and governance",
+      "summary": "Find open vulnerabilities and review your security policies.",
+      "source_workflows": [
+        "WF-35",
+        "WF-37",
+        "WF-38",
+        "WF-39",
+        "WF-40"
+      ],
+      "controls": [
+        {
+          "name": "No critical vulnerabilities remain open",
+          "slug": "no-critical-vulnerabilities",
+          "description": "Scanned hosts must not have critical exposure.",
+          "category": "Vulnerability",
+          "severity": "high",
+          "autonomy": "suggest_only",
+          "definition": {
+            "match": {
+              "predicate": "vulnerability_max_severity"
+            },
+            "expect": [
+              {
+                "fact": "vulnerability_max_severity",
+                "op": "neq",
+                "value": "critical"
+              }
+            ],
+            "severity": "high",
+            "title": "Critical vulnerability remains open",
+            "evidence": [
+              "vulnerability_max_severity"
+            ]
+          },
+          "parameters": {},
+          "enabled": true,
+          "source_workflows": [
+            "WF-38"
+          ]
+        },
+        {
+          "name": "Open vulnerabilities stay below threshold",
+          "slug": "vulnerability-count",
+          "description": "Open findings per scanned host must remain within the reviewed threshold.",
+          "category": "Vulnerability",
+          "severity": "medium",
+          "autonomy": "suggest_only",
+          "definition": {
+            "match": {
+              "predicate": "vulnerability_open_count"
+            },
+            "expect": [
+              {
+                "fact": "vulnerability_open_count",
+                "op": "lte",
+                "value": {
+                  "param": "maximum"
+                }
+              }
+            ],
+            "severity": "medium",
+            "title": "Host exceeds vulnerability threshold",
+            "evidence": [
+              "vulnerability_open_count"
+            ]
+          },
+          "parameters": {
+            "maximum": {
+              "type": "integer",
+              "default": 5,
+              "min": 0,
+              "max": 1000,
+              "label": "Maximum open vulnerabilities"
+            }
+          },
+          "enabled": true,
+          "source_workflows": [
+            "WF-38"
+          ]
+        }
+      ],
+      "manual_checks": [
+        {
+          "name": "Review configuration drift governance",
+          "instructions": "Review approved baselines, exception ownership and drift evidence across systems. Current facts do not prove a complete cross-domain baseline.",
+          "category": "Governance",
+          "review_interval_days": 30,
+          "source_workflows": [
+            "WF-35"
+          ]
+        },
+        {
+          "name": "Review incident response readiness",
+          "instructions": "Confirm contacts, roles, escalation paths, communications and exercise evidence are current.",
+          "category": "Security",
+          "review_interval_days": 90,
+          "source_workflows": [
+            "WF-37"
+          ]
+        },
+        {
+          "name": "Review email security posture",
+          "instructions": "Review SPF, DKIM, DMARC, threat protection, forwarding and audit retention in the source consoles. Current emitted mail facts do not prove these BIOS controls.",
+          "category": "Email",
+          "review_interval_days": 30,
+          "source_workflows": [
+            "WF-39",
+            "WF-40",
+            "WF-42",
+            "WF-43"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "email-domain-protection",
+      "name": "Email & domain protection",
+      "domain": "External exposure",
+      "summary": "Review email protection, domain ownership and website certificates.",
+      "source_workflows": [],
+      "controls": [
+        {
+          "name": "SPF record is present",
+          "slug": "external-spf-present",
+          "description": "Each sending domain must publish exactly one SPF record.",
+          "category": "External exposure",
+          "severity": "high",
+          "autonomy": "suggest_only",
+          "definition": {
+            "match": {
+              "predicate": "external_spf_present"
+            },
+            "expect": [
+              {
+                "fact": "external_spf_present",
+                "op": "eq",
+                "value": true
+              }
+            ],
+            "severity": "high",
+            "title": "SPF record is missing",
+            "evidence": [
+              "external_spf_present"
+            ]
+          },
+          "parameters": {},
+          "enabled": true,
+          "source_workflows": []
+        },
+        {
+          "name": "DMARC enforcement is enabled",
+          "slug": "external-dmarc-enforced",
+          "description": "Each sending domain must have a valid DMARC record with p=quarantine or p=reject and pct=100.",
+          "category": "External exposure",
+          "severity": "high",
+          "autonomy": "suggest_only",
+          "definition": {
+            "match": {
+              "predicate": "external_dmarc_enforced"
+            },
+            "expect": [
+              {
+                "fact": "external_dmarc_enforced",
+                "op": "eq",
+                "value": true
+              }
+            ],
+            "severity": "high",
+            "title": "DMARC enforcement is not enabled",
+            "evidence": [
+              "external_dmarc_enforced"
+            ]
+          },
+          "parameters": {},
+          "enabled": true,
+          "source_workflows": []
+        },
+        {
+          "name": "Mail exchange is configured",
+          "slug": "external-mx-present",
+          "description": "Each mail domain must publish an MX record pointing to a mail server. Null MX does not pass.",
+          "category": "External exposure",
+          "severity": "high",
+          "autonomy": "suggest_only",
+          "definition": {
+            "match": {
+              "predicate": "external_mx_present"
+            },
+            "expect": [
+              {
+                "fact": "external_mx_present",
+                "op": "eq",
+                "value": true
+              }
+            ],
+            "severity": "high",
+            "title": "Mail exchange is missing",
+            "evidence": [
+              "external_mx_present"
+            ]
+          },
+          "parameters": {},
+          "enabled": true,
+          "source_workflows": []
+        }
+      ],
+      "manual_checks": [
+        {
+          "name": "Review SPF records",
+          "instructions": "For every sending domain, manually validate the public SPF record, authorised senders and DNS lookup budget. The automated control only proves that one SPF record is present; this review remains required for record validity, approved senders and the recursive lookup limit. Pass when the record is valid, contains only approved senders and stays within the agreed lookup budget. Fail when it is malformed, includes an unapproved sender or exceeds the lookup budget. Evidence: capture the DNS response, domain and review date.",
+          "category": "External exposure",
+          "review_interval_days": 30,
+          "source_workflows": []
+        },
+        {
+          "name": "Review DKIM signing",
+          "instructions": "For every sending domain and provider, verify the published DKIM selector and send a test message where appropriate. Pass when approved outbound mail is signed and the public key validates. Fail when signing is disabled, the selector is absent or validation fails. Evidence: record the selector, provider result and a redacted test header.",
+          "category": "External exposure",
+          "review_interval_days": 30,
+          "source_workflows": []
+        },
+        {
+          "name": "Review DMARC policy",
+          "instructions": "Inspect the public DMARC record and reporting destinations for every sending domain. Pass when an approved policy is published, aligned with the agreed enforcement level and reports go to monitored mailboxes. Fail when it is missing, set to monitoring only without an approved exception, or sends reports to an unowned destination. Evidence: capture the DNS response, policy and exception owner.",
+          "category": "External exposure",
+          "review_interval_days": 30,
+          "source_workflows": []
+        },
+        {
+          "name": "Review domain registration and expiry",
+          "instructions": "Compare every business domain with the registrar account and renewal register. Pass when the registrant, registrar access, renewal owner and expiry date are recorded and auto-renewal or a dated renewal task is confirmed. Fail when ownership is unclear, expiry is within the agreed renewal window, or no recovery access is held. Evidence: attach the registrar record or renewal confirmation; do not store credentials.",
+          "category": "External exposure",
+          "review_interval_days": 30,
+          "source_workflows": []
+        },
+        {
+          "name": "Review public TLS certificates",
+          "instructions": "Inventory public HTTPS endpoints and inspect each certificate chain, hostname coverage, issuer and expiry. Pass when each approved endpoint uses a trusted, hostname-matching certificate with a documented renewal owner and more than 30 days remaining. Fail when a certificate is expired, mismatched, untrusted or has 30 days or fewer remaining; record any approved exception separately. Evidence: record the endpoint, certificate subject, issuer, expiry and inspection date. Alignr does not run an external scanner for this check.",
+          "category": "External exposure",
+          "review_interval_days": 30,
+          "source_workflows": []
+        }
+      ]
+    },
+    {
+      "key": "external-exposure",
+      "name": "External exposure",
+      "domain": "External exposure",
+      "summary": "Review systems exposed to the internet and how people access them remotely.",
+      "source_workflows": [],
+      "controls": [
+        {
+          "name": "DNS nameserver count",
+          "slug": "external-nameserver-count",
+          "description": "Each domain should have at least two authoritative DNS nameservers for resilience.",
+          "category": "External exposure",
+          "severity": "medium",
+          "autonomy": "suggest_only",
+          "definition": {
+            "match": {
+              "predicate": "external_nameserver_count"
+            },
+            "expect": [
+              {
+                "fact": "external_nameserver_count",
+                "op": "gte",
+                "value": 2
+              }
+            ],
+            "severity": "medium",
+            "title": "Domain has fewer than two nameservers",
+            "evidence": [
+              "external_nameserver_count"
+            ]
+          },
+          "parameters": {},
+          "enabled": true,
+          "source_workflows": []
+        }
+      ],
+      "manual_checks": [
+        {
+          "name": "Review external asset inventory",
+          "instructions": "Reconcile the approved public asset register with current DNS, cloud and vendor records. Pass when every internet-facing hostname, address, service owner and business purpose is recorded, and retired assets are removed or blocked. Fail when an exposed asset is unknown, ownerless or no longer required. Evidence: attach the dated inventory export and record the source systems checked. Alignr does not run an external asset scanner for this check.",
+          "category": "External exposure",
+          "review_interval_days": 30,
+          "source_workflows": []
+        },
+        {
+          "name": "Review exposed administration ports",
+          "instructions": "For each approved internet-facing asset, inspect firewall, cloud security group and service configuration for management ports and interfaces. Pass when administration is private or restricted to approved source networks with MFA and logging. Fail when RDP, SSH, database or appliance administration is exposed broadly, uses an unapproved source or lacks compensating controls. Evidence: record the asset, port, rule, allowed sources and owner; Alignr does not scan ports.",
+          "category": "External exposure",
+          "review_interval_days": 30,
+          "source_workflows": []
+        },
+        {
+          "name": "Review remote access paths",
+          "instructions": "Review VPN, zero-trust and remote support services against the approved user, group, device and destination register. Pass when each path has an owner, MFA, least-privilege scope, logging and a current access review. Fail when a path is anonymous, stale, over-broad or lacks a recent owner review. Evidence: attach the access export and record the test of a representative path; Alignr does not perform an external reachability scan.",
+          "category": "External exposure",
+          "review_interval_days": 30,
+          "source_workflows": []
+        }
+      ]
+    }
+  ]
+}

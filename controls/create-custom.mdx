@@ -1,0 +1,63 @@
+---
+title: "Create a custom control"
+description: "Build a clear, evidence-based control using the Alignr editor."
+---
+
+This walkthrough checks whether **MDM-enrolled devices report encryption enabled**. It checks the reported encryption state; recovery-key availability needs a separate review.
+
+## Before you start
+
+You need permission to edit controls, an editable standard, and evidence from the relevant connected and mapped sources. System standard contents are protected: copy the standard to customise its controls.
+
+From the standards page, **More → Create a blank standard** starts your own collection. **More → Browse library** lets you copy a template. Library copies start as disabled drafts; review their contents before enabling them.
+
+<Steps>
+  <Step title="Write the expectation">
+    Use a name such as **MDM-enrolled devices report encryption enabled**. In the description, explain why it matters and its limit: reported encryption does not establish recovery-key custody.
+  </Step>
+  <Step title="Add the control">
+    Open your editable standard's controls and select **Add control**. Set a unique, readable slug such as `mdm-encryption-enabled`, choose an endpoint category and appropriate severity, and use **Suggest only** autonomy while reviewing the behaviour.
+
+    Clear **Enabled** while drafting. The new-control form starts enabled; saving a control is not automatically a draft workflow.
+  </Step>
+  <Step title="Select the population">
+    Set **Population predicate** to `mdm_enrolled_by`. This selects subjects with that observation. It does not select every device in the client's inventory.
+  </Step>
+  <Step title="Define the expectation">
+    Set **Fact to verify** to `device_encryption_enabled`, **Operator** to **equals**, **Value source** to **True / false**, and the expected value to `true`.
+
+    Use a Boolean value, not the text string `"true"`.
+  </Step>
+  <Step title="Review and save">
+    Check the name, population, expected fact, type, severity and enabled state before saving. Then follow the [testing checklist](/controls/test-and-rollout) and inspect actual client evidence before rollout.
+  </Step>
+</Steps>
+
+## Read the condition in plain English
+
+> For each subject with an MDM enrolment observation, check that the same subject has an encryption observation equal to true.
+
+| Evidence for an enrolled device | Meaning |
+| --- | --- |
+| Encryption is `true`. | Satisfies the comparison, subject to evidence eligibility and freshness. |
+| Encryption is `false`. | Contrary evidence: the expectation fails. |
+| No encryption observation. | Unknown; investigate source coverage and subject matching. |
+| No MDM enrolment observation. | Outside this selected population, not proof of encryption. |
+
+The device identity must join the observations correctly. Similar device names from two sources do not establish that they describe the same subject.
+
+## Another example: a configurable vulnerability limit
+
+For **Open vulnerability count stays within the agreed limit**, use `vulnerability_open_count` as both the population predicate and the fact to verify. Choose **at most** as the operator.
+
+Under **Parameters**, add `maximum` with type **Integer**, label **Maximum open vulnerabilities**, and default `5`. Set **Value source** to **Parameter default** and select that parameter for the comparison. Five is an example starting value, not a universal recommendation.
+
+A count of zero is real evidence. No count observation is a coverage gap, not zero. Read [parameters and overrides](/controls/parameters) before changing the threshold for a client.
+
+## Know the editor's scope
+
+The simple creation form defines one population predicate and one expectation. It does not expose an exact population value (`match.object`) or additional `where` filters.
+
+For example, choosing `account_enabled` as the population predicate alone includes observed enabled **and disabled** accounts. “Enabled accounts only” requires an exact value filter. See [advanced definitions](/controls/advanced-definitions) for that distinction and a complete example.
+
+Custom controls use supported predicates; typing a new name does not create an integration or collect a new kind of evidence. Use the [predicate reference](/guides/predicate-reference) to check meaning and coverage.

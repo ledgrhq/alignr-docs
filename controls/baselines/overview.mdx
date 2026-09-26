@@ -1,0 +1,48 @@
+---
+title: "Choose a baseline"
+description: "Browse supplied controls and manual checks without reading one overwhelming list."
+---
+
+The supplied catalogue has two sources. Keep them distinct when choosing a starting point.
+
+| Source | Contents | How to use it |
+| --- | --- | --- |
+| **Alignr Baseline** in the seed catalogue | 18 automated controls across identity, endpoints, backup, vulnerabilities and licensing. | A supplied reference baseline; its presence depends on workspace provisioning. It is not automatically promised in every production workspace. |
+| **Standard library** | Seven copyable templates containing 15 automated controls and 19 manual checks. | Open **More → Browse library** on the standards page, copy a suitable template, review the disabled draft, then enable deliberately. |
+
+Similar controls appear in both sources. The category pages identify each source separately and show its actual population, expected values, parameter defaults and limits.
+
+## Browse by topic
+
+<CardGroup cols={2}>
+  <Card title="Identity and access" href="/controls/baselines/identity">Accounts, MFA, policies and privileged access.</Card>
+  <Card title="Endpoints and servers" href="/controls/baselines/endpoints">Reporting, patching, EDR and encryption.</Card>
+  <Card title="Backup and recovery" href="/controls/baselines/backup">Protection, job status, recency and restores.</Card>
+  <Card title="Vulnerabilities and governance" href="/controls/baselines/vulnerability">Findings, missing patches and security reviews.</Card>
+  <Card title="Licensing" href="/controls/baselines/licensing">Licence presence and renewal evidence.</Card>
+  <Card title="Networks and firewalls" href="/controls/baselines/network">Firmware, availability and configuration recovery.</Card>
+  <Card title="Email and domains" href="/controls/baselines/email">SPF, DMARC, MX, DKIM and domain reviews.</Card>
+  <Card title="External exposure" href="/controls/baselines/external">DNS resilience and internet-facing asset reviews.</Card>
+</CardGroup>
+
+## Copyable templates
+
+| Template | Automated controls | Manual checks |
+| --- | --- | --- |
+| BIOS Identity Assurance | 2 | 3 |
+| BIOS Endpoint and Server Health | 4 | 1 |
+| BIOS Network Health | 1 | 3 |
+| BIOS Backup Health | 2 | 1 |
+| BIOS Vulnerability and Governance | 2 | 3 |
+| Email & domain protection | 3 | 5 |
+| External exposure | 1 | 3 |
+
+## What a baseline does and does not establish
+
+A baseline supplies expectations, not evidence that the client meets them. Check source coverage and subject identity before interpreting the results. Some templates combine automated observations with manual reviews precisely because the broader outcome cannot be established from one fact.
+
+Titles can summarise more than the actual comparison proves. For example, the backup “retention window” control measures the time since a successful backup; it does not inspect the retention policy. The category reference calls out these limits alongside each definition.
+
+Default severities, thresholds and review intervals are starting settings. Review client requirements and [parameters and overrides](/controls/parameters), then follow [testing and rollout](/controls/test-and-rollout).
+
+The references are generated from the application's built-in declarations. They describe the supplied catalogue, not the custom controls or effective overrides in your workspace.

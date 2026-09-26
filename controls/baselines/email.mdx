@@ -1,0 +1,192 @@
+---
+title: "Email and domains"
+description: "DNS observations and the manual checks needed for broader mail protection."
+---
+
+This category contains **3 automated control definitions** and **5 manual checks** across the sources named below. Similar controls from different standards are listed separately because names, thresholds or severity can differ.
+
+The seeded Alignr Baseline is a reference from the seed catalogue, not a promise that every production workspace contains it. Library templates are copied as disabled drafts. See [Choose a baseline](/controls/baselines/overview) before enabling anything.
+
+## Automated controls
+
+Expand a control to see the exact population, expectation and defaults. A pass requires usable evidence for the selected population. A known contrary observation can prove failure; missing observations or an empty population must not become a pass.
+
+<AccordionGroup>
+
+<Accordion title="SPF record is present">
+
+**Source:** Email & domain protection. **Severity:** high. **Declared autonomy:** `suggest_only`.
+
+**Population:** subjects with an observation of **SPF record present** (`external_spf_present`).
+
+**Expectation:** **SPF record present** (`external_spf_present`) equals `true`.
+
+**Thresholds:** no configurable parameter is declared for this control.
+
+**Required observations:** `external_spf_present`.
+
+**Interpretation:** This is the bounded DNS presence check, not a full validation of authorised senders or every SPF include. Complete the manual SPF review.
+
+**Investigate:** confirm the client and subject, inspect source and observation time, then compare the actual value with the effective expectation. Review a supported change separately from the assessment.
+
+```json
+{
+  "match": {
+    "predicate": "external_spf_present"
+  },
+  "expect": [
+    {
+      "fact": "external_spf_present",
+      "op": "eq",
+      "value": true
+    }
+  ],
+  "severity": "high",
+  "title": "SPF record is missing",
+  "evidence": [
+    "external_spf_present"
+  ]
+}
+```
+
+</Accordion>
+
+<Accordion title="DMARC enforcement is enabled">
+
+**Source:** Email & domain protection. **Severity:** high. **Declared autonomy:** `suggest_only`.
+
+**Population:** subjects with an observation of **DMARC enforcement policy** (`external_dmarc_enforced`).
+
+**Expectation:** **DMARC enforcement policy** (`external_dmarc_enforced`) equals `true`.
+
+**Thresholds:** no configurable parameter is declared for this control.
+
+**Required observations:** `external_dmarc_enforced`.
+
+**Interpretation:** This checks the collected DNS enforcement signal. It does not test actual message alignment, reporting operation or every mail flow.
+
+**Investigate:** confirm the client and subject, inspect source and observation time, then compare the actual value with the effective expectation. Review a supported change separately from the assessment.
+
+```json
+{
+  "match": {
+    "predicate": "external_dmarc_enforced"
+  },
+  "expect": [
+    {
+      "fact": "external_dmarc_enforced",
+      "op": "eq",
+      "value": true
+    }
+  ],
+  "severity": "high",
+  "title": "DMARC enforcement is not enabled",
+  "evidence": [
+    "external_dmarc_enforced"
+  ]
+}
+```
+
+</Accordion>
+
+<Accordion title="Mail exchange is configured">
+
+**Source:** Email & domain protection. **Severity:** high. **Declared autonomy:** `suggest_only`.
+
+**Population:** subjects with an observation of **Mail routing records present** (`external_mx_present`).
+
+**Expectation:** **Mail routing records present** (`external_mx_present`) equals `true`.
+
+**Thresholds:** no configurable parameter is declared for this control.
+
+**Required observations:** `external_mx_present`.
+
+**Interpretation:** A usable MX observation does not prove mail acceptance or correct routing for every sender. Null MX does not satisfy the source check.
+
+**Investigate:** confirm the client and subject, inspect source and observation time, then compare the actual value with the effective expectation. Review a supported change separately from the assessment.
+
+```json
+{
+  "match": {
+    "predicate": "external_mx_present"
+  },
+  "expect": [
+    {
+      "fact": "external_mx_present",
+      "op": "eq",
+      "value": true
+    }
+  ],
+  "severity": "high",
+  "title": "Mail exchange is missing",
+  "evidence": [
+    "external_mx_present"
+  ]
+}
+```
+
+</Accordion>
+
+</AccordionGroup>
+
+## Manual checks
+
+These are human reviews, not automated evidence. The interval below is the template default; review ownership, evidence and suitability for the client.
+
+<AccordionGroup>
+
+<Accordion title="Review SPF records">
+
+**Source:** Email & domain protection. **Default review interval:** 30 days.
+
+For every sending domain, manually validate the public SPF record, authorised senders and DNS lookup budget. The automated control only proves that one SPF record is present; this review remains required for record validity, approved senders and the recursive lookup limit. Pass when the record is valid, contains only approved senders and stays within the agreed lookup budget. Fail when it is malformed, includes an unapproved sender or exceeds the lookup budget. Evidence: capture the DNS response, domain and review date.
+
+**Record:** who performed the review, when it was performed, the evidence, the conclusion and any follow-up or approved exception. A due review is not evidence of a completed review.
+
+</Accordion>
+
+<Accordion title="Review DKIM signing">
+
+**Source:** Email & domain protection. **Default review interval:** 30 days.
+
+For every sending domain and provider, verify the published DKIM selector and send a test message where appropriate. Pass when approved outbound mail is signed and the public key validates. Fail when signing is disabled, the selector is absent or validation fails. Evidence: record the selector, provider result and a redacted test header.
+
+**Record:** who performed the review, when it was performed, the evidence, the conclusion and any follow-up or approved exception. A due review is not evidence of a completed review.
+
+</Accordion>
+
+<Accordion title="Review DMARC policy">
+
+**Source:** Email & domain protection. **Default review interval:** 30 days.
+
+Inspect the public DMARC record and reporting destinations for every sending domain. Pass when an approved policy is published, aligned with the agreed enforcement level and reports go to monitored mailboxes. Fail when it is missing, set to monitoring only without an approved exception, or sends reports to an unowned destination. Evidence: capture the DNS response, policy and exception owner.
+
+**Record:** who performed the review, when it was performed, the evidence, the conclusion and any follow-up or approved exception. A due review is not evidence of a completed review.
+
+</Accordion>
+
+<Accordion title="Review domain registration and expiry">
+
+**Source:** Email & domain protection. **Default review interval:** 30 days.
+
+Compare every business domain with the registrar account and renewal register. Pass when the registrant, registrar access, renewal owner and expiry date are recorded and auto-renewal or a dated renewal task is confirmed. Fail when ownership is unclear, expiry is within the agreed renewal window, or no recovery access is held. Evidence: attach the registrar record or renewal confirmation; do not store credentials.
+
+**Record:** who performed the review, when it was performed, the evidence, the conclusion and any follow-up or approved exception. A due review is not evidence of a completed review.
+
+</Accordion>
+
+<Accordion title="Review public TLS certificates">
+
+**Source:** Email & domain protection. **Default review interval:** 30 days.
+
+Inventory public HTTPS endpoints and inspect each certificate chain, hostname coverage, issuer and expiry. Pass when each approved endpoint uses a trusted, hostname-matching certificate with a documented renewal owner and more than 30 days remaining. Fail when a certificate is expired, mismatched, untrusted or has 30 days or fewer remaining; record any approved exception separately. Evidence: record the endpoint, certificate subject, issuer, expiry and inspection date. Alignr does not run an external scanner for this check.
+
+**Record:** who performed the review, when it was performed, the evidence, the conclusion and any follow-up or approved exception. A due review is not evidence of a completed review.
+
+</Accordion>
+
+</AccordionGroup>
+
+## Next steps
+
+[Create a custom control](/controls/create-custom) · [Parameters and client overrides](/controls/parameters) · [Record a manual check](/controls/manual-checks)
