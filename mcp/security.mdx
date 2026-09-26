@@ -7,6 +7,8 @@ description: "Understand the access granted to an MCP client."
 
 Grant only the tool scopes the client needs. Read scopes do not imply permission to write. `organization:write` enables client creation and updates, while `detection:write` enables detection notes. Choose either only when the workflow needs it.
 
+`remediation:read` allows the two remediation status tools. For a user-owned key, its owner must still hold `remediation.read` when the tool is called. The scope does not grant remediation execution, approval or rollback. A completed run status is separate from verified resolution of the underlying control.
+
 In the token form, **Select all** selects every currently issuable API and MCP scope, even while you are filtering the list. For a single assistant workflow, choose the scopes in the [tool catalogue](/mcp/tools) individually and review the selection before creating the key.
 
 ## Live permission checks

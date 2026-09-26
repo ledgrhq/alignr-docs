@@ -14,6 +14,7 @@ Scopes specify what a key may do. REST and MCP use different names:
 | REST API | `organization.read` | Read Organizations through the API. |
 | MCP client | `organization:read` | Call the `get_organization` tool. |
 | MCP client | `organization:write` | Call `create_organization` or `update_organization` with a user-owned key. |
+| MCP client | `remediation:read` | List remediation run statuses or inspect one run; it does not authorise an action. |
 
 Choose the exact scopes listed for your endpoint or [MCP tool](/mcp/tools).
 

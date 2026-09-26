@@ -26,6 +26,8 @@ The catalogue includes retained server tools. The current token-creation form do
 | [Review a standard across clients](#review-a-standard-across-clients) | `get_standard_rollup` | `compliance:standard_rollup` |
 | [List detections](#list-detections) | `list_detections` | `detection:read` |
 | [Add a detection note](#add-a-detection-note) | `create_detection_note` | `detection:write` |
+| [List remediation runs](#list-remediation-runs) | `list_remediation_runs` | `remediation:read` |
+| [Get remediation run status](#get-remediation-run-status) | `get_remediation_run_status` | `remediation:read` |
 | [Search indexed content](#search-indexed-content) | `search_documentation` | `search:read` |
 | [Ask an evidence-backed question](#ask-an-evidence-backed-question) | `ask_ledgr` | `ask:use` |
 
@@ -248,6 +250,48 @@ Attach a note to a detection as an evidence row.
 - **`note`:** Text to add to the detection.
 
 <Warning>This tool writes a detection note. Confirm the target and note text before allowing the call.</Warning>
+
+## Remediation status
+
+### List remediation runs
+
+`list_remediation_runs`
+
+List a bounded page of remediation run statuses in the calling MSP workspace.
+
+**Required scope:** `remediation:read`
+
+**User permissions:** `remediation.read`.
+
+| Argument | Required | Default |
+| --- | --- | --- |
+| `limit` | No | `20` |
+| `offset` | No | `0` |
+| `status` | No | `null` |
+
+- **`limit`:** Run statuses per page, from 1 to 50 (default 20).
+- **`offset`:** Zero-based page offset from 0 to 10,000. Most recently started runs appear first; unstarted runs appear last. Equal start times use run ID as a tie-breaker.
+- **`status`:** Optional exact run status: pending_approval, running, completed, partial, failed or rolled_back.
+
+The `total` count and `items` page are restricted to your MSP workspace. Each item contains only the run, detection and plan UUIDs; lifecycle and verification statuses; a `simulated` flag; and creation, start, finish and update timestamps. The page never includes step outputs, vendor payloads, result summaries, labels or rollback material.
+
+### Get remediation run status
+
+`get_remediation_run_status`
+
+Fetch one remediation run's status without execution or rollback data.
+
+**Required scope:** `remediation:read`
+
+**User permissions:** `remediation.read`.
+
+| Argument | Required | Default |
+| --- | --- | --- |
+| `run_id` | Yes | — |
+
+- **`run_id`:** Remediation run UUID. A run outside your workspace returns not found.
+
+<Note>The detail returns the same fixed fields as each list item. A run marked `completed` means execution reached that state; it does not prove the control was fixed. Check `verificationStatus` and fresh source evidence. `simulated: true` means at least one step was rehearsed rather than applied. Neither this tool nor the list reports rollback eligibility: status alone cannot establish that a rollback window is open or an eligible token remains.</Note>
 
 ## Search and questions
 

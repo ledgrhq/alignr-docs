@@ -62,6 +62,7 @@ A useful answer identifies the client, the expectation, the actual observation a
 | Which clients have a particular control status? | `list_organizations_by_control_status` |
 | How do clients stand against a standard? | `get_standard_rollup` |
 | What findings are open? | `list_detections` |
+| What is the status of a remediation run? | `list_remediation_runs` or `get_remediation_run_status` — requires `remediation:read`; neither confirms rollback eligibility. |
 | Can I add an agreed note to a finding? | `create_detection_note` — requires write access. |
 
 Tool availability and permission checks remain server-side. A client's ability to discover a tool is not permission to execute it.

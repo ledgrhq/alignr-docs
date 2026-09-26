@@ -65,6 +65,7 @@ TOOL_GROUPS = {
     'Client actions': [('create_organization', 'Create a client'), ('update_organization', 'Update a client')],
     'Control results': [('get_organization_compliance', 'Read client control results'), ('explain_control_status', 'Explain a control result'), ('list_organizations_by_control_status', 'Find clients by control status'), ('get_standard_rollup', 'Review a standard across clients')],
     'Findings': [('list_detections', 'List detections'), ('create_detection_note', 'Add a detection note')],
+    'Remediation status': [('list_remediation_runs', 'List remediation runs'), ('get_remediation_run_status', 'Get remediation run status')],
     'Search and questions': [('search_documentation', 'Search indexed content'), ('ask_ledgr', 'Ask an evidence-backed question')],
 }
 ARGUMENT_HELP = {
@@ -84,6 +85,7 @@ ARGUMENT_HELP = {
     'standard': 'Standard UUID, name, or case-insensitive substring of its name or slug.',
     'status': 'Status to filter by; the default is shown below.',
     'detection_ref': 'Reference identifying the detection to annotate.',
+    'run_id': 'Remediation run UUID. A run outside your workspace returns not found.',
     'note': 'Text to add to the detection.',
 }
 ordered_tools = [name for group in TOOL_GROUPS.values() for name, _ in group]
@@ -112,6 +114,12 @@ for category, group in TOOL_GROUPS.items():
             help_text = ARGUMENT_HELP[argument]
             if name == 'list_organizations' and argument == 'limit':
                 help_text = 'Clients per page, from 1 to 100 (default 20).'
+            if name == 'list_remediation_runs' and argument == 'limit':
+                help_text = 'Run statuses per page, from 1 to 50 (default 20).'
+            if name == 'list_remediation_runs' and argument == 'offset':
+                help_text = 'Zero-based page offset from 0 to 10,000. Most recently started runs appear first; unstarted runs appear last. Equal start times use run ID as a tie-breaker.'
+            if name == 'list_remediation_runs' and argument == 'status':
+                help_text = 'Optional exact run status: pending_approval, running, completed, partial, failed or rolled_back.'
             if argument == 'organization_id' and parameters[argument].default is not inspect.Parameter.empty:
                 help_text += ' Omit it to use the tool’s workspace-wide scope.'
             lines.append(f'- **`{argument}`:** {help_text}')
@@ -121,6 +129,10 @@ for category, group in TOOL_GROUPS.items():
             lines += ['', '<Warning>This changes a client. Confirm the exact Organization ID and intended fields before calling it. A valid user-owned key and its active owner’s current `organization.write` permission are required; the owner must have no pending required password change. Service keys cannot perform this write.</Warning>']
         elif name == 'create_detection_note':
             lines += ['', '<Warning>This tool writes a detection note. Confirm the target and note text before allowing the call.</Warning>']
+        elif name == 'list_remediation_runs':
+            lines += ['', 'The `total` count and `items` page are restricted to your MSP workspace. Each item contains only the run, detection and plan UUIDs; lifecycle and verification statuses; a `simulated` flag; and creation, start, finish and update timestamps. The page never includes step outputs, vendor payloads, result summaries, labels or rollback material.']
+        elif name == 'get_remediation_run_status':
+            lines += ['', '<Note>The detail returns the same fixed fields as each list item. A run marked `completed` means execution reached that state; it does not prove the control was fixed. Check `verificationStatus` and fresh source evidence. `simulated: true` means at least one step was rehearsed rather than applied. Neither this tool nor the list reports rollback eligibility: status alone cannot establish that a rollback window is open or an eligible token remains.</Note>']
 lines += ['', '## Understand the answer', '', 'A missing result is not proof that a control passed. Read [control statuses](/guides/control-status), retain the client and evidence context, and review [MCP permissions](/mcp/security).']
 (ROOT/'mcp/tools.mdx').write_text('\n'.join(lines)+'\n')
 print(f'Generated {len(paths)} read endpoints and {len(MCP_TOOL_SCOPES)} MCP tools.')
