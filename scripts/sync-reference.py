@@ -67,7 +67,7 @@ TOOL_GROUPS = {
     'Search and questions': [('search_documentation', 'Search indexed content'), ('ask_ledgr', 'Ask an evidence-backed question')],
 }
 ARGUMENT_HELP = {
-    'organization_id': 'Organization UUID. When optional, omit it to use the tool’s workspace-wide scope.',
+    'organization_id': 'Organization UUID.',
     'asset_id': 'UUID of the asset to retrieve.',
     'query': 'Text to search for.',
     'question': 'The question you want answered from available evidence.',
@@ -82,7 +82,7 @@ ordered_tools = [name for group in TOOL_GROUPS.values() for name, _ in group]
 registry = {spec.tool: spec for spec in MCP_TOOL_SCOPES.values()}
 if set(ordered_tools) != set(registry):
     raise ValueError('Update TOOL_GROUPS when the MCP registry changes')
-lines = ['---', 'title: "MCP tools"', 'description: "Choose a tool by task, then check its arguments and required scope."', '---', '', 'Use this catalogue to choose the tool for your question. Names, scopes and defaults are generated from Alignr’s server; [connect your client](/mcp/connect) before making a call.', '', 'Confirm deployment availability using the [live reference](/api-reference/live-schema). An Organization is one client in your MSP workspace.', '', 'The required scope must be assigned to the key. For a user-scoped key, the owner must also retain the listed user permissions.', '', '## Choose a tool', '', '| Task | Tool | Required scope |', '| --- | --- | --- |']
+lines = ['---', 'title: "MCP tools"', 'description: "Choose a tool by task, then check its arguments and required scope."', '---', '', 'Use this catalogue to choose the tool for your question. Names, scopes and defaults are generated from Alignr’s server; [connect your client](/mcp/connect) before making a call.', '', 'Confirm deployment availability using the [live reference](/api-reference/live-schema). An Organization is one client in your MSP workspace.', '', 'The required scope must be assigned to the key. For a user-scoped key, the owner must also retain the listed user permissions.', '', 'The catalogue includes retained server tools. The current token-creation form does not offer `asset:read`, `search:read` or `ask:use`, so do not assume every listed tool can be configured through that form. Existing credentials and the live deployment contract must be checked separately.', '', '## Choose a tool', '', '| Task | Tool | Required scope |', '| --- | --- | --- |']
 for group in TOOL_GROUPS.values():
     for name, title in group:
         spec = registry[name]
@@ -101,7 +101,10 @@ for category, group in TOOL_GROUPS.items():
             lines.append(f'| `{argument}` | {"Yes" if required else "No"} | {default} |')
         lines += ['']
         for argument in parameters:
-            lines.append(f'- **`{argument}`:** {ARGUMENT_HELP[argument]}')
+            help_text = ARGUMENT_HELP[argument]
+            if argument == 'organization_id' and parameters[argument].default is not inspect.Parameter.empty:
+                help_text += ' Omit it to use the tool’s workspace-wide scope.'
+            lines.append(f'- **`{argument}`:** {help_text}')
         if spec.mutating:
             lines += ['', '<Warning>This tool writes a detection note. Confirm the target and note text before allowing the call.</Warning>']
 lines += ['', '## Understand the answer', '', 'A missing result is not proof that a control passed. Read [control statuses](/guides/control-status), retain the client and evidence context, and review [MCP permissions](/mcp/security).']

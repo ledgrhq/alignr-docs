@@ -1,0 +1,23 @@
+# API, MCP and developer documentation audit
+
+Source target: app 565fae53f166e14dae4f3d872572ab3e3bdfdc28; docs baseline 0bf7785de4d97ac9f8a759bb9626d837fa4feeca. Root owns this audit and the narrow corrections. Source-only inspection and deterministic reference regeneration; no authenticated API or MCP calls were made.
+
+| ID | Priority | User task / gap | Evidence | Disposition |
+| --- | --- | --- | --- | --- |
+| DEV-01 | P1 | Find and issue a personal token. Published guide uses obsolete Settings → API keys and implies generic key-management permission is necessary. | `frontend/src/features/api-keys/ApiKeysPage.tsx:33,140`; `api/ledgr/api/v1/api_keys.py:160–178,242`; `services/api_keys_service.py` creator and revoke rules. | Fixed guide to MCP/API Tokens → + Generate token; personal keys vs workspace administration, role.manage service requirement, expiry and exact revoke actions. |
+| DEV-02 | P1 | Choose a tool that can actually be configured in the current token form. Server catalogue includes get_asset/search_documentation/ask_ledgr, but UI does not offer asset:read/search:read/ask:use. | `frontend/src/features/api-keys/scopePolicy.ts:3–15`; `CreateApiKeyDrawer.tsx:55–58`; `api/ledgr/core/scopes.py` retained registry. | Added precise caveat to generated MCP catalogue and generator. Do not say tools are removed or scopes forbidden by API; the current creation UI is the boundary. Product decision remains needed before expanding public legacy-tool recipes. |
+| DEV-03 | P2 | Try requests in the authenticated explorer without confusing identity or live writes. Live-schema page only links the explorer. | `DeveloperPage.tsx:241–290` identity picker; `TryItPanel.tsx:76–86,165–179,230` execution/confirmation; `consoleIdentity.tsx` memory-only identity. | Added session/key selection, read vs mutation confirmation, response identity, live workspace and reference downloads. |
+| DEV-04 | P2 | Interpret required Organization arguments. Generator repeats optional/workspace-wide advice even on required parameters. | `scripts/sync-reference.py:69,103`; inspected signatures in `api/ledgr/mcp/server.py`. | Generator now appends optional guidance only for parameters with defaults; regenerated ten tools. |
+| DEV-05 | P2 | Build useful supported API workflows beyond isolated read calls: client assessment report, cross-client gaps, retries/pagination and optional MCP explanation. | Public snapshot explicitly selects ten GET operations; `api/ledgr/api/v1/__init__.py` mounts broader current and retained backend routers. | Backlog: one end-to-end read-only recipe using current operations with permission table, paging, timestamps, missing-evidence handling and a fictional response. Do not publish the whole internal schema by default. |
+| DEV-06 | P2 | Know which current API/MCP operations are supported versus historically retained. | `vault/09-Delivery/Retained Backend Surface 2026-09-26.md`; ADR-0023; mounted assets/documents/secrets/migrations/procedures routes. | Product-contract decision needed. Keep live-schema link and explain deployment availability; do not revive retired documentation-product UI or invent endpoint removal. |
+
+## Surface inventory
+
+- `/api-keys`, `/api-keys/:id`: covered with narrow fixes above. Scopes immutable; inspect ownership/status/last-used and rotate via replacement.
+- `/developer`: reference/API console covered by expanded live-schema page. Authentication/MCP tabs and exports exist; no unauthenticated public schema claim.
+- Public ten-operation REST snapshot: regenerated with no OpenAPI diff. Existing auth, pagination and errors guides remain the foundation.
+- MCP ten-tool server registry: regenerated with explicit token-UI boundary. Feature flag controls mounting; docs already require deployment availability.
+- Retained backend-only library CRUD/secret/migration/procedure interfaces: accounted for, not new current app-user guide requirements. Separate product boundary must precede new public promises.
+- Operator AWS/ClickHouse/deployment tooling: belongs to internal operator runbooks, not routine MSP app setup. This audit does not imply telemetry work is finished.
+
+Validation: generator ran successfully from application Python environment, emitted ten GET endpoints and ten MCP tools; OpenAPI output unchanged. Environment emitted existing Starlette deprecation and missing email-validator warnings. No application behavior changed and no app test suite was run for these docs-only edits.

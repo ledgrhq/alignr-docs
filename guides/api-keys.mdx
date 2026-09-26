@@ -19,13 +19,15 @@ Choose the exact scopes listed for your endpoint or [MCP tool](/mcp/tools).
 ## Create a key
 
 <Steps>
-  <Step title="Open API keys">
-    In Alignr, open **Settings → API keys**. You need permission to manage keys.
+  <Step title="Open MCP/API Tokens">
+    In Alignr, open **Settings → MCP/API Tokens → + Generate token**. Signed-in users can create keys within their own permissions and manage their own keys. Administrators with `settings.manage` can view and manage workspace-wide keys.
   </Step>
   <Step title="Choose the access">
     Give the key a recognisable name and choose the required scopes. For the REST quickstart, use `organization.read`. For the MCP Organization tool, use `organization:read`.
 
-    A user-scoped key is limited by its owner’s current permissions on every request. A service key uses its assigned scopes and must have an expiry.
+    Choose **User key — bound to my account** for a personal connection. Its permissions are checked against your current roles on every request, and it stops working if your account is deactivated.
+
+    A **Service key** keeps its assigned scopes through staff changes. Creating one requires `role.manage` and an expiry date. The form interprets **Expires on** as the end of that date in UTC. Select **Create key** once the name, scopes and expiry are correct.
   </Step>
   <Step title="Store the key">
     Copy the key when it is created; its value is shown only once. Store it in a secret manager or your client’s protected credential store.
@@ -38,9 +40,15 @@ Send `Authorization: Bearer <your-api-key>` with each request. Keys currently re
 
 Do not put keys in browser code, Git commits, URLs or screenshots. Examples in these docs read `ALIGNR_API_KEY` from your environment.
 
+## Review a key
+
+Open a token from the list to review its owner, status, **Last used**, expiry and **Scopes**. A key marked active can still lack permission for a particular request. For a user key, also check the owner’s current roles.
+
+The creation form offers scopes for the current Alignr product. Older keys may display historical scopes that are no longer offered in this form. Check [the live reference](/api-reference/live-schema) for the deployment’s current reference.
+
 ## Replace or revoke a key
 
-Scopes are fixed at creation. Create a replacement key to change its access, update the consuming client, verify it works, then revoke the old key. Revoke a suspected exposed key promptly.
+Scopes are fixed at creation. Create a replacement key to change its access, update the consuming client, verify it works, then revoke the old key. To revoke, open the token, select **Revoke**, then confirm **Revoke key**. Revoke a suspected exposed key promptly.
 
 ## Try the key
 

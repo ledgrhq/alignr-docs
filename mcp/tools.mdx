@@ -9,6 +9,8 @@ Confirm deployment availability using the [live reference](/api-reference/live-s
 
 The required scope must be assigned to the key. For a user-scoped key, the owner must also retain the listed user permissions.
 
+The catalogue includes retained server tools. The current token-creation form does not offer `asset:read`, `search:read` or `ask:use`, so do not assume every listed tool can be configured through that form. Existing credentials and the live deployment contract must be checked separately.
+
 ## Choose a tool
 
 | Task | Tool | Required scope |
@@ -40,7 +42,7 @@ Fetch summary details for one organization (MSP client).
 | --- | --- | --- |
 | `organization_id` | Yes | — |
 
-- **`organization_id`:** Organization UUID. When optional, omit it to use the tool’s workspace-wide scope.
+- **`organization_id`:** Organization UUID.
 
 ### Get an asset
 
@@ -74,7 +76,7 @@ One organization's compliance grid: every control it has been evaluated against,
 | --- | --- | --- |
 | `organization_id` | Yes | — |
 
-- **`organization_id`:** Organization UUID. When optional, omit it to use the tool’s workspace-wide scope.
+- **`organization_id`:** Organization UUID.
 
 ### Explain a control result
 
@@ -91,7 +93,7 @@ Why one control has the status it has for one organization — the detections ra
 | `organization_id` | Yes | — |
 | `control` | Yes | — |
 
-- **`organization_id`:** Organization UUID. When optional, omit it to use the tool’s workspace-wide scope.
+- **`organization_id`:** Organization UUID.
 - **`control`:** Control UUID, name, or case-insensitive substring of its name or slug.
 
 ### Find clients by control status
@@ -148,7 +150,7 @@ List detections for the calling tenant, most recently seen first.
 | `status` | No | `"open"` |
 | `limit` | No | `10` |
 
-- **`organization_id`:** Organization UUID. When optional, omit it to use the tool’s workspace-wide scope.
+- **`organization_id`:** Organization UUID. Omit it to use the tool’s workspace-wide scope.
 - **`status`:** Status to filter by; the default is shown below.
 - **`limit`:** Maximum number of results requested.
 
@@ -191,7 +193,7 @@ Full-text and semantic search over document bodies, asset fields and attachment 
 | `limit` | No | `8` |
 
 - **`query`:** Text to search for.
-- **`organization_id`:** Organization UUID. When optional, omit it to use the tool’s workspace-wide scope.
+- **`organization_id`:** Organization UUID. Omit it to use the tool’s workspace-wide scope.
 - **`limit`:** Maximum number of results requested.
 
 ### Ask an evidence-backed question
@@ -210,7 +212,7 @@ Ask a natural-language question over the governed corpus, with citations.
 | `organization_id` | No | `null` |
 
 - **`question`:** The question you want answered from available evidence.
-- **`organization_id`:** Organization UUID. When optional, omit it to use the tool’s workspace-wide scope.
+- **`organization_id`:** Organization UUID. Omit it to use the tool’s workspace-wide scope.
 
 ## Understand the answer
 

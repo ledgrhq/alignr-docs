@@ -4,6 +4,8 @@
 
 Read AGENTS.md, this vault's MOC and relevant decisions. Check branch and working changes in both docs and application checkouts; claim files and preserve concurrent work. Consult the application's vault for product decisions and source code for current implementation. Never make product decisions by changing public copy.
 
+Reconcile affected routes, shell actions, connector modes and developer scopes with [Application documentation coverage](Documentation%20Coverage.md). Update its linked guide and remaining-gap status when closing a task; preserve dated audit evidence.
+
 ## Change impact
 
 | Change | Update together |

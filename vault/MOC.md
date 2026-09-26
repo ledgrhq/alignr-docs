@@ -19,6 +19,14 @@ This is the source of truth for **how the public docs are designed, written and 
 - [Review checklist](Review%20Checklist.md) — repeatable criteria for independent review and re-review.
 - [Review log](Review%20Log.md) — verification, known gaps and next improvements.
 
+## Coverage audit
+
+- [Application documentation coverage](Documentation%20Coverage.md) — route reconciliation, prioritised backlog and completed corrections.
+- [Daily operations evidence](Review%20Evidence/Daily%20Operations%20Audit.md).
+- [Setup and integrations evidence](Review%20Evidence/Setup%20and%20Integrations%20Audit.md).
+- [Assessments and sharing evidence](Review%20Evidence/Assessments%20and%20Sharing%20Audit.md).
+- [API and MCP evidence](Review%20Evidence/API%20and%20MCP%20Audit.md).
+
 ## Publication boundary
 
 `vault/` is excluded from Mintlify through `.mintignore`, together with agent instructions and maintainer scripts. Never add vault pages to public navigation or link to them from public MDX. This is a publication boundary, not a secret store: repository readers can still see these notes. Do not store credentials or customer data here.

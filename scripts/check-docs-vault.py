@@ -10,14 +10,14 @@ required = {'vault/', 'AGENTS.md', 'CLAUDE.md', 'scripts/'}
 ignored = {line.strip() for line in (ROOT / '.mintignore').read_text().splitlines() if line.strip() and not line.startswith('#')}
 for entry in sorted(required - ignored):
     errors.append(f'.mintignore must exclude {entry}')
-notes = list((ROOT / 'vault').glob('*.md'))
+notes = list((ROOT / 'vault').rglob('*.md'))
 moc = ROOT / 'vault/MOC.md'
 if not moc.exists():
     errors.append('Missing vault/MOC.md')
 else:
     indexed = {unquote(target.split('#')[0]) for target in re.findall(r'\]\(([^)]+)\)', moc.read_text())}
     for note in notes:
-        if note != moc and note.name not in indexed:
+        if note != moc and note.relative_to(ROOT / 'vault').as_posix() not in indexed:
             errors.append(f'Vault note is not indexed: {note.name}')
 for note in notes:
     for target in re.findall(r'\]\(([^)]+)\)', note.read_text()):
