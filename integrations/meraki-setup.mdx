@@ -1,0 +1,77 @@
+---
+title: "Connect Cisco Meraki"
+description: "Prepare Meraki API access, map organizations correctly and verify current network evidence."
+---
+
+Use the Meraki Dashboard API connection to collect network-device identity, firmware, reachability, reported update availability, licence and VPN observations. It also records an MX layer-three firewall-rule fingerprint for change detection.
+
+For example, an MSP key may see Acme and several other Meraki organizations. The key's visibility is not a client mapping: you must identify and assign the intended source organization before using its evidence.
+
+## Before you begin
+
+- Access to the intended Meraki organization and permission to enable its Dashboard API access.
+- A Meraki administrator identity whose access is limited to the organizations and reads you intend Alignr to use. API keys inherit that identity's permissions in each organization.
+- An Alignr role with `integration.read` and `integration.manage`, plus the client access needed to review mappings.
+- An existing Alignr client, or permission to create one during import.
+
+The current Alignr connector uses an **API key** and performs read operations. You do not configure Meraki OAuth scopes in the Alignr form. Meraki's OAuth permissions belong to a different authorisation method. [Cisco's authentication reference](https://developer.cisco.com/meraki/api-v1/authorization/).
+
+## Prepare Meraki
+
+<Steps>
+  <Step title="Enable API access for the organization">
+    In Meraki Dashboard, review the intended organization's API access setting and enable Dashboard API access if it is off. Cisco's setup guide identifies **Enable access to the Cisco Meraki Dashboard API** as the setting to check.
+
+    Confirm this for each intended organization; one accessible organization does not prove that API access is enabled everywhere. [Cisco API setup](https://developer.cisco.com/meraki/build/meraki-postman-collection-getting-started/getting-started/).
+  </Step>
+  <Step title="Generate a key under the intended identity">
+    Cisco's current navigation is **Organization → API & Webhooks → API keys and access**. Review the identity's organization permissions and generate a key. Store the credential securely for entry into Alignr.
+
+    Older Dashboard layouts may show API key management under the profile. Use Cisco's [current key instructions](https://developer.cisco.com/meraki/api-v1/authorization/) if the menu differs.
+  </Step>
+  <Step title="Check the permission boundary">
+    The same identity may be read-only in one organization and have broader access in another. Review the entire intended organization set. For evidence collection, use appropriate read access rather than granting write access to resolve an unrelated setup problem.
+
+    **Checkpoint:** you know whose key this is and which organizations it is authorised to read.
+  </Step>
+</Steps>
+
+## Add the connection in Alignr
+
+1. Open **Integrations → + Add connection**, choose **Cisco Meraki** and set a descriptive **Connection name**, such as `Meraki — MSP managed clients`.
+2. Paste the key into **API key** and review the collection interval.
+3. Save and inspect the outcome. A connection test checks that the organizations API is accessible; it does not prove every downstream workload read will succeed.
+4. Open **Clients & sites** and select **Refresh sites**. Review each returned Meraki organization ID and name, then **Assign client** for the intended records.
+5. Use **Sync now**, inspect **Sync history**, and confirm a known device is attributed to the right client.
+
+The usual mapping unit is the **Meraki organization ID**. The connector can also operate with a deployment-configured network scope, showing `Organization / Network` records with network IDs. The current add form exposes only the API key, not a network-scope selector. If you need a different boundary, confirm that configuration with your deployment administrator before linking records.
+
+Several Meraki networks within one organization must not be assumed to be separate Alignr clients under organization-level mapping.
+
+## Verify one real result
+
+Choose a known device in a mapped client and compare its model, firmware and source context with Meraki. Then inspect the control you want to use.
+
+| Observation | What it answers | What it does not answer |
+| --- | --- | --- |
+| Device online | The source's reported availability. | Whether the device's configuration is secure. |
+| Firmware update available | The source reports an update. | Whether that update is approved or safe to apply now. |
+| Firewall-rule fingerprint | A comparable representation of supported MX layer-three rules. | Whether the rule set meets your firewall standard. |
+| Licence or VPN observations | Reported entitlement or topology information. | Whether every remote-access path is appropriately authorised. |
+
+Meraki does not supply the RMM-management, OS-platform, device-check-in or network-uplink predicates through this connector. Do not keep rotating a valid key to make an unsupported observation appear.
+
+**Checkpoint:** the intended organization is mapped, collection completes, and the observations support the specific control you intend to evaluate. Then [run the reviewed standard](/guides/standards).
+
+## Troubleshoot the boundary that failed
+
+| Symptom | Next check |
+| --- | --- |
+| Connection test fails. | Check the key, its owning administrator and Dashboard API enablement. |
+| HTTP 404 from an organization read. | The connector treats this as potentially an access problem as well as an absent resource. Verify key and organization access rather than interpreting it as an empty estate. |
+| Some organizations are missing. | Review the key owner's access and whether API access is enabled for those organizations. |
+| A device belongs to the wrong Alignr client. | Review organization/network mapping before editing control thresholds. |
+| A collection is throttled or incomplete. | Inspect the recorded collection error and retry after the underlying limit recovers. Do not treat a partial collection as complete coverage. |
+| A key was rotated or its owner lost access. | Update the saved credential bundle and confirm fresh collection. |
+
+Follow [integration maintenance](/guides/maintain-integrations) to rotate or retire the connection. This walkthrough is checked against current Alignr code and Cisco's published instructions; completing your own mapping and collection checkpoints is still required.

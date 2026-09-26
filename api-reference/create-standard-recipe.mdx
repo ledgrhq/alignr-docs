@@ -1,0 +1,108 @@
+---
+title: "Create an inactive standard"
+description: "Use a tested Python example to create one draft standard and control without activating or evaluating them."
+---
+
+This recipe creates an **inactive standard with one inactive control** in a single request. The fictional control asks whether MDM-enrolled devices report encryption enabled. It writes configuration; it does not create evidence, assess a client or run remediation.
+
+The [runnable example](https://github.com/ledgrhq/alignr-docs/blob/main/examples/create_standard.py) uses Python's standard library. It previews the payload by default and sends requests only with `--apply`.
+
+## Check the authentication requirement
+
+`POST /api/v1/standards` requires a **signed-in human's short-lived access token** and `detection_rule.write`. An API key, including a user-scoped API key, does not satisfy this endpoint's human-authentication requirement. A refresh token is not an access token.
+
+The example also reads the standard list before creating anything, so the signed-in user needs `detection_rule.read`. Obtain the access token through your deployment's supported human sign-in flow, including any required MFA, and provide it as `ALIGNR_ACCESS_TOKEN` through your local secret-management environment. Do not put it in source code, command arguments or shared screenshots.
+
+This is an explicitly invoked administrative workflow, not a service-key automation recipe. If you only have an API key, create the draft through [the app](/controls/create-custom) instead.
+
+## Preview the exact configuration
+
+Download the example or check out the [docs repository](https://github.com/ledgrhq/alignr-docs). From that checkout, use Python 3.10 or newer:
+
+```bash
+python3 examples/create_standard.py --slug example-encryption-review
+```
+
+No token or network access is needed for this dry run. Review the printed payload:
+
+| Field | Example value and purpose |
+| --- | --- |
+| Standard `enabled` | `false`: keeps the whole draft inactive. |
+| Control `enabled` | `false`: requires a separate deliberate review before activation. |
+| Control `autonomy` | `suggest_only`: does not authorise automatic remediation. |
+| `match.predicate` | `mdm_enrolled_by`: selects subjects with an MDM enrolment observation. |
+| `expect` | `device_encryption_enabled` equals Boolean `true`. |
+| `parameters` | Empty: this example has no configurable threshold. |
+
+The selected population and encryption observation must describe the same device. An encryption value of `false` contradicts the expectation; a missing observation does not establish a pass. Reported encryption does not prove that a recovery key is available.
+
+## Create the reviewed draft
+
+Choose a stable, unused slug for this request. Keep it in your change record so you can locate the draft if a response is lost. The child control slug is derived by adding `-encryption`.
+
+After reviewing the dry run and confirming your environment, explicitly invoke the write:
+
+```bash
+python3 examples/create_standard.py \
+  --slug example-encryption-review \
+  --api-base https://api.alignr.io/api/v1 \
+  --apply
+```
+
+Use your intended deployment's base URL. The script requires HTTPS, with HTTP permitted only for a local development server. It refuses redirects rather than forwarding credentials to another destination.
+
+The script performs:
+
+1. `GET /api/v1/standards`, checking whether the standard slug already exists.
+2. One `POST /api/v1/standards` containing the parent and initial control together.
+3. Response checks for HTTP 201, the expected slug, inactive parent state, one control and a valid returned standard ID.
+
+The create contract accepts the initial controls as part of the standard request, and the service creates them in one transaction. This avoids making separate parent and child requests in the example. Slugs must be unique within their relevant workspace records; the preflight is a convenience, not a concurrency lock or idempotency guarantee.
+
+A confirmed result prints a small summary such as:
+
+```json
+{
+  "id": "11111111-1111-4111-8111-111111111111",
+  "slug": "example-encryption-review",
+  "state": "inactive"
+}
+```
+
+This is the script's illustrative summary, not the full API response.
+
+## Verify it in the app
+
+Open **Standards**, locate the returned draft and inspect its **Controls** tab. Confirm the standard and control are both disabled and the definition matches the reviewed payload.
+
+**Checkpoint:** you can identify the saved standard, its one inactive control and the intended expectation. The script does not send activation, evaluation or remediation requests.
+
+Before enabling anything, follow [test and rollout](/controls/test-and-rollout). Review evidence coverage, the control's enabled state and client exceptions. Enabling a shared standard is not limited to the single client you may later select in **Run checks**.
+
+## Recover without duplicating work
+
+The example makes **no automatic retries**. A timeout or lost response after POST can occur even when creation committed.
+
+| Outcome | Next action |
+| --- | --- |
+| Dry run | Review the configuration; nothing was sent. |
+| Preflight failed | No create was sent. Check the URL, human token and read permission. |
+| Slug already exists | Inspect that standard; the script does not adopt, modify or replace it. |
+| HTTP 401 or 403 | Check token expiry, human authentication and the required permissions. |
+| HTTP 409 | Inspect the standard and derived control slugs for a conflict before choosing whether another draft is actually needed. |
+| HTTP 422 | Review the configuration against the deployment's current schema and definition constraints. |
+| Timeout, server error or unexpected create response | Inspect **Standards** for the recorded slug before attempting another write. Do not change the slug merely to get past uncertainty. |
+
+After any uncertain write, reconcile the saved state first. Rerunning with the same slug is not an idempotent “get or create” operation, and retrying with a new slug can create a second standard.
+
+## What has been tested
+
+The [offline test suite](https://github.com/ledgrhq/alignr-docs/blob/main/examples/test_create_standard.py) checks request construction, inactive flags, dry-run behaviour, duplicate detection, response validation, redirect refusal and errors without retries. Run it from the docs checkout:
+
+```bash
+python3 -m unittest discover -s examples -p 'test_create_standard.py'
+```
+
+The example payload also passed the application's request model and control-definition validator. These checks do not create a workspace record or prove your deployment's authentication and database availability. Verify the saved draft in your authorised environment after invoking the write.
+
+Use the [live schema](/api-reference/live-schema) for the deployed contract, or return to [standard creation in the app](/controls/create-custom).

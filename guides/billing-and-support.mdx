@@ -1,0 +1,73 @@
+---
+title: "Billing and support"
+description: "Review billing connection status, open the billing portal and get help with the right context."
+---
+
+Open **Settings → Account → Billing** to review your workspace's billing connection. You need `billing.read` to see it and `billing.manage` to connect a profile or open the billing portal.
+
+Plans and custom subscriptions are arranged separately. Connecting a billing profile does not make a charge. For pricing, an agreement or a billing question, contact [support@alignr.io](mailto:support@alignr.io).
+
+## Connect a billing profile
+
+<Steps>
+  <Step title="Check the mode and state">
+    Read the Billing section. **Test mode · No live charges** is different from **Live billing**. A test subscription does not establish that a live payment was made.
+  </Step>
+  <Step title="Request the connection">
+    Where offered, select **Connect billing profile**. The confirmation **Billing profile requested** means setup has been requested; wait for the connected state.
+
+    Billing setup does not limit workspace access while it is pending.
+  </Step>
+  <Step title="Open the connected portal">
+    Once the profile is ready, select **Open billing portal**. This takes you to the billing provider's portal for the connected workspace. Review the account and any available subscription information there.
+  </Step>
+</Steps>
+
+**Checkpoint:** Billing reports that the profile is connected and an authorised manager can open its portal. This confirms the connection, not a particular plan, charge or payment outcome.
+
+## Read the status
+
+| Message | Meaning and next action |
+| --- | --- |
+| Billing has not been configured | The billing integration is unavailable for this workspace. Contact support if you need it arranged. |
+| Connect this workspace to billing | An authorised manager can select **Connect billing profile**. |
+| Your billing profile is being connected | Setup is pending. The page checks for an updated state. |
+| Billing setup needs attention | Review the message; an authorised manager can select **Retry billing setup**. Workspace access remains available. |
+| Your billing profile is connected | Use **Open billing portal**. Plans are managed separately. |
+| Billing status is temporarily unavailable | Select **Try again**. A failed status request is not proof of a payment problem. |
+
+The app shows the subscription records received for this workspace, including identifiers and statuses where available. It is a saved billing view, not a fresh provider query on every page load. Confirm invoices, payments and commercial questions through the portal or support rather than inferring them from a stale status.
+
+## Arrange or change your agreement
+
+Contact [support@alignr.io](mailto:support@alignr.io) to discuss pricing, plan changes, custom subscriptions or cancellation. Include the workspace name and the change you want. For a billing-record query, include the subscription or invoice reference if you have one.
+
+Confirm applicable prices, taxes, billing frequency, notice periods and service terms in your agreement. This guide does not define a pricing tier, refund policy or cancellation entitlement. Connecting a profile is not a substitute for agreeing those terms.
+
+## Get help with a product issue
+
+Start with [troubleshooting](/guides/troubleshooting) or [Workspace health](/guides/workspace-health) when collection or assessments appear incomplete. If the issue remains, email [support@alignr.io](mailto:support@alignr.io).
+
+Use this outline:
+
+```text
+Workspace:
+Affected client, if relevant:
+Page or workflow:
+What I expected:
+What happened:
+Time and timezone:
+Safe error message or record reference:
+Steps already tried:
+Operational impact:
+```
+
+Include the relevant finding, run or subscription identifier when useful. Share a redacted screenshot only if it helps explain the problem. Do not send passwords, API tokens, invitation links, reset links, integration secrets or unnecessary client records.
+
+A missing action can be a role-permission issue; include the page and action rather than sharing another user's credentials. For a lost password or authenticator, follow [sign-in recovery](/guides/sign-in-recovery).
+
+## Confirm the next step
+
+Keep the support conversation linked to the affected task. After a proposed resolution, repeat the original workflow and inspect the saved state or fresh evidence. A successful retry is more useful than assuming the problem cleared because an email was sent.
+
+For response-time commitments, incident escalation or service availability requirements, confirm the terms applicable to your agreement. For security or deletion questions, use [Security and your data](/guides/security-and-data).

@@ -1,0 +1,75 @@
+---
+title: "Security and your data"
+description: "Understand the evidence flow, access controls and questions to confirm before onboarding client data."
+---
+
+Alignr connects evidence from your tools to client assessments. This page explains the product's data flow and the controls you can use. For contractual privacy, retention, residency or service commitments, request the current documents for your agreement from [support@alignr.io](mailto:support@alignr.io).
+
+## Understand what enters the workspace
+
+| Data | Why Alignr uses it | Your setup decision |
+| --- | --- | --- |
+| Source credentials and authorisation | Connect to the systems you authorise. | Grant the permissions needed by the specific connector. |
+| Client and source identifiers | Link source companies, tenants or sites to the right Organization. | Verify mappings rather than relying on similar names. |
+| Observed facts and provenance | Assess expectations and explain results. | Review supported predicates, source and observation time. |
+| Manual assessments and review notes | Record human conclusions and supporting evidence. | Enter only what the review needs; use appropriate evidence references. |
+| Questions, assistant answers and citations | Support evidence-based investigation and conversation history. | Check the assistant's scope and avoid unnecessary sensitive content. |
+| Configuration, approvals and operational records | Explain expectations, decisions and changes. | Keep ownership and reasons clear when acting. |
+
+An MSP workspace is a **tenant**; its clients are **Organizations**. Client mapping determines where source evidence belongs. Follow [client setup](/guides/configure-client) before relying on collected observations.
+
+## Understand AI processing
+
+Ask Alignr and AI-assisted workflows use model services to process questions and the context assembled for the task. The application integrates with the Anthropic API. Treat information you submit to an AI workflow as information that may be processed by that service, rather than as local-only text.
+
+The assistant uses permission-aware tools and evidence citations. Review the cited records and the client scope before acting on an answer. A proposed configuration change still needs the explicit review described in [Ask Alignr](/guides/ask-alignr); operational remediation follows its own authority and approval rules.
+
+For procurement or client consent, request the current data-processing terms, subprocessor information and AI data-use terms. This operational guide does not establish a model-training policy, provider retention period or contractual processing location.
+
+## Manage access deliberately
+
+- Assign colleagues the [roles and permissions](/guides/account-and-team#review-and-change-access) their tasks require. Multiple roles combine their permissions.
+- Use scoped [API tokens](/guides/api-keys) for scripts and MCP clients. User keys depend on the owner's current access; service keys need separate lifecycle management.
+- Register a [security key](/guides/account-and-team#add-a-security-key) for the supported additional sign-in step. Password recovery does not bypass a registered authenticator.
+- Review client-portal access separately from internal staff access. A saved report or exported CSV is a separate copy of data; portal presentation settings do not redact it.
+
+Credential and vaulted-secret handling uses encrypted storage paths. Revealing vaulted secrets is separately gated by step-up authentication. Keep secrets in designated credential fields rather than ordinary descriptions, evidence notes, prompts or support emails.
+
+These mechanisms describe application behaviour. Ask for the deployment's current security documentation when you need assurance about hosting controls, encryption coverage or operational access.
+
+## Bound changes to client systems
+
+A connected evidence source does not automatically authorise changes. Effective remediation authority is bounded by the control, client contract, workspace and platform settings. A named human approval is required for irreversible actions.
+
+Read the specific plan, target and risk before execution. A rollback is available only for supported, eligible changes within that run's window. See [remediation and verification](/guides/remediation) for the actual workflow.
+
+## Review history and exported copies
+
+Use **Activity → Audit trail** to inspect recorded actions and **Activity → Fix history** for remediation outcomes. Follow the [audit export guide](/guides/daily-review#inspect-activity-and-export-audit-history) when supplying operational records to an authorised reviewer.
+
+Control who can receive exported reports, CSV files and copied evidence. Changes inside Alignr do not automatically remove copies already downloaded or shared elsewhere.
+
+## Retention, deletion and leaving a workspace
+
+Disabling a connection, revoking a token and deleting retained data are different actions. Do not assume that stopping collection deletes earlier evidence, reviews, conversations or audit records. Likewise, archiving a client is not confirmation that its retained information has been erased.
+
+For a retention or deletion request, contact [support@alignr.io](mailto:support@alignr.io) with your workspace identity, the affected client or data category, and the outcome you need. Ask for confirmation of the authorised scope, applicable retention obligations, handling of backups and audit records, and completion evidence. Do not send credentials or a bulk client-data export to start the request.
+
+Confirm the process and applicable timescales for your agreement before making deletion promises to your own clients.
+
+## Prepare a security review
+
+Ask for the current authoritative documents relevant to your requirements:
+
+| Question | What to confirm |
+| --- | --- |
+| Where is data processed and stored? | Hosting, backup and provider locations for your deployment and agreement. |
+| Who processes data? | Current subprocessors and their purpose. |
+| How is AI data handled? | Processing terms, retention and any training restrictions. |
+| How long is information retained? | Data-category retention, deletion and backup handling. |
+| What independent assurance exists? | Current reports or certificates and their actual scope, if available. |
+| What happens during an incident or outage? | Agreed contact, notification, recovery and service commitments. |
+
+The Account page's **Tenancy** section displays a data-residency label. Confirm the underlying hosting and processing commitments through the appropriate documentation; the label alone is not evidence of every provider's processing location.
+
+To report a suspected security issue, contact [support@alignr.io](mailto:support@alignr.io) with a brief, non-sensitive description and ask for a secure channel for additional evidence. Do not send passwords, API tokens or unnecessary client records.

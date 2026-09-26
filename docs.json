@@ -54,6 +54,7 @@
             "group": "Start here",
             "pages": [
               "introduction",
+              "journeys/visual-tour",
               "journeys/evaluate-alignr",
               "guides/setup-wizard",
               "quickstart",
@@ -89,6 +90,8 @@
                   {
                     "group": "Integration setup guides",
                     "pages": [
+                      "integrations/microsoft-setup",
+                      "integrations/meraki-setup",
                       "integrations/identity",
                       "integrations/psa-rmm",
                       "integrations/network",
@@ -109,7 +112,9 @@
                   "guides/settings",
                   "guides/account-and-team",
                   "guides/sign-in-recovery",
-                  "guides/workspace-health"
+                  "guides/workspace-health",
+                  "guides/security-and-data",
+                  "guides/billing-and-support"
                 ]
               },
               {
@@ -208,7 +213,8 @@
               "api-reference/authentication",
               "api-reference/pagination",
               "api-reference/errors",
-              "api-reference/client-assessment-recipe"
+              "api-reference/client-assessment-recipe",
+              "api-reference/create-standard-recipe"
             ]
           },
           {

@@ -50,3 +50,7 @@ Daily review → triage → supported remediation or client review → risk/road
 ## Buyer and account-manager journeys
 
 The pilot guide in Start here establishes evidence-based evaluation checkpoints without promising trial terms or ROI. The client-meeting playbook joins reviews, risks, reports, portal responses and verification. Keep suggested operating practices distinct from app features.
+
+## Visual, trust and developer handoffs
+
+Start here includes a real-screen visual tour with a text transcript and full-size expandable images. Detailed Microsoft/Meraki setup stays in Connect your tools. Security/data and billing/support live in Manage your workspace, with buyer entry links on Introduction. The API tab includes an inactive-standard write recipe that explicitly distinguishes human access tokens from API keys.
