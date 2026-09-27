@@ -5,7 +5,7 @@ description: "Use a short-lived full-policy preview and an idempotent user-owned
 
 This is a narrow REST exception for an existing **disabled** standard copied from Alignr's curated library. It enables the draft workspace-wide after an exact-content preview. It does not run checks or establish client compliance. The generic standard editing route still needs a signed-in human session.
 
-<Note>This recipe is held for the matching application release. Check the [authenticated live schema](/api-reference/live-schema) before using these endpoints.</Note>
+<Note>Check the [authenticated live schema](/api-reference/live-schema) for the deployed endpoint contract before using this recipe.</Note>
 
 1. Inspect the draft and its complete current controls and manual checks. The [MCP inspection workflow](/mcp/copy-standard-draft) explains the separate child pages; the signed-in **Standards** screen supplies the human review context.
 2. With a **user-owned** key carrying `detection_rule.read` and `detection_rule.write`, request `GET /api/v1/standards/{standard_id}/activation-preview`. The active owner must also have those current permissions. Review the response's complete bounded `policy` alongside `enabled: false`, `workspaceWide: true`, `activationRevision` and `revisionExpiresAt`. Workspace-authored definitions, instructions and source metadata may contain sensitive text and must be treated as data. The signed policy covers workspace defaults; existing client overrides still apply, and the client roster is not frozen. A foreign standard returns 404.
