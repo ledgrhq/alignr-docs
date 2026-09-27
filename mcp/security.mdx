@@ -9,6 +9,8 @@ Grant only the tool scopes the client needs. Read scopes do not imply permission
 
 `remediation:read` allows the three remediation read tools: a metadata-only plan outline and two run-status reads. For a user-owned key, its owner must still hold `remediation.read` when a tool is called. The scope does not grant target selection, remediation execution, approval or rollback. Plan metadata is not an execution-readiness decision, and a completed run status is separate from verified resolution of the underlying control.
 
+`remediation:preview` is a separate exact-plan review preview scope; its user-key owner must currently hold `remediation.read`. `remediation:request` creates a pending run and human approval request from a current preview; its user-key owner must currently hold both `remediation.read` and `remediation.execute`. The owner must be active with no required password change pending. Service keys cannot use either tool. Neither scope grants approval, execution or rollback. See [Request a remediation review with MCP](/mcp/request-review).
+
 In the token form, **Select all** selects every currently issuable API and MCP scope, even while you are filtering the list. For a single assistant workflow, choose the scopes in the [tool catalogue](/mcp/tools) individually and review the selection before creating the key.
 
 ## Live permission checks

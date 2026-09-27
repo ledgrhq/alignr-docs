@@ -1,0 +1,54 @@
+---
+title: "Request a remediation review with MCP"
+description: "Preview one exact plan and ask a separate human to decide, without executing it."
+---
+
+An assistant can help prepare a supported remediation for human review. This workflow creates a **pending** run and approval request; it does not approve, execute, verify or roll back a change. Check the [live reference](/api-reference/live-schema) for availability on your deployment before relying on these tools.
+
+## Prepare a user-owned key
+
+The key needs `remediation:preview` for `get_remediation_review_preview` and `remediation:request` for `request_remediation_review`. The active owner must hold `remediation.read` for preview and both `remediation.read` and `remediation.execute` for request, with no required password change pending. These are MCP scope names; they are distinct from REST permissions. A service key cannot use either tool. The server checks the key, owner and current permissions again when each call runs.
+
+In **MCP → + Generate token**, check that both scopes are actually offered for the intended user key. If either is absent, this deployment cannot complete this MCP workflow through the token form; inspect its live reference and use the signed-in [remediation workflow](/guides/remediation) instead. Tool discovery alone is not permission to call it.
+
+## 1. Identify the exact plan
+
+Start from an open detection and record its `detection_id` and the linked `plan_id`. `get_remediation_plan_outline` can explain broad plan intent under `remediation:read`, but its result is `metadata_only`: target and execution readiness are `not_checked`, simulation mode is unknown, and it **cannot** supply the review revision required below.
+
+Ask the assistant to call `get_remediation_review_preview` with the two UUIDs:
+
+```json
+{"detection_id":"11111111-1111-4111-8111-111111111111","plan_id":"22222222-2222-4222-8222-222222222222"}
+```
+
+The exact-plan preview checks the open detection, linked plan, selected target binding, current local authority and complete bounded step set (1–50 steps). Inspect `organizationId` and `organizationName`, every step's `actionType`, `integrationId`/`integrationName`, `resource` where required, `simulated`, `reversible` and `requiresApproval`. The response excludes credentials and executable step parameters. `reviewRequestReady: true` means these local request checks passed **at preview time**; `vendorExecutionReady: not_checked` does not promise a vendor action will succeed.
+
+Save the returned `reviewRevision` and `revisionExpiresAt`. The revision lasts 15 minutes and is tied to the caller, exact detection, client, plan, step/target state and source state. The server checks live authority again on submission. Previewing does not create a run.
+
+## 2. Request a named human's decision
+
+After reviewing the exact target and scope, generate and record one new UUID for `idempotency_key`. Call `request_remediation_review` with the same detection and plan UUIDs and the preview's `reviewRevision`:
+
+```json
+{"detection_id":"11111111-1111-4111-8111-111111111111","plan_id":"22222222-2222-4222-8222-222222222222","review_revision":"<reviewRevision from the current preview>","idempotency_key":"33333333-3333-4333-8333-333333333333"}
+```
+
+The server rechecks live permission, detection, plan, authority, target binding and source state before creating a pending run and pending approval. A changed or expired revision is refused; get a new preview and review the current target before making a **new** request. A successful result contains `runId`, `approvalId`, `runStatus: pending_approval`, `approvalStatus: pending` and `replayed: false`. A separate named human reviews the actual approval in **Activity → Approvals**; the requester cannot approve their own request. No step executes from this MCP call.
+
+## 3. Resolve uncertainty and follow the result
+
+If the response is lost or times out, do not create a fresh UUID and send another request. Retry **the same payload with the same `idempotency_key`** to recover the committed result; `replayed: true` identifies it. A different payload with the same key is refused. The existing result may be returned even after the preview revision expires, because the server looks up the original committed request first. If there is no committed request and the revision has expired or anything changed, inspect the current run/approval state, preview again, and use a new key only for a deliberately new request.
+
+Use `get_remediation_run_status` or `list_remediation_runs` to follow the run. `pending_approval` is not execution; `completed` is not verified resolution. The named human's approval can still be refused if the target or plan changes before execution. Check the run's separate verification status and fresh evidence before claiming a fix. Approval, execution and rollback remain in the signed-in [remediation workflow](/guides/remediation).
+
+## When the call is refused
+
+| Result | Next check |
+| --- | --- |
+| Unauthorised or forbidden | Confirm a live **user-owned** key, the exact MCP scope, current owner permissions and that no password change is required. A service key is refused. |
+| Not found | Confirm the detection and plan UUIDs belong together in your MSP workspace. A foreign-workspace identifier is not disclosed. |
+| Conflict | The detection may have closed, another run may be in flight, the target/authority may have changed, or the revision may have expired. Reopen the exact preview; do not reuse a changed payload under the same idempotency key. |
+| Validation error | Check UUID syntax and the required `review_revision` value. |
+| Timeout or server error | The outcome may be committed. Retry only the identical request under the recorded idempotency UUID, then inspect run and approval status. |
+
+The [Developer Console](https://app.alignr.io/developer) **Try it** panel executes real REST requests in your workspace. It is not an isolated sandbox or an MCP tool runner. The corresponding REST preview and review-request routes are visible in the authenticated live schema when deployed; use the same exact-target and idempotency discipline there.

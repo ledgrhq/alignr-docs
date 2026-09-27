@@ -283,7 +283,8 @@
             "pages": [
               "mcp/introduction",
               "mcp/connect",
-              "mcp/manage-clients"
+              "mcp/manage-clients",
+              "mcp/request-review"
             ]
           },
           {

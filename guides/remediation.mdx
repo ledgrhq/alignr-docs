@@ -5,7 +5,7 @@ description: "Follow a supported plan through approval, execution, verification 
 
 A remediation **plan** describes proposed steps. A **run** is one execution. Start from an open [issue](/guides/triage-issues), review the target and evidence, then follow the outcome in **Activity → Fix history**.
 
-An external MCP assistant can read a [bounded plan outline and run status](/mcp/tools) for a handover, but those reads omit target and execution details. Use this signed-in workflow for the full plan, reviewed target, approval and action.
+An external MCP assistant can read a [bounded plan outline and run status](/mcp/tools) for a handover. With separate user-owned key scopes and current owner permissions, it can also [preview one exact plan and submit a pending human review request](/mcp/request-review). Those calls do not approve or execute a change. Use this signed-in workflow for the full plan, human approval and action.
 
 ## Review and request a fix
 
@@ -14,6 +14,8 @@ You need `remediation.execute` to request execution. Open the issue and inspect 
 Select the issue's primary action, whose label describes the supported fix, then review the confirmation before proceeding. A disabled action includes a reason: a closed or snoozed issue, an unsupported plan, incomplete target selection, authority limits or pending verification can prevent another run.
 
 **Checkpoint:** the request has a visible run state. Submission is not proof that the action executed or that the finding was fixed.
+
+An assistant can alternatively submit the exact plan to this same pending approval queue through the [MCP review-request workflow](/mcp/request-review). It needs a fresh preview revision and a recorded idempotency UUID; an uncertain response must be retried only with the identical request and key. The named human still reviews and decides the approval here. A later execution can refuse if the target or plan changes.
 
 ```mermaid
 flowchart TD

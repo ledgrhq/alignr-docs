@@ -27,6 +27,8 @@ The catalogue includes retained server tools. The current token-creation form do
 | [List detections](#list-detections) | `list_detections` | `detection:read` |
 | [Add a detection note](#add-a-detection-note) | `create_detection_note` | `detection:write` |
 | [Get remediation plan outline](#get-remediation-plan-outline) | `get_remediation_plan_outline` | `remediation:read` |
+| [Preview an exact remediation review](#preview-an-exact-remediation-review) | `get_remediation_review_preview` | `remediation:preview` |
+| [Request human remediation review](#request-human-remediation-review) | `request_remediation_review` | `remediation:request` |
 | [List remediation runs](#list-remediation-runs) | `list_remediation_runs` | `remediation:read` |
 | [Get remediation run status](#get-remediation-run-status) | `get_remediation_run_status` | `remediation:read` |
 | [Search indexed content](#search-indexed-content) | `search_documentation` | `search:read` |
@@ -252,7 +254,7 @@ Attach a note to a detection as an evidence row.
 
 <Warning>This tool writes a detection note. Confirm the target and note text before allowing the call.</Warning>
 
-## Remediation reads
+## Remediation
 
 ### Get remediation plan outline
 
@@ -273,6 +275,54 @@ Read bounded plan and step metadata without parameters or credentials. Targets, 
 This is a metadata-only outline, not an execution preview. `previewKind` is `metadata_only`; `executionReadiness` and `targetReadiness` are `not_checked`; `simulationMode` is `unknown`. The result gives plan, detection and Organization UUIDs, required autonomy and reversibility, plus at most 50 steps ordered by position and ID. Each step contains only its UUID, position, allowlisted `actionType` (or `unsupported`), reversibility and `requiresApproval`. `stepsTruncated: true` means more steps exist; never treat the displayed page as the whole plan.
 
 <Warning>No step parameters, target binding or eligible targets, credentials, descriptions, result payloads or plan fingerprint are returned. Reversibility and approval metadata do not establish that the action is ready, permitted or safe to run. Use the signed-in [remediation workflow](/guides/remediation) to inspect current targets and authority and request or approve an action.</Warning>
+
+### Preview an exact remediation review
+
+`get_remediation_review_preview`
+
+Review bounded exact-plan target metadata and obtain a short-lived request revision.
+
+**Required scope:** `remediation:preview`
+
+**User permissions:** `remediation.read`.
+
+| Argument | Required | Default |
+| --- | --- | --- |
+| `detection_id` | Yes | — |
+| `plan_id` | Yes | — |
+
+- **`detection_id`:** Open detection UUID linked to the exact plan.
+- **`plan_id`:** Remediation plan UUID. A plan outside your workspace returns not found.
+
+This is a separate exact-plan request preview. It checks the current open detection, linked plan, selected targets, local authority, connector binding and a complete set of 1–50 steps. The response includes `reviewRequestReady`, `vendorExecutionReady: not_checked`, `reviewRevision`, `revisionExpiresAt`, client/detection/plan identifiers and bounded step metadata: action, position, reversibility, approval need, selected integration and an allowlisted resource parameter/value where required. It omits credentials and executable step parameters. The revision expires after 15 minutes; previewing does not request, approve or execute a run.
+
+<Warning>`reviewRequestReady: true` means this exact request passed local checks at preview time, not that a vendor action will succeed. The server rechecks the plan and live authority when a request is submitted. The metadata-only outline above does not supply a `reviewRevision`.</Warning>
+
+### Request human remediation review
+
+`request_remediation_review`
+
+Ask a separate named human to approve an existing exact plan; never executes it.
+
+**Required scope:** `remediation:request`
+
+**User permissions:** `remediation.read`, `remediation.execute`.
+
+| Argument | Required | Default |
+| --- | --- | --- |
+| `detection_id` | Yes | — |
+| `plan_id` | Yes | — |
+| `review_revision` | Yes | — |
+| `idempotency_key` | Yes | — |
+
+- **`detection_id`:** Open detection UUID linked to the exact plan.
+- **`plan_id`:** Remediation plan UUID. A plan outside your workspace returns not found.
+- **`review_revision`:** The short-lived `reviewRevision` returned by `get_remediation_review_preview`. Request a fresh preview after expiry or a plan, target, authority or source change.
+- **`idempotency_key`:** Caller-generated UUID for this one intended request. Keep it and reuse it only to resolve an uncertain outcome for the same payload; a different payload under the same key is refused.
+
+Requires a user-owned key with `remediation:request`; its active owner must currently hold both `remediation.read` and `remediation.execute` and have no pending required password change. A service key is refused. Pass the exact IDs, the latest preview’s `reviewRevision`, and a caller-generated UUID `idempotency_key`. A changed/expired preview is refused; obtain a new one. The result contains `runId`, `approvalId`, `runStatus`, `approvalStatus` and `replayed`. New requests create only a pending approval and pending run; no step executes. A separate named human reviews and approves in Alignr.
+
+<Warning>This tool writes a review request. Reuse the same UUID only with the same payload after an uncertain response; `replayed: true` reports the existing request. Do not generate a new key and blindly repeat. A prior run may already be pending even when this call times out. See the [review-request workflow](/mcp/request-review).</Warning>
 
 ### List remediation runs
 
