@@ -206,3 +206,10 @@ unpublished activation guide. Application candidate4dbe590 passed the complete
 local gate; release PR10 at e11ebc9 awaits its final remote backend check. Held
 activation notices remain until immutable API/worker and frontend verification.
 No public documentation has been pushed by this reconciliation.
+
+
+## 2026-09-27 — Activation validation before production rollout
+
+Against application release candidate `e11ebc9` (merged to production as `7d74c18`), regenerated the curated reference offline: 14 reads and 29 MCP tools, with no generated drift. The vault guard (14 notes), whitespace, pinned Node22/Mintlify4.2.939 broken links, OpenAPI validation, build validation and accessibility checks all passed; accessibility examined 92 MDX pages. Production workflow `36338616971` is still running its pre-cloud gate, so activation notices remain held and this branch is unpublished.
+
+Browser DOM previews loaded the exact MCP guide at desktop1440 and mobile390 widths, with the expected heading/body and document width equal to the viewport. Mobile navigation exposed the new guide. Screenshot capture repeatedly timed out in the browser CLI and in an isolated headless Chrome fallback. A subsequent measurement accidentally observed about:blank and was discarded; repeated measurements explicitly asserted the guide URL and heading. Native link/navigation completion was not verified: the preview retained the source route after activation, although the anchor href points to the valid REST recipe. Do not count these partial DOM checks as a complete screenshot or interaction pass. Existing published setup screenshots have not been replaced by these attempts.
