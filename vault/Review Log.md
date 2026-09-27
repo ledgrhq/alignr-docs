@@ -186,3 +186,7 @@ tools. The guide distinguishes controlled definition/instructions as untrusted d
 current state from historical copy receipt, and inspection from evaluation or
 approval. Source runtime, independent review, full gate, live tool availability and
 publication remain unverified at this draft stage.
+
+## 2026-09-27 — Held copied-standard activation guidance
+
+Prepared a separate MCP workflow and REST recipe against the isolated activation candidate `53d1b65`. The workflow previews the complete bounded standard, control and manual-check policy, then enables only a disabled receipt-backed draft through a user-owned scoped key and one saved idempotency UUID. It distinguishes the historical activation receipt from current enabled state, workspace defaults from per-client overrides, and activation from evaluation or vendor action. Workspace-authored text in the preview is explicitly treated as potentially sensitive, untrusted data. The application candidate's focused activation tests passed 12 cases, including a same-count policy-edit regression; disposable migration and old-writer enabled-toggle checks passed. The offline generator produced 14 selected REST reads and 29 MCP tools. Vault guard, broken links, OpenAPI and pinned Mintlify 4.2.939 build validation passed; the first build attempt hit only a shared-cache permission error and the authorised rerun passed. These are candidate checks, not a public release or hosted protocol proof. Independent documentation review and publication remain outstanding.

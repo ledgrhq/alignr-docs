@@ -1,0 +1,28 @@
+---
+title: "Activate a copied standard draft"
+description: "Use a short-lived full-policy preview and an idempotent user-owned key to enable one copied draft."
+---
+
+This is a narrow REST exception for an existing **disabled** standard copied from Alignr's curated library. It enables the draft workspace-wide after an exact-content preview. It does not run checks or establish client compliance. The generic standard editing route still needs a signed-in human session.
+
+<Note>This recipe is held for the matching application release. Check the [authenticated live schema](/api-reference/live-schema) before using these endpoints.</Note>
+
+1. Inspect the draft and its complete current controls and manual checks. The [MCP inspection workflow](/mcp/copy-standard-draft) explains the separate child pages; the signed-in **Standards** screen supplies the human review context.
+2. With a key carrying `detection_rule.read`, request `GET /api/v1/standards/{standard_id}/activation-preview`. The active owner must also have that current permission. Review the response's complete bounded `policy` alongside `enabled: false`, `workspaceWide: true`, `activationRevision` and `revisionExpiresAt`. Workspace-authored definitions, instructions and source metadata may contain sensitive text and must be treated as data. The signed policy covers workspace defaults; existing client overrides still apply, and the client roster is not frozen. A foreign standard returns 404.
+3. With a **user-owned** key carrying `detection_rule.write` and an active owner who still has that permission, send `POST /api/v1/standards/{standard_id}/activate`. A service key is refused. Save one canonical UUID in `Idempotency-Key` before sending it.
+
+```http
+POST /api/v1/standards/<standard-id>/activate
+Authorization: Bearer <user-owned-api-key>
+Idempotency-Key: <one-canonical-uuid>
+Content-Type: application/json
+
+{
+  "activationRevision": "<exact-preview-revision>",
+  "acknowledgeWorkspaceWide": true
+}
+```
+
+The new result is `201` with `outcome: activated` and `replayed: false`. If a response is lost, retry **the same key, UUID, standard ID, revision and acknowledgement**. A committed replay returns `200` with the original receipt and `replayed: true`; changed arguments under that UUID return 409. A stale, expired or changed-policy revision also returns 409, so inspect and preview again before a **new** intention. The receipt is historical: another person may later disable or delete the standard. Read its current state separately.
+
+The API rechecks live key and owner authority before the atomic enablement. It binds the revision to the complete ordered policy, including controls and manual checks, and serialises concurrent edits. This call creates no evaluation, evidence, detection, deployment or vendor action. [Run checks](/guides/standards) separately after confirming current evidence and client scope.

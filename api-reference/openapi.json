@@ -341,6 +341,56 @@
         "x-ledgr-permission": "detection_rule.read"
       }
     },
+    "/api/v1/standards/{standard_id}/activation-preview": {
+      "get": {
+        "tags": [
+          "Standards"
+        ],
+        "summary": "Preview copied-standard activation",
+        "operationId": "get_standard_activation_preview_api_v1_standards__standard_id__activation_preview_get",
+        "parameters": [
+          {
+            "name": "standard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Standard Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardActivationPreviewRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "description": "Requires `detection_rule.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability. For a non-empty disabled curated-copy draft, returns the bounded complete standard/control/manual-check policy it signs, workspace-wide acknowledgement context and a short-lived revision. Current per-client overrides and client population are not frozen; this read does not enable or evaluate.",
+        "x-ledgr-permission": "detection_rule.read"
+      }
+    },
     "/api/v1/organizations/{organization_id}/compliance": {
       "get": {
         "tags": [
@@ -1952,6 +2002,298 @@
         ],
         "title": "ControlStatus",
         "description": "The outcome of one control evaluated against one organisation \u2014 spec \u00a75,\ndecided by ADR-0014 \u00a74. Three of the five members are not \"fail\", even though\nnone of them is \"pass\" either: a control that has not affirmatively fired has\nproved nothing, so `no_data` (population exists, no facts arrived),\n`not_covered` (nothing connected here could ever supply the facts) and\n`not_applicable` (disabled, or overridden out, for this organisation) stay\ndistinct outcomes rather than being folded into whichever of `pass`/`fail` is\ncheaper to compute. Collapsing any of them into `pass` reproduces the exact\nfailure this design exists to rule out \u2014 a compliance grid rendering green for\na client nobody is actually monitoring.\n\n`PASS` is spelled upper-case like every other member in this module \u2014 that\nconvention, not the keyword collision, is why it is not written `pass`. Its\n*value* is still the reserved word `\"pass\"`, which is fine: only the bare name\n`pass` is a Python keyword, and nothing here ever writes one."
+      },
+      "StandardActivationPreviewRead": {
+        "properties": {
+          "standardId": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Standardid"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "enabled": {
+            "type": "boolean",
+            "const": false,
+            "title": "Enabled"
+          },
+          "controlCount": {
+            "type": "integer",
+            "title": "Controlcount"
+          },
+          "manualCheckCount": {
+            "type": "integer",
+            "title": "Manualcheckcount"
+          },
+          "workspaceWide": {
+            "type": "boolean",
+            "const": true,
+            "title": "Workspacewide"
+          },
+          "activationRevision": {
+            "type": "string",
+            "title": "Activationrevision"
+          },
+          "revisionExpiresAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Revisionexpiresat"
+          },
+          "policy": {
+            "$ref": "#/components/schemas/StandardActivationPolicyRead"
+          }
+        },
+        "type": "object",
+        "required": [
+          "standardId",
+          "name",
+          "enabled",
+          "controlCount",
+          "manualCheckCount",
+          "workspaceWide",
+          "activationRevision",
+          "revisionExpiresAt",
+          "policy"
+        ],
+        "title": "StandardActivationPreviewRead"
+      },
+      "StandardActivationPolicyRead": {
+        "properties": {
+          "standard": {
+            "$ref": "#/components/schemas/ActivationStandardPolicyRead"
+          },
+          "controls": {
+            "items": {
+              "$ref": "#/components/schemas/ActivationControlPolicyRead"
+            },
+            "type": "array",
+            "title": "Controls"
+          },
+          "manualChecks": {
+            "items": {
+              "$ref": "#/components/schemas/ActivationManualPolicyRead"
+            },
+            "type": "array",
+            "title": "Manualchecks"
+          }
+        },
+        "type": "object",
+        "required": [
+          "standard",
+          "controls",
+          "manualChecks"
+        ],
+        "title": "StandardActivationPolicyRead"
+      },
+      "ActivationManualPolicyRead": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "organizationId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Organizationid"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "instructions": {
+            "type": "string",
+            "title": "Instructions"
+          },
+          "category": {
+            "type": "string",
+            "title": "Category"
+          },
+          "reviewIntervalDays": {
+            "type": "integer",
+            "title": "Reviewintervaldays"
+          },
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled"
+          },
+          "version": {
+            "type": "integer",
+            "title": "Version"
+          },
+          "sourceMetadata": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/JsonValue"
+            },
+            "type": "object",
+            "title": "Sourcemetadata"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "organizationId",
+          "name",
+          "instructions",
+          "category",
+          "reviewIntervalDays",
+          "enabled",
+          "version",
+          "sourceMetadata"
+        ],
+        "title": "ActivationManualPolicyRead"
+      },
+      "JsonValue": {},
+      "ActivationControlPolicyRead": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "slug": {
+            "type": "string",
+            "title": "Slug"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "scope": {
+            "type": "string",
+            "title": "Scope"
+          },
+          "scopeIds": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "title": "Scopeids"
+          },
+          "category": {
+            "type": "string",
+            "title": "Category"
+          },
+          "severity": {
+            "type": "string",
+            "title": "Severity"
+          },
+          "autonomy": {
+            "type": "string",
+            "title": "Autonomy"
+          },
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled"
+          },
+          "definition": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/JsonValue"
+            },
+            "type": "object",
+            "title": "Definition"
+          },
+          "parameters": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/JsonValue"
+            },
+            "type": "object",
+            "title": "Parameters"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "slug",
+          "description",
+          "scope",
+          "scopeIds",
+          "category",
+          "severity",
+          "autonomy",
+          "enabled",
+          "definition",
+          "parameters"
+        ],
+        "title": "ActivationControlPolicyRead"
+      },
+      "ActivationStandardPolicyRead": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "slug": {
+            "type": "string",
+            "title": "Slug"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled"
+          },
+          "isSystem": {
+            "type": "boolean",
+            "title": "Issystem"
+          },
+          "version": {
+            "type": "integer",
+            "title": "Version"
+          },
+          "activationGeneration": {
+            "type": "integer",
+            "title": "Activationgeneration"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "slug",
+          "description",
+          "enabled",
+          "isSystem",
+          "version",
+          "activationGeneration"
+        ],
+        "title": "ActivationStandardPolicyRead"
       },
       "ControlPage": {
         "properties": {

@@ -21,7 +21,9 @@ The [source-client linking routes](/api-reference/link-source-clients) are anoth
 
 The curated standards-library routes are a further narrow exception. A key with `detection_rule.read` can list and read templates with their current `revision`; a **user-owned** key with `detection_rule.write` can call `POST /api/v1/standards-library/{key}/copy` with `expectedRevision` and a canonical UUID `Idempotency-Key` to copy that exact template into a disabled draft. A service key cannot copy. The [MCP draft-copy guide](/mcp/copy-standard-draft) explains safe same-key recovery; MCP uses the separate `standards:read` and `standards:copy` scopes.
 
-Other REST writes, including direct standard creation, editing, enabling and detection mutations, still require a signed-in human session. Issuing another write scope does not by itself make its route callable with a key.
+The [copied-draft activation routes](/api-reference/activate-standard-draft) add one bounded exception. `GET /api/v1/standards/{standard_id}/activation-preview` accepts `detection_rule.read` and returns the complete current policy with a short-lived revision. `POST /api/v1/standards/{standard_id}/activate` accepts a **user-owned** key with `detection_rule.write`, that exact revision, an explicit workspace-wide acknowledgement and a canonical UUID `Idempotency-Key`. Service keys cannot activate. MCP uses the distinct `standards:read` and `standards:activate` scopes. Activation alone does not evaluate clients or prove compliance.
+
+Other REST writes, including direct standard creation, general editing and detection mutations, still require a signed-in human session. Issuing another write scope does not by itself make its route callable with a key.
 
 ## User and service keys
 
