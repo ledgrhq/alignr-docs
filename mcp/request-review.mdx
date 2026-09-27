@@ -7,9 +7,9 @@ An assistant can help prepare a supported remediation for human review. This wor
 
 ## Prepare a user-owned key
 
-The key needs `remediation:preview` for `get_remediation_review_preview` and `remediation:request` for `request_remediation_review`. The active owner must hold `remediation.read` for preview and both `remediation.read` and `remediation.execute` for request, with no required password change pending. These are MCP scope names; they are distinct from REST permissions. A service key cannot use either tool. The server checks the key, owner and current permissions again when each call runs.
+For the full workflow, give a user-owned key `remediation:read` for the optional outline and run-status tools, `remediation:preview` for `get_remediation_review_preview`, and `remediation:request` for `request_remediation_review`. The active owner must hold `remediation.read` for the reads and preview, and both `remediation.read` and `remediation.execute` for request, with no required password change pending. The preview and request scopes also work on their exact-plan REST routes; they differ from the owner's permissions and grant no other REST write. A service key cannot use the preview or request tool. The server checks the key, owner and current permissions again when each call runs.
 
-In **MCP → + Generate token**, check that both scopes are actually offered for the intended user key. If either is absent, this deployment cannot complete this MCP workflow through the token form; inspect its live reference and use the signed-in [remediation workflow](/guides/remediation) instead. Tool discovery alone is not permission to call it.
+In **MCP → + Generate token**, select the three scopes for a user key. Tool discovery alone is not permission to call a tool; check the [live reference](/api-reference/live-schema) for the deployed contract.
 
 ## 1. Identify the exact plan
 
@@ -39,7 +39,7 @@ The server rechecks live permission, detection, plan, authority, target binding 
 
 If the response is lost or times out, do not create a fresh UUID and send another request. Retry **the same payload with the same `idempotency_key`** to recover the committed result; `replayed: true` identifies it. A different payload with the same key is refused. The existing result may be returned even after the preview revision expires, because the server looks up the original committed request first. If there is no committed request and the revision has expired or anything changed, inspect the current run/approval state, preview again, and use a new key only for a deliberately new request.
 
-Use `get_remediation_run_status` or `list_remediation_runs` to follow the run. `pending_approval` is not execution; `completed` is not verified resolution. The named human's approval can still be refused if the target or plan changes before execution. Check the run's separate verification status and fresh evidence before claiming a fix. Approval, execution and rollback remain in the signed-in [remediation workflow](/guides/remediation).
+Use `get_remediation_run_status` or `list_remediation_runs` under `remediation:read` to follow the run. `pending_approval` is not execution; `completed` is not verified resolution. A named human may approve the request, but a changed target or plan can cause the queued execution to refuse to act. Check the run's separate verification status and fresh evidence before claiming a fix. Approval, execution and rollback remain in the signed-in [remediation workflow](/guides/remediation).
 
 ## When the call is refused
 

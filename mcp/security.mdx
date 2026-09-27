@@ -19,7 +19,7 @@ A user-scoped key cannot exceed its owner’s current permissions. Tenant scopin
 
 The two [help resources](/mcp/tools#authenticated-help-resources) are static product metadata. `resources/list` and `resources/read` require a valid bearer key, but they do not grant tool scopes or bypass the checks applied when a tool runs.
 
-REST and MCP scopes use different names. A user-owned key needs `organization:write` for MCP `create_organization` and `update_organization`; the owner must still have `organization.write` at call time, be active and have no pending required password change. Revoked or expired keys cannot call the tools. Service keys cannot perform these MCP writes. The REST client actions instead require the distinct `organization.write` key scope; see the [REST recipe](/api-reference/manage-clients-recipe) or the [MCP client-management guide](/mcp/manage-clients). The [MCP tool catalogue](/mcp/tools) defines the available MCP actions.
+Scope names depend on the operation. A user-owned key needs `organization:write` for MCP `create_organization` and `update_organization`; the owner must still have `organization.write` at call time, be active and have no pending required password change. Revoked or expired keys cannot call the tools. Service keys cannot perform these MCP writes. The REST client actions instead require the distinct `organization.write` key scope; see the [REST recipe](/api-reference/manage-clients-recipe) or the [MCP client-management guide](/mcp/manage-clients). The exact-plan REST review routes are an exception: they accept `remediation:preview` and `remediation:request`, the same scopes as their MCP tools, with the same live owner checks. The [MCP tool catalogue](/mcp/tools) defines the available MCP actions.
 
 ## Secrets
 

@@ -7,7 +7,7 @@ Create a key when connecting a script or MCP client. You do not need one for nor
 
 ## Choose the right scopes
 
-Scopes specify what a key may do. REST and MCP use different names:
+Scopes specify what a key may do. Many REST and MCP operations use different names; the exact-plan REST review routes accept the same colon-named preview and request scopes as their MCP tools:
 
 | Connection | Example scope | What it allows |
 | --- | --- | --- |
@@ -15,7 +15,7 @@ Scopes specify what a key may do. REST and MCP use different names:
 | REST API | `billing.read` | Request a read-only USD workspace billing estimate, where the owner holds billing access. |
 | MCP client | `organization:read` | Call the `get_organization` tool. |
 | MCP client | `organization:write` | Call `create_organization` or `update_organization` with a user-owned key. |
-| MCP client | `remediation:read` | List remediation run statuses or inspect one run; it does not authorise an action. |
+| MCP client | `remediation:read` | Read a metadata-only plan outline or remediation run statuses; it does not authorise an action. |
 | MCP client | `remediation:preview` | Preview one exact plan for a human review request; no run is created. |
 | MCP client | `remediation:request` | Create a pending run and human approval request from a valid preview; no step executes. |
 
@@ -25,9 +25,9 @@ A scope is necessary but does not make every REST route accept a key. A **user k
 
 For MCP client creation and updates, use the separate `organization:write` scope on a **user key**. The owner must retain `organization.write` permission. Service keys are refused for those tools. See [Manage clients with MCP](/mcp/manage-clients).
 
-The [MCP remediation review-request workflow](/mcp/request-review) needs a user key with both `remediation:preview` and `remediation:request`. The owner must currently have `remediation.read` for preview and both `remediation.read` and `remediation.execute` for request, remain active and have no required password change pending. Service keys are refused. Check that the scopes are offered in your deployment's token form before depending on this workflow; the presence of a tool in discovery alone cannot make the scope issuable.
+The [MCP remediation review-request workflow](/mcp/request-review) needs a user key with `remediation:preview` and `remediation:request`; add `remediation:read` to inspect the outline and follow run status. The owner must currently have `remediation.read` for preview and both `remediation.read` and `remediation.execute` for request, remain active and have no required password change pending. Service keys are refused for preview and request. Tool discovery alone does not grant access.
 
-The form offers **Select all** and **Clear** for bulk selection. **Select all** adds every currently offered scope that you are allowed to issue, including scopes hidden by a text filter; it does not mean “select only these search results”. Review the complete selection before creating the key, or choose individual scopes for a narrower client. Scopes you cannot issue and historical scopes that the form no longer offers are excluded.
+The form offers **Select all** and **Deselect all** for bulk selection. **Select all** adds every currently offered scope that you are allowed to issue, including scopes hidden by a text filter; it does not mean “select only these search results”. Review the complete selection before creating the key, or choose individual scopes for a narrower client. Scopes you cannot issue and historical scopes that the form no longer offers are excluded.
 
 ## Create a key
 

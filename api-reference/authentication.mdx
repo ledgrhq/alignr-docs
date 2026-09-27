@@ -9,9 +9,13 @@ description: "Authenticate REST requests with a scoped bearer token."
 Authorization: Bearer <your-api-key>
 ```
 
-[Create an API key](/guides/api-keys) with the scopes required by a key-compatible operation. REST scopes use permission codes such as `organization.read` and `detection.read`. MCP uses its own scope names, described in the [tool reference](/mcp/tools).
+[Create an API key](/guides/api-keys) with the scopes required by a key-compatible operation. Many REST scopes use permission codes such as `organization.read` and `detection.read`; MCP tools use the names in the [tool reference](/mcp/tools). The exact-plan review REST routes below accept the same colon-named scopes as their corresponding MCP tools.
 
-An API key scope grants permission only where the route accepts API keys. User-owned keys with `organization.write` can call `POST /organizations`, `PATCH /organizations/{organization_id}` and `DELETE /organizations/{organization_id}` to [manage clients](/api-reference/manage-clients-recipe). Service keys cannot call those client writes, even when they carry that scope. Other REST writes, including standard and detection mutations, still require a signed-in human session. Issuing another write scope does not by itself make its route callable with a key.
+An API key scope grants permission only where the route accepts API keys. User-owned keys with `organization.write` can call `POST /organizations`, `PATCH /organizations/{organization_id}` and `DELETE /organizations/{organization_id}` to [manage clients](/api-reference/manage-clients-recipe). Service keys cannot call those client writes, even when they carry that scope.
+
+The exact-plan REST review routes are another explicit key-compatible exception. A user-owned key with `remediation:preview` can call `GET /api/v1/remediations/plans/{plan_id}/review-preview` with the `detectionId` query parameter. A user-owned key with `remediation:request` can call `POST /api/v1/remediations/plans/{plan_id}/review-requests` with JSON `detectionId` and `reviewRevision` plus a caller-generated UUID in the `Idempotency-Key` header. These colon-separated scopes also serve the corresponding MCP tools; they are not a general REST write grant. The active key owner needs current `remediation.read` for preview and both `remediation.read` and `remediation.execute` for request, with no required password change. Service keys are refused. A new request creates only a pending run and human approval, never an execution. Follow the [review-request workflow](/mcp/request-review) for the revision and uncertain-result rules.
+
+Other REST writes, including standard and detection mutations, still require a signed-in human session. Issuing another write scope does not by itself make its route callable with a key.
 
 ## User and service keys
 
