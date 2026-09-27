@@ -186,3 +186,7 @@ tools. The guide distinguishes controlled definition/instructions as untrusted d
 current state from historical copy receipt, and inspection from evaluation or
 approval. Source runtime, independent review, full gate, live tool availability and
 publication remain unverified at this draft stage.
+
+## 2026-09-27 — Standards copy and inspection release preparation
+
+Application release `ca2f0b3` has API and worker task revisions 18 with the release manifest's exact image digest. The Vercel production alias `app.alignr.io` independently read back deployment `dpl_7oUhZZio7jFAtKgJcs5PVjmR7VE5`, READY from the same source SHA. Reconciled this docs branch with current `origin/main` at `2770c36`, preserving the first-link publication note and the 27-tool standards copy/inspection catalogue. Replaced the copy guide's held-release notice with authenticated live-tool discovery wording. Vault guard, broken links, OpenAPI and pinned Mintlify 4.2.939 build validation passed on the reconciled branch. Desktop 1440×900 and mobile 390×844 previews showed readable heading, scoped-key guidance and navigation. Docs CI, hosted readback and live MCP invocation remain to verify before claiming publication.
