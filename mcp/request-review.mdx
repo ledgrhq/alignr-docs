@@ -52,3 +52,5 @@ Use `get_remediation_run_status` or `list_remediation_runs` under `remediation:r
 | Timeout or server error | The outcome may be committed. Retry only the identical request under the recorded idempotency UUID, then inspect run and approval status. |
 
 The [Developer Console](https://app.alignr.io/developer) **Try it** panel executes real REST requests in your workspace. It is not an isolated sandbox or an MCP tool runner. The corresponding REST preview and review-request routes are visible in the authenticated live schema when deployed; use the same exact-target and idempotency discipline there.
+
+For the REST review request, enter the recorded UUID in **Idempotency-Key**. **Generate UUID** starts a new key; it is not a retry button. The console keeps the key after errors and shows conflicts without automatically resending the request.

@@ -44,7 +44,9 @@ Open [Alignr’s developer page](https://app.alignr.io/developer) while signed i
 
 Choose **REST API**, filter by path, method, summary or permission, and open an operation. Check **Try it executes as**: use **My session** for human-session routes, or paste a token and select **Use this key** to test a key-compatible operation's actual access. A displayed scope is not proof that an API key is accepted by that route.
 
-Enter the path and query values and review the request body where applicable. **Execute** sends a read request immediately. Other methods show a confirmation with the method, URL and body before sending. This operates on your live workspace; it is not a sandbox.
+Enter the path and query values and review the request body where applicable. When an operation requires **Idempotency-Key**, enter a UUID or select **Generate UUID** once for the intended request. The same value appears in the cURL example and is sent with the request. Keep that key and the identical payload when retrying after a timeout or lost response; generate a new key only for a deliberately new action.
+
+**Execute** sends a read request immediately. Other methods show a confirmation with the method, URL, idempotency key where applicable and body before sending. This operates on your live workspace; it is not a sandbox. Required headers the explorer does not support prevent execution; use an appropriate API client for those operations.
 
 Read the response status and the identity shown beside it. A forbidden response under a narrow key does not establish that your signed-in account lacks access. Pasted tokens are held only for the current page; the explorer does not save them for later visits.
 
