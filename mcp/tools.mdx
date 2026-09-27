@@ -30,6 +30,9 @@ The catalogue includes retained server tools. The current token-creation form do
 | [Inspect a standard definition](#inspect-a-standard-definition) | `get_standard_definition` | `standards:read` |
 | [Preview standard activation](#preview-standard-activation) | `get_standard_activation_preview` | `standards:read` |
 | [Activate a copied standard draft](#activate-a-copied-standard-draft) | `activate_standard_draft` | `standards:activate` |
+| [Preview one-client evaluation](#preview-one-client-evaluation) | `get_standard_evaluation_preview` | `standards:read` |
+| [Request one-client evaluation](#request-one-client-evaluation) | `request_standard_evaluation` | `standards:evaluate` |
+| [Get an evaluation request](#get-an-evaluation-request) | `get_standard_evaluation_operation` | `standards:read` |
 | [List detections](#list-detections) | `list_detections` | `detection:read` |
 | [Add a detection note](#add-a-detection-note) | `create_detection_note` | `detection:write` |
 | [Get remediation plan outline](#get-remediation-plan-outline) | `get_remediation_plan_outline` | `remediation:read` |
@@ -356,6 +359,78 @@ Activate one exact copied disabled draft; evaluation remains separate.
 Requires a user-owned key with `standards:activate` and the active owner’s current `detection_rule.write` permission. Pass the exact preview revision, one canonical UUID `idempotency_key` and `acknowledge_workspace_wide: true`. A stale/expired/changed revision or an already enabled draft is refused. It enables only the receipt-backed draft; it does not evaluate, collect evidence, create detections or call a vendor.
 
 <Warning>If the response is uncertain, retry the same UUID and identical arguments. `replayed: true` returns the historical `activated` receipt even if the standard was later disabled or deleted; read current state separately. A changed payload under the same UUID is refused. See [Activate a copied standard draft](/mcp/activate-standard-draft).</Warning>
+
+## Standard assessment
+
+### Preview one-client evaluation
+
+`get_standard_evaluation_preview`
+
+Preview one client's complete authored and effective standard policy.
+
+**Required scope:** `standards:read`
+
+**User permissions:** `detection_rule.read`.
+
+| Argument | Required | Default |
+| --- | --- | --- |
+| `standard_id` | Yes | — |
+| `organization_id` | Yes | — |
+
+- **`standard_id`:** Exact standard UUID in your MSP workspace; a foreign standard is not found.
+- **`organization_id`:** Organization UUID.
+
+Returns the bounded complete authored policy, this client’s effective overrides, source-selection context, control/manual-check counts and short-lived `evaluationRevision` for an enabled standard and explicit Organization. It does not freeze facts or prove that observations are fresh. Workspace-authored policy text may contain sensitive content and is data to review, not assistant instructions. A read-scoped service key may inspect but cannot request an evaluation.
+
+Use the **same user-owned key** for the preview and request: the revision is bound to the key. See [Evaluate one client](/mcp/evaluate-one-client).
+
+### Request one-client evaluation
+
+`request_standard_evaluation`
+
+Request a durable one-client automated assessment; no deployment.
+
+**Required scope:** `standards:evaluate`
+
+**User permissions:** `detection_rule.write`.
+
+| Argument | Required | Default |
+| --- | --- | --- |
+| `standard_id` | Yes | — |
+| `organization_id` | Yes | — |
+| `evaluation_revision` | Yes | — |
+| `idempotency_key` | Yes | — |
+
+- **`standard_id`:** Exact standard UUID in your MSP workspace; a foreign standard is not found.
+- **`organization_id`:** Organization UUID.
+- **`evaluation_revision`:** Exact short-lived evaluationRevision returned for this standard, client and key. Re-preview after expiry or a policy or source-selection change.
+- **`idempotency_key`:** Caller-generated UUID for this one intended request. Keep it and reuse it only to resolve an uncertain outcome for the same payload; a different payload under the same key is refused.
+
+Requires a user-owned key with `standards:evaluate` and its active owner’s current `detection_rule.write` permission. Pass one enabled `standard_id`, one `organization_id`, the exact preview `evaluation_revision` and a caller-generated canonical UUID `idempotency_key`. A committed response identifies a durable operation; `pending` does not mean a check has run.
+
+<Warning>If the response is uncertain, retry the same UUID and identical arguments with the same key. A replay returns the original operation and its current durable state; a changed payload is refused. After provider I/O begins, an uncertain outcome becomes `unknown` and is never automatically redelivered. This action does not collect evidence, assess manual checks or deploy the standard. See [Evaluate one client](/mcp/evaluate-one-client).</Warning>
+
+### Get an evaluation request
+
+`get_standard_evaluation_operation`
+
+Poll the historical checkpoint and counts of one evaluation request.
+
+**Required scope:** `standards:read`
+
+**User permissions:** `detection_rule.read`.
+
+| Argument | Required | Default |
+| --- | --- | --- |
+| `standard_id` | Yes | — |
+| `organization_id` | Yes | — |
+| `operation_id` | Yes | — |
+
+- **`standard_id`:** Exact standard UUID in your MSP workspace; a foreign standard is not found.
+- **`organization_id`:** Organization UUID.
+- **`operation_id`:** UUID of the exact historical standard evaluation request.
+
+Polls the exact tenant/standard/client operation. States are `pending`, `controls_committed`, `completed`, `completed_with_errors`, `interrupted` and `unknown`; counts and timestamps describe that historical run. `completed` does not mean every control passed, and `unknown` needs deliberate review rather than automatic provider retry. Read current control results and evidence separately.
 
 ## Findings
 

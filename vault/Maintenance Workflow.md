@@ -67,3 +67,7 @@ Changes to review queues, reports, portal permissions, risk decisions, roadmap d
 Assistant capability changes must update guides/ask-alignr.mdx: verify the actual read/draft tool set, permissions, context precedence, creation defaults, global versus client scope and apply recovery. Keep in-app Ask, documentation search/AI and external MCP clients distinct.
 
 Screenshots must retain capture date, demo/source provenance and honest incomplete states; update images when their task UI changes. Follow Usability and Measurement for task studies and aggregate measures. Verify commercial/security policy against an authoritative owner-approved source; product source code cannot establish contractual terms. Run offline tests for executable examples and verify their auth dependency on endpoint changes.
+
+## Held one-client evaluation candidate
+
+The held candidate against application `d65fc8a` adds [REST evaluation guidance](../api-reference/evaluate-one-client.mdx), an [MCP workflow](../mcp/evaluate-one-client.mdx), three tools (32 total) and two curated GETs (16 total). It describes a same-key preview, durable user-owned-key request and exact historical poll for one enabled standard and Organization. Source refresh, manual checks and standard deployment remain separate. `unknown` is terminal to automatic provider retry. This is source-aligned draft content, not a production availability or acceptance claim; publish only after the matching API and worker release is verified.

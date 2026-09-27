@@ -30,6 +30,7 @@ Use `tools/list` for the connected server's tool definitions and input schemas. 
 - Inspect a client’s compliance grid and explain a control’s status.
 - Review a standard across Organizations.
 - List curated standard templates, copy one disabled draft with a user-owned key, inspect its full current policy, and activate that exact reviewed draft with a separate user-owned scope and workspace-wide acknowledgement. Activation does not evaluate clients.
+- Preview one enabled standard and one client's effective policy, request a durable automated assessment with `standards:evaluate`, and poll the exact historical operation. Evaluation does not collect evidence, assess manual checks or deploy the standard.
 - Read a bounded list of remediation run statuses or inspect one run without execution details. Verification remains separate from a completed run.
 - Inspect a remediation plan's bounded metadata outline before asking a person to review the actual target and authority. The outline is not a readiness check.
 - Preview one exact plan and submit a pending review request with a user-owned key and separate `remediation:preview` and `remediation:request` scopes. A named human still decides the approval; the MCP request does not execute a step.
@@ -38,6 +39,6 @@ Use `tools/list` for the connected server's tool definitions and input schemas. 
 - Ask questions over authorised evidence.
 - Add a detection note when explicitly granted the write scope.
 
-[Connect your client](/mcp/connect), follow the [client-management guide](/mcp/manage-clients), [standard draft guide](/mcp/copy-standard-draft), [activation guide](/mcp/activate-standard-draft), [source-client linking guide](/mcp/link-source-clients), [remediation review-request guide](/mcp/request-review) or [evidence refresh guide](/mcp/refresh-evidence), or inspect the [tool catalogue](/mcp/tools).
+[Connect your client](/mcp/connect), follow the [client-management guide](/mcp/manage-clients), [standard draft guide](/mcp/copy-standard-draft), [activation guide](/mcp/activate-standard-draft), [one-client evaluation guide](/mcp/evaluate-one-client), [source-client linking guide](/mcp/link-source-clients), [remediation review-request guide](/mcp/request-review) or [evidence refresh guide](/mcp/refresh-evidence), or inspect the [tool catalogue](/mcp/tools).
 
 <Note>Alignr’s application MCP server is separate from Mintlify’s documentation MCP server. Use the Alignr endpoint for client data and assessment tools.</Note>

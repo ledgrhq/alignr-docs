@@ -391,6 +391,136 @@
         "x-ledgr-permission": "detection_rule.read"
       }
     },
+    "/api/v1/standards/{standard_id}/evaluation-preview": {
+      "get": {
+        "tags": [
+          "Standards"
+        ],
+        "summary": "Preview one-client evaluation",
+        "operationId": "get_standard_evaluation_preview_api_v1_standards__standard_id__evaluation_preview_get",
+        "parameters": [
+          {
+            "name": "standard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Standard Id"
+            }
+          },
+          {
+            "name": "organizationId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Organizationid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardEvaluationPreviewRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "description": "Requires `detection_rule.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability. Preview one enabled standard and one explicit client with authored policy, effective overrides, source-selection context and a short-lived caller-bound revision. This read does not collect facts, assess manual checks, run controls or deploy a standard.",
+        "x-ledgr-permission": "detection_rule.read"
+      }
+    },
+    "/api/v1/standards/{standard_id}/evaluation-requests/{operation_id}": {
+      "get": {
+        "tags": [
+          "Standards"
+        ],
+        "summary": "Get an evaluation request",
+        "operationId": "get_standard_evaluation_operation_api_v1_standards__standard_id__evaluation_requests__operation_id__get",
+        "parameters": [
+          {
+            "name": "standard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Standard Id"
+            }
+          },
+          {
+            "name": "operation_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Operation Id"
+            }
+          },
+          {
+            "name": "organizationId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Organizationid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardEvaluationOperationRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "description": "Requires `detection_rule.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability. Read the exact historical one-client evaluation operation. Pending and controls_committed are checkpoints; completed does not mean every control passed. Unknown provider outcome is terminal to automatic retry. This is not a current compliance score.",
+        "x-ledgr-permission": "detection_rule.read"
+      }
+    },
     "/api/v1/organizations/{organization_id}/compliance": {
       "get": {
         "tags": [
@@ -2003,6 +2133,236 @@
         "title": "ControlStatus",
         "description": "The outcome of one control evaluated against one organisation \u2014 spec \u00a75,\ndecided by ADR-0014 \u00a74. Three of the five members are not \"fail\", even though\nnone of them is \"pass\" either: a control that has not affirmatively fired has\nproved nothing, so `no_data` (population exists, no facts arrived),\n`not_covered` (nothing connected here could ever supply the facts) and\n`not_applicable` (disabled, or overridden out, for this organisation) stay\ndistinct outcomes rather than being folded into whichever of `pass`/`fail` is\ncheaper to compute. Collapsing any of them into `pass` reproduces the exact\nfailure this design exists to rule out \u2014 a compliance grid rendering green for\na client nobody is actually monitoring.\n\n`PASS` is spelled upper-case like every other member in this module \u2014 that\nconvention, not the keyword collision, is why it is not written `pass`. Its\n*value* is still the reserved word `\"pass\"`, which is fine: only the bare name\n`pass` is a Python keyword, and nothing here ever writes one."
       },
+      "StandardEvaluationOperationRead": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "standardId": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Standardid"
+          },
+          "organizationId": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Organizationid"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "controls_committed",
+              "completed",
+              "completed_with_errors",
+              "interrupted",
+              "unknown"
+            ],
+            "title": "State"
+          },
+          "controlCounts": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Controlcounts"
+          },
+          "detectionCounts": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Detectioncounts"
+          },
+          "safeErrorCode": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Safeerrorcode"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Createdat"
+          },
+          "stageStartedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Stagestartedat"
+          },
+          "controlsCommittedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Controlscommittedat"
+          },
+          "providerStartedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Providerstartedat"
+          },
+          "detectionCommittedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Detectioncommittedat"
+          },
+          "finishedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Finishedat"
+          },
+          "replayed": {
+            "type": "boolean",
+            "title": "Replayed",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "standardId",
+          "organizationId",
+          "state",
+          "controlCounts",
+          "detectionCounts",
+          "safeErrorCode",
+          "createdAt",
+          "stageStartedAt",
+          "controlsCommittedAt",
+          "providerStartedAt",
+          "detectionCommittedAt",
+          "finishedAt"
+        ],
+        "title": "StandardEvaluationOperationRead"
+      },
+      "StandardEvaluationPreviewRead": {
+        "properties": {
+          "standardId": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Standardid"
+          },
+          "organizationId": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Organizationid"
+          },
+          "policy": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/JsonValue"
+            },
+            "type": "object",
+            "title": "Policy"
+          },
+          "effectiveOverrides": {
+            "items": {
+              "additionalProperties": {
+                "$ref": "#/components/schemas/JsonValue"
+              },
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Effectiveoverrides"
+          },
+          "sourceContext": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/JsonValue"
+            },
+            "type": "object",
+            "title": "Sourcecontext"
+          },
+          "controlCount": {
+            "type": "integer",
+            "title": "Controlcount"
+          },
+          "manualCheckCount": {
+            "type": "integer",
+            "title": "Manualcheckcount"
+          },
+          "scope": {
+            "type": "string",
+            "const": "one_client_automated_controls",
+            "title": "Scope"
+          },
+          "manualChecksEvaluated": {
+            "type": "boolean",
+            "const": false,
+            "title": "Manualchecksevaluated"
+          },
+          "deploysStandard": {
+            "type": "boolean",
+            "const": false,
+            "title": "Deploysstandard"
+          },
+          "evaluationRevision": {
+            "type": "string",
+            "title": "Evaluationrevision"
+          },
+          "revisionExpiresAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Revisionexpiresat"
+          }
+        },
+        "type": "object",
+        "required": [
+          "standardId",
+          "organizationId",
+          "policy",
+          "effectiveOverrides",
+          "sourceContext",
+          "controlCount",
+          "manualCheckCount",
+          "scope",
+          "manualChecksEvaluated",
+          "deploysStandard",
+          "evaluationRevision",
+          "revisionExpiresAt"
+        ],
+        "title": "StandardEvaluationPreviewRead"
+      },
+      "JsonValue": {},
       "StandardActivationPreviewRead": {
         "properties": {
           "standardId": {
@@ -2152,7 +2512,6 @@
         ],
         "title": "ActivationManualPolicyRead"
       },
-      "JsonValue": {},
       "ActivationControlPolicyRead": {
         "properties": {
           "id": {

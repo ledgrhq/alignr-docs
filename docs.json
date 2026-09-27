@@ -219,7 +219,8 @@
               "api-reference/link-source-clients",
               "api-reference/billing-estimate",
               "api-reference/create-standard-recipe",
-              "api-reference/activate-standard-draft"
+              "api-reference/activate-standard-draft",
+              "api-reference/evaluate-one-client"
             ]
           },
           {
@@ -243,7 +244,9 @@
               "GET /api/v1/standards",
               "GET /api/v1/standards/{standard_id}",
               "GET /api/v1/standards/{standard_id}/controls",
-              "GET /api/v1/standards/{standard_id}/activation-preview"
+              "GET /api/v1/standards/{standard_id}/activation-preview",
+              "GET /api/v1/standards/{standard_id}/evaluation-preview",
+              "GET /api/v1/standards/{standard_id}/evaluation-requests/{operation_id}"
             ]
           },
           {
@@ -292,6 +295,7 @@
               "mcp/manage-clients",
               "mcp/copy-standard-draft",
               "mcp/activate-standard-draft",
+              "mcp/evaluate-one-client",
               "mcp/request-review",
               "mcp/refresh-evidence",
               "mcp/link-source-clients"

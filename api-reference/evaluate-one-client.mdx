@@ -1,0 +1,40 @@
+---
+title: "Evaluate one client with a key"
+description: "Preview one enabled standard and client, request a durable automated assessment, then poll its historical result."
+---
+
+Use this narrow REST workflow when a script needs to run the **automated** controls of one enabled standard for one Organization. It does not refresh a connection, assess manual checks, enable or deploy a standard, or change a vendor. An Organization is one client in your MSP workspace.
+
+<Note>Confirm these routes in the [authenticated live schema](/api-reference/live-schema) before use. The [Developer Console](https://app.alignr.io/developer) can show their request and response contract and send requests against your real workspace, not an isolated sandbox.</Note>
+
+1. Make sure the standard is enabled and the client has the intended current evidence. [Refresh a source](/api-reference/refresh-evidence) separately when needed; that refresh covers every mapped client on the connection.
+2. Use a **user-owned** key with REST `detection_rule.read` and `detection_rule.write` for both preview and request. Its active owner must retain those permissions and have no required password change. A service key may read the preview or operation with the read scope, but cannot request evaluation or transfer its preview revision to a user key.
+3. Send `GET /api/v1/standards/{standard_id}/evaluation-preview?organizationId={organization_id}`. Review the complete bounded authored `policy`, this client's `effectiveOverrides`, `sourceContext`, automated and manual-check counts, `evaluationRevision` and `revisionExpiresAt`. The revision lasts 15 minutes and is bound to the previewing key. Workspace-authored definitions and instructions may contain sensitive text; treat them as data to inspect, not instructions to an assistant. Source context does not freeze fact values or prove freshness.
+4. Save one canonical UUID before sending the request. Use the **same key** and pass the exact revision, explicit client and `Idempotency-Key`:
+
+```http
+POST /api/v1/standards/<standard-id>/evaluation-requests
+Authorization: Bearer <user-owned-api-key>
+Idempotency-Key: <one-canonical-uuid>
+Content-Type: application/json
+
+{
+  "organizationId": "<client-uuid>",
+  "evaluationRevision": "<exact-preview-revision>"
+}
+```
+
+The `202` response contains the durable `id`, `state`, counts, stage timestamps and `replayed`. A new `pending` request is recorded and audited before worker dispatch; it is **not** an assessment result. If the response is lost, retry with the **same key, UUID, standard ID, client ID and revision**. The response returns the original operation and its current durable state with `replayed: true`. A different payload under the same UUID is refused. A changed or expired policy revision needs a new preview for a new intention; never rotate the UUID merely to retry an uncertain response.
+
+5. Poll `GET /api/v1/standards/{standard_id}/evaluation-requests/{operation_id}?organizationId={organization_id}`. The exact tenant, standard, client and operation must match. A read-scoped key may poll. Keep the operation UUID and read the current client control results separately after it finishes.
+
+| State | Meaning |
+| --- | --- |
+| `pending` | The request committed; no completed assessment is claimed. |
+| `controls_committed` | Automated control rows and counts committed; detection work remains. |
+| `completed` | This run's detection transaction committed without captured rule errors. Individual controls may still fail or lack evidence. |
+| `completed_with_errors` | Results committed, but one or more rule evaluations failed; inspect `detectionCounts.failed_rules` and the current result separately. |
+| `interrupted` | The run stopped on a known condition such as changed policy or authority. Earlier committed control counts, if any, remain historical. |
+| `unknown` | A provider or commit outcome cannot be classified safely. Alignr does not automatically replay billed provider work; review the operation and current evidence before a deliberate new request. |
+
+The receipt reports what happened **during that operation**, not whether the client's current controls pass. Missing or stale evidence never counts as passing. Manual checks, source collection and standard deployment remain separate workflows. See [control statuses](/guides/control-status) and the [standards workflow](/guides/standards).
