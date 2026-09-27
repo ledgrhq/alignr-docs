@@ -45,6 +45,8 @@ The signup path leads to the wizard immediately and the welcome message links ba
 
 The wizard has five optional, resumable steps: Microsoft partner access, PSA, RMM, teammates and standards. Keep PSA client/service context separate from RMM device observations; ConnectWise Automate remains unavailable in the RMM choice. The current wizard offers a guided baseline; checklist import remains a Standards workflow outside it. Platform Direct and Partner Center Microsoft registrations have separate permissions and availability. Token documentation must explain that the bulk **Select all** action ignores the current text filter and selects all issuable current scopes.
 
+The Standards step hands off to guided baseline setup with `from=setup`. Its Back/exit route returns to `/setup?step=standards`; an unfinished baseline is a same-browser, account-scoped draft that offers Resume or Start again on re-entry. Saving creates an inactive standard for review and does not itself finish the wizard or enable evaluation. Show these continuity and completion boundaries beside the Standards step, rather than treating the wizard and builder as separate journeys. Keep the five visual-tour step captures in sync with the released header and logo treatment.
+
 ## Continuing after the first result
 
 Daily review → triage → supported remediation or client review → risk/roadmap → fixed report or authorised portal sharing. Vendor setup is grouped by category with per-product accordions; UniFi and SonicWall have dedicated mode guides. Keep API recipes in the developer tab and link them from task guidance.
