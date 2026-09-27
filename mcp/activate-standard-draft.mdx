@@ -9,7 +9,7 @@ Use this workflow after [copying and inspecting a curated draft](/mcp/copy-stand
 
 ## Grant access
 
-In **MCP → + Generate token**, create a **user-owned** key with `standards:read` and `standards:activate`. Its active owner needs current `detection_rule.read` and `detection_rule.write` respectively and must have no required password change pending. A service key may inspect with `standards:read` but cannot activate. The copy step separately needs `standards:copy`; `standards:activate` alone cannot copy or edit another standard.
+In **MCP → + Generate token**, create a **user-owned** key with `standards:read` and `standards:activate`. Use that **same key** for preview and activation; the revision is bound to its identity and cannot be transferred to another key. Its active owner needs current `detection_rule.read` and `detection_rule.write` respectively and must have no required password change pending. A service key may inspect with `standards:read` but cannot activate or pass its preview revision to a user key. The copy step separately needs `standards:copy`; `standards:activate` alone cannot copy or edit another standard.
 
 ## Review and activate
 
