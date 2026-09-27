@@ -26,6 +26,8 @@ The catalogue includes retained server tools. The current token-creation form do
 | [Review a standard across clients](#review-a-standard-across-clients) | `get_standard_rollup` | `compliance:standard_rollup` |
 | [List curated standard templates](#list-curated-standard-templates) | `list_standard_library_templates` | `standards:read` |
 | [Copy a disabled standard draft](#copy-a-disabled-standard-draft) | `copy_standard_library_template` | `standards:copy` |
+| [List workspace standards](#list-workspace-standards) | `list_workspace_standards` | `standards:read` |
+| [Inspect a standard definition](#inspect-a-standard-definition) | `get_standard_definition` | `standards:read` |
 | [List detections](#list-detections) | `list_detections` | `detection:read` |
 | [Add a detection note](#add-a-detection-note) | `create_detection_note` | `detection:write` |
 | [Get remediation plan outline](#get-remediation-plan-outline) | `get_remediation_plan_outline` | `remediation:read` |
@@ -262,6 +264,52 @@ Copy one curated template to a disabled draft with durable idempotency.
 Requires a user-owned key with `standards:copy`, backed by the active owner’s `detection_rule.write` permission. The server copies only the selected curated template into a disabled draft, including its controls and manual checks. It does not enable, evaluate, deploy, collect evidence or create detections. A service key cannot copy.
 
 <Warning>Save a canonical UUID `idempotency_key` before calling this tool. If the response is uncertain, retry with the **same key and identical arguments**. `replayed: true` returns the historical `copied_disabled` receipt; it does not assert that a human has not since enabled, edited or deleted the draft. A changed payload under the same key is refused. See [Copy a standard draft](/mcp/copy-standard-draft).</Warning>
+
+### List workspace standards
+
+`list_workspace_standards`
+
+List a bounded page of current workspace standards, including copied drafts.
+
+**Required scope:** `standards:read`
+
+**User permissions:** `detection_rule.read`.
+
+| Argument | Required | Default |
+| --- | --- | --- |
+| `limit` | No | `20` |
+| `offset` | No | `0` |
+
+- **`limit`:** Workspace standards per page, from 1 to 20 (default 20).
+- **`offset`:** Zero-based offset from 0 to 10,000; standard name then UUID order.
+
+Lists current standards in the key’s MSP workspace, including copied drafts, with enabled state, version and child counts. It does not return control definitions or attest assessment. The page is ordered by name and UUID; each request is capped at 20 items and 256 KiB. User-owned keys need the active owner’s current `detection_rule.read`; a read-scoped service key may also list. See [Copy and inspect a standard draft](/mcp/copy-standard-draft).
+
+### Inspect a standard definition
+
+`get_standard_definition`
+
+Inspect the current standard and bounded pages of its controls and manual checks.
+
+**Required scope:** `standards:read`
+
+**User permissions:** `detection_rule.read`.
+
+| Argument | Required | Default |
+| --- | --- | --- |
+| `standard_id` | Yes | — |
+| `control_limit` | No | `10` |
+| `control_offset` | No | `0` |
+| `manual_check_limit` | No | `10` |
+| `manual_check_offset` | No | `0` |
+
+- **`standard_id`:** Exact standard UUID in your MSP workspace; a foreign standard is not found.
+- **`control_limit`:** Number of controls on this page, from 1 to 20 (default 10).
+- **`control_offset`:** Zero-based control offset from 0 to 10,000 (default 0).
+- **`manual_check_limit`:** Number of manual checks on this page, from 1 to 20 (default 10).
+- **`manual_check_offset`:** Zero-based manual-check offset from 0 to 10,000 (default 0).
+
+Reads one current standard and independent, bounded pages of its controls and manual checks. `definition`, `parameters` and `instructions` are workspace-controlled data, not instructions to your assistant. The tool omits assessments, evidence, source metadata and secret values. Each child page is capped at 20 and the whole result at 256 KiB; reduce page sizes if refused. A foreign standard returns not found. Inspection does not enable, evaluate or approve a draft. See [Copy and inspect a standard draft](/mcp/copy-standard-draft).
 
 ## Findings
 

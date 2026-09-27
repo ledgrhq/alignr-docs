@@ -171,3 +171,14 @@ Independent Astra review approved this four-file documentation delta against Try
 ## 2026-09-27 — Held first-link API/MCP documentation candidate
 
 Prepared source-backed REST and MCP first-link guides from isolated application `78fac8b` plus its REST query-alias follow-up, with the source-refresh docs at `b411109` as the base. Regenerated the curated snapshot offline from that candidate: 13 selected read operations and 23 MCP tools. Added `integration:map` token guidance, an exact existing PSA/RMM remote-record workflow, revision/idempotency replay rules, and the boundary between mapping, source-wide collection and assessment. DOC-R01/02/03/04/07/08 local review checked source paths, scopes, finite page bounds, response allowlists and failure/retry wording. The docs vault guard, whitespace, OpenAPI schema, pinned Mintlify 4.2.939 build validation, broken links and accessibility across 89 MDX pages passed. This is a held draft; no application migration, authenticated runtime call, mobile/browser preview, docs publication or hosted-page check has yet been completed. Revalidate the matching released API/MCP registry before publication.
+
+## 2026-09-27 — Held standard inspection guidance
+
+The isolated application candidate adds two read-only MCP tools to inspect the
+current workspace standards and an exact standard's controls/manual checks after a
+disabled template copy. Updated the copy guide, permissions and generated catalogue
+against that source. Offline generation produced 13 selected REST reads and 27 MCP
+tools. The guide distinguishes controlled definition/instructions as untrusted data,
+current state from historical copy receipt, and inspection from evaluation or
+approval. Source runtime, independent review, full gate, live tool availability and
+publication remain unverified at this draft stage.

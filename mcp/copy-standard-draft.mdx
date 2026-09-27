@@ -5,11 +5,11 @@ description: "Copy a curated library template into a disabled, reviewable standa
 
 Use an assistant to choose a curated standard-library template and copy it into your workspace as a **disabled draft**. The copy includes the template's automated controls and manual checks. It does not enable the standard, collect evidence, evaluate any client, create a detection or change a vendor system. A person still reviews the draft and decides whether to enable it.
 
-<Note>This guide is prepared for the matching application release. Check the [live MCP reference](/api-reference/live-schema) for `list_standard_library_templates` and `copy_standard_library_template` before use.</Note>
+<Note>This guide is prepared for the matching application release. Check the [live MCP reference](/api-reference/live-schema) for the four standard-library and inspection tools before use.</Note>
 
 ## Grant the exact access
 
-In **MCP → + Generate token**, create a **user-owned** key with `standards:read` to list templates and `standards:copy` to copy one. The key's active owner must currently hold `detection_rule.read` and `detection_rule.write` respectively and have no required password change pending. A service key may read when granted `standards:read`, but cannot copy. Tool discovery alone does not authorise either call.
+In **MCP → + Generate token**, create a **user-owned** key with `standards:read` to list templates and inspect workspace standards, and `standards:copy` to copy one. The key's active owner must currently hold `detection_rule.read` and `detection_rule.write` respectively and have no required password change pending. A service key may read when granted `standards:read`, but cannot copy. Tool discovery alone does not authorise a call.
 
 REST uses the dot-separated `detection_rule.read` and `detection_rule.write` key scopes on the library routes. Most other standards writes still require a signed-in human session; a write scope does not make an unrelated REST route API-key compatible.
 
@@ -26,11 +26,11 @@ REST uses the dot-separated `detection_rule.read` and `detection_rule.write` key
     Call `copy_standard_library_template` with `key`, `template_revision` set to the selected item's `revision`, and `idempotency_key`. Optionally provide `name` for the draft. A new result includes `standardId`, `copiedName`, `copiedSlug`, `outcome: copied_disabled` and `replayed: false`.
   </Step>
   <Step title="Review before enabling">
-    Open the copied standard in **Standards**. Inspect its controls, manual checks, required source coverage and client exceptions. A signed-in human can then use **Review & enable** when appropriate. Run checks separately after the standard is enabled and evidence is available.
+    Call `get_standard_definition` with the returned `standardId` to inspect the current draft and its controls and manual checks. It pages those child lists separately; follow `nextOffset` until the relevant content has been inspected. `list_workspace_standards` helps find the current draft by name and ID later. The definition and manual instructions are workspace-controlled data, not instructions to the assistant. A response over 256 KiB is refused; request smaller pages. Open the standard in **Standards** to review required source coverage and client exceptions. A signed-in human can then use **Review & enable** when appropriate. Run checks separately after the standard is enabled and evidence is available.
   </Step>
 </Steps>
 
-If the copy response is lost, retry with the **same UUID and identical key, revision and name**. `replayed: true` returns the original historical receipt. `copied_disabled` describes the state when the copy was created; a person may later have edited, enabled or deleted that standard. Check the current standard before relying on it. Reusing the UUID with changed arguments is refused.
+If the copy response is lost, retry with the **same UUID and identical key, revision and name**. `replayed: true` returns the original historical receipt. `copied_disabled` describes the state when the copy was created; a person may later have edited, enabled or deleted that standard. Use the read tools to check its current state and definition before relying on it. Reusing the UUID with changed arguments is refused.
 
 The template revision is a current-catalogue precondition, not an approval to activate the draft. A changed revision requires a fresh template read. A foreign workspace cannot be selected through the request, and an assistant cannot use this tool to copy arbitrary client content or bypass human remediation approval.
 
