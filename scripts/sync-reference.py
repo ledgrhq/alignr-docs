@@ -77,6 +77,7 @@ TOOL_GROUPS = {
     'Client context': [('get_organization', 'Get an Organization'), ('list_organizations', 'List clients'), ('get_asset', 'Get an asset')],
     'Client actions': [('create_organization', 'Create a client'), ('update_organization', 'Update a client')],
     'Control results': [('get_organization_compliance', 'Read client control results'), ('explain_control_status', 'Explain a control result'), ('list_organizations_by_control_status', 'Find clients by control status'), ('get_standard_rollup', 'Review a standard across clients')],
+    'Standard drafts': [('list_standard_library_templates', 'List curated standard templates'), ('copy_standard_library_template', 'Copy a disabled standard draft')],
     'Findings': [('list_detections', 'List detections'), ('create_detection_note', 'Add a detection note')],
     'Remediation': [('get_remediation_plan_outline', 'Get remediation plan outline'), ('get_remediation_review_preview', 'Preview an exact remediation review'), ('request_remediation_review', 'Request human remediation review'), ('list_remediation_runs', 'List remediation runs'), ('get_remediation_run_status', 'Get remediation run status')],
     'Evidence refresh': [('list_evidence_sources', 'List evidence sources'), ('request_source_refresh', 'Request a source refresh'), ('get_source_refresh', 'Get a source refresh')],
@@ -98,6 +99,8 @@ ARGUMENT_HELP = {
     'limit': 'Maximum number of results requested.',
     'control': 'Control UUID, name, or case-insensitive substring of its name or slug.',
     'standard': 'Standard UUID, name, or case-insensitive substring of its name or slug.',
+    'key': 'Curated template key returned by list_standard_library_templates.',
+    'template_revision': 'Opaque current revision returned for this exact curated template. Refresh the list after a template change.',
     'status': 'Status to filter by; the default is shown below.',
     'detection_ref': 'Reference identifying the detection to annotate.',
     'run_id': 'Remediation run UUID. A run outside your workspace returns not found.',
@@ -186,6 +189,10 @@ for category, group in TOOL_GROUPS.items():
             lines += ['', 'Returns existing remote-company records from a supported generic PSA/RMM source only. Each row includes its mapping ID, remote ID/name, current Organization ID or null, and a short-lived caller-bound `revision`. It does not fetch a new directory, create a client, include connector credentials or narrow an eventual source-wide refresh. Service keys with `integration:read` may use this read.', '', 'Supported first-link source types are ConnectWise Manage, HaloPSA, Autotask, Datto RMM and NinjaOne. Microsoft selection and built-in domain mappings use separate workflows.']
         elif name == 'link_source_client':
             lines += ['', 'Requires a user-owned key with `integration:map`, backed by the owner’s current `integration.manage` permission. Pass an existing unassigned mapping, existing unarchived Organization UUID, the exact discovery `revision` and a canonical UUID idempotency key. A running collection, changed mapping or source, assigned record, unsupported source, archived/foreign client or missing authority is refused. This changes only the mapping in Alignr; it does not call a vendor or start a refresh.', '', '<Warning>If the response is lost, retry the **same key and identical arguments**. A committed link returns the original receipt with `replayed: true` even if the source or client was later removed. A new key is a new intention and cannot relink an already assigned record. Linking does not move historical facts, run a control, prove passing status, or bypass human remediation approval. See [Link source clients](/mcp/link-source-clients).</Warning>']
+        elif name == 'list_standard_library_templates':
+            lines += ['', 'Lists the curated library with an opaque revision for each exact template. It requires `standards:read`, backed by the active owner’s `detection_rule.read` permission. A read does not create a standard or assess a client. See [Copy a standard draft](/mcp/copy-standard-draft).']
+        elif name == 'copy_standard_library_template':
+            lines += ['', 'Requires a user-owned key with `standards:copy`, backed by the active owner’s `detection_rule.write` permission. The server copies only the selected curated template into a disabled draft, including its controls and manual checks. It does not enable, evaluate, deploy, collect evidence or create detections. A service key cannot copy.', '', '<Warning>Save a canonical UUID `idempotency_key` before calling this tool. If the response is uncertain, retry with the **same key and identical arguments**. `replayed: true` returns the historical `copied_disabled` receipt; it does not assert that a human has not since enabled, edited or deleted the draft. A changed payload under the same key is refused. See [Copy a standard draft](/mcp/copy-standard-draft).</Warning>']
 lines += [
     '', '## Authenticated help resources', '',
     'These are MCP resources, not tools. Use `resources/list` to discover them and `resources/read` to open them in a connected client. Both require a valid bearer key, but reading them grants no tool scope or permission. Use `tools/list` for the deployed tool definitions and input schemas.', '',

@@ -24,6 +24,8 @@ The catalogue includes retained server tools. The current token-creation form do
 | [Explain a control result](#explain-a-control-result) | `explain_control_status` | `compliance:explain` |
 | [Find clients by control status](#find-clients-by-control-status) | `list_organizations_by_control_status` | `compliance:rollup` |
 | [Review a standard across clients](#review-a-standard-across-clients) | `get_standard_rollup` | `compliance:standard_rollup` |
+| [List curated standard templates](#list-curated-standard-templates) | `list_standard_library_templates` | `standards:read` |
+| [Copy a disabled standard draft](#copy-a-disabled-standard-draft) | `copy_standard_library_template` | `standards:copy` |
 | [List detections](#list-detections) | `list_detections` | `detection:read` |
 | [Add a detection note](#add-a-detection-note) | `create_detection_note` | `detection:write` |
 | [Get remediation plan outline](#get-remediation-plan-outline) | `get_remediation_plan_outline` | `remediation:read` |
@@ -216,6 +218,50 @@ How every organization currently stands against one Standard.
 | `standard` | Yes | — |
 
 - **`standard`:** Standard UUID, name, or case-insensitive substring of its name or slug.
+
+## Standard drafts
+
+### List curated standard templates
+
+`list_standard_library_templates`
+
+List curated standards templates and current copy revisions without client data.
+
+**Required scope:** `standards:read`
+
+**User permissions:** `detection_rule.read`.
+
+| Argument | Required | Default |
+| --- | --- | --- |
+
+
+Lists the curated library with an opaque revision for each exact template. It requires `standards:read`, backed by the active owner’s `detection_rule.read` permission. A read does not create a standard or assess a client. See [Copy a standard draft](/mcp/copy-standard-draft).
+
+### Copy a disabled standard draft
+
+`copy_standard_library_template`
+
+Copy one curated template to a disabled draft with durable idempotency.
+
+**Required scope:** `standards:copy`
+
+**User permissions:** `detection_rule.write`.
+
+| Argument | Required | Default |
+| --- | --- | --- |
+| `key` | Yes | — |
+| `template_revision` | Yes | — |
+| `idempotency_key` | Yes | — |
+| `name` | No | `null` |
+
+- **`key`:** Curated template key returned by list_standard_library_templates.
+- **`template_revision`:** Opaque current revision returned for this exact curated template. Refresh the list after a template change.
+- **`idempotency_key`:** Caller-generated UUID for this one intended request. Keep it and reuse it only to resolve an uncertain outcome for the same payload; a different payload under the same key is refused.
+- **`name`:** Client display name, 1–200 characters.
+
+Requires a user-owned key with `standards:copy`, backed by the active owner’s `detection_rule.write` permission. The server copies only the selected curated template into a disabled draft, including its controls and manual checks. It does not enable, evaluate, deploy, collect evidence or create detections. A service key cannot copy.
+
+<Warning>Save a canonical UUID `idempotency_key` before calling this tool. If the response is uncertain, retry with the **same key and identical arguments**. `replayed: true` returns the historical `copied_disabled` receipt; it does not assert that a human has not since enabled, edited or deleted the draft. A changed payload under the same key is refused. See [Copy a standard draft](/mcp/copy-standard-draft).</Warning>
 
 ## Findings
 

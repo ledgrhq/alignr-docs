@@ -288,6 +288,7 @@
               "mcp/introduction",
               "mcp/connect",
               "mcp/manage-clients",
+              "mcp/copy-standard-draft",
               "mcp/request-review",
               "mcp/refresh-evidence",
               "mcp/link-source-clients"

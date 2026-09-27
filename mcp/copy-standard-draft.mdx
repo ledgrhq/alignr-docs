@@ -1,0 +1,37 @@
+---
+title: "Copy a standard draft with MCP"
+description: "Copy a curated library template into a disabled, reviewable standard using a scoped user key."
+---
+
+Use an assistant to choose a curated standard-library template and copy it into your workspace as a **disabled draft**. The copy includes the template's automated controls and manual checks. It does not enable the standard, collect evidence, evaluate any client, create a detection or change a vendor system. A person still reviews the draft and decides whether to enable it.
+
+<Note>This guide is prepared for the matching application release. Check the [live MCP reference](/api-reference/live-schema) for `list_standard_library_templates` and `copy_standard_library_template` before use.</Note>
+
+## Grant the exact access
+
+In **MCP → + Generate token**, create a **user-owned** key with `standards:read` to list templates and `standards:copy` to copy one. The key's active owner must currently hold `detection_rule.read` and `detection_rule.write` respectively and have no required password change pending. A service key may read when granted `standards:read`, but cannot copy. Tool discovery alone does not authorise either call.
+
+REST uses the dot-separated `detection_rule.read` and `detection_rule.write` key scopes on the library routes. Most other standards writes still require a signed-in human session; a write scope does not make an unrelated REST route API-key compatible.
+
+## Choose, copy and review
+
+<Steps>
+  <Step title="List the curated templates">
+    Call `list_standard_library_templates`. Each item gives a `key`, name, domain, summary, control and manual-check counts, and an opaque `revision`. Choose a template for its intended expectations; its presence is not evidence that a client meets them. The [baseline catalogue](/controls/baselines/overview) explains their meaning and coverage limits.
+  </Step>
+  <Step title="Keep the exact revision and request UUID">
+    Record the selected `key` and `revision`. Generate one canonical UUID for `idempotency_key` before calling the write tool. Keep that UUID with this one intended copy. If the template changes, list it again and review the new revision before making a new request.
+  </Step>
+  <Step title="Copy one disabled draft">
+    Call `copy_standard_library_template` with `key`, `template_revision` set to the selected item's `revision`, and `idempotency_key`. Optionally provide `name` for the draft. A new result includes `standardId`, `copiedName`, `copiedSlug`, `outcome: copied_disabled` and `replayed: false`.
+  </Step>
+  <Step title="Review before enabling">
+    Open the copied standard in **Standards**. Inspect its controls, manual checks, required source coverage and client exceptions. A signed-in human can then use **Review & enable** when appropriate. Run checks separately after the standard is enabled and evidence is available.
+  </Step>
+</Steps>
+
+If the copy response is lost, retry with the **same UUID and identical key, revision and name**. `replayed: true` returns the original historical receipt. `copied_disabled` describes the state when the copy was created; a person may later have edited, enabled or deleted that standard. Check the current standard before relying on it. Reusing the UUID with changed arguments is refused.
+
+The template revision is a current-catalogue precondition, not an approval to activate the draft. A changed revision requires a fresh template read. A foreign workspace cannot be selected through the request, and an assistant cannot use this tool to copy arbitrary client content or bypass human remediation approval.
+
+**Checkpoint:** one disabled standard draft exists or the original receipt was safely recovered. Neither outcome reports a passing control. Continue with [Build or import a standard](/guides/build-or-import-standard) for the human review and enable steps.
