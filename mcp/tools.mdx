@@ -235,7 +235,7 @@ List curated standards templates and current copy revisions without client data.
 | --- | --- | --- |
 
 
-Lists the curated library with an opaque revision for each exact template. It requires `standards:read`, backed by the active owner’s `detection_rule.read` permission. A read does not create a standard or assess a client. See [Copy a standard draft](/mcp/copy-standard-draft).
+Lists the curated library with an opaque revision for each exact template. It requires `standards:read`; for a user-owned key, the active owner must also retain `detection_rule.read`. A service key with that read scope may list templates. A read does not create a standard or assess a client. See [Copy a standard draft](/mcp/copy-standard-draft).
 
 ### Copy a disabled standard draft
 
@@ -257,7 +257,7 @@ Copy one curated template to a disabled draft with durable idempotency.
 - **`key`:** Curated template key returned by list_standard_library_templates.
 - **`template_revision`:** Opaque current revision returned for this exact curated template. Refresh the list after a template change.
 - **`idempotency_key`:** Caller-generated UUID for this one intended request. Keep it and reuse it only to resolve an uncertain outcome for the same payload; a different payload under the same key is refused.
-- **`name`:** Client display name, 1–200 characters.
+- **`name`:** Optional display name for the new standard draft, 1–200 characters.
 
 Requires a user-owned key with `standards:copy`, backed by the active owner’s `detection_rule.write` permission. The server copies only the selected curated template into a disabled draft, including its controls and manual checks. It does not enable, evaluate, deploy, collect evidence or create detections. A service key cannot copy.
 
