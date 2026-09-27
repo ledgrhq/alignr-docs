@@ -233,3 +233,16 @@ Both hosted activation guides return200, contain the expected title and no longe
 contain the stale held-release notice. Readback is retained in
 `/tmp/alignr-prod-work/release-pr10/docs-hosted-readback.json`. This closes public
 publication acceptance, not an authenticated activation mutation or assessment.
+
+## 2026-09-27 — Setup continuity published
+
+Application production `dfcc95e744383c7a292b6e2948acf4de8767a832` completed
+workflow36344303838. API/worker revision20, migration0071 and exact image digest
+were independently verified; matching frontend `dpl_GMjtdJ55C7beaHa4bWBPSujTjDJh`
+was promoted with app-domain readback. Docs `c1d8b9d` published with validation
+workflow36347252295 SUCCESS. Hosted `/guides/setup-wizard` and
+`/journeys/visual-tour` returned200 with updated return/draft copy, and all five
+`images/walkthroughs/setup-*.png` matched the reviewed local SHA-256 bytes exactly.
+Readback retained in application release evidence `/tmp/alignr-prod-work/release-pr11/`.
+Domain lookup and explicit partner admin-consent are separate candidates and are
+not claimed by this publication. No real Microsoft connection acceptance is implied.
