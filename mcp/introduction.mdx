@@ -32,9 +32,10 @@ Use `tools/list` for the connected server's tool definitions and input schemas. 
 - Read a bounded list of remediation run statuses or inspect one run without execution details. Verification remains separate from a completed run.
 - Inspect a remediation plan's bounded metadata outline before asking a person to review the actual target and authority. The outline is not a readiness check.
 - Preview one exact plan and submit a pending review request with a user-owned key and separate `remediation:preview` and `remediation:request` scopes. A named human still decides the approval; the MCP request does not execute a step.
+- Discover evidence sources, request a recoverable source-wide collection with a user-owned `integration:sync` key, and poll its exact SyncRun under `integration:read`. A completed collection is not a passing assessment.
 - Ask questions over authorised evidence.
 - Add a detection note when explicitly granted the write scope.
 
-[Connect your client](/mcp/connect), follow the [client-management guide](/mcp/manage-clients) or [remediation review-request guide](/mcp/request-review), or inspect the [tool catalogue](/mcp/tools).
+[Connect your client](/mcp/connect), follow the [client-management guide](/mcp/manage-clients), [remediation review-request guide](/mcp/request-review) or [evidence refresh guide](/mcp/refresh-evidence), or inspect the [tool catalogue](/mcp/tools).
 
 <Note>Alignr’s application MCP server is separate from Mintlify’s documentation MCP server. Use the Alignr endpoint for client data and assessment tools.</Note>

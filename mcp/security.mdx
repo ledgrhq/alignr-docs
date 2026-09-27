@@ -11,6 +11,8 @@ Grant only the tool scopes the client needs. Read scopes do not imply permission
 
 `remediation:preview` is a separate exact-plan review preview scope; its user-key owner must currently hold `remediation.read`. `remediation:request` creates a pending run and human approval request from a current preview; its user-key owner must currently hold both `remediation.read` and `remediation.execute`. The owner must be active with no required password change pending. Service keys cannot use either tool. Neither scope grants approval, execution or rollback. See [Request a remediation review with MCP](/mcp/request-review).
 
+`integration:read` discovers evidence sources and polls a specific refresh, backed by `integration.read`. `integration:sync` requests a source-wide collection, backed by `integration.manage`; it requires a user-owned key whose owner is still active and permitted. A service key may read but cannot request a refresh. A selected source can cover many mapped clients, and a successful collection does not establish a passing control. See [Refresh evidence with MCP](/mcp/refresh-evidence).
+
 In the token form, **Select all** selects every currently issuable API and MCP scope, even while you are filtering the list. For a single assistant workflow, choose the scopes in the [tool catalogue](/mcp/tools) individually and review the selection before creating the key.
 
 ## Live permission checks

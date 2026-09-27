@@ -1,0 +1,60 @@
+---
+title: "Refresh evidence with MCP"
+description: "Request one recoverable source-wide collection and follow its exact result."
+---
+
+Use this workflow when an assistant needs fresher observations from a connected evidence source. A refresh covers **the entire connection and every client mapped to it**. Choosing a client in your prompt does not narrow the collection. Importing client records from a directory or PSA is a separate task.
+
+<Note>Check the [live MCP reference](/api-reference/live-schema) before relying on these tools. This guide is prepared for the matching application release; a tool appearing in a catalogue does not prove it is enabled on your deployment.</Note>
+
+## Prepare a key
+
+In **MCP → + Generate token**, create a **user-owned** key with `integration:read` to discover and poll sources and `integration:sync` to request a refresh. Its active owner must currently hold `integration.read` and `integration.manage` respectively, with no required password change. The server checks the key and owner again before vendor collection and evidence publication. A service key may use the read tools when granted `integration:read`, but cannot request a refresh.
+
+REST uses different, dot-separated scopes: `integration.read` to poll and `integration.manage` to request. See the [REST refresh guide](/api-reference/refresh-evidence) if you are writing an API client.
+
+## 1. Find a source
+
+Ask your MCP client to call `list_evidence_sources`:
+
+```json
+{"limit":50,"offset":0}
+```
+
+It returns a bounded page ordered by connection name and ID, with an ID, type, mode, status and last sync time for each evidence-producing connector type. `limit` is clamped to 1–50 and `offset` to 0–10,000. The list can include a connection that is not currently connected; check its `status` before requesting collection. Directory-only client import sources are excluded. Record the intended `integration_id` from the result, not an Organization ID.
+
+## 2. Request once, then poll
+
+Generate and **save one canonical UUID** for this intended request. Pass it with the source ID to `request_source_refresh`:
+
+```json
+{"integration_id":"11111111-1111-4111-8111-111111111111","idempotency_key":"22222222-2222-4222-8222-222222222222"}
+```
+
+The response gives the durable operation `id`, `integrationId`, `state`, optional exact `sweepId` and `syncRunId`, timestamps, `errorCode`, `assessmentState: unknown` and `replayed`. A new request normally starts as `pending`; that means Alignr recorded it, **not** that a vendor call or assessment succeeded. One source can have only one active refresh. The server may refuse a disconnected source, a directory-only source, a Microsoft evidence source with no selected client, or an overlapping request.
+
+Poll the returned operation ID with `get_source_refresh`:
+
+```json
+{"integration_id":"11111111-1111-4111-8111-111111111111","operation_id":"33333333-3333-4333-8333-333333333333"}
+```
+
+Use the actual `id` returned by the request in place of the illustrative `operation_id` above. The lookup must match both your workspace and the exact source; another source or workspace returns not found. The result has the current durable state even if the connection has since been removed.
+
+| State | Meaning | Next action |
+| --- | --- | --- |
+| `pending` | Recorded and waiting for a collector or a busy source. | Keep the same operation ID and poll later. |
+| `running` | An exact SyncRun was claimed; collection may still be in progress. | Poll the same operation; do not start another. |
+| `completed` | That exact SyncRun completed evidence collection. | Check fresh facts, then run or inspect assessment separately. |
+| `failed` | Collection failed or the request could not be dispatched within its bounded window. | Inspect `errorCode` and connection health; a deliberate new attempt needs a new key. |
+| `interrupted` | Authority, selected source policy or the source itself changed, or its run disappeared. | Recheck owner access, source selection and mappings before making a new request. |
+
+`errorCode` is a safe machine-readable reason, not a vendor response. Examples include `source_unavailable`, `source_changed_before_dispatch`, `source_no_selected_clients`, `authority_changed`, `collection_failed`, `source_or_run_removed`, `authority_or_source_changed` and `dispatch_expired`. The exact state and code returned by your deployment are authoritative.
+
+## Recover an uncertain response
+
+If the request times out or the response is lost, **repeat the same `integration_id` and `idempotency_key`**. The same caller receives the original operation ID and its current durable state with `replayed: true` if it committed. Using that key for another source is refused. Keep the returned operation ID for subsequent polls.
+
+Once an exact SyncRun exists, Alignr does **not** automatically repeat uncertain vendor work after a worker crash or timeout. It reconciles that run's recorded outcome. Do not create a fresh key and blindly submit again: inspect the existing operation and source first. A new key represents a deliberate new collection.
+
+<Warning>`completed` says evidence collection ended; it does not say a control passed, that the evidence is current for every check, or that detection and standards evaluation finished. Missing or stale evidence never counts as passing. Review [control statuses](/guides/control-status) and the relevant source's last observation before reporting a result.</Warning>

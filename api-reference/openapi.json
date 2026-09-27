@@ -943,6 +943,66 @@
         "x-ledgr-permission": "fact.read"
       }
     },
+    "/api/v1/integrations/{integration_id}/sync-operations/{operation_id}": {
+      "get": {
+        "tags": [
+          "Evidence"
+        ],
+        "summary": "Get an evidence refresh",
+        "operationId": "read_sync_operation_api_v1_integrations__integration_id__sync_operations__operation_id__get",
+        "parameters": [
+          {
+            "name": "integration_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Integration Id"
+            }
+          },
+          {
+            "name": "operation_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Operation Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntegrationSyncOperationRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "description": "Requires `integration.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability. Read the current durable state of the exact source-wide collection. `completed` means its SyncRun finished evidence collection; `assessmentState: unknown` does not attest a passing control or completed downstream evaluation. A foreign or mismatched source/operation pair returns 404.",
+        "x-ledgr-permission": "integration.read"
+      }
+    },
     "/api/v1/billing/estimate": {
       "get": {
         "tags": [
@@ -1140,6 +1200,108 @@
           "billingPeriod"
         ],
         "title": "BillingEstimateRead"
+      },
+      "IntegrationSyncOperationRead": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "integrationId": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Integrationid"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "running",
+              "completed",
+              "failed",
+              "interrupted"
+            ],
+            "title": "State"
+          },
+          "sweepId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sweepid"
+          },
+          "syncRunId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Syncrunid"
+          },
+          "startedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Startedat"
+          },
+          "finishedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Finishedat"
+          },
+          "errorCode": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Errorcode"
+          },
+          "assessmentState": {
+            "type": "string",
+            "const": "unknown",
+            "title": "Assessmentstate",
+            "default": "unknown"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "integrationId",
+          "state",
+          "sweepId",
+          "syncRunId",
+          "startedAt",
+          "finishedAt",
+          "errorCode"
+        ],
+        "title": "IntegrationSyncOperationRead"
       },
       "Severity": {
         "type": "string",

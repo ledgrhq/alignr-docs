@@ -1,0 +1,35 @@
+---
+title: "Request an evidence refresh"
+description: "Start a recoverable connection-wide collection with an idempotency key."
+---
+
+These key-compatible REST routes request and read an evidence refresh for one integration. The refresh covers **all clients mapped to that source**, not a client supplied by the caller. It collects evidence; it does not import client records or promise a completed assessment.
+
+Use a user-owned API key with `integration.manage` and an active owner who currently holds that permission to start a request. A signed-in human with `integration.manage` can also call it. Polling requires `integration.read`; a read-only service key can poll when granted that scope. A service key cannot start collection.
+
+## Start a request
+
+Generate a UUID once, store it with the source ID, and send an empty-body POST:
+
+```bash
+curl --fail-with-body -X POST \
+  'https://api.alignr.io/api/v1/integrations/11111111-1111-4111-8111-111111111111/sync-operations' \
+  --header "Authorization: Bearer $ALIGNR_API_KEY" \
+  --header 'Idempotency-Key: 22222222-2222-4222-8222-222222222222'
+```
+
+Use your own source ID and canonical UUID, not the illustrative values. A new durable request returns HTTP `202` and an operation `id` with `state: pending`. A replay of the same caller, key and source returns HTTP `200` with the **current** operation state. Reusing the key for a different source returns `409`. The request can also be refused when the source is not connected, does not produce evidence, has no selected Microsoft client or already has an active refresh.
+
+## Poll the exact operation
+
+```bash
+curl --fail-with-body \
+  'https://api.alignr.io/api/v1/integrations/11111111-1111-4111-8111-111111111111/sync-operations/33333333-3333-4333-8333-333333333333' \
+  --header "Authorization: Bearer $ALIGNR_API_KEY"
+```
+
+Replace the final UUID with the returned operation `id`. The source and operation IDs must match in your MSP workspace; a foreign or mismatched pair returns `404`. The response contains `id`, `integrationId`, `state`, optional `sweepId` and `syncRunId`, `startedAt`, `finishedAt`, `errorCode` and `assessmentState: unknown`. Both routes use `Cache-Control: no-store` on successful responses.
+
+`pending` means recorded, `running` means an exact SyncRun was claimed, and `completed` means that exact run finished evidence collection. `failed` and `interrupted` carry a safe `errorCode`; vendor error bodies and credentials are not returned. `assessmentState: unknown` means the operation does not attest that later detection or standards evaluation completed. A passing control requires current, applicable evidence and its own evaluation.
+
+If the POST response is uncertain, retry with **the identical source and Idempotency-Key** before creating a new request. After the exact run is claimed, the server does not automatically replay uncertain vendor work. Use the poll route to recover the durable outcome. See [Refresh evidence with MCP](/mcp/refresh-evidence) for the state table and recovery guidance.

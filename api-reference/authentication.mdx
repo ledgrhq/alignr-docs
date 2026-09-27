@@ -15,6 +15,8 @@ An API key scope grants permission only where the route accepts API keys. User-o
 
 The exact-plan REST review routes are another explicit key-compatible exception. A user-owned key with `remediation:preview` can call `GET /api/v1/remediations/plans/{plan_id}/review-preview` with the `detectionId` query parameter. A user-owned key with `remediation:request` can call `POST /api/v1/remediations/plans/{plan_id}/review-requests` with JSON `detectionId` and `reviewRevision` plus a caller-generated UUID in the `Idempotency-Key` header. These colon-separated scopes also serve the corresponding MCP tools; they are not a general REST write grant. The active key owner needs current `remediation.read` for preview and both `remediation.read` and `remediation.execute` for request, with no required password change. Service keys are refused. A new request creates only a pending run and human approval, never an execution. Follow the [review-request workflow](/mcp/request-review) for the revision and uncertain-result rules.
 
+The [evidence refresh routes](/api-reference/refresh-evidence) are also key-compatible. `POST /api/v1/integrations/{integration_id}/sync-operations` accepts a user-owned key with the REST scope `integration.manage`, a currently permitted owner and a canonical UUID `Idempotency-Key`. Its matching GET uses `integration.read`; a read-only service key may poll but cannot start a refresh. The corresponding MCP tools use the distinct `integration:sync` and `integration:read` scopes. A refresh covers the entire connection, not one client.
+
 Other REST writes, including standard and detection mutations, still require a signed-in human session. Issuing another write scope does not by itself make its route callable with a key.
 
 ## User and service keys

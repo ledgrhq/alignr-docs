@@ -18,7 +18,7 @@ GROUPS = {
     'Standards': [('/standards', 'List standards'), ('/standards/{standard_id}', 'Get a standard'), ('/standards/{standard_id}/controls', 'List controls')],
     'Alignment': [('/organizations/{organization_id}/compliance', 'Get client compliance'), ('/organizations/{organization_id}/compliance/trend', 'Get compliance trend')],
     'Detections': [('/detections', 'List detections'), ('/detections/{detection_id}', 'Get a detection')],
-    'Evidence': [('/facts', 'List facts')],
+    'Evidence': [('/facts', 'List facts'), ('/integrations/{integration_id}/sync-operations/{operation_id}', 'Get an evidence refresh')],
     'Billing': [('/billing/estimate', 'Get a billing estimate')],
 }
 schema = app.openapi()
@@ -41,6 +41,8 @@ for group, endpoints in GROUPS.items():
                 '429': {'description': 'The estimate request rate limit was reached.'},
                 '503': {'description': 'The provider estimate is temporarily unavailable; no amount is returned.'},
             })
+        if suffix == '/integrations/{integration_id}/sync-operations/{operation_id}':
+            operation['description'] += ' Read the current durable state of the exact source-wide collection. `completed` means its SyncRun finished evidence collection; `assessmentState: unknown` does not attest a passing control or completed downstream evaluation. A foreign or mismatched source/operation pair returns 404.'
         operation['x-ledgr-permission'] = permission
         paths[path] = {'get': operation}
 # Include only components reached by selected operations.
@@ -75,6 +77,7 @@ TOOL_GROUPS = {
     'Control results': [('get_organization_compliance', 'Read client control results'), ('explain_control_status', 'Explain a control result'), ('list_organizations_by_control_status', 'Find clients by control status'), ('get_standard_rollup', 'Review a standard across clients')],
     'Findings': [('list_detections', 'List detections'), ('create_detection_note', 'Add a detection note')],
     'Remediation': [('get_remediation_plan_outline', 'Get remediation plan outline'), ('get_remediation_review_preview', 'Preview an exact remediation review'), ('request_remediation_review', 'Request human remediation review'), ('list_remediation_runs', 'List remediation runs'), ('get_remediation_run_status', 'Get remediation run status')],
+    'Evidence refresh': [('list_evidence_sources', 'List evidence sources'), ('request_source_refresh', 'Request a source refresh'), ('get_source_refresh', 'Get a source refresh')],
     'Search and questions': [('search_documentation', 'Search indexed content'), ('ask_ledgr', 'Ask an evidence-backed question')],
 }
 ARGUMENT_HELP = {
@@ -97,6 +100,8 @@ ARGUMENT_HELP = {
     'run_id': 'Remediation run UUID. A run outside your workspace returns not found.',
     'plan_id': 'Remediation plan UUID. A plan outside your workspace returns not found.',
     'detection_id': 'Open detection UUID linked to the exact plan.',
+    'integration_id': 'UUID of the evidence-producing connection. A refresh covers all of its mapped clients.',
+    'operation_id': 'The durable operation UUID returned by the refresh request. Match it with the same connection ID.',
     'review_revision': 'The short-lived `reviewRevision` returned by `get_remediation_review_preview`. Request a fresh preview after expiry or a plan, target, authority or source change.',
     'idempotency_key': 'Caller-generated UUID for this one intended request. Keep it and reuse it only to resolve an uncertain outcome for the same payload; a different payload under the same key is refused.',
     'note': 'Text to add to the detection.',
@@ -133,6 +138,12 @@ for category, group in TOOL_GROUPS.items():
                 help_text = 'Zero-based page offset from 0 to 10,000. Most recently started runs appear first; unstarted runs appear last. Equal start times use run ID as a tie-breaker.'
             if name == 'list_remediation_runs' and argument == 'status':
                 help_text = 'Optional exact run status: pending_approval, running, completed, partial, failed or rolled_back.'
+            if name == 'list_evidence_sources' and argument == 'limit':
+                help_text = 'Sources per page, clamped to 1–50 (default 50).'
+            if name == 'list_evidence_sources' and argument == 'offset':
+                help_text = 'Zero-based offset clamped to 0–10,000; source name then UUID order.'
+            if name == 'request_source_refresh' and argument == 'idempotency_key':
+                help_text = 'Canonical caller-generated UUID for this one source-wide request. Save and reuse it with the same connection after an uncertain response; a different source under the same key is refused.'
             if argument == 'organization_id' and parameters[argument].default is not inspect.Parameter.empty:
                 help_text += ' Omit it to use the tool’s workspace-wide scope.'
             lines.append(f'- **`{argument}`:** {help_text}')
@@ -152,6 +163,12 @@ for category, group in TOOL_GROUPS.items():
             lines += ['', 'This is a separate exact-plan request preview. It checks the current open detection, linked plan, selected targets, local authority, connector binding and a complete set of 1–50 steps. The response includes `reviewRequestReady`, `vendorExecutionReady: not_checked`, `reviewRevision`, `revisionExpiresAt`, client/detection/plan identifiers and bounded step metadata: action, position, reversibility, approval need, selected integration and an allowlisted resource parameter/value where required. It omits credentials and executable step parameters. The revision expires after 15 minutes; previewing does not request, approve or execute a run.', '', '<Warning>`reviewRequestReady: true` means this exact request passed local checks at preview time, not that a vendor action will succeed. The server rechecks the plan and live authority when a request is submitted. The metadata-only outline above does not supply a `reviewRevision`.</Warning>']
         elif name == 'request_remediation_review':
             lines += ['', 'Requires a user-owned key with `remediation:request`; its active owner must currently hold both `remediation.read` and `remediation.execute` and have no pending required password change. A service key is refused. Pass the exact IDs, the latest preview’s `reviewRevision`, and a caller-generated UUID `idempotency_key`. A changed/expired preview is refused; obtain a new one. The result contains `runId`, `approvalId`, `runStatus`, `approvalStatus` and `replayed`. New requests create only a pending approval and pending run; no step executes. A separate named human reviews and approves in Alignr.', '', '<Warning>This tool writes a review request. Reuse the same UUID only with the same payload after an uncertain response; `replayed: true` reports the existing request. Do not generate a new key and blindly repeat. A prior run may already be pending even when this call times out. See the [review-request workflow](/mcp/request-review).</Warning>']
+        elif name == 'list_evidence_sources':
+            lines += ['', 'The page lists evidence-producing connector types across your MSP, including sources that may not currently be connected. Check each `status` before requesting a refresh. It does not list directory-only client import sources, and no client filter narrows a refresh.']
+        elif name == 'request_source_refresh':
+            lines += ['', 'Requires a user-owned `integration:sync` key and the active owner’s current `integration.manage` permission. A service key is refused. The result reports one durable operation and `replayed`; `pending` means recorded, not collected. The collection spans the connection and every mapped client. Same caller/key/source retries return the current original operation; after an exact SyncRun is claimed, uncertain vendor I/O is not automatically replayed.', '', '<Warning>Save the UUID and returned operation ID. Do not make a new request after a timeout until you recover the original state with the same key or poll the operation. `completed` does not mean assessment passed. Follow [Refresh evidence with MCP](/mcp/refresh-evidence).</Warning>']
+        elif name == 'get_source_refresh':
+            lines += ['', 'Returns only the matching workspace, connection and exact operation. `state` is pending, running, completed, failed or interrupted; `assessmentState` remains `unknown`. Optional `sweepId` and `syncRunId` identify the exact collection. `errorCode` is safe and machine-readable, not a vendor response. A completed collection still needs fresh evidence and separate standards evaluation before a pass claim.']
 lines += [
     '', '## Authenticated help resources', '',
     'These are MCP resources, not tools. Use `resources/list` to discover them and `resources/read` to open them in a connected client. Both require a valid bearer key, but reading them grants no tool scope or permission. Use `tools/list` for the deployed tool definitions and input schemas.', '',

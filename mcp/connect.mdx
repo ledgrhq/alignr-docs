@@ -68,6 +68,8 @@ A useful answer identifies the client, the expectation, the actual observation a
 | Can I preview one exact plan before requesting human review? | `get_remediation_review_preview` — requires `remediation:preview` and current owner `remediation.read`; see the [review-request guide](/mcp/request-review). |
 | Can I submit that reviewed plan for a human decision? | `request_remediation_review` — requires `remediation:request` and current owner `remediation.read` and `remediation.execute`; it creates only a pending request. |
 | What is the status of a remediation run? | `list_remediation_runs` or `get_remediation_run_status` — requires `remediation:read`; neither confirms rollback eligibility. |
+| Which connection can supply evidence? | `list_evidence_sources` — requires `integration:read`; the list may include a source that is not currently connected. |
+| Can I refresh and follow one source? | `request_source_refresh` needs a user-owned `integration:sync` key and a saved UUID; `get_source_refresh` needs `integration:read`. The refresh spans all mapped clients. Follow the [evidence refresh guide](/mcp/refresh-evidence). |
 | Can I add an agreed note to a finding? | `create_detection_note` — requires write access. |
 
 Tool availability and permission checks remain server-side. A client's ability to discover a tool is not permission to execute it.
@@ -75,6 +77,8 @@ Tool availability and permission checks remain server-side. A client's ability t
 For an assistant such as Claude Code or Codex, use `get_remediation_plan_outline` to explain broad intent, then use the separate [exact-plan preview and review-request workflow](/mcp/request-review) if the key and owner qualify. The outline gives no target, simulation mode or execution readiness and cannot be used as a request revision. `request_remediation_review` creates a pending run and approval; it does not approve or execute. Use `list_remediation_runs` or `get_remediation_run_status` to report lifecycle and separate verification state. A completed run does not prove the control is fixed. A named human reviews approval and any execution or rollback in the signed-in [remediation workflow](/guides/remediation).
 
 For client creation and updates, follow [Manage clients with MCP](/mcp/manage-clients) and issue a separate user-owned key with the required write scope.
+
+For a source refresh, use the [recoverable evidence workflow](/mcp/refresh-evidence). Keep its operation ID and caller-generated UUID after an uncertain response rather than asking the assistant to start another collection.
 
 ## Codex
 

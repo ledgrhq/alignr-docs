@@ -31,6 +31,9 @@ The catalogue includes retained server tools. The current token-creation form do
 | [Request human remediation review](#request-human-remediation-review) | `request_remediation_review` | `remediation:request` |
 | [List remediation runs](#list-remediation-runs) | `list_remediation_runs` | `remediation:read` |
 | [Get remediation run status](#get-remediation-run-status) | `get_remediation_run_status` | `remediation:read` |
+| [List evidence sources](#list-evidence-sources) | `list_evidence_sources` | `integration:read` |
+| [Request a source refresh](#request-a-source-refresh) | `request_source_refresh` | `integration:sync` |
+| [Get a source refresh](#get-a-source-refresh) | `get_source_refresh` | `integration:read` |
 | [Search indexed content](#search-indexed-content) | `search_documentation` | `search:read` |
 | [Ask an evidence-backed question](#ask-an-evidence-backed-question) | `ask_ledgr` | `ask:use` |
 
@@ -363,6 +366,70 @@ Fetch one remediation run's status without execution or rollback data.
 - **`run_id`:** Remediation run UUID. A run outside your workspace returns not found.
 
 <Note>The detail returns the same fixed fields as each list item. A run marked `completed` means execution reached that state; it does not prove the control was fixed. Check `verificationStatus` and fresh source evidence. `simulated: true` means at least one step was rehearsed rather than applied. Neither this tool nor the list reports rollback eligibility: status alone cannot establish that a rollback window is open or an eligible token remains.</Note>
+
+## Evidence refresh
+
+### List evidence sources
+
+`list_evidence_sources`
+
+List bounded evidence-producing connections across this MSP; no credentials.
+
+**Required scope:** `integration:read`
+
+**User permissions:** `integration.read`.
+
+| Argument | Required | Default |
+| --- | --- | --- |
+| `limit` | No | `50` |
+| `offset` | No | `0` |
+
+- **`limit`:** Sources per page, clamped to 1–50 (default 50).
+- **`offset`:** Zero-based offset clamped to 0–10,000; source name then UUID order.
+
+The page lists evidence-producing connector types across your MSP, including sources that may not currently be connected. Check each `status` before requesting a refresh. It does not list directory-only client import sources, and no client filter narrows a refresh.
+
+### Request a source refresh
+
+`request_source_refresh`
+
+Queue one durable, source-wide evidence refresh with a UUID idempotency key.
+
+**Required scope:** `integration:sync`
+
+**User permissions:** `integration.manage`.
+
+| Argument | Required | Default |
+| --- | --- | --- |
+| `integration_id` | Yes | — |
+| `idempotency_key` | Yes | — |
+
+- **`integration_id`:** UUID of the evidence-producing connection. A refresh covers all of its mapped clients.
+- **`idempotency_key`:** Canonical caller-generated UUID for this one source-wide request. Save and reuse it with the same connection after an uncertain response; a different source under the same key is refused.
+
+Requires a user-owned `integration:sync` key and the active owner’s current `integration.manage` permission. A service key is refused. The result reports one durable operation and `replayed`; `pending` means recorded, not collected. The collection spans the connection and every mapped client. Same caller/key/source retries return the current original operation; after an exact SyncRun is claimed, uncertain vendor I/O is not automatically replayed.
+
+<Warning>Save the UUID and returned operation ID. Do not make a new request after a timeout until you recover the original state with the same key or poll the operation. `completed` does not mean assessment passed. Follow [Refresh evidence with MCP](/mcp/refresh-evidence).</Warning>
+
+### Get a source refresh
+
+`get_source_refresh`
+
+Poll the exact collection outcome of a durable evidence refresh.
+
+**Required scope:** `integration:read`
+
+**User permissions:** `integration.read`.
+
+| Argument | Required | Default |
+| --- | --- | --- |
+| `integration_id` | Yes | — |
+| `operation_id` | Yes | — |
+
+- **`integration_id`:** UUID of the evidence-producing connection. A refresh covers all of its mapped clients.
+- **`operation_id`:** The durable operation UUID returned by the refresh request. Match it with the same connection ID.
+
+Returns only the matching workspace, connection and exact operation. `state` is pending, running, completed, failed or interrupted; `assessmentState` remains `unknown`. Optional `sweepId` and `syncRunId` identify the exact collection. `errorCode` is safe and machine-readable, not a vendor response. A completed collection still needs fresh evidence and separate standards evaluation before a pass claim.
 
 ## Search and questions
 
