@@ -18,7 +18,7 @@ GROUPS = {
     'Standards': [('/standards', 'List standards'), ('/standards/{standard_id}', 'Get a standard'), ('/standards/{standard_id}/controls', 'List controls')],
     'Alignment': [('/organizations/{organization_id}/compliance', 'Get client compliance'), ('/organizations/{organization_id}/compliance/trend', 'Get compliance trend')],
     'Detections': [('/detections', 'List detections'), ('/detections/{detection_id}', 'Get a detection')],
-    'Evidence': [('/facts', 'List facts'), ('/integrations/{integration_id}/sync-operations/{operation_id}', 'Get an evidence refresh')],
+    'Evidence': [('/facts', 'List facts'), ('/integrations/{integration_id}/client-mapping-candidates', 'List source client mappings'), ('/integrations/{integration_id}/sync-operations/{operation_id}', 'Get an evidence refresh')],
     'Billing': [('/billing/estimate', 'Get a billing estimate')],
 }
 schema = app.openapi()
@@ -43,6 +43,8 @@ for group, endpoints in GROUPS.items():
             })
         if suffix == '/integrations/{integration_id}/sync-operations/{operation_id}':
             operation['description'] += ' Read the current durable state of the exact source-wide collection. `completed` means its SyncRun finished evidence collection; `assessmentState: unknown` does not attest a passing control or completed downstream evaluation. A foreign or mismatched source/operation pair returns 404.'
+        if suffix == '/integrations/{integration_id}/client-mapping-candidates':
+            operation['description'] += ' List bounded existing remote-company mappings for an eligible generic PSA/RMM source. Includes remote ID/name, current Organization ID and caller-bound short-lived revision; excludes credentials and source config. Only unassigned records can be first-linked through the separate write endpoint. A foreign source or Organization filter returns 404.'
         operation['x-ledgr-permission'] = permission
         paths[path] = {'get': operation}
 # Include only components reached by selected operations.
@@ -78,6 +80,7 @@ TOOL_GROUPS = {
     'Findings': [('list_detections', 'List detections'), ('create_detection_note', 'Add a detection note')],
     'Remediation': [('get_remediation_plan_outline', 'Get remediation plan outline'), ('get_remediation_review_preview', 'Preview an exact remediation review'), ('request_remediation_review', 'Request human remediation review'), ('list_remediation_runs', 'List remediation runs'), ('get_remediation_run_status', 'Get remediation run status')],
     'Evidence refresh': [('list_evidence_sources', 'List evidence sources'), ('request_source_refresh', 'Request a source refresh'), ('get_source_refresh', 'Get a source refresh')],
+    'Client source linking': [('list_source_client_mappings', 'List source client mappings'), ('link_source_client', 'Link a source client')],
     'Search and questions': [('search_documentation', 'Search indexed content'), ('ask_ledgr', 'Ask an evidence-backed question')],
 }
 ARGUMENT_HELP = {
@@ -100,7 +103,11 @@ ARGUMENT_HELP = {
     'run_id': 'Remediation run UUID. A run outside your workspace returns not found.',
     'plan_id': 'Remediation plan UUID. A plan outside your workspace returns not found.',
     'detection_id': 'Open detection UUID linked to the exact plan.',
-    'integration_id': 'UUID of the evidence-producing connection. A refresh covers all of its mapped clients.',
+    'integration_id': 'UUID of the connection.',
+    'mapping_id': 'UUID of an existing unassigned remote record returned by mapping discovery.',
+    'revision': 'The short-lived opaque revision returned for the exact mapping. Refresh discovery if it changes or expires.',
+    'remote_id': 'Optional exact vendor remote ID filter, up to 300 characters; never use a display name as identity.',
+    'assignment': 'Filter mappings by all, assigned or unassigned; default all.',
     'operation_id': 'The durable operation UUID returned by the refresh request. Match it with the same connection ID.',
     'review_revision': 'The short-lived `reviewRevision` returned by `get_remediation_review_preview`. Request a fresh preview after expiry or a plan, target, authority or source change.',
     'idempotency_key': 'Caller-generated UUID for this one intended request. Keep it and reuse it only to resolve an uncertain outcome for the same payload; a different payload under the same key is refused.',
@@ -144,6 +151,12 @@ for category, group in TOOL_GROUPS.items():
                 help_text = 'Zero-based offset clamped to 0–10,000; source name then UUID order.'
             if name == 'request_source_refresh' and argument == 'idempotency_key':
                 help_text = 'Canonical caller-generated UUID for this one source-wide request. Save and reuse it with the same connection after an uncertain response; a different source under the same key is refused.'
+            if name == 'link_source_client' and argument == 'idempotency_key':
+                help_text = 'Canonical UUID for this exact first link. Reuse the same key with identical arguments after an uncertain response; changed payload is refused.'
+            if name == 'list_source_client_mappings' and argument == 'limit':
+                help_text = 'Remote records per page, from 1 to 50 (default 25).'
+            if name == 'list_source_client_mappings' and argument == 'offset':
+                help_text = 'Zero-based offset from 0 to 10,000; remote name then mapping UUID order.'
             if argument == 'organization_id' and parameters[argument].default is not inspect.Parameter.empty:
                 help_text += ' Omit it to use the tool’s workspace-wide scope.'
             lines.append(f'- **`{argument}`:** {help_text}')
@@ -169,6 +182,10 @@ for category, group in TOOL_GROUPS.items():
             lines += ['', 'Requires a user-owned `integration:sync` key and the active owner’s current `integration.manage` permission. A service key is refused. The result reports one durable operation and `replayed`; `pending` means recorded, not collected. The collection spans the connection and every mapped client. Same caller/key/source retries return the current original operation; after an exact SyncRun is claimed, uncertain vendor I/O is not automatically replayed.', '', '<Warning>Save the UUID and returned operation ID. Do not make a new request after a timeout until you recover the original state with the same key or poll the operation. `completed` does not mean assessment passed. Follow [Refresh evidence with MCP](/mcp/refresh-evidence).</Warning>']
         elif name == 'get_source_refresh':
             lines += ['', 'Returns only the matching workspace, connection and exact operation. `state` is pending, running, completed, failed or interrupted; `assessmentState` remains `unknown`. Optional `sweepId` and `syncRunId` identify the exact collection. `errorCode` is safe and machine-readable, not a vendor response. A completed collection still needs fresh evidence and separate standards evaluation before a pass claim.']
+        elif name == 'list_source_client_mappings':
+            lines += ['', 'Returns existing remote-company records from a supported generic PSA/RMM source only. Each row includes its mapping ID, remote ID/name, current Organization ID or null, and a short-lived caller-bound `revision`. It does not fetch a new directory, create a client, include connector credentials or narrow an eventual source-wide refresh. Service keys with `integration:read` may use this read.', '', 'Supported first-link source types are ConnectWise Manage, HaloPSA, Autotask, Datto RMM and NinjaOne. Microsoft selection and built-in domain mappings use separate workflows.']
+        elif name == 'link_source_client':
+            lines += ['', 'Requires a user-owned key with `integration:map`, backed by the owner’s current `integration.manage` permission. Pass an existing unassigned mapping, existing unarchived Organization UUID, the exact discovery `revision` and a canonical UUID idempotency key. A running collection, changed mapping or source, assigned record, unsupported source, archived/foreign client or missing authority is refused. This changes only the mapping in Alignr; it does not call a vendor or start a refresh.', '', '<Warning>If the response is lost, retry the **same key and identical arguments**. A committed link returns the original receipt with `replayed: true` even if the source or client was later removed. A new key is a new intention and cannot relink an already assigned record. Linking does not move historical facts, run a control, prove passing status, or bypass human remediation approval. See [Link source clients](/mcp/link-source-clients).</Warning>']
 lines += [
     '', '## Authenticated help resources', '',
     'These are MCP resources, not tools. Use `resources/list` to discover them and `resources/read` to open them in a connected client. Both require a valid bearer key, but reading them grants no tool scope or permission. Use `tools/list` for the deployed tool definitions and input schemas.', '',

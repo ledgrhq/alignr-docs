@@ -943,6 +943,129 @@
         "x-ledgr-permission": "fact.read"
       }
     },
+    "/api/v1/integrations/{integration_id}/client-mapping-candidates": {
+      "get": {
+        "tags": [
+          "Evidence"
+        ],
+        "summary": "List source client mappings",
+        "operationId": "list_client_mapping_candidates_api_v1_integrations__integration_id__client_mapping_candidates_get",
+        "parameters": [
+          {
+            "name": "integration_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Integration Id"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 50,
+              "minimum": 1,
+              "default": 25,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 10000,
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          },
+          {
+            "name": "assignment",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "all",
+                "assigned",
+                "unassigned"
+              ],
+              "type": "string",
+              "default": "all",
+              "title": "Assignment"
+            }
+          },
+          {
+            "name": "remoteId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 300
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Remoteid"
+            }
+          },
+          {
+            "name": "organizationId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Organizationid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MappingCandidatesRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "description": "Requires `integration.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability. List bounded existing remote-company mappings for an eligible generic PSA/RMM source. Includes remote ID/name, current Organization ID and caller-bound short-lived revision; excludes credentials and source config. Only unassigned records can be first-linked through the separate write endpoint. A foreign source or Organization filter returns 404.",
+        "x-ledgr-permission": "integration.read"
+      }
+    },
     "/api/v1/integrations/{integration_id}/sync-operations/{operation_id}": {
       "get": {
         "tags": [
@@ -1302,6 +1425,79 @@
           "errorCode"
         ],
         "title": "IntegrationSyncOperationRead"
+      },
+      "MappingCandidatesRead": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/MappingCandidateRead"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "limit": {
+            "type": "integer",
+            "title": "Limit"
+          },
+          "offset": {
+            "type": "integer",
+            "title": "Offset"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items",
+          "total",
+          "limit",
+          "offset"
+        ],
+        "title": "MappingCandidatesRead"
+      },
+      "MappingCandidateRead": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "remoteId": {
+            "type": "string",
+            "title": "Remoteid"
+          },
+          "remoteName": {
+            "type": "string",
+            "title": "Remotename"
+          },
+          "organizationId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Organizationid"
+          },
+          "revision": {
+            "type": "string",
+            "title": "Revision"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "remoteId",
+          "remoteName",
+          "organizationId",
+          "revision"
+        ],
+        "title": "MappingCandidateRead"
       },
       "Severity": {
         "type": "string",

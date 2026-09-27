@@ -34,6 +34,8 @@ The catalogue includes retained server tools. The current token-creation form do
 | [List evidence sources](#list-evidence-sources) | `list_evidence_sources` | `integration:read` |
 | [Request a source refresh](#request-a-source-refresh) | `request_source_refresh` | `integration:sync` |
 | [Get a source refresh](#get-a-source-refresh) | `get_source_refresh` | `integration:read` |
+| [List source client mappings](#list-source-client-mappings) | `list_source_client_mappings` | `integration:read` |
+| [Link a source client](#link-a-source-client) | `link_source_client` | `integration:map` |
 | [Search indexed content](#search-indexed-content) | `search_documentation` | `search:read` |
 | [Ask an evidence-backed question](#ask-an-evidence-backed-question) | `ask_ledgr` | `ask:use` |
 
@@ -404,7 +406,7 @@ Queue one durable, source-wide evidence refresh with a UUID idempotency key.
 | `integration_id` | Yes | — |
 | `idempotency_key` | Yes | — |
 
-- **`integration_id`:** UUID of the evidence-producing connection. A refresh covers all of its mapped clients.
+- **`integration_id`:** UUID of the connection.
 - **`idempotency_key`:** Canonical caller-generated UUID for this one source-wide request. Save and reuse it with the same connection after an uncertain response; a different source under the same key is refused.
 
 Requires a user-owned `integration:sync` key and the active owner’s current `integration.manage` permission. A service key is refused. The result reports one durable operation and `replayed`; `pending` means recorded, not collected. The collection spans the connection and every mapped client. Same caller/key/source retries return the current original operation; after an exact SyncRun is claimed, uncertain vendor I/O is not automatically replayed.
@@ -426,10 +428,70 @@ Poll the exact collection outcome of a durable evidence refresh.
 | `integration_id` | Yes | — |
 | `operation_id` | Yes | — |
 
-- **`integration_id`:** UUID of the evidence-producing connection. A refresh covers all of its mapped clients.
+- **`integration_id`:** UUID of the connection.
 - **`operation_id`:** The durable operation UUID returned by the refresh request. Match it with the same connection ID.
 
 Returns only the matching workspace, connection and exact operation. `state` is pending, running, completed, failed or interrupted; `assessmentState` remains `unknown`. Optional `sweepId` and `syncRunId` identify the exact collection. `errorCode` is safe and machine-readable, not a vendor response. A completed collection still needs fresh evidence and separate standards evaluation before a pass claim.
+
+## Client source linking
+
+### List source client mappings
+
+`list_source_client_mappings`
+
+Discover bounded existing PSA/RMM remote-client mappings without credentials.
+
+**Required scope:** `integration:read`
+
+**User permissions:** `integration.read`.
+
+| Argument | Required | Default |
+| --- | --- | --- |
+| `integration_id` | Yes | — |
+| `limit` | No | `25` |
+| `offset` | No | `0` |
+| `assignment` | No | `"all"` |
+| `remote_id` | No | `null` |
+| `organization_id` | No | `null` |
+
+- **`integration_id`:** UUID of the connection.
+- **`limit`:** Remote records per page, from 1 to 50 (default 25).
+- **`offset`:** Zero-based offset from 0 to 10,000; remote name then mapping UUID order.
+- **`assignment`:** Filter mappings by all, assigned or unassigned; default all.
+- **`remote_id`:** Optional exact vendor remote ID filter, up to 300 characters; never use a display name as identity.
+- **`organization_id`:** Organization UUID. Omit it to use the tool’s workspace-wide scope.
+
+Returns existing remote-company records from a supported generic PSA/RMM source only. Each row includes its mapping ID, remote ID/name, current Organization ID or null, and a short-lived caller-bound `revision`. It does not fetch a new directory, create a client, include connector credentials or narrow an eventual source-wide refresh. Service keys with `integration:read` may use this read.
+
+Supported first-link source types are ConnectWise Manage, HaloPSA, Autotask, Datto RMM and NinjaOne. Microsoft selection and built-in domain mappings use separate workflows.
+
+### Link a source client
+
+`link_source_client`
+
+First-link one existing unassigned remote record to one existing client.
+
+**Required scope:** `integration:map`
+
+**User permissions:** `integration.manage`.
+
+| Argument | Required | Default |
+| --- | --- | --- |
+| `integration_id` | Yes | — |
+| `mapping_id` | Yes | — |
+| `organization_id` | Yes | — |
+| `revision` | Yes | — |
+| `idempotency_key` | Yes | — |
+
+- **`integration_id`:** UUID of the connection.
+- **`mapping_id`:** UUID of an existing unassigned remote record returned by mapping discovery.
+- **`organization_id`:** Organization UUID.
+- **`revision`:** The short-lived opaque revision returned for the exact mapping. Refresh discovery if it changes or expires.
+- **`idempotency_key`:** Canonical UUID for this exact first link. Reuse the same key with identical arguments after an uncertain response; changed payload is refused.
+
+Requires a user-owned key with `integration:map`, backed by the owner’s current `integration.manage` permission. Pass an existing unassigned mapping, existing unarchived Organization UUID, the exact discovery `revision` and a canonical UUID idempotency key. A running collection, changed mapping or source, assigned record, unsupported source, archived/foreign client or missing authority is refused. This changes only the mapping in Alignr; it does not call a vendor or start a refresh.
+
+<Warning>If the response is lost, retry the **same key and identical arguments**. A committed link returns the original receipt with `replayed: true` even if the source or client was later removed. A new key is a new intention and cannot relink an already assigned record. Linking does not move historical facts, run a control, prove passing status, or bypass human remediation approval. See [Link source clients](/mcp/link-source-clients).</Warning>
 
 ## Search and questions
 

@@ -13,10 +13,10 @@ Scopes specify what a key may do. Many REST and MCP operations use different nam
 | --- | --- | --- |
 | REST API | `organization.read` | Read Organizations through the API. |
 | REST API | `billing.read` | Request a read-only USD workspace billing estimate, where the owner holds billing access. |
-| REST API | `integration.read` / `integration.manage` | Poll a source refresh / request one for all clients mapped to that source. |
+| REST API | `integration.read` / `integration.manage` | Discover persisted PSA/RMM client mappings or poll a source refresh / first-link one unassigned mapping or request a source-wide refresh. |
 | MCP client | `organization:read` | Call the `get_organization` tool. |
 | MCP client | `organization:write` | Call `create_organization` or `update_organization` with a user-owned key. |
-| MCP client | `integration:read` / `integration:sync` | Discover or poll evidence sources / request a source-wide refresh. |
+| MCP client | `integration:read` / `integration:sync` / `integration:map` | Discover mappings or poll sources / request source-wide refresh / first-link an unassigned remote record. |
 | MCP client | `remediation:read` | Read a metadata-only plan outline or remediation run statuses; it does not authorise an action. |
 | MCP client | `remediation:preview` | Preview one exact plan for a human review request; no run is created. |
 | MCP client | `remediation:request` | Create a pending run and human approval request from a valid preview; no step executes. |
@@ -28,6 +28,8 @@ A scope is necessary but does not make every REST route accept a key. A **user k
 For MCP client creation and updates, use the separate `organization:write` scope on a **user key**. The owner must retain `organization.write` permission. Service keys are refused for those tools. See [Manage clients with MCP](/mcp/manage-clients).
 
 To [refresh evidence with MCP](/mcp/refresh-evidence), use a user key with `integration:read` for discovery and polling and `integration:sync` to request collection. The owner must retain the corresponding `integration.read` and `integration.manage` permissions. A service key can use the read tools but cannot start collection. REST refresh routes use the dot-separated scopes shown above.
+
+To [first-link a PSA/RMM remote record](/mcp/link-source-clients), use `integration:read` to inspect existing mappings and `integration:map` to link one unassigned record to an existing client. The owner must retain `integration.manage`; service keys cannot link. REST uses `integration.read`/`integration.manage` for the corresponding narrow routes. A link neither starts source collection nor changes existing assignments.
 
 The [MCP remediation review-request workflow](/mcp/request-review) needs a user key with `remediation:preview` and `remediation:request`; add `remediation:read` to inspect the outline and follow run status. The owner must currently have `remediation.read` for preview and both `remediation.read` and `remediation.execute` for request, remain active and have no required password change pending. Service keys are refused for preview and request. Tool discovery alone does not grant access.
 

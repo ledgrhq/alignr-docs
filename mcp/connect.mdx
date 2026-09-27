@@ -69,6 +69,7 @@ A useful answer identifies the client, the expectation, the actual observation a
 | Can I submit that reviewed plan for a human decision? | `request_remediation_review` — requires `remediation:request` and current owner `remediation.read` and `remediation.execute`; it creates only a pending request. |
 | What is the status of a remediation run? | `list_remediation_runs` or `get_remediation_run_status` — requires `remediation:read`; neither confirms rollback eligibility. |
 | Which connection can supply evidence? | `list_evidence_sources` — requires `integration:read`; the list may include a source that is not currently connected. |
+| Which remote client is mapped? | `list_source_client_mappings` needs `integration:read`; `link_source_client` needs a user-owned `integration:map` key, an existing unassigned PSA/RMM record and a current revision. Follow the [linking guide](/mcp/link-source-clients). |
 | Can I refresh and follow one source? | `request_source_refresh` needs a user-owned `integration:sync` key and a saved UUID; `get_source_refresh` needs `integration:read`. The refresh spans all mapped clients. Follow the [evidence refresh guide](/mcp/refresh-evidence). |
 | Can I add an agreed note to a finding? | `create_detection_note` — requires write access. |
 

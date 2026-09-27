@@ -1,0 +1,30 @@
+---
+title: "Link a source record to a client"
+description: "Discover an existing PSA/RMM mapping and recover one first-link write with an API key."
+---
+
+The REST first-link workflow connects an **existing unassigned** remote-company mapping to an **existing unarchived** Organization. It makes a local Alignr mapping change only. It does not create a client, fetch a directory, call a vendor, move historical evidence, refresh a source or evaluate controls.
+
+<Note>This guide is held for the matching application release. Confirm availability in the authenticated [live schema](/api-reference/live-schema). The [Developer Console](https://app.alignr.io/developer) can inspect and try supported requests against your **real workspace**.</Note>
+
+Use a signed-in staff session with `integration.read`/`integration.manage`, or a **user-owned** API key with those exact dot-separated scopes. A key's owner must remain active, retain the corresponding permission and have no required password change. Service keys may read permitted mappings but cannot first-link. MCP uses separate `integration:read` and `integration:map` scopes; see the [MCP guide](/mcp/link-source-clients).
+
+## Discover the exact mapping
+
+`GET /api/v1/integrations/{integration_id}/client-mapping-candidates` accepts `limit` (1–50, default 25), `offset` (0–10,000), `assignment` (`all`, `assigned`, `unassigned`), exact `remoteId` and `organizationId` filters. It requires `integration.read` and returns `items`, `total`, `limit` and `offset`. Each item contains only mapping `id`, `remoteId`, `remoteName`, current `organizationId` or null, and a short-lived opaque `revision`.
+
+Choose a supported generic PSA/RMM connection: ConnectWise Manage, HaloPSA, Autotask, Datto RMM or NinjaOne. Microsoft selection and built-in domain mappings are separate. Confirm the remote ID, not just its display name. The response omits credentials, configuration and vendor errors; it does not reach out to a connector. A foreign connection or Organization filter returns 404.
+
+## Submit one recoverable first link
+
+Send `POST /api/v1/integrations/{integration_id}/client-mapping-links` with `integration.manage`, a canonical UUID `Idempotency-Key` header and this JSON body:
+
+```json
+{"mappingId":"22222222-2222-4222-8222-222222222222","organizationId":"33333333-3333-4333-8333-333333333333","revision":"<revision from discovery>"}
+```
+
+On a new link the server returns 201 with `id`, `integrationId`, `mappingId`, `organizationId`, `remoteId`, `outcome: linked` and `replayed: false`. The revision must be current for this exact caller, source and remote mapping. An assigned record, changed or expired revision, running collection, unsupported connection or archived target is refused. A foreign source, mapping or client is hidden as 404.
+
+If the response is lost, resend **the same header UUID and identical body**. The original committed receipt returns with 200 and `replayed: true`, even after a source or client has been removed. Reusing the UUID for different arguments returns 409. The write and its audit are committed together; retrying with a fresh UUID is a different intention and cannot relink an assigned record.
+
+After linking, request an [evidence refresh](/api-reference/refresh-evidence) separately if needed. That refresh covers the whole connection and every mapped client. Completion is a collection outcome, not a passing assessment or approval to remediate.

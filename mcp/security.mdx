@@ -13,6 +13,8 @@ Grant only the tool scopes the client needs. Read scopes do not imply permission
 
 `integration:read` discovers evidence sources and polls a specific refresh, backed by `integration.read`. `integration:sync` requests a source-wide collection, backed by `integration.manage`; it requires a user-owned key whose owner is still active and permitted. A service key may read but cannot request a refresh. A selected source can cover many mapped clients, and a successful collection does not establish a passing control. See [Refresh evidence with MCP](/mcp/refresh-evidence).
 
+`integration:read` also lists existing PSA/RMM client mappings. The separate `integration:map` scope permits a **first link** of one existing unassigned remote record to one existing client, backed by the owner's current `integration.manage` permission. Only a user-owned key can write. It does not grant arbitrary remapping, unlinking, Microsoft source selection, directory creation, vendor writes or a collection. See [Link source clients with MCP](/mcp/link-source-clients).
+
 In the token form, **Select all** selects every currently issuable API and MCP scope, even while you are filtering the list. For a single assistant workflow, choose the scopes in the [tool catalogue](/mcp/tools) individually and review the selection before creating the key.
 
 ## Live permission checks
