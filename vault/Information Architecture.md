@@ -47,6 +47,8 @@ The wizard has five optional, resumable steps: Microsoft partner access, PSA, RM
 
 The Standards step hands off to guided baseline setup with `from=setup`. Its Back/exit route returns to `/setup?step=standards`; an unfinished baseline is a same-browser, account-scoped draft that offers Resume or Start again on re-entry. Saving creates an inactive standard for review and does not itself finish the wizard or enable evaluation. Show these continuity and completion boundaries beside the Standards step, rather than treating the wizard and builder as separate journeys. Keep the five visual-tour step captures in sync with the released header and logo treatment.
 
+The held Microsoft guidance adds optional public domain-to-tenant-ID discovery in the connection form and two distinct MSP partner steps: administrator consent return, then delegated account authorisation. A discovered ID is not ownership proof. A dated consent return is not a verified grant, token or customer access result. Keep customer assignment, consent and GDAP checks after partner sign-in. Refresh the visual-tour Microsoft capture against the matching released UI before publishing this guidance.
+
 ## Continuing after the first result
 
 Daily review → triage → supported remediation or client review → risk/roadmap → fixed report or authorised portal sharing. Vendor setup is grouped by category with per-product accordions; UniFi and SonicWall have dedicated mode guides. Keep API recipes in the developer tab and link them from task guidance.

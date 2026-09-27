@@ -9,7 +9,7 @@ For a first client, **Direct** is the route when the client is outside your part
 
 ## Gather the prerequisites
 
-- The client's Microsoft tenant ID and the matching Alignr client.
+- The client's Microsoft tenant ID and the matching Alignr client. When adding a Microsoft or Partner Center connection, the **Add connection** form can look up that connection's tenant ID from its Microsoft domain; check the returned tenant before using it.
 - An Alignr account with `integration.read` and `integration.manage`, plus access to the client.
 - For Direct, a client administrator authorised to grant the requested application permissions.
 - For Partner Center, an authorised partner user with MFA, an active customer relationship, the relevant GDAP role assignments and customer application consent.
@@ -78,11 +78,12 @@ For a custom application, review its **API permissions** in Microsoft Entra, cho
 
 ## Partner: authorise the MSP, then the customer
 
-1. In **Settings → Microsoft**, choose **Partner Center · use your partner account**, select or add the partner connection and **Save Microsoft defaults**. This route requires the separate Partner platform application when using Alignr's shared registration; Direct application credentials cannot replace it.
-2. Select **Authorise partner account** and sign in to the intended MSP partner tenant with MFA. The current authorisation requests Partner Center `user_impersonation`, `offline_access`, and Graph `User.Read` / `User.Read.All` for the MSP staff-directory preview. This is not customer Graph consent. [Partner Center authentication](https://learn.microsoft.com/en-us/partner-center/developer/partner-center-authentication).
-3. Review and assign the customer's tenant to its Alignr client.
-4. Open the client's **Connections**, confirm the saved Partner Center route and tenant ID, then select **Connect client**.
-5. Review the result. This action checks access and can request missing customer read consent where authorised; it does not create GDAP relationships or grant the partner user new customer roles.
+1. In **Settings → Microsoft**, choose **Partner Center · use your partner account**, select or add the partner connection and **Save Microsoft defaults**. When adding a connection, **Find tenant ID by domain** can look up your MSP partner tenant's ID from its Microsoft domain: enter the domain, select **Look up tenant**, confirm the result and select **Use tenant ID**. Public metadata does not prove tenant ownership or grant access. This route requires the separate Partner platform application when using Alignr's shared registration; Direct application credentials cannot replace it.
+2. Select **1. Request admin consent**. Review Microsoft's screen with an administrator of your MSP partner tenant. Returning to Alignr records only that the consent flow returned; it does not verify a grant or customer access. If the return fails, correct the problem and start this step again.
+3. Select **2. Authorise partner account** and sign in to the intended MSP partner tenant with MFA. This separate delegated authorisation requests Partner Center `user_impersonation`, `offline_access`, and Graph `User.Read` / `User.Read.All` for the MSP staff-directory preview. It is not customer Graph consent. [Partner Center authentication](https://learn.microsoft.com/en-us/partner-center/developer/partner-center-authentication).
+4. Review and assign the customer's tenant to its Alignr client. Use that customer's tenant ID, not the MSP partner tenant ID entered for the partner connection.
+5. Open the client's **Connections**, confirm the saved Partner Center route and tenant ID, then select **Connect client**.
+6. Review the result. This action checks access and can request missing customer read consent where authorised; it does not create GDAP relationships or grant the partner user new customer roles.
 
 The current customer-consent request contains these delegated Graph permissions:
 

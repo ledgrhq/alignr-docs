@@ -14,7 +14,7 @@ Alignr's shared Direct and Partner Center routes use separate platform applicati
 ## Before you begin
 
 - Create or identify the correct [Alignr client](/guides/organizations).
-- Have the **Microsoft tenant ID belonging to that client**, rather than your MSP's tenant ID or its Alignr Organization ID.
+- Have the **Microsoft tenant ID belonging to that client**, rather than your MSP's tenant ID or its Alignr Organization ID. Separately, the **Add connection** form for Microsoft or Partner Center can look up the connection's tenant ID from its Microsoft domain; confirm that result before using it.
 - Use a role with `integration.read` to view connection settings and `integration.manage` to change them. You also need access to the client.
 - For Direct, arrange for a client administrator who can approve the requested Microsoft application permissions. For Partner Center, your partner authorisation, customer consent and GDAP access must be in place.
 
@@ -50,10 +50,10 @@ Open **Settings → Microsoft**. Under **How your clients connect**, choose **De
 <Tabs sync={false}>
   <Tab title="Usually Partner Center">
     1. Choose **Partner Center · use your partner account**.
-    2. Choose an enabled live **Partner account**, or select **Add partner connection**.
+    2. Choose an enabled live **Partner account**, or select **Add partner connection**. The add form can look up your MSP partner tenant ID by domain, but it does not prove ownership or authorise the account.
     3. Select **Save Microsoft defaults**.
-    4. Select **Authorise partner account** and complete Microsoft's authorisation.
-    5. Return to each client's **Connections** tab to confirm its customer assignment and access.
+    4. Select **1. Request admin consent** and have an administrator review Microsoft's request. A return to Alignr is a dated record of the consent flow, not verification of the grant.
+    5. Select **2. Authorise partner account** and complete the separate partner sign-in. Then return to each client's **Connections** tab to confirm its customer assignment and check access.
 
     Use the Microsoft 365 partner-access connection for these identity checks. The separate Partner Center connection that supplies customer lists and purchased subscriptions does not itself grant this Graph access.
   </Tab>
