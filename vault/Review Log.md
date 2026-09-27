@@ -187,6 +187,22 @@ current state from historical copy receipt, and inspection from evaluation or
 approval. Source runtime, independent review, full gate, live tool availability and
 publication remain unverified at this draft stage.
 
+## 2026-09-27 — Standards copy and inspection release preparation
+
+Application release `ca2f0b3` has API and worker task revisions 18 with the release manifest's exact image digest. The Vercel production alias `app.alignr.io` independently read back deployment `dpl_7oUhZZio7jFAtKgJcs5PVjmR7VE5`, READY from the same source SHA. Reconciled this docs branch with current `origin/main` at `2770c36`, preserving the first-link publication note and the 27-tool standards copy/inspection catalogue. Replaced the copy guide's held-release notice with authenticated live-tool discovery wording. Vault guard, broken links, OpenAPI and pinned Mintlify 4.2.939 build validation passed on the reconciled branch. Desktop 1440×900 and mobile 390×844 previews showed readable heading, scoped-key guidance and navigation. Docs CI, hosted readback and live MCP invocation remain to verify before claiming publication.
+
+Docs `e099248` published to main and workflow `36334882660` passed. The hosted [copy guide](https://docs.alignr.io/mcp/copy-standard-draft) showed the live-reference notice and scoped-key workflow; the hosted [tool catalogue](https://docs.alignr.io/mcp/tools) contained all four standard-library/copy/inspection tool names. This confirms public-page availability, not an authenticated live MCP invocation, a copied customer draft or an assessment result.
+
 ## 2026-09-27 — Held copied-standard activation guidance
 
 Prepared a separate MCP workflow and REST recipe against the isolated activation candidate `53d1b65`. The workflow previews the complete bounded standard, control and manual-check policy, then enables only a disabled receipt-backed draft through a user-owned scoped key and one saved idempotency UUID. It distinguishes the historical activation receipt from current enabled state, workspace defaults from per-client overrides, and activation from evaluation or vendor action. Workspace-authored text in the preview is explicitly treated as potentially sensitive, untrusted data. The application candidate's focused activation tests passed 12 cases, including a same-count policy-edit regression; disposable migration and old-writer enabled-toggle checks passed. The offline generator produced 14 selected REST reads and 29 MCP tools. Vault guard, broken links, OpenAPI and pinned Mintlify 4.2.939 build validation passed; the first build attempt hit only a shared-cache permission error and the authorised rerun passed. These are candidate checks, not a public release or hosted protocol proof. Independent documentation review and publication remain outstanding.
+
+
+## 2026-09-27 — Activation release reconciliation
+
+Root reconciled held29-tool/14-read activation documentation with published
+main1ad3bda, retaining the verified copy/inspection publication record and the
+unpublished activation guide. Application candidate4dbe590 passed the complete
+local gate; release PR10 at e11ebc9 awaits its final remote backend check. Held
+activation notices remain until immutable API/worker and frontend verification.
+No public documentation has been pushed by this reconciliation.
