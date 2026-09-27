@@ -219,3 +219,9 @@ Browser DOM previews loaded the exact MCP guide at desktop1440 and mobile390 wid
 Production workflow36338616971 succeeded for7d74c18. Direct AWS readback confirms migration0071 stopped with exit0 and the exact manifest digest, API/worker revision19 are sole COMPLETED primaries at desired/running1, and remembered old tasks actually STOPPED. Public readiness and activation OpenAPI contracts pass. Matching Vercel deployment dpl_CRfTTSScQvBNkg8Pzuh3noeKMmmp is promoted with domain readback; temporary build access was revoked. Removed only the two stale held-release notices, retaining authenticated live-schema/tool discovery. This is not evidence of an authenticated production activation mutation or live vendor assessment.
 
 An independent fresh agent-browser session resolved the earlier preview capture failure. Both REST and MCP activation guides loaded their exact URLs/titles and settled article content at1440 and390px. Captures are `/private/tmp/alignr-docs-activation-{rest,mcp}-{1440,390}.png`; mobile menu captures end `-mobile-nav.png`. The reviewer inspected all four article captures, found readable layout without obvious overflow, and checked mobile menu links and the cross-guide destinations. Root also inspected the REST390px capture. These captures include the pre-removal hold notices; page structure is unchanged. Docs CI and hosted publication readback remain pending.
+
+Publication completed as **274862d**, validation workflow **36341693672 SUCCESS**.
+Both hosted activation guides return200, contain the expected title and no longer
+contain the stale held-release notice. Readback is retained in
+`/tmp/alignr-prod-work/release-pr10/docs-hosted-readback.json`. This closes public
+publication acceptance, not an authenticated activation mutation or assessment.
