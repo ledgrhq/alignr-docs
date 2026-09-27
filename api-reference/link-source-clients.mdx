@@ -5,7 +5,7 @@ description: "Discover an existing PSA/RMM mapping and recover one first-link wr
 
 The REST first-link workflow connects an **existing unassigned** remote-company mapping to an **existing unarchived** Organization. It makes a local Alignr mapping change only. It does not create a client, fetch a directory, call a vendor, move historical evidence, refresh a source or evaluate controls.
 
-<Note>This guide is held for the matching application release. Confirm availability in the authenticated [live schema](/api-reference/live-schema). The [Developer Console](https://app.alignr.io/developer) can inspect and try supported requests against your **real workspace**.</Note>
+<Note>Confirm availability in the authenticated [live schema](/api-reference/live-schema). The [Developer Console](https://app.alignr.io/developer) can inspect and try supported requests against your **real workspace**.</Note>
 
 Use a signed-in staff session with `integration.read`/`integration.manage`, or a **user-owned** API key with those exact dot-separated scopes. A key's owner must remain active, retain the corresponding permission and have no required password change. Service keys may read permitted mappings but cannot first-link. MCP uses separate `integration:read` and `integration:map` scopes; see the [MCP guide](/mcp/link-source-clients).
 
