@@ -19,7 +19,6 @@ GROUPS = {
     'Alignment': [('/organizations/{organization_id}/compliance', 'Get client compliance'), ('/organizations/{organization_id}/compliance/trend', 'Get compliance trend')],
     'Detections': [('/detections', 'List detections'), ('/detections/{detection_id}', 'Get a detection')],
     'Evidence': [('/facts', 'List facts'), ('/integrations/{integration_id}/client-mapping-candidates', 'List source client mappings'), ('/integrations/{integration_id}/sync-operations/{operation_id}', 'Get an evidence refresh')],
-    'Billing': [('/billing/estimate', 'Get a billing estimate')],
 }
 schema = app.openapi()
 permissions = {path: _permission_for_route(route) for path, route in _api_routes(app.routes) if 'GET' in route.methods}
@@ -33,14 +32,6 @@ for group, endpoints in GROUPS.items():
             raise ValueError(f'Expected an explicit permission for {path}')
         operation.update(summary=title, tags=[group], security=[{'BearerAuth': []}])
         operation['description'] = f'Requires `{permission}`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability.'
-        if suffix == '/billing/estimate':
-            operation['description'] += ' Optional USD pre-tax catalogue estimate only. Uses this tenant’s non-archived Organization count with a minimum billable quantity of ten; it does not create a checkout, subscription, invoice or charge. Annual commitment terms are arranged separately.'
-            operation['responses'].update({
-                '403': {'description': 'The actor does not hold billing.read.'},
-                '409': {'description': 'Billing is not configured, or the client count needs a tailored estimate.'},
-                '429': {'description': 'The estimate request rate limit was reached.'},
-                '503': {'description': 'The provider estimate is temporarily unavailable; no amount is returned.'},
-            })
         if suffix == '/integrations/{integration_id}/sync-operations/{operation_id}':
             operation['description'] += ' Read the current durable state of the exact source-wide collection. `completed` means its SyncRun finished evidence collection; `assessmentState: unknown` does not attest a passing control or completed downstream evaluation. A foreign or mismatched source/operation pair returns 404.'
         if suffix == '/integrations/{integration_id}/client-mapping-candidates':
@@ -89,7 +80,7 @@ TOOL_GROUPS = {
     'Remediation': [('get_remediation_plan_outline', 'Get remediation plan outline'), ('get_remediation_review_preview', 'Preview an exact remediation review'), ('request_remediation_review', 'Request human remediation review'), ('list_remediation_runs', 'List remediation runs'), ('get_remediation_run_status', 'Get remediation run status')],
     'Evidence refresh': [('list_evidence_sources', 'List evidence sources'), ('request_source_refresh', 'Request a source refresh'), ('get_source_refresh', 'Get a source refresh')],
     'Client source linking': [('list_source_client_mappings', 'List source client mappings'), ('link_source_client', 'Link a source client')],
-    'Search and questions': [('search_documentation', 'Search indexed content'), ('ask_ledgr', 'Ask an evidence-backed question')],
+    'Search': [('search_documentation', 'Search indexed content')],
 }
 ARGUMENT_HELP = {
     'organization_id': 'Organization UUID.',
@@ -102,7 +93,6 @@ ARGUMENT_HELP = {
     'q': 'Optional name or slug search, up to 200 characters.',
     'asset_id': 'UUID of the asset to retrieve.',
     'query': 'Text to search for.',
-    'question': 'The question you want answered from available evidence.',
     'limit': 'Maximum number of results requested.',
     'control': 'Control UUID, name, or case-insensitive substring of its name or slug.',
     'standard': 'Standard UUID, name, or case-insensitive substring of its name or slug.',
@@ -135,7 +125,7 @@ ordered_tools = [name for group in TOOL_GROUPS.values() for name, _ in group]
 registry = {spec.tool: spec for spec in MCP_TOOL_SCOPES.values()}
 if set(ordered_tools) != set(registry):
     raise ValueError('Update TOOL_GROUPS when the MCP registry changes')
-lines = ['---', 'title: "MCP tools"', 'description: "Choose a tool by task, then check its arguments and required scope."', '---', '', 'Use this catalogue to choose the tool for your question. Names, scopes and defaults are generated from Alignr’s server; [connect your client](/mcp/connect) before making a call.', '', 'Confirm deployment availability using the [live reference](/api-reference/live-schema). An Organization is one client in your MSP workspace.', '', 'The required scope must be assigned to the key. For a user-scoped key, the owner must also retain the listed user permissions.', '', 'The catalogue includes retained server tools. The current token-creation form does not offer `asset:read`, `search:read` or `ask:use`, so do not assume every listed tool can be configured through that form. Existing credentials and the live deployment contract must be checked separately.', '', '## Choose a tool', '', '| Task | Tool | Required scope |', '| --- | --- | --- |']
+lines = ['---', 'title: "MCP tools"', 'description: "Choose a tool by task, then check its arguments and required scope."', '---', '', 'Use this catalogue to choose a tool for your task. Names, scopes and defaults are generated from Alignr’s server; [connect your client](/mcp/connect) before making a call.', '', 'Confirm deployment availability using the [live reference](/api-reference/live-schema). An Organization is one client in your MSP workspace.', '', 'The required scope must be assigned to the key. For a user-scoped key, the owner must also retain the listed user permissions.', '', 'The current token-creation form does not offer `asset:read` or `search:read`, so do not assume every listed tool can be configured through that form. Existing credentials and the live deployment contract must be checked separately.', '', '## Choose a tool', '', '| Task | Tool | Required scope |', '| --- | --- | --- |']
 for group in TOOL_GROUPS.values():
     for name, title in group:
         spec = registry[name]

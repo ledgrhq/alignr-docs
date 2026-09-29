@@ -3,13 +3,13 @@ title: "MCP tools"
 description: "Choose a tool by task, then check its arguments and required scope."
 ---
 
-Use this catalogue to choose the tool for your question. Names, scopes and defaults are generated from Alignr’s server; [connect your client](/mcp/connect) before making a call.
+Use this catalogue to choose a tool for your task. Names, scopes and defaults are generated from Alignr’s server; [connect your client](/mcp/connect) before making a call.
 
 Confirm deployment availability using the [live reference](/api-reference/live-schema). An Organization is one client in your MSP workspace.
 
 The required scope must be assigned to the key. For a user-scoped key, the owner must also retain the listed user permissions.
 
-The catalogue includes retained server tools. The current token-creation form does not offer `asset:read`, `search:read` or `ask:use`, so do not assume every listed tool can be configured through that form. Existing credentials and the live deployment contract must be checked separately.
+The current token-creation form does not offer `asset:read` or `search:read`, so do not assume every listed tool can be configured through that form. Existing credentials and the live deployment contract must be checked separately.
 
 ## Choose a tool
 
@@ -46,7 +46,6 @@ The catalogue includes retained server tools. The current token-creation form do
 | [List source client mappings](#list-source-client-mappings) | `list_source_client_mappings` | `integration:read` |
 | [Link a source client](#link-a-source-client) | `link_source_client` | `integration:map` |
 | [Search indexed content](#search-indexed-content) | `search_documentation` | `search:read` |
-| [Ask an evidence-backed question](#ask-an-evidence-backed-question) | `ask_ledgr` | `ask:use` |
 
 ## Client context
 
@@ -708,7 +707,7 @@ Requires a user-owned key with `integration:map`, backed by the owner’s curren
 
 <Warning>If the response is lost, retry the **same key and identical arguments**. A committed link returns the original receipt with `replayed: true` even if the source or client was later removed. A new key is a new intention and cannot relink an already assigned record. Linking does not move historical facts, run a control, prove passing status, or bypass human remediation approval. See [Link source clients](/mcp/link-source-clients).</Warning>
 
-## Search and questions
+## Search
 
 ### Search indexed content
 
@@ -729,24 +728,6 @@ Full-text and semantic search over document bodies, asset fields and attachment 
 - **`query`:** Text to search for.
 - **`organization_id`:** Organization UUID. Omit it to use the tool’s workspace-wide scope.
 - **`limit`:** Maximum number of results requested.
-
-### Ask an evidence-backed question
-
-`ask_ledgr`
-
-Ask a natural-language question over the governed corpus, with citations.
-
-**Required scope:** `ask:use`
-
-**User permissions:** `document.read`, `asset.read`, `organization.read`, `fact.read`, `detection.read`.
-
-| Argument | Required | Default |
-| --- | --- | --- |
-| `question` | Yes | — |
-| `organization_id` | No | `null` |
-
-- **`question`:** The question you want answered from available evidence.
-- **`organization_id`:** Organization UUID. Omit it to use the tool’s workspace-wide scope.
 
 ## Authenticated help resources
 

@@ -1,41 +1,53 @@
 ---
 title: "Build or import a standard"
-description: "Turn your managed areas or existing questionnaire into a reviewed, inactive standard."
+description: "Build one domain at a time, connect relevant tools and save a standard for review."
 ---
 
 Choose the starting point that matches the material you already have. All of these paths still need a review of source coverage and client exceptions before use.
 
-| Starting point | Use it when | Where to begin |
-| --- | --- | --- |
-| Guided baseline | You want questions about the areas you manage. | **Standards → Guided setup**. |
-| Standard library | A supplied checklist matches your topic. | [Choose a baseline](/controls/baselines/overview). |
-| Existing questionnaire | Your team already has an Excel or CSV checklist. | **Settings → Setup checklist → Set up your standards → Use an existing checklist → Import checklist**. |
-| Blank standard | You want to define the structure yourself. | **Standards → More → Create a blank standard**. |
+- **Guided domain setup:** For focused questions and relevant sources, open **Standards → Set up a domain**.
+- **Standard library:** For a supplied checklist, [choose a baseline](/controls/baselines/overview).
+- **Existing questionnaire:** For your team's Excel or CSV checklist, [open checklist import](https://app.alignr.io/standards/import) after signing in.
+- **Blank standard:** To define the structure yourself, open **Standards → More → Create a blank standard**.
 
 Creating or importing standards requires `detection_rule.write`. A saved draft is shared standard content; it is not a completed client assessment.
 
 For a scoped assistant workflow, a user-owned key can [copy a curated library template into a disabled draft](/mcp/copy-standard-draft). The owner must retain the appropriate permissions. Review and enable the draft as a signed-in human before running checks; the assistant copy does not evaluate any client.
 
-## Build a guided baseline
+## Build one domain at a time
+
+Open **Standards → Set up a domain**, or **Choose a domain** in the setup wizard's Standards step. Start with **Identity**, then add other domains when you are ready. Each guided setup creates a separate standard.
+
+The domain chooser lists standards already saved for that domain and whether each is **On** or **Off**. Open one to review it, or choose **Build another** for a separate standard. General or mixed standards remain under **All standards**.
+
+- **Identity:** Choose MFA registration for every enabled account or Global Administrators, and when an unused enabled account needs attention.
+- **Devices:** Set how recently managed devices must check in, with optional patch-compliance and MDM encryption checks.
+- **Backup:** Set how recent a successful backup must be, alongside reported backup-job errors.
+- **Email & domains:** Set instructions and cadence for a human review. This guided path is manual-only and needs no connector.
 
 <Steps>
-  <Step title="Choose the areas you manage">
-    Select automated areas such as **People & access**, **Devices & protection** and **Backup & recovery**. Add manual review areas where human judgement is needed, such as governance or incident response.
+  <Step title="Answer questions">
+    Set the expectations for this domain. The summary shows your proposed checks as you answer. These answers define what you want to assess; they are not evidence that a client meets it.
+
+    For Identity, MFA registration does not prove enforcement at every sign-in. The dormant-account check flags accounts for review; creating the standard does not disable accounts.
   </Step>
-  <Step title="Answer each question">
-    Review the MFA population and time windows. For manual areas, write useful **Review instructions** and choose a cadence in days. These are expectations for your clients, not observations about their current state.
+  <Step title="Connect your tools">
+    Reuse a saved connection or select **Add a connector**. **Browse tools** starts with tools relevant to your domain. Choose another category or **All tools** to widen the list, and search within that selection.
+
+    After saving a connection, use **Match clients** to link its records to the correct Alignr clients. Return to domain setup to continue. A saved connection alone does not prove usable coverage: check its collection status and client mapping. You can save the inactive standard now and connect tools later.
   </Step>
-  <Step title="Review the proposed checks">
-    Name the standard and inspect the selected checks. Each identifies whether it is automated or manual. Deselect checks you do not intend to include and review the evidence needed by automated ones.
-  </Step>
-  <Step title="Save and inspect the draft">
-    Select **Save baseline**, then **Review & enable baseline**. The saved standard starts inactive. Inspect it before enabling it; enabling a standard applies it across the workspace, with deliberate client exceptions where needed.
+  <Step title="Review your standard">
+    Name the standard, inspect the proposed automated controls and manual checks, and deselect anything you do not need. Select **Save inactive standard**.
+
+    Select **Review & enable standard** to inspect the saved draft before enabling it. Enabling applies it across the workspace, subject to client overrides. Selecting particular clients in **Run checks** does not narrow that activation scope.
   </Step>
 </Steps>
 
-If you return with a saved browser draft, choose **Resume draft** or **Start again**. A browser draft is not a saved standard. If the page cannot save a draft locally, keep it open while finishing.
+Your unfinished answers are restored when you return in the same browser, account and workspace. Drafts are separate for each domain. A browser draft is not a saved standard. If browser storage is unavailable, saving the standard is paused; restore storage access before continuing.
 
-**Checkpoint:** a named inactive standard contains the intended automated controls and manual checks. No client result has been inferred from your answers.
+**Checkpoint:** a named inactive standard contains your intended checks. Confirm source collection and client mapping, review and enable the standard, then run checks. Manual assessments are completed separately.
+
+Use **Set up another domain** when you are ready to add another area. You do not need to configure every domain before assessing the first one.
 
 ## Prepare a questionnaire
 
