@@ -11,7 +11,7 @@ You need `detection.read` to view issues, `detection.write` to snooze or dismiss
 
 <Steps>
   <Step title="Confirm the scope">
-    Check the client and any control filter carried into the page. Use the category filters and **Status** selector to narrow the list. The default status is **Open**; **Snoozed**, **Resolved** and **Dismissed** are separate views.
+    Check any client or issue-type filter carried into the page. Select **Status**, then use **Client**, **Issue type**, **Source**, **Domain** or **Severity** to narrow the list. **Domain** is the finding's technical category, not an email domain. Its choices come from matching issues rather than a fixed list. The default status is **Open**; **Snoozed**, **Resolved** and **Dismissed** are separate views.
   </Step>
   <Step title="Open the issue">
     Select a finding to open its details. Confirm the client, subject and finding reference, then read the explanation and cited evidence. Check observation times and whether the evidence still describes the intended account or device.
@@ -20,6 +20,10 @@ You need `detection.read` to view issues, `detection.write` to snooze or dismiss
     Review a supported remediation plan, snooze work awaiting a known event, or dismiss a finding you have established is not a problem. Keep the decision distinct from the automated control result.
   </Step>
 </Steps>
+
+The filter choices come from the full matching issue set, not just the page you are viewing. Changing a filter narrows the other choices. A client selected in the top bar still scopes the queue when there is no explicit client filter in the page URL.
+
+Older links with a `domain` URL filter still narrow issues by an email address's domain or a domain subject. The page shows **Email domain: …** with **Remove email filter** when that filter is active. Remove it to see issues outside that email domain; use **Domain** for technical categories.
 
 **Checkpoint:** you can explain what was observed, why it matters, which client and subject it concerns, and what action follows.
 
