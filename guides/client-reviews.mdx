@@ -3,7 +3,7 @@ title: "Run a client review"
 description: "Assign due manual checks, record evidence and follow failures through to reassessment."
 ---
 
-Open a client and choose **More → Manual reviews**. This brings together **Scheduled reviews** and **Follow-up work**. Confirm the client shown above the queue; filters can also show work across clients.
+Open a client and choose **More → Manual reviews**. The **Client reviews** and **Follow-up work** tabs keep reviews separate from work after a failed check. In **Client reviews**, the page header offers **Start client review** and **Schedule one check**. Confirm the client shown above the queue; **Filters** beside the tabs can also show work across clients.
 
 Viewing requires `organization.read` and `detection_rule.read`. Managing work requires `organization.read` and `detection_rule.write`. The check and its parent standard must be enabled before assessment.
 
@@ -21,12 +21,12 @@ A client review takes the due manual checks at creation. Its **Review period** n
 
 <Steps>
   <Step title="Start the review">
-    In **Scheduled reviews**, select **Start client review**. Choose the client, review period, owner and due date. Inspect the number of due manual checks and add notes if useful, then confirm **Start client review**.
+    In **Client reviews**, select **Start client review** in the page header. Choose the client, review period, owner and due date. Inspect the number of due manual checks and add notes if useful, then confirm **Start client review**.
 
     If no checks are due, use **Review client checks** to inspect current results and enabled states. Do not create an artificial failure to start a review.
   </Step>
   <Step title="Record each outcome">
-    Select **Open review**. Read the next check's instructions and perform the review. Choose **Pass**, **Fail** or **Not applicable**, enter an **Evidence note**, optionally add an **Evidence URL**, then select **Record outcome**.
+    Select **Start review** on a scheduled row, **Continue review** on one in progress, or **Resume review** on a paused row. The review opens beneath the list. Read the next check's instructions and perform the review. Choose **Pass**, **Fail** or **Not applicable**, enter an **Evidence note**, optionally add an **Evidence URL**, then select **Record outcome**.
 
     Explain what was inspected and why the conclusion follows. Keep credentials and unnecessary personal data out of notes.
   </Step>
@@ -41,6 +41,8 @@ A client review takes the due manual checks at creation. Its **Review period** n
 </Steps>
 
 **Checkpoint:** every included item has a recorded outcome or explicit handling decision, with evidence and unresolved work visible. “Checks handled” measures review progress, not the percentage passing or the automated alignment score.
+
+Review rows show **Scheduled**, **In progress**, **Paused**, **Completed** or **Cancelled** with a handled count. Inside a review, checks are marked **To review**, **Recorded** or **Skipped**. A pending check that changed or was disabled shows **Needs decision** until you record an explicit handling decision. These labels describe the review work; read the recorded outcome and evidence to understand the result.
 
 ## Schedule one check
 
