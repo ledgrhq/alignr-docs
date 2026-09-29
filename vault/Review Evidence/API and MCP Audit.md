@@ -29,3 +29,7 @@ Source target: app 565fae53f166e14dae4f3d872572ab3e3bdfdc28; docs baseline 0bf77
 - Operator AWS/ClickHouse/deployment tooling: belongs to internal operator runbooks, not routine MSP app setup. This audit does not imply telemetry work is finished.
 
 Validation: generator ran successfully from application Python environment, emitted ten GET endpoints and ten MCP tools; OpenAPI output unchanged. Environment emitted existing Starlette deprecation and missing email-validator warnings. No application behavior changed and no app test suite was run for these docs-only edits.
+
+## 2026-09-29 release reconciliation
+
+The dated DEV-02 and DEV-10 rows describe their earlier source targets, not the current public contract. In released application `e5f7e929e6614cbc39d086f83613f58bf70b25ba`, `ask_ledgr` is absent from `MCP_TOOL_SCOPES` and the billing router is excluded from the public OpenAPI schema. The in-app Ask Alignr assistant and human Billing page remain separate product surfaces. Regeneration from that exact checkout yields 31 MCP tools and 15 selected REST reads: it removes the stale MCP Ask entry and public billing-estimate operation/page. The selected-read diff also carries source-derived detection/fact filters, a bounded failing-subject preview and `setupDomain` on standards. This is an offline source comparison, not an authenticated live MCP or billing check.

@@ -217,7 +217,6 @@
               "api-reference/manage-clients-recipe",
               "api-reference/refresh-evidence",
               "api-reference/link-source-clients",
-              "api-reference/billing-estimate",
               "api-reference/create-standard-recipe",
               "api-reference/activate-standard-draft",
               "api-reference/evaluate-one-client"
@@ -272,13 +271,6 @@
               "GET /api/v1/facts",
               "GET /api/v1/integrations/{integration_id}/client-mapping-candidates",
               "GET /api/v1/integrations/{integration_id}/sync-operations/{operation_id}"
-            ]
-          },
-          {
-            "group": "Billing",
-            "openapi": "/api-reference/openapi.json",
-            "pages": [
-              "GET /api/v1/billing/estimate"
             ]
           }
         ]

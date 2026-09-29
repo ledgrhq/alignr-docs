@@ -761,6 +761,57 @@
             }
           },
           {
+            "name": "source_system",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 100
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Source System"
+            }
+          },
+          {
+            "name": "sourceSystem",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 100
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Sourcesystem"
+            }
+          },
+          {
+            "name": "domain",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 253
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Domain"
+            }
+          },
+          {
             "name": "page",
             "in": "query",
             "required": false,
@@ -988,7 +1039,8 @@
             "schema": {
               "anyOf": [
                 {
-                  "type": "string"
+                  "type": "string",
+                  "maxLength": 500
                 },
                 {
                   "type": "null"
@@ -1004,13 +1056,48 @@
             "schema": {
               "anyOf": [
                 {
-                  "type": "string"
+                  "type": "string",
+                  "maxLength": 200
                 },
                 {
                   "type": "null"
                 }
               ],
               "title": "Predicate"
+            }
+          },
+          {
+            "name": "source_system",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 100
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Source System"
+            }
+          },
+          {
+            "name": "sourceSystem",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 100
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Sourcesystem"
             }
           },
           {
@@ -1305,73 +1392,6 @@
         "description": "Requires `integration.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability. Read the current durable state of the exact source-wide collection. `completed` means its SyncRun finished evidence collection; `assessmentState: unknown` does not attest a passing control or completed downstream evaluation. A foreign or mismatched source/operation pair returns 404.",
         "x-ledgr-permission": "integration.read"
       }
-    },
-    "/api/v1/billing/estimate": {
-      "get": {
-        "tags": [
-          "Billing"
-        ],
-        "summary": "Get a billing estimate",
-        "operationId": "get_billing_estimate_api_v1_billing_estimate_get",
-        "parameters": [
-          {
-            "name": "offer",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "enum": [
-                "monthly",
-                "annual_commit_monthly",
-                "annual_upfront"
-              ],
-              "type": "string",
-              "default": "monthly",
-              "title": "Offer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BillingEstimateRead"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "The actor does not hold billing.read."
-          },
-          "409": {
-            "description": "Billing is not configured, or the client count needs a tailored estimate."
-          },
-          "429": {
-            "description": "The estimate request rate limit was reached."
-          },
-          "503": {
-            "description": "The provider estimate is temporarily unavailable; no amount is returned."
-          }
-        },
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ],
-        "description": "Requires `billing.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability. Optional USD pre-tax catalogue estimate only. Uses this tenant\u2019s non-archived Organization count with a minimum billable quantity of ten; it does not create a checkout, subscription, invoice or charge. Annual commitment terms are arranged separately.",
-        "x-ledgr-permission": "billing.read"
-      }
     }
   },
   "components": {
@@ -1435,74 +1455,6 @@
           "type"
         ],
         "title": "ValidationError"
-      },
-      "BillingEstimateRead": {
-        "properties": {
-          "offer": {
-            "type": "string",
-            "enum": [
-              "monthly",
-              "annual_commit_monthly",
-              "annual_upfront"
-            ],
-            "title": "Offer"
-          },
-          "mode": {
-            "type": "string",
-            "enum": [
-              "test",
-              "live"
-            ],
-            "title": "Mode"
-          },
-          "actualClientCount": {
-            "type": "integer",
-            "title": "Actualclientcount"
-          },
-          "billableQuantity": {
-            "type": "integer",
-            "title": "Billablequantity"
-          },
-          "currencyCode": {
-            "type": "string",
-            "const": "USD",
-            "title": "Currencycode"
-          },
-          "unitAmountMinor": {
-            "type": "integer",
-            "title": "Unitamountminor"
-          },
-          "subtotalMinor": {
-            "type": "integer",
-            "title": "Subtotalminor"
-          },
-          "billingPeriod": {
-            "type": "string",
-            "enum": [
-              "month",
-              "year"
-            ],
-            "title": "Billingperiod"
-          },
-          "estimateOnly": {
-            "type": "boolean",
-            "const": true,
-            "title": "Estimateonly",
-            "default": true
-          }
-        },
-        "type": "object",
-        "required": [
-          "offer",
-          "mode",
-          "actualClientCount",
-          "billableQuantity",
-          "currencyCode",
-          "unitAmountMinor",
-          "subtotalMinor",
-          "billingPeriod"
-        ],
-        "title": "BillingEstimateRead"
       },
       "IntegrationSyncOperationRead": {
         "properties": {
@@ -2063,11 +2015,19 @@
             "type": "array",
             "title": "Degradedcoverage",
             "default": []
+          },
+          "failingSubjects": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Failingsubjects",
+            "default": []
           }
         },
         "type": "object",
         "title": "ComplianceRowDetail",
-        "description": "`control_evaluations.detail`, reshaped onto the wire's camelCase\ncontract. Two independent reasons a row carries one instead of `null`:\n\n- the row is `notCovered` (spec \u00a75/\u00a75a) \u2014 `missingPredicates`,\n  `satisfiedBy`, `connectedHere`, `refusedHere` are populated, and\n  `degradedCoverage` is always empty (a predicate that reconciled off an\n  existing fact is, by definition, not `notCovered` \u2014 see step 3a);\n- the row is `pass`/`fail`/`no_data` but evaluated against at least one\n  predicate whose live coverage is `degradedCoverage` (step 3a) \u2014 only\n  that field is populated, and every `notCovered`-only field stays at its\n  empty default.\n\nA `fail` row's `failing_subjects` and a `notApplicable` row's disable\nmetadata are already surfaced through `ComplianceRow`'s own\n`subjectsFailing`/`disabledReason`/`disabledByName`/`disabledAt` fields, so\nrestating them here would be a second, divergeable copy of the same fact."
+        "description": "`control_evaluations.detail`, reshaped onto the wire's camelCase\ncontract. Two independent reasons a row carries one instead of `null`:\n\n- the row is `notCovered` (spec \u00a75/\u00a75a) \u2014 `missingPredicates`,\n  `satisfiedBy`, `connectedHere`, `refusedHere` are populated, and\n  `degradedCoverage` is always empty (a predicate that reconciled off an\n  existing fact is, by definition, not `notCovered` \u2014 see step 3a);\n- the row is `pass`/`fail`/`no_data` but evaluated against at least one\n  predicate whose live coverage is `degradedCoverage` (step 3a) \u2014 only\n  that field is populated, and every `notCovered`-only field stays at its\n  empty default.\n\nA current `fail` row may also carry a bounded `failingSubjects` preview.\n`subjectsFailing` remains the total count; the preview is not a citation."
       },
       "DegradedCoverageEntry": {
         "properties": {
@@ -2824,6 +2784,17 @@
               }
             ],
             "title": "Description"
+          },
+          "setupDomain": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Setupdomain"
           },
           "enabled": {
             "type": "boolean",
