@@ -52,6 +52,8 @@ All thirteen audited documentation gaps now have source-backed guides. This clos
 
 The historical audit notes retain the complete route inventory. Recovery now covers authentication; build/import covers standards intake; domain operations and client reviews cover client tabs and `/assessments/work`; reports/portal cover sharing; risk/roadmap covers decisions and delivery; daily review, triage, remediation and Ask cover operational routes and shell actions. The catalogue and maintenance guides cover all 38 implemented connector types and distinguish eight unavailable entries. The API recipe completes the developer task gap.
 
+The 2026-09-30 client overview candidate is covered by [Your daily review](../guides/daily-review.mdx) and [Run a client review](../guides/client-reviews.mdx): current versus last-loaded assessment, recorded-result counts, permission-dependent open issues, expandable next steps and run details, focus refresh with retained cached results on failure, and updated standard coverage after recording a manual outcome. These claims were checked against the isolated application candidate and remain held for its release; no generated API/MCP references change.
+
 Standalone `/monitoring` remains directly routed but absent from the main shell. Its advanced guide states that boundary explicitly. Portal contact access currently needs administrator/support setup because the current People & views screen lacks the required editor; do not invent a self-service screen.
 
 ## Deliberately excluded from new public promises
