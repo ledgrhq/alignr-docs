@@ -287,7 +287,7 @@
             "BearerAuth": []
           }
         ],
-        "description": "Requires `detection_rule.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability.",
+        "description": "Requires `detection_rule.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability. The standard summary includes its saved `scopeMode` and `assignedClientCount`. For selected-client scope, use the assignments route to read client IDs. This read does not run checks.",
         "x-ledgr-permission": "detection_rule.read"
       }
     },
@@ -437,7 +437,7 @@
             "BearerAuth": []
           }
         ],
-        "description": "Requires `detection_rule.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability. For a non-empty disabled curated-copy draft, returns the bounded complete standard/control/manual-check policy it signs, workspace-wide acknowledgement context and a short-lived revision. Current per-client overrides and client population are not frozen; this read does not enable or evaluate.",
+        "description": "Requires `detection_rule.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability. For a non-empty disabled curated-copy draft, returns the bounded complete standard/control/manual-check policy it signs, the current scope and assigned-client count, and whether workspace-wide acknowledgement is required. Current per-client overrides and client population are not frozen; this read does not enable or evaluate.",
         "x-ledgr-permission": "detection_rule.read"
       }
     },
