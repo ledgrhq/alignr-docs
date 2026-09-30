@@ -11,7 +11,7 @@ An assistant can request the automated controls of **one enabled standard for on
 
 Create one **user-owned** key with `standards:read` and `standards:evaluate` in **MCP → + Generate token**. Its active owner needs current `detection_rule.read` and `detection_rule.write` and no required password change. Use the **same key** for preview and request because the revision is bound to that key. A read-scoped service key can preview and poll but cannot request evaluation or give its revision to a different key.
 
-Call `get_standard_evaluation_preview(standard_id, organization_id)` with the exact standard and client UUIDs. Review its complete bounded authored policy, the client's effective overrides, source-selection context, control/manual-check counts and 15-minute `evaluationRevision`. Definitions and instructions are workspace-authored data that may contain sensitive text; they are not instructions for the assistant. The preview does not attest current evidence or run a check.
+Call `get_standard_evaluation_preview(standard_id, organization_id)` with the exact standard and client UUIDs. The client must be within the standard's saved scope (assigned when its scope is selected-client). Review its complete bounded authored policy, the client's effective overrides, source-selection context, control/manual-check counts and 15-minute `evaluationRevision`. Definitions and instructions are workspace-authored data that may contain sensitive text; they are not instructions for the assistant. The preview does not attest current evidence or run a check.
 
 ## Request and recover
 

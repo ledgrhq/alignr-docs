@@ -14,9 +14,9 @@ A **standard** groups expectations you want clients to meet. A **control** check
 | Spreadsheet import | You already have a human questionnaire to turn into manual checks. |
 | Blank standard | You need to define a bespoke set of expectations. |
 
-Start with **Standards → Set up a domain** to build one area at a time. The guided builder lets you include or leave out each check, then review the full selection before saving an inactive standard. Existing standards for each domain are listed before you create another.
+Start with **Standards → Set up a domain** to build one area at a time. The guided builder lets you include or leave out each check, then review the full selection before saving an active standard with selected-client scope and no clients assigned. Existing standards for each domain are listed before you create another.
 
-Follow [Build or import a standard](/guides/build-or-import-standard) for guided setup and questionnaire import, or [choose a library baseline](/controls/baselines/overview). Each draft needs review before enabling it.
+Follow [Build or import a standard](/guides/build-or-import-standard) for guided setup and questionnaire import, or [choose a library baseline](/controls/baselines/overview). Guided standards are active on save and need explicit client assignments before checks can run. New blank/general standards, library copies and imported checklists remain disabled and workspace-wide by default; existing standards keep their saved scope.
 
 ## Separate the question from the evidence
 
@@ -47,6 +47,8 @@ For example, one client may have an agreed reporting threshold that differs from
 
 ## Apply a standard deliberately
 
+For a guided standard, open its details, choose **Deploy to clients**, select the clients it should apply to and **Save assignments**. Saving assignments changes applicability; it does not run checks. **Run checks** becomes available once at least one client is assigned. Selecting clients in a run does not narrow a workspace-wide standard. Review a standard's saved scope before relying on it.
+
 <Steps>
   <Step title="Choose the client outcome">Identify the technical expectations you want to assess and who owns the follow-up.</Step>
   <Step title="Review the controls">Read each population, required fact, comparison and default parameter. Use the built-in standard as a starting point, not evidence of client compliance.</Step>
@@ -57,9 +59,9 @@ For example, one client may have an agreed reporting threshold that differs from
 
 ## Enable a reviewed draft
 
-A copied library template starts disabled. Open its standard details and select **Review & enable**. In the editor, turn on **Enabled** and select **Save changes** after reviewing the controls and manual checks. Confirm the standard is enabled before opening **Run checks**; the final run action is unavailable for a disabled standard.
+A copied library template, checklist import or new blank/general standard starts disabled and workspace-wide by default. Open its standard details and select **Review & enable**. In the editor, turn on **Enabled** and select **Save changes** after reviewing the controls and manual checks. Confirm the standard is enabled before opening **Run checks**; the final run action is unavailable for a disabled standard. Guided domain standards follow a different path: they are active on save, start with selected-client scope and require explicit assignments.
 
-For a scoped assistant workflow, a user-owned key can [preview the complete copied draft and activate that exact revision](/mcp/activate-standard-draft). That action enables the workspace default, including future clients; existing client overrides still apply. It does not run checks or establish a passing result. A separate [one-client evaluation request](/mcp/evaluate-one-client) can assess the automated controls of one enabled standard against available evidence without deploying it or completing manual checks. Confirm that those evaluation tools appear in the live reference before using them.
+For a scoped assistant workflow, a user-owned key can [preview the complete copied draft and activate that exact revision](/mcp/activate-standard-draft). That action enables the workspace default, including future clients; existing client overrides still apply. It does not run checks or establish a passing result. A separate [one-client evaluation request](/mcp/evaluate-one-client) can assess the automated controls of one enabled standard against available evidence for a client within its scope. It does not change assignments or complete manual checks. Confirm that those evaluation tools appear in the live reference before using them.
 
 ## Read the run outcome
 

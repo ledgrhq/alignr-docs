@@ -1,0 +1,31 @@
+---
+title: "Assign clients to a standard"
+description: "Read or replace the client set for a selected-client standard."
+---
+
+Use these routes to inspect or replace the clients to which a **selected-client** standard applies. A standard saved by guided domain setup is active with an empty assignment set. Assigning clients changes where that standard applies; it does not run checks or collect evidence.
+
+The read route requires both `organization.read` and `detection_rule.read`. The write route requires both `organization.read` and `detection_rule.write`, and a user identity. Service keys cannot replace assignments. Check the authenticated [live schema](/api-reference/live-schema) for route availability and your key's effective permissions.
+
+## Read the current scope and assignments
+
+```http
+GET /api/v1/standards/{standard_id}/assignments
+```
+
+The response includes `scopeMode` and `organizationIds`. For `selected` scope, an empty list means that no clients are assigned. For `workspace` scope, the standard applies to all clients; the returned list is not an exception roster.
+
+## Replace the selected client set
+
+```http
+PUT /api/v1/standards/{standard_id}/assignments
+Content-Type: application/json
+
+{
+  "organizationIds": ["00000000-0000-4000-8000-000000000001"]
+}
+```
+
+`organizationIds` is the complete replacement set, not a list of additions. Send `[]` to remove all assignments. The maximum is 5,000 unique client IDs. The standard must use selected-client scope; workspace-scoped standards cannot use this operation. Foreign, missing or archived clients are rejected rather than silently assigned.
+
+The response returns the saved scope and client IDs. If you need to confirm a change, read the assignments again. After a successful assignment, run checks separately from the app's **Run checks** workflow when you are ready to assess current evidence. A saved assignment does not establish a result.

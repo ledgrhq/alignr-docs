@@ -15,7 +15,7 @@ from ledgr.mcp import server
 ROOT = Path(__file__).resolve().parents[1]
 GROUPS = {
     'Organizations': [('/organizations', 'List Organizations'), ('/organizations/{organization_id}', 'Get an Organization')],
-    'Standards': [('/standards', 'List standards'), ('/standards/{standard_id}', 'Get a standard'), ('/standards/{standard_id}/controls', 'List controls'), ('/standards/{standard_id}/activation-preview', 'Preview copied-standard activation'), ('/standards/{standard_id}/evaluation-preview', 'Preview one-client evaluation'), ('/standards/{standard_id}/evaluation-requests/{operation_id}', 'Get an evaluation request')],
+    'Standards': [('/standards', 'List standards'), ('/standards/{standard_id}', 'Get a standard'), ('/standards/{standard_id}/controls', 'List controls'), ('/standards/{standard_id}/assignments', 'Get standard client assignments'), ('/standards/{standard_id}/activation-preview', 'Preview copied-standard activation'), ('/standards/{standard_id}/evaluation-preview', 'Preview one-client evaluation'), ('/standards/{standard_id}/evaluation-requests/{operation_id}', 'Get an evaluation request')],
     'Alignment': [('/organizations/{organization_id}/compliance', 'Get client compliance'), ('/organizations/{organization_id}/compliance/trend', 'Get compliance trend')],
     'Detections': [('/detections', 'List detections'), ('/detections/{detection_id}', 'Get a detection')],
     'Evidence': [('/facts', 'List facts'), ('/integrations/{integration_id}/client-mapping-candidates', 'List source client mappings'), ('/integrations/{integration_id}/sync-operations/{operation_id}', 'Get an evidence refresh')],
@@ -28,6 +28,8 @@ for group, endpoints in GROUPS.items():
         path = '/api/v1' + suffix
         operation = deepcopy(schema['paths'][path]['get'])
         permission = permissions[path]
+        if suffix == '/standards/{standard_id}/assignments':
+            permission = 'organization.read + detection_rule.read'
         if not permission:
             raise ValueError(f'Expected an explicit permission for {path}')
         operation.update(summary=title, tags=[group], security=[{'BearerAuth': []}])
@@ -42,6 +44,8 @@ for group, endpoints in GROUPS.items():
             operation['description'] += ' Preview one enabled standard and one explicit client with authored policy, effective overrides, source-selection context and a short-lived caller-bound revision. This read does not collect facts, assess manual checks, run controls or deploy a standard.'
         if suffix == '/standards/{standard_id}/evaluation-requests/{operation_id}':
             operation['description'] += ' Read the exact historical one-client evaluation operation. Pending and controls_committed are checkpoints; completed does not mean every control passed. Unknown provider outcome is terminal to automatic retry. This is not a current compliance score.'
+        if suffix == '/standards/{standard_id}/assignments':
+            operation['description'] += ' Returns the saved applicability scope and assigned client IDs. An empty `organizationIds` list for selected scope means no clients are assigned; workspace scope applies to all clients. This read does not change assignments or run checks.'
         operation['x-ledgr-permission'] = permission
         paths[path] = {'get': operation}
 # Include only components reached by selected operations.

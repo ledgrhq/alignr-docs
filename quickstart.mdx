@@ -13,7 +13,7 @@ You are signed in as soon as account creation succeeds. Alignr also queues a wel
 2. **Connect your PSA:** choose ConnectWise Manage, HaloPSA or Autotask to connect client and service records.
 3. **Connect your RMM:** choose Datto RMM or NinjaOne for device observations. ConnectWise Automate is shown as unavailable. Match the source sites or organisations to the right clients and check the first collection.
 4. **Invite teammates:** invite people manually, or preview your MSP’s own Microsoft directory and review each invitation and Alignr role. Previewing a directory does not create users or send invitations. Customer users and guests are not imported as MSP teammates.
-5. **Set up standards:** choose a domain card to open its dedicated setup page, then answer one question at a time. Include only checks that fit your policy, connect relevant tools, review the full selection and save an inactive standard. Add Devices, Backup or Email & domains later as separate standards.
+5. **Set up standards:** choose a domain card to open its dedicated setup page, then answer one question at a time. Include only checks that fit your policy, connect relevant tools and review the full selection. The guided standard is active when saved, with no clients assigned; deploy it to the intended clients before running checks. Add Devices, Backup or Email & domains later as separate standards.
 
 Alignr prepares secure connection storage automatically. If preparation is still running, continue with another step; the connection form becomes available when protection has been verified. You never need to provision an AWS key yourself.
 
@@ -39,9 +39,9 @@ Sign in to [Alignr](https://app.alignr.io) with a workspace account. You need pe
     [Understand Organizations](/guides/organizations).
   </Step>
   <Step title="Review your standard">
-    Open **Standards → Set up a domain** to build a focused standard, or **More → Browse library** to copy a supplied template. Both create inactive drafts. Review the controls, parameters, evidence requirements and client-specific overrides before enabling one.
+    Open **Standards → Set up a domain** to build a focused standard, or **More → Browse library** to copy a supplied template. A guided domain standard is active when saved, but starts with no clients assigned. In its details, choose **Deploy to clients** and save the client assignments; this does not run checks. New blank/general standards, library copies and checklist imports remain disabled and workspace-wide by default; existing standards keep their saved scope.
 
-    Open the copied standard and select **Review & enable**. Turn on **Enabled** and select **Save changes** once its contents are ready. Confirm the standard is enabled before running checks.
+    Review and enable a disabled workspace-wide draft with **Review & enable** only after checking its scope, controls, parameters, evidence requirements and client-specific overrides. Confirm the standard is enabled before running checks.
 
     [Choose a baseline](/controls/baselines/overview).
   </Step>
@@ -49,7 +49,7 @@ Sign in to [Alignr](https://app.alignr.io) with a workspace account. You need pe
     Check that collection has completed for the intended client. Look at source and observation time. Missing or stale evidence must not be interpreted as passing.
   </Step>
   <Step title="Run the assessment">
-    From **Standards**, select **Run checks**. Review the standard, selected clients and settings, then confirm **Run checks for N clients**. Wait for the evaluation to complete before interpreting the results.
+    After assigning clients to a guided standard, select **Run checks** from its details or **Standards**. Review the standard, selected clients and settings, then confirm **Run checks for N clients**. Deployment sets which clients the standard applies to; running checks is a separate assessment. Wait for the evaluation to complete before interpreting the results.
   </Step>
   <Step title="Review the results">
     Open the client’s alignment results. Investigate failures, distinguish missing data from unsupported coverage, and assign manual checks where needed. Review a supported remediation plan before approving a change.
