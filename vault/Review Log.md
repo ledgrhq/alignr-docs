@@ -393,3 +393,14 @@ GitHub reports PR #11 head `1286ddf2192d744ce77399be93dfdceed508f203` and its
 Mintlify Deployment check completed successfully. The branch remains unmerged;
 the hosted docs were not read back, and the change remains held until the app
 release.
+
+An independent root review corrected the client-detail map: the active-check
+coverage count and percentage belong to **Current assessment**, while **Check
+coverage** shows the status bar, legend and total. The expandable progress
+sections are named **Evidence collection** and **Automatic checks** in the
+Checks tab, not “Details”. The daily-review guide now uses those exact locations
+and labels. The vault guard, OpenAPI check, 95-MDX accessibility scan and
+whitespace check passed again for this correction; broken-links still reports
+only the two excluded README maintainer links. Mintlify CLI 4.2.229 still lacks
+`validate`, and preview remains unavailable on ports 3000–3009. No hosted
+readback was performed.
