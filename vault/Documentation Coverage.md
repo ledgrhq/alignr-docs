@@ -186,3 +186,16 @@ matching Controls app PR52 was verified live. PR21 merged as
 `63b422fc02e744a343442a7d1c18d07ae9689e85`; main validation run `36893332012`
 passed. PR22 remains a held draft for app PR53; its dependency on the now-published
 PR21 has been reconciled to main, but PR22 is not released or hosted-accepted.
+
+## Held Activity collection controls — 1 October 2026
+
+Daily review and security/data export guidance now cover full-collection search,
+heading/mobile ordering, pagination, URL-over-header client scope, matching export
+filters/order, query metadata privacy and CSV formula-safe presentation. Source:
+application `18fada94c706c3b6cc2c547c3606b423238ccc9f`, identical feature source to
+reviewed `0d27682`. Publication is held until the matching application release.
+Audit routes are absent from curated generator GROUPS, so this slice does not add
+or regenerate public OpenAPI operations. The existing 50,000-row cap is a current
+implementation limitation, not an accepted new policy. The owner's direction to
+remove collection/export limits remains outstanding application work; do not
+claim unlimited export before implementation and verification.

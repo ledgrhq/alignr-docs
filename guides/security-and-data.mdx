@@ -47,6 +47,8 @@ Read the specific plan, target and risk before execution. A rollback is availabl
 
 Use **Activity → Audit trail** to inspect recorded actions and **Activity → Fix history** for remediation outcomes. Follow the [audit export guide](/guides/daily-review#inspect-activity-and-export-audit-history) when supplying operational records to an authorised reviewer.
 
+Audit CSV exports prefix spreadsheet-sensitive text with an apostrophe for safe presentation; this does not rewrite the stored audit values. Check the export completion message before treating a file as complete.
+
 Control who can receive exported reports, CSV files and copied evidence. Changes inside Alignr do not automatically remove copies already downloaded or shared elsewhere.
 
 ## Retention, deletion and leaving a workspace
