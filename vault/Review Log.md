@@ -752,3 +752,33 @@ MDX link failed. The installed Mintlify CLI is 4.2.229 and does not implement
 ports 3000 through 3009 were already occupied; no other preview server was
 stopped or changed. Desktop/mobile rendering and hosted readback remain pending.
 Keep this docs change unpublished until the matching app release is verified.
+
+## 2026-10-01 — Held Controls table guidance
+
+Updated `controls/parameters.mdx` for the Controls tab collection controls in
+application candidate `cf98db8f1edf7f2b36c854f23cd1a582738dd1fc`; the retained
+draft behavior is from Controls implementation commit
+`fda1783a66021c0105c08a4b444fa681e11c46b7`. The guide covers full-collection
+search, category and On/Off filters, sortable headings and the narrow-screen
+selector, page sizes, category grouping, and parameter edit retention while
+filtering/paging. It advises users to resolve a failed or pending save before
+leaving the standard. Source review confirms search/filter/sort precede paging,
+uncategorised controls are last in category view, and the page may split one
+category across page boundaries. No REST/MCP contract, permission, generated
+reference or control definition changed, so no reference regeneration is
+needed. The application candidate is not verified live and this docs change is
+held for the matching application release. A separate source-diff review of
+`e7c500a0dd57b255be1ad5742710ec3997b3eb1f` confirmed its wrapper/grid changes
+are responsive layout only; the search, filter, sort and edit handlers are
+unchanged. No application test was run in this docs workstream.
+
+With Node 22.13.1 and Mintlify CLI 4.2.229, `python3
+scripts/check-docs-vault.py` passed (14 indexed notes), `mint openapi-check
+api-reference/openapi.json`, `mint a11y` (95 MDX files) and `git diff --check`
+passed. `mint broken-links` reports the two pre-existing README links to
+intentionally excluded `AGENTS.md` and `vault/MOC.md`; no public MDX link
+failed. This installed Mintlify CLI does not support `mint validate`. A local
+preview attempt could not start because Mint reported no available port in its
+3115–3124 range, so desktop/mobile rendering and hosted readback remain
+unverified. Keep this docs change unpublished until the matching app release
+is verified.
