@@ -25,9 +25,14 @@ the existing optional `email-validator` package notice; output generation exited
 enabled, the eight sort choices, optional page defaulting to one, and `pageSize`
 1–100 with the 25/default and bare-list compatibility description. Inspected
 `/api/v1/facts` sort values `subject`, `predicate`, `value`, `sourceSystem`,
-`observedAt` and directions `asc`/`desc`. Full local Mintlify preview, independent
-docs review, application full gate, publication and hosted readback remain pending;
-this draft makes no deployment claim.
+`observedAt` and directions `asc`/`desc`. Root's independent content review
+compared the Standards and Facts guide wording with the composed app source,
+confirmed the sort contracts, and corrected the JSON-details statement to “where
+available” so it does not imply withheld objects are exposed. The matching
+application work is [PR #50](https://github.com/ledgrhq/ledgr/pull/50), currently
+open and not released. Full local Mintlify preview, application release,
+publication and hosted readback remain pending; this draft makes no availability
+claim.
 
 For this draft, `python3 scripts/check-docs-vault.py` passed with 14 indexed notes,
 `mint openapi-check api-reference/openapi.json` passed, `mint a11y` passed across 95
@@ -45,8 +50,8 @@ I also tried `npm exec --package=@mintlify/cli@4.2.939 -- mint --version` under
 Node 22.13.1; npm returned `ETARGET` because that package version is unavailable
 from the registry. The installed `mint` CLI remains 4.2.229. The branch
 `docs/standards-index-search-paging` is in draft docs PR #19, based on updated
-docs main after Docs18. It must remain held until the matching application
-release and required documentation review are complete.
+docs main after Docs18. Its matching app work is PR #50. Keep docs PR #19 in draft
+until PR #50 is released and hosted documentation publication is authorized.
 
 ## 2026-10-01 — Held paged standard activation reference
 
