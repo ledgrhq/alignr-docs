@@ -138,3 +138,17 @@ to freshness rules. The canonical predicate vocabulary and control definitions
 did not change, so the generated control catalogue,
 OpenAPI and MCP references remain unchanged. Keep these pages held until PR41's
 matching application release is verified.
+
+## 2026-10-01 — Fix history search and ordering (held)
+
+`guides/remediation.mdx` now explains whole-history literal search, composing
+Organization/result filters, five heading cycles, mobile sorting, 25-row pages
+and default newest-started ordering. The curated API selection adds only
+GET `/api/v1/remediations` and `/api/v1/approvals`, each with q200 and ten
+explicit sort values. The approval guidance retains status chips, default
+newest-requested order, missing-context behaviour and the Reset view action.
+Source: composed app PR53 `a9be8793a6e09dc429d8864f4ff289614ee74963`.
+No action, rollback, approval, verification or MCP capability changes are claimed.
+This branch builds on held docs PR21 `498af123ddec1f136d97165b52bab86c14af6e82`;
+publication requires app53 live verification and the held docs dependencies to
+be published. This is a source-aligned candidate, not hosted acceptance.

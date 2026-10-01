@@ -782,3 +782,63 @@ preview attempt could not start because Mint reported no available port in its
 3115–3124 range, so desktop/mobile rendering and hosted readback remain
 unverified. Keep this docs change unpublished until the matching app release
 is verified.
+
+## 2026-10-01 — Remediations collection candidate (held)
+
+Based on held docs PR21 `498af123ddec1f136d97165b52bab86c14af6e82`. Read
+AGENTS/MOC, decisions, architecture, editorial/workflow and review checklist.
+Claimed scope: `guides/remediation.mdx`, curated reference generator/output and
+its navigation group, Documentation Coverage and this review log. Compared
+the exact composed application source `a9be8793a6e09dc429d8864f4ff289614ee74963`
+in `/private/tmp/alignr-remediations-composed` (clean) with the implemented
+Remediations page/list router/service. No application code or tests changed.
+
+The guide explains q search fields/literal semantics and length bound, combining
+existing filters, all five heading cycles, mobile selector, complete-collection
+server paging, missing-date placement, default started-time order and reset.
+Result sorting is distinct from verification/simulation; collection controls do
+not invoke actions or change rollback eligibility. Existing approval and rollback
+guidance is preserved. DOC-R02/03/04/07 source checks completed; browser and
+published acceptance remain separate gates.
+
+Regenerated using the application Python environment with PYTHONPATH pointing
+to the exact composed source, without lifespan, database or vendor access:
+`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/private/tmp/alignr-remediations-composed/api
+<application-python> scripts/sync-reference.py`. The generated selection is now
+20 read endpoints and 33 unchanged MCP tools. Semantic comparison found no
+changed prior endpoint: only GET `/api/v1/remediations` and `/api/v1/approvals` were added. Both generated
+schemas have q maxLength200 and their ten sort values. Existing Remediations
+Organization aliases and Approvals subject-type filters remain. Permissions
+remain remediation.read and approval.read respectively, with tenant scoping.
+Mintlify official OpenAPI setup/CLI documentation was consulted for validation.
+
+Validation results are recorded before the candidate commit. Hold publication
+until app PR53 is verified live and docs PR21 plus its dependencies are published.
+
+Scope expanded, at the coordinator's request, to the independently reviewed
+Approvals list controls batched in the same app PR53. The exact combined source
+above is clean; its feature blobs match the reviewed candidates. The guide
+explains requester/title/reference/client search, status chips, five heading
+cycles, mobile ordering, reset and page changes. Existing named-human decision,
+review-context and rollback instructions were not changed.
+
+Local preview used pinned Mint4.2.939 with Node22.13.1 at localhost3245, in an
+isolated agent-browser session. Inspected both changed sections at1440x1000 and
+390x844: readable text and table, no page-level horizontal overflow (390 document
+width equals390 viewport width). Screenshots are local `/private/tmp/fix-history-
+docs-1440.png`, `fix-history-docs-390.png`, `approvals-docs-1440.png` and
+`approvals-docs-390.png`. These are candidate docs previews, not live app/public
+site evidence. The read-fix-history TOC link was exercised.
+
+Final validation of the combined candidate: `check-docs-vault.py` passed
+(14 indexed notes); pinned Mint4.2.939 `broken-links` found no broken links,
+`openapi-check` passed (with its CLI deprecation notice), `a11y` passed
+(94 MDX files) and `validate` passed. `git diff --check` passed. Existing API
+paths remain semantically unchanged; only the two reviewed GET operations
+and their reachable schemas were added. MCP tools are unchanged. The local
+preview and dedicated browser session were stopped.
+
+The draft targets `docs/controls-table-controls` (docs PR21), which itself
+targets `docs/users-api-keys-table-sort` (docs PR20), then main. Both were open
+drafts when checked. Do not publish until app PR53 is live and docs PR20/21
+are published, including the matching Controls release required by PR21.

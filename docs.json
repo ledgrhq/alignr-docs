@@ -269,6 +269,14 @@
             ]
           },
           {
+            "group": "Remediations",
+            "openapi": "/api-reference/openapi.json",
+            "pages": [
+              "GET /api/v1/remediations",
+              "GET /api/v1/approvals"
+            ]
+          },
+          {
             "group": "Evidence",
             "openapi": "/api-reference/openapi.json",
             "pages": [
