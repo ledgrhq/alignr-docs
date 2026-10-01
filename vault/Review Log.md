@@ -892,6 +892,14 @@ historical snapshots. No API, MCP or schema contract changed, so generated
 references are unchanged. This draft is held pending the matching application
 release; it makes no production availability claim.
 
+The daily-review text distinguishes the UI's **No live checks to score** state
+for existing clients from **Not assessed yet** when the workspace has no clients.
+Its example uses four eligible checks (two passing and two failing) plus an
+unrelated stale asset to show that a 50% score is not an overall health grade.
+The report guide also warns that older snapshots without saved eligibility
+counts retain their recorded label and value; readers must not infer or
+recalculate historical eligibility.
+
 Validation: `check-docs-vault.py`, `mint openapi-check` and `mint a11y` passed;
 `git diff --check` passed. The available Mint CLI is 4.2.229 under Node 22, while
 the repository pins 4.2.939. Attempting `npx mint@4.2.939` stalled without
