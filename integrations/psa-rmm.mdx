@@ -86,6 +86,8 @@ Check Platform region before saving; the connector defaults to concord. Antiviru
 
 **Available observations:** Device management, Last management check-in, Device online, Operating system, Patch state, Antivirus product.
 
+Datto maps recognised patch states to Alignr’s patch vocabulary. An unfamiliar non-empty state is recorded as `unknown`, which needs evidence rather than passing or failing the check. If a device’s patch status is omitted from a complete, validated inventory, its previous Datto patch observation is withdrawn. A malformed or incomplete inventory does not promote a partial snapshot, so Datto’s previous observation stays in place. It remains subject to the normal freshness rules.
+
 Use the vendor’s current instructions for credential preparation: [Datto RMM API key setup](https://rmm.datto.com/help/en/Content/2SETUP/APIv2.htm).
 
 </Accordion>

@@ -43,7 +43,7 @@ notes = {
  'mfa_registered':'This checks MFA registration, not effective enforcement at every sign-in. Review policy coverage, allowed methods and emergency exclusions separately.',
  'ca_policy_state':'The title is broader than the measured condition: an observed All users policy being enabled does not establish all policy interactions, exclusions or sign-in enforcement.',
  'edr_agent_installed':'Agent installation is not agent health or recent reporting. Correlate the same endpoint across sources.',
- 'patch_status':'The expected state is the exact string compliant. Review the source’s patch scope; this does not prove absence of every vulnerability.',
+ 'patch_status':'`compliant` passes and a recognised non-compliant state fails. Datto’s explicit `unknown` is not a result: if no known state fails, the control needs evidence (`no_data`). A validated complete Datto inventory that omits patch status withdraws Datto’s previous observation. A malformed or incomplete inventory leaves that observation in place; freshness rules still determine whether it can be used. This check does not prove absence of every vulnerability.',
  'device_encryption_enabled':'Reported encryption does not establish recovery-key custody or successful recovery.',
  'device_compliance_state':'Compliant means compliant with the MDM source’s configured policies, not every Alignr expectation.',
  'backup_protected_by':'Recorded product presence is not a successful backup or a tested restore. Missing evidence must be investigated rather than treated as passing.',

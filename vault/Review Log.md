@@ -480,3 +480,35 @@ the two pre-existing maintainer README links to intentionally excluded
 does not provide `mint validate`. Local preview was not available during the
 prior PR11 validation; the post-release browser readback confirms hosted text,
 not app behavior or responsive rendering.
+
+## 2026-10-01 — Held Datto unknown patch-status guidance
+
+Prepared a documentation candidate against application commits `cd99774`
+(`fix(detection): keep unknown Datto patch state out of failures`) and `e617d33`
+(`fix(integrations): fail closed on malformed Datto snapshots`). Updated the
+Datto RMM section of `integrations/psa-rmm.mdx`, `patch_status` human metadata
+and generated predicate reference, and the generated seeded/BIOS endpoint
+control explanations. Copy distinguishes an unfamiliar non-empty vendor value
+(`unknown`, Needs evidence / `no_data`) from a recognised non-compliant failure;
+a validated complete inventory can withdraw Datto's previous patch observation,
+while malformed or incomplete inventory does not promote partial results.
+Retained observations still follow freshness rules. No API/MCP schema, predicate
+vocabulary, seed control or control definition changed, so the generated control
+catalogue and OpenAPI/MCP references were not changed. Source inspection also reviewed the focused assertions for recognised pass/fail versus `unknown`/`no_data`, malformed pagination, and retention after malformed device identity; these app tests were not run in the docs workstream. This PR remains held
+until the matching PR41 application release is verified; no public availability
+or live connector acceptance is claimed.
+
+The vocabulary/reference generators rendered 88 predicate descriptions and
+retained the existing control catalogue counts (18 seeded controls, 7 templates,
+15 library controls and 19 manual checks); `reference-data/control-catalogue.json`
+did not change. The vault guard, OpenAPI check, accessibility scan (95 MDX files)
+and whitespace check passed. `mint broken-links` reports only the pre-existing
+README links to excluded `AGENTS.md` and `vault/MOC.md`; no public MDX links fail.
+Mintlify CLI 4.2.229 does not support `mint validate`. A local preview at port
+3111 was inspected at 1440×900 and 390×844; the edited Datto and patch-control
+paragraphs wrapped without horizontal overflow (`scrollWidth` matched the
+390px viewport). Captures are `/private/tmp/alignr-docs-datto-psa-rmm-final-desktop.png`,
+`/private/tmp/alignr-docs-datto-psa-rmm-final-mobile.png`,
+`/private/tmp/alignr-docs-datto-endpoints-final-desktop.png` and
+`/private/tmp/alignr-docs-datto-endpoints-final-mobile.png`. This is a local
+render only; hosted readback and app test execution are not claimed.

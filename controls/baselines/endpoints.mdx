@@ -166,7 +166,7 @@ Devices reported as managed by an RMM.
 
 **What the result tells you**
 
-The expected state is the exact string compliant. Review the source’s patch scope; this does not prove absence of every vulnerability.
+`compliant` passes and a recognised non-compliant state fails. Datto’s explicit `unknown` is not a result: if no known state fails, the control needs evidence (`no_data`). A validated complete Datto inventory that omits patch status withdraws Datto’s previous observation. A malformed or incomplete inventory leaves that observation in place; freshness rules still determine whether it can be used. This check does not prove absence of every vulnerability.
 
 </Tab>
 <Tab title="Definition">
@@ -430,7 +430,7 @@ Devices reported as managed by an RMM.
 
 **What the result tells you**
 
-The expected state is the exact string compliant. Review the source’s patch scope; this does not prove absence of every vulnerability.
+`compliant` passes and a recognised non-compliant state fails. Datto’s explicit `unknown` is not a result: if no known state fails, the control needs evidence (`no_data`). A validated complete Datto inventory that omits patch status withdraws Datto’s previous observation. A malformed or incomplete inventory leaves that observation in place; freshness rules still determine whether it can be used. This check does not prove absence of every vulnerability.
 
 </Tab>
 <Tab title="Definition">
