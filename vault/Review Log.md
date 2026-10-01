@@ -2,56 +2,29 @@
 
 Append dated entries. Keep evidence precise and do not turn planned checks into passed checks.
 
-## 2026-10-01 — Held Standards and Facts table search/sort docs
+## 2026-10-01 — Published Standards and Facts table search/sort docs
 
 Updated `guides/standards.mdx` for the routed Standards table and
-`guides/evidence.mdx` for Facts heading sorting. The Standards copy explains
-name/slug/description/setup-domain search, enabled filtering, full matching-result
-counts, page sizes and the legacy distinction: only an unparameterized
-`GET /standards` returns the complete collection; filtered, sorted or paged calls
-default to page 1 with 25 rows. Facts copy describes the sortable columns, sorting
-before page slicing and value ordering by the safe public projection.
+`guides/evidence.mdx` for Facts heading sorting. Standards search, filters,
+sorting and pagination apply before the page slice; the bare `GET /standards`
+retains its historical full-list response. Facts sorting applies to the complete
+matching result before paging and value order uses the safe public projection.
+The generated OpenAPI reference was checked against composed app source
+`c21594796c4436447a0cec0681d6506592d9c6da`; no MCP catalogue change was needed.
 
-Regenerated `api-reference/openapi.json` from composed application source
-`c21594796c4436447a0cec0681d6506592d9c6da`, containing Standards
-`1863b2edc98d1fbba50b4733ab0e6836ecf593ad` and Facts
-`b4178b6447cbb549a0cd882a9917f378260e2bf1`. The command ran
-`python /docs/scripts/sync-reference.py` in the already-built API dev image using
-a unique Compose project, read-only app bind, writable docs bind, no published
-ports and `--no-deps`; it did not start Postgres, Redis or an API server. The
-generator reported 18 selected REST reads and 33 MCP tools. Its only warning was
-the existing optional `email-validator` package notice; output generation exited
-0. Inspected generated `/api/v1/standards` parameters for `q` max length 200,
-enabled, the eight sort choices, optional page defaulting to one, and `pageSize`
-1–100 with the 25/default and bare-list compatibility description. Inspected
-`/api/v1/facts` sort values `subject`, `predicate`, `value`, `sourceSystem`,
-`observedAt` and directions `asc`/`desc`. Root's independent content review
-compared the Standards and Facts guide wording with the composed app source,
-confirmed the sort contracts, and corrected the JSON-details statement to “where
-available” so it does not imply withheld objects are exposed. The matching
-application work is [PR #50](https://github.com/ledgrhq/ledgr/pull/50), currently
-open and not released. Full local Mintlify preview, application release,
-publication and hosted readback remain pending; this draft makes no availability
-claim.
+Docs PR #19 exact head `eafc2b40e91d6cd44667657e4bf901564e0f5f74` merged to main
+as `0f7ab8ba229c2c97e6e29cc20dadb853f100103e` at 13:58:29 UTC, after matching
+application PR #50 was promoted. Main workflow `36872717239` succeeded, including
+the vault guard, broken-link check, OpenAPI check and pinned `mint validate`.
 
-For this draft, `python3 scripts/check-docs-vault.py` passed with 14 indexed notes,
-`mint openapi-check api-reference/openapi.json` passed, `mint a11y` passed across 95
-MDX files, Python JSON parsing passed and `git diff --check` passed. `mint broken-links`
-reported two links in the unchanged docs `README.md` pointing to `AGENTS.md` and
-`vault/MOC.md`; neither is a changed public guide. The installed Mintlify CLI is
-4.2.229 and has no `validate` command, so `mint validate` is unsupported. No local
-desktop/mobile preview, hosted publication or hosted-page readback has been run.
-Draft PR #19 workflow run `36862745797` passed its `validate` job at initial head
-`5d77f02c5796547b5a4651f918562db40f10e03d`; Mintlify Deployment was skipped for
-the draft. This workflow check validates the candidate but does not establish
-publication.
-
-I also tried `npm exec --package=@mintlify/cli@4.2.939 -- mint --version` under
-Node 22.13.1; npm returned `ETARGET` because that package version is unavailable
-from the registry. The installed `mint` CLI remains 4.2.229. The branch
-`docs/standards-index-search-paging` is in draft docs PR #19, based on updated
-docs main after Docs18. Its matching app work is PR #50. Keep docs PR #19 in draft
-until PR #50 is released and hosted documentation publication is authorized.
+Hosted readback at 14:01 UTC confirmed `https://docs.alignr.io/guides/standards`,
+`https://docs.alignr.io/guides/evidence` and
+`https://docs.alignr.io/api-reference/openapi.json`. The hosted Standards text
+states the search and page-size bounds, sort orders and bare-list compatibility;
+the Facts text states full-result sort order, newest-first default and safe value
+ordering. The hosted OpenAPI schema exposes the documented query options, and
+reported Mintlify version `dpl_5WfBKS6uvB3ch6FqbAMNWRNXnopx`. No live application
+endpoint call or hosted visual inspection was performed.
 
 ## 2026-10-01 — Held paged standard activation reference
 
@@ -700,3 +673,54 @@ MDX link failed. The installed Mintlify CLI is 4.2.229 and does not implement
 ports 3000 through 3009 were already occupied; no other preview server was
 stopped or changed. Desktop/mobile rendering and hosted readback remain pending.
 Keep this docs change unpublished until the matching app release is verified.
+
+## 2026-10-01 — Held Users and API Keys table guides
+
+Updated `guides/account-and-team.mdx` and `guides/api-keys.mdx` against the
+reachable page source in app candidates `b3eff8eb2382c567ff88827ac6977dd24087d4a7`
+(Users) and final API Keys candidate `fc179c3498bd28a08c5ae2cab660113681880c5f`.
+The Users
+guide names the search fields, status and role filters including **No role**,
+sortable table headings, 25-row display pages and the **Sort users** mobile
+control. The source fetches all API pages then filters, sorts and slices in the
+browser; this guide does not claim server-side query support. The API Keys guide
+documents search by name/prefix/owner, status filtering, all six sortable
+headings, desktop heading buttons and the **Sort API keys** mobile control. The
+existing **Name A–Z** default remains; null owner/date values stay last in either
+direction. The final API Keys revision removed the desktop selector; the guide
+now identifies headings as desktop controls and the selector as mobile-only.
+
+No OpenAPI or MCP reference changed because neither candidate changes an API
+contract. The pages were checked against the two isolated application commits
+and existing public-page structure. The matching application PR #51 is live. This remains an unpublished docs
+draft pending final docs checks, merge and hosted readback; no live application
+interaction is claimed.
+
+`python3 scripts/check-docs-vault.py` passed with 14 indexed notes and
+publication boundaries; `git diff --check`, `mint openapi-check
+api-reference/openapi.json` and `mint a11y` across 95 MDX files passed under
+Node 22.13.1. `mint broken-links` completed and found only the two existing
+`README.md` links to excluded `AGENTS.md` and `vault/MOC.md`; neither public guide
+link failed. An earlier invocation under Node 16 exited before checking files
+with `ReferenceError: Blob is not defined`. Docs review checked the visible labels
+and collection behaviour against the two pinned application sources. The final
+API Keys app pin uses column-heading buttons on desktop and retains the
+**Sort API keys** select only below the desktop breakpoint. Root reports the
+app owner's final 9/9 focused tests, red/green proof and static checks, and root's
+390px/1440px visual review; those checks were not rerun by docs work. No docs
+build, full Mintlify validation, docs responsive preview or hosted readback was
+run. Publication remains held for the matching app releases.
+
+### Local preview follow-up for draft PR #20
+
+Started `mint dev --port 3011` with Node 22.13.1 and read both changed guides
+through a browser session against `http://localhost:3011`. At 1440×900 and
+390×844, `document.documentElement.scrollWidth` matched the viewport width for
+both pages (1440 and 390 respectively). The rendered Users controls text block
+measured 576×168 at desktop and 308×308 at mobile; the API Keys block measured
+576×224 and 308×420. Both paragraphs rendered with the documented labels and
+order; no `vault`/review-log links appeared on either page. The browser session
+was read-only and closed after inspection; the local preview was stopped with
+Ctrl-C. Screenshot capture hung and was stopped, so there are no saved captures
+or pixel-level screenshot claims. This preview does not establish hosted
+publication or application runtime behavior.
