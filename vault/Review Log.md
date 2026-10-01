@@ -484,12 +484,18 @@ not app behavior or responsive rendering.
 ## 2026-10-01 — Held workspace Billing navigation
 
 Updated `guides/billing-and-support.mdx` to direct readers from the Settings directory
-to **Billing**, matching the isolated app candidate's `/settings/billing` route. The
-candidate reuses the existing billing view and keeps `billing.read` for page access
-and `billing.manage` for mutations; it removes billing from personal `/account` and
-redirects legacy checkout-return hints to the new route. No public API or MCP contract
-changed, so generated references were not changed. Source comparison is against app
-base `a7347a9` plus the unmerged candidate at `/private/tmp/alignr-billing-ui`; tests,
-independent review and the full application gate remain pending. This docs branch is
-held for that matching app release and has not been published or read back from the
-hosted site.
+to **Billing**, matching the composed app candidate's `/settings/billing` route. Source
+inspection at app commit `d5587da4e986b3c609625c3dba54fead7852d4c1` confirms that the
+page requires `billing.read`, mutations require `billing.manage`, Account no longer
+contains Billing, and legacy `/account?checkout=return` hints redirect to the new
+route while preserving the server lookup hint. The provider route maps the
+allowlisted `configuration_incompatible` response to HTTP 409 with the safe message
+“Billing portal setup is incomplete. Contact support to finish setup.”; other provider
+failures keep the generic temporary-unavailability response. The guide gives those
+two distinct next steps. It does not claim that the provider's Chargebee Login versus
+Single Sign On API setting has been changed, or that portal opening now succeeds.
+There is no API/MCP contract or catalogue change, so generated references were not
+changed. App test source and the combined candidate were inspected; this docs review
+did not run application suites because the root agent owns the active serial gate.
+The docs branch remains draft/held for app42 release and has not been published or
+read back from the hosted site.
