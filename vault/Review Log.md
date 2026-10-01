@@ -336,6 +336,76 @@ Re-review against the changed task flow (DOC-R01/02/03/04/07): the quickstart gi
 
 With Node 22.13.1 and locally installed Mintlify CLI 4.2.229, the 14-note vault guard, OpenAPI check, 94-page accessibility scan and `git diff --check` passed. `mint broken-links` reported only the two pre-existing maintainer README links to `AGENTS.md` and `vault/MOC.md`, which are intentionally excluded from publication. The prescribed Mintlify 4.2.939 package could not be downloaded because `registry.npmjs.org` DNS lookup returned `ENOTFOUND`; therefore the installed CLI's `mint validate` command is unavailable. Local preview could not start because all ports 3000–3009 were occupied. No app tests, rendered app acceptance, hosted docs readback or publication are claimed. This documentation branch is held until the matching app release is verified.
 
+
+## 2026-09-30 — Selected-client standard and client-page documentation (held candidate)
+
+Updated the guided-standard and setup explanations to state that **Create standard** saves an active selected-client standard with no assignments; **Deploy to clients** and **Save assignments** set applicability, while **Run checks** is a separate assessment. Clarified that new blank/general standards, curated library copies and checklist imports remain disabled and workspace-wide by default, while existing standards keep their saved scope. Updated the one-client pilot warning so it distinguishes selected-client applicability from choosing a client for a run.
+
+Checked source in `/private/tmp/alignr-client-checks-clarity` (app base `0531397` plus uncommitted candidate) for `DomainIntakePage`, standard detail/deploy flow, assignments routes/service, connection chooser, client list controls and Facts table. Added a public REST recipe for `GET`/`PUT /standards/{standard_id}/assignments` and included the read operation in the selected OpenAPI snapshot generator. The GET requires `organization.read` and `detection_rule.read`; PUT requires `organization.read` and `detection_rule.write` plus a user identity. The write replaces the full unique ID set (up to 5,000); it does not run checks. MCP remains at 31 tools with no tool-name or scope change. `get_standard_definition` now reports `scopeMode` and `assignedClientCount`; activation preview reports actual `workspaceWide` and `assignedClientCount`, and signs `scope_mode`, `assigned_client_count` and `assignment_fingerprint` in policy. These MCP responses do not expose assigned client IDs; the REST assignments read is documented for that roster. Updated the MCP guides and catalogue descriptions accordingly. This docs candidate is held for matching application review and release; it is not a claim of production availability.
+
+DOC-R01/02/03/04/07/08 source reconciliation is complete for the changed workflows. The generator completed against the candidate app and produced 16 selected REST reads and 31 MCP tools; the assignment GET was added to the curated REST selection. MCP tool names and scopes remain unchanged, but `get_standard_definition` now reports `scopeMode`/`assignedClientCount` and activation preview reports actual `workspaceWide`/`assignedClientCount` plus signed policy scope/fingerprint; its client IDs remain absent, so the REST assignments read is documented for that roster. `python3 scripts/check-docs-vault.py`, `mint openapi-check api-reference/openapi.json`, `mint a11y` (95 MDX files) and `git diff --check` passed with Node 22.13.1 and Mintlify CLI 4.2.229. `mint broken-links` reported only the two existing README links to intentionally excluded `AGENTS.md` and `vault/MOC.md`; no public MDX link failed. The installed CLI has no `mint validate` command. Local preview could not start because Mintlify found every port from 3000 through 3009 occupied. The existing Issues guide already explains the Status and Severity filters and their meanings; the current source change only places the dropdowns together, so no user guidance change is needed for that layout-only adjustment. I did not run app behavior tests, authenticated API use or hosted readback. These remain outstanding; publication waits for matching app review and release.
+
+
+## 2026-10-01 — active guided setup follow-up
+
+Updated the build/import guide against the isolated application candidate
+`feat/active-standard-setup`: both domain and earlier baseline questionnaires
+create active selected-client standards, followed by Choose clients. Corrected
+the button label to Create active standard and clarified assignment entry points.
+Blank creation, imports and library copies retain disabled workspace defaults.
+Application source review includes truthful existing-standard readback; no claim
+of absent prior checks for a recovered standard. This PR remains unpublished
+until API0078 and the corresponding guided UI are verified live.
+
+## 2026-10-01 — first-day client and page clarity (held PR candidate)
+
+Updated `guides/daily-review.mdx`, `guides/organizations.mdx`,
+`guides/standards.mdx`, `guides/build-or-import-standard.mdx` and `quickstart.mdx`
+against application `feat/active-standard-setup` at `bc4b310` (count-first
+overview, client-scoped Run all checks, Create standard, and Audit trail title)
+and the isolated client-sort commit `74d8850` (heading sort cycle). Source review
+verified that the client overview displays API `scoreCounts`: the API coverage
+denominator is passing + failed + unknown + uncovered; excluded checks are
+shown separately. Non-live pass/fail states are converted to unknown before
+the API computes either percentage. The guides distinguish the one-client
+automated evaluation from source collection and manual assessment; the Clients
+guide says heading clicks cycle ascending, descending, then clear to default,
+after search/filter and before pagination. Create standard opens the domain
+chooser; workspace setup keeps its separate **Choose a domain** label. The audit
+page heading now matches the Activity destination.
+
+Updated Information Architecture, Documentation Coverage and this review log.
+The change is explanatory UI guidance; no API/MCP contract or generated
+reference changed. This is an update for held docs PR #11; it must not merge
+until the matching application release. No production availability is claimed.
+With Node 22.13.1 and Mintlify CLI 4.2.229, the vault guard (14 indexed notes),
+OpenAPI check (valid), accessibility scan (95 MDX files) and `git diff --check`
+passed. `mint broken-links` found only the two existing maintainer README links
+to intentionally excluded `AGENTS.md` and `vault/MOC.md`; no public MDX link
+failed. This CLI does not support `mint validate`. Local preview could not start
+because all ports 3000–3009 are occupied; desktop/mobile rendering remains
+unverified. The initial sandboxed fetch could not resolve `github.com`; an
+authorised fetch then confirmed the PR branch was still at its base before the
+commit. No authenticated app action or hosted docs readback was performed.
+`1286ddf2192d744ce77399be93dfdceed508f203` was pushed to the existing PR
+branch after `git fetch` confirmed the remote branch was at its base commit.
+GitHub reports PR #11 head `1286ddf2192d744ce77399be93dfdceed508f203` and its
+Mintlify Deployment check completed successfully. The branch remains unmerged;
+the hosted docs were not read back, and the change remains held until the app
+release.
+
+An independent root review corrected the client-detail map: the active-check
+coverage count and percentage belong to **Current assessment**, while **Check
+coverage** shows the status bar, legend and total. The expandable progress
+sections are named **Evidence collection** and **Automatic checks** in the
+Checks tab, not “Details”. The daily-review guide now uses those exact locations
+and labels. The vault guard, OpenAPI check, 95-MDX accessibility scan and
+whitespace check passed again for this correction; broken-links still reports
+only the two excluded README maintainer links. Mintlify CLI 4.2.229 still lacks
+`validate`, and preview remains unavailable on ports 3000–3009. No hosted
+readback was performed.
+
+
 ## 2026-10-01 — Held roles, API-key and detected-risk table controls
 
 Updated `guides/account-and-team.mdx`, `guides/api-keys.mdx` and `guides/risk-and-roadmap.mdx` against the uncommitted table-controls candidate in `/private/tmp/alignr-client-checks-clarity` (application base `d349133548c901b262d72d998482eda6433058d6`, branch `feat/admin-risk-table-controls`). Source comparison covered `RolesPage.tsx`, `ApiKeysPage.tsx`, `RiskTab.tsx`, and the role/API-key list routes and services. The role and API-key list endpoints return the complete collection permitted to the caller; search, filters, sort and 25/50/100-row pagination then operate on that collection. Role search covers name/description, type filters cover all/system/custom, and sorting covers name, user count and granted-permission count. API-key search covers name, prefix and owner name/email, with status and owner/name sorting. Detected risks retain search across title/reference/client and severity/decision filters; sort choices are rank score, severity and name. Pagination applies to detected risks; manual assessment risks remain separate. No API/MCP contract changed, so generated references were not regenerated.
@@ -345,6 +415,7 @@ This is source inspection of an unmerged app candidate and an unpublished docume
 For this candidate, `python3 scripts/check-docs-vault.py`, `git diff --check`, `mint openapi-check api-reference/openapi.json` and `mint a11y` passed (94 MDX files) with Node 22.13.1 and Mint 4.2.229. `mint broken-links` found only the pre-existing README links to the intentionally excluded `AGENTS.md` and `vault/MOC.md`; no public MDX links failed. This CLI does not provide the prescribed `mint validate` command. Mint's `--port` option was not shown by `mint dev --help`, but the CLI accepted `mint dev --no-open --port 3100`; it started after `lsof` confirmed no listeners on 3100–3110 and local bind permission was granted. I stopped only this preview process. With agent-browser, I reviewed all three changed paragraphs at 1440×900 and 390×844; text wrapped within the content column without horizontal overflow. Captures are in `/private/tmp/alignr-docs-roles-anchor-desktop.png`, `/private/tmp/alignr-docs-roles-mobile-paragraph.png`, `/private/tmp/alignr-docs-api-keys-desktop.png`, `/private/tmp/alignr-docs-api-keys-mobile.png`, `/private/tmp/alignr-docs-risk-desktop.png` and `/private/tmp/alignr-docs-risk-mobile.png`. These are local documentation renders only. No app tests, authenticated interaction, hosted readback or publication were performed.
 
 
+
 ## 1 October — Issues search and sorting candidate
 
 Draft guides explain indexed word search, exact email tokens, scope limits and named sort orders over the full result set. Application candidate: `/private/tmp/alignr-issues-search-sort`; no deployment claim. Curated OpenAPI regeneration and validation are part of this workstream. Hold publication until the API contract and UI are released together; the existing backend scan hold is not waived.
@@ -352,3 +423,30 @@ Draft guides explain indexed word search, exact email tokens, scope limits and n
 Prior table guides PR12 merged as `62bc54d`; main validation passed. Live Roles, API keys and risk guide paragraphs were checked, and hosted search found the risk guide. Matching application PR38 frontend is live; authenticated tenant workflows were not repeated in production.
 
 Reference generation used the Issues candidate and produced its q/sort parameters. Unrelated unreleased standard-scope component changes were excluded from this PR; held PR11 owns those schema changes. This branch retains the baseline schema except the generated detections operation.
+
+## 2026-10-01 — PR11 conflict reconciliation
+
+Fetched docs `origin/main` at `62bc54d` (PR #12) and merged it into the held
+PR11 branch. The only merge conflict was the append-only Review Log: preserved
+both PR11's active-standard/client summary, Run all checks, sorting and label
+records and PR #12's roles, API-key and risk table-controls record. PR #12's
+published account/team, API-key and risk guides are also retained unchanged.
+The PR11 candidate remains draft; neither PR is being merged as part of this
+conflict resolution. The matching app release remains the publication gate.
+With Node 22.13.1 and Mintlify CLI 4.2.229, the vault guard (14 indexed notes),
+OpenAPI check, accessibility scan (95 MDX files) and `git diff --check` passed.
+`mint broken-links` reports only the two pre-existing maintainer README links to
+intentionally excluded `AGENTS.md` and `vault/MOC.md`; no public MDX links fail.
+This CLI does not support `mint validate`. A local preview was attempted but did
+not become available, so desktop/mobile rendering remains unverified. No hosted
+docs readback or authenticated application check was performed.
+
+
+## 2026-10-01 — PR11 public release
+
+PR #11 merged to docs `main` as `4d7bc3124b60cebdc5fde28d4f07f282c832de97`
+following successful GitHub validation and Mintlify Deployment checks. Application
+release PR40 is live at `app.alignr.io`, aliasing deployment
+`dpl_2f2dBJtaNaVnmjN7ENHhEaRN6hU8` from source `a7347a9435cccbea5622106ee2dab92ed518a671`;
+API deployment workflow `36815756972` succeeded. Hosted docs readback will be
+recorded after all approved guides are published.

@@ -287,7 +287,7 @@
             "BearerAuth": []
           }
         ],
-        "description": "Requires `detection_rule.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability.",
+        "description": "Requires `detection_rule.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability. The standard summary includes its saved `scopeMode` and `assignedClientCount`. For selected-client scope, use the assignments route to read client IDs. This read does not run checks.",
         "x-ledgr-permission": "detection_rule.read"
       }
     },
@@ -341,6 +341,56 @@
         "x-ledgr-permission": "detection_rule.read"
       }
     },
+    "/api/v1/standards/{standard_id}/assignments": {
+      "get": {
+        "tags": [
+          "Standards"
+        ],
+        "summary": "Get standard client assignments",
+        "operationId": "get_standard_assignments_api_v1_standards__standard_id__assignments_get",
+        "parameters": [
+          {
+            "name": "standard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Standard Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardAssignmentsRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "description": "Requires `organization.read + detection_rule.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability. Returns the saved applicability scope and assigned client IDs. An empty `organizationIds` list for selected scope means no clients are assigned; workspace scope applies to all clients. This read does not change assignments or run checks.",
+        "x-ledgr-permission": "organization.read + detection_rule.read"
+      }
+    },
     "/api/v1/standards/{standard_id}/activation-preview": {
       "get": {
         "tags": [
@@ -387,7 +437,7 @@
             "BearerAuth": []
           }
         ],
-        "description": "Requires `detection_rule.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability. For a non-empty disabled curated-copy draft, returns the bounded complete standard/control/manual-check policy it signs, workspace-wide acknowledgement context and a short-lived revision. Current per-client overrides and client population are not frozen; this read does not enable or evaluate.",
+        "description": "Requires `detection_rule.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability. For a non-empty disabled curated-copy draft, returns the bounded complete standard/control/manual-check policy it signs, the current scope and assigned-client count, and whether workspace-wide acknowledgement is required. Current per-client overrides and client population are not frozen; this read does not enable or evaluate.",
         "x-ledgr-permission": "detection_rule.read"
       }
     },
@@ -2376,8 +2426,11 @@
           },
           "workspaceWide": {
             "type": "boolean",
-            "const": true,
             "title": "Workspacewide"
+          },
+          "assignedClientCount": {
+            "type": "integer",
+            "title": "Assignedclientcount"
           },
           "activationRevision": {
             "type": "string",
@@ -2400,6 +2453,7 @@
           "controlCount",
           "manualCheckCount",
           "workspaceWide",
+          "assignedClientCount",
           "activationRevision",
           "revisionExpiresAt",
           "policy"
@@ -2615,6 +2669,22 @@
             "type": "boolean",
             "title": "Enabled"
           },
+          "scopeMode": {
+            "type": "string",
+            "enum": [
+              "workspace",
+              "selected"
+            ],
+            "title": "Scopemode"
+          },
+          "assignedClientCount": {
+            "type": "integer",
+            "title": "Assignedclientcount"
+          },
+          "assignmentFingerprint": {
+            "type": "string",
+            "title": "Assignmentfingerprint"
+          },
           "isSystem": {
             "type": "boolean",
             "title": "Issystem"
@@ -2635,11 +2705,46 @@
           "slug",
           "description",
           "enabled",
+          "scopeMode",
+          "assignedClientCount",
+          "assignmentFingerprint",
           "isSystem",
           "version",
           "activationGeneration"
         ],
         "title": "ActivationStandardPolicyRead"
+      },
+      "StandardAssignmentsRead": {
+        "properties": {
+          "standardId": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Standardid"
+          },
+          "scopeMode": {
+            "type": "string",
+            "enum": [
+              "workspace",
+              "selected"
+            ],
+            "title": "Scopemode"
+          },
+          "organizationIds": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "title": "Organizationids"
+          }
+        },
+        "type": "object",
+        "required": [
+          "standardId",
+          "scopeMode",
+          "organizationIds"
+        ],
+        "title": "StandardAssignmentsRead"
       },
       "ControlPage": {
         "properties": {
@@ -2826,6 +2931,20 @@
           "enabled": {
             "type": "boolean",
             "title": "Enabled"
+          },
+          "scopeMode": {
+            "type": "string",
+            "enum": [
+              "workspace",
+              "selected"
+            ],
+            "title": "Scopemode",
+            "default": "workspace"
+          },
+          "assignedOrganizationCount": {
+            "type": "integer",
+            "title": "Assignedorganizationcount",
+            "default": 0
           },
           "isSystem": {
             "type": "boolean",

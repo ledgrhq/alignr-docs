@@ -15,7 +15,7 @@ from ledgr.mcp import server
 ROOT = Path(__file__).resolve().parents[1]
 GROUPS = {
     'Organizations': [('/organizations', 'List Organizations'), ('/organizations/{organization_id}', 'Get an Organization')],
-    'Standards': [('/standards', 'List standards'), ('/standards/{standard_id}', 'Get a standard'), ('/standards/{standard_id}/controls', 'List controls'), ('/standards/{standard_id}/activation-preview', 'Preview copied-standard activation'), ('/standards/{standard_id}/evaluation-preview', 'Preview one-client evaluation'), ('/standards/{standard_id}/evaluation-requests/{operation_id}', 'Get an evaluation request')],
+    'Standards': [('/standards', 'List standards'), ('/standards/{standard_id}', 'Get a standard'), ('/standards/{standard_id}/controls', 'List controls'), ('/standards/{standard_id}/assignments', 'Get standard client assignments'), ('/standards/{standard_id}/activation-preview', 'Preview copied-standard activation'), ('/standards/{standard_id}/evaluation-preview', 'Preview one-client evaluation'), ('/standards/{standard_id}/evaluation-requests/{operation_id}', 'Get an evaluation request')],
     'Alignment': [('/organizations/{organization_id}/compliance', 'Get client compliance'), ('/organizations/{organization_id}/compliance/trend', 'Get compliance trend')],
     'Detections': [('/detections', 'List detections'), ('/detections/{detection_id}', 'Get a detection')],
     'Evidence': [('/facts', 'List facts'), ('/integrations/{integration_id}/client-mapping-candidates', 'List source client mappings'), ('/integrations/{integration_id}/sync-operations/{operation_id}', 'Get an evidence refresh')],
@@ -28,6 +28,8 @@ for group, endpoints in GROUPS.items():
         path = '/api/v1' + suffix
         operation = deepcopy(schema['paths'][path]['get'])
         permission = permissions[path]
+        if suffix == '/standards/{standard_id}/assignments':
+            permission = 'organization.read + detection_rule.read'
         if not permission:
             raise ValueError(f'Expected an explicit permission for {path}')
         operation.update(summary=title, tags=[group], security=[{'BearerAuth': []}])
@@ -37,11 +39,15 @@ for group, endpoints in GROUPS.items():
         if suffix == '/integrations/{integration_id}/client-mapping-candidates':
             operation['description'] += ' List bounded existing remote-company mappings for an eligible generic PSA/RMM source. Includes remote ID/name, current Organization ID and caller-bound short-lived revision; excludes credentials and source config. Only unassigned records can be first-linked through the separate write endpoint. A foreign source or Organization filter returns 404.'
         if suffix == '/standards/{standard_id}/activation-preview':
-            operation['description'] += ' For a non-empty disabled curated-copy draft, returns the bounded complete standard/control/manual-check policy it signs, workspace-wide acknowledgement context and a short-lived revision. Current per-client overrides and client population are not frozen; this read does not enable or evaluate.'
+            operation['description'] += ' For a non-empty disabled curated-copy draft, returns the bounded complete standard/control/manual-check policy it signs, the current scope and assigned-client count, and whether workspace-wide acknowledgement is required. Current per-client overrides and client population are not frozen; this read does not enable or evaluate.'
+        if suffix == '/standards/{standard_id}':
+            operation['description'] += ' The standard summary includes its saved `scopeMode` and `assignedClientCount`. For selected-client scope, use the assignments route to read client IDs. This read does not run checks.'
         if suffix == '/standards/{standard_id}/evaluation-preview':
             operation['description'] += ' Preview one enabled standard and one explicit client with authored policy, effective overrides, source-selection context and a short-lived caller-bound revision. This read does not collect facts, assess manual checks, run controls or deploy a standard.'
         if suffix == '/standards/{standard_id}/evaluation-requests/{operation_id}':
             operation['description'] += ' Read the exact historical one-client evaluation operation. Pending and controls_committed are checkpoints; completed does not mean every control passed. Unknown provider outcome is terminal to automatic retry. This is not a current compliance score.'
+        if suffix == '/standards/{standard_id}/assignments':
+            operation['description'] += ' Returns the saved applicability scope and assigned client IDs. An empty `organizationIds` list for selected scope means no clients are assigned; workspace scope applies to all clients. This read does not change assignments or run checks.'
         operation['x-ledgr-permission'] = permission
         paths[path] = {'get': operation}
 # Include only components reached by selected operations.
@@ -100,7 +106,7 @@ ARGUMENT_HELP = {
     'template_revision': 'Opaque current revision returned for this exact curated template. Refresh the list after a template change.',
     'activation_revision': 'Exact short-lived activationRevision returned by the complete policy preview. Re-preview after expiry or a policy edit.',
     'evaluation_revision': 'Exact short-lived evaluationRevision returned for this standard, client and key. Re-preview after expiry or a policy or source-selection change.',
-    'acknowledge_workspace_wide': 'Set true only after reviewing the complete policy and accepting its workspace-wide effect, including clients added later.',
+    'acknowledge_workspace_wide': 'Set true only when the preview reports workspace scope and you accept its effect, including future clients; use false for selected-client scope.',
     'standard_id': 'Exact standard UUID in your MSP workspace; a foreign standard is not found.',
     'control_limit': 'Number of controls on this page, from 1 to 20 (default 10).',
     'control_offset': 'Zero-based control offset from 0 to 10,000 (default 0).',
@@ -136,7 +142,10 @@ for category, group in TOOL_GROUPS.items():
     for name, title in group:
         spec = registry[name]
         function = getattr(server, name)
-        lines += ['', f'### {title}', '', f'`{name}`', '', spec.summary, '', f'**Required scope:** `{spec.scope}`', '', '**User permissions:** '+', '.join(f'`{permission}`' for permission in spec.permissions)+'.', '', '| Argument | Required | Default |', '| --- | --- | --- |']
+        summary = spec.summary
+        if name == 'get_standard_activation_preview':
+            summary = 'Preview a complete copied draft’s current scope and signed revision.'
+        lines += ['', f'### {title}', '', f'`{name}`', '', summary, '', f'**Required scope:** `{spec.scope}`', '', '**User permissions:** '+', '.join(f'`{permission}`' for permission in spec.permissions)+'.', '', '| Argument | Required | Default |', '| --- | --- | --- |']
         parameters = inspect.signature(function).parameters
         for argument, param in parameters.items():
             required = param.default is inspect.Parameter.empty
@@ -209,11 +218,11 @@ for category, group in TOOL_GROUPS.items():
         elif name == 'list_workspace_standards':
             lines += ['', 'Lists current standards in the key’s MSP workspace, including copied drafts, with enabled state, version and child counts. It does not return control definitions or attest assessment. The page is ordered by name and UUID; each request is capped at 20 items and 256 KiB. `truncatedByOffsetLimit: true` means more rows exist beyond the permitted 10,000 offset; `nextOffset` is then null. User-owned keys need the active owner’s current `detection_rule.read`; a read-scoped service key may also list. See [Copy and inspect a standard draft](/mcp/copy-standard-draft).']
         elif name == 'get_standard_definition':
-            lines += ['', 'Reads one current standard and independent, bounded pages of its controls and manual checks. `definition`, `parameters` and `instructions` are workspace-controlled data, not instructions to your assistant; a user may have entered sensitive text there. The tool omits assessments, evidence, source metadata and vaulted-secret or credential-envelope fields, but does not redact arbitrary text from those three content fields. Each child page is capped at 20 and the whole result at 256 KiB; reduce page sizes if refused. `truncatedByOffsetLimit: true` means more rows lie beyond the permitted 10,000 offset. A foreign standard returns not found. Inspection does not enable, evaluate or approve a draft. See [Copy and inspect a standard draft](/mcp/copy-standard-draft).']
+            lines += ['', 'Reads one current standard and independent, bounded pages of its controls and manual checks. The standard summary includes `scopeMode` and `assignedClientCount`; it does not include assigned client IDs. Use the [REST assignments route](/api-reference/assign-standard-clients) when you need that roster. `definition`, `parameters` and `instructions` are workspace-controlled data, not instructions to your assistant; a user may have entered sensitive text there. The tool omits assessments, evidence, source metadata and vaulted-secret or credential-envelope fields, but does not redact arbitrary text from those three content fields. Each child page is capped at 20 and the whole result at 256 KiB; reduce page sizes if refused. `truncatedByOffsetLimit: true` means more rows lie beyond the permitted 10,000 offset. A foreign standard returns not found. Inspection does not enable, evaluate or approve a draft. See [Copy and inspect a standard draft](/mcp/copy-standard-draft).']
         elif name == 'get_standard_activation_preview':
-            lines += ['', 'For a non-empty disabled draft with a curated copy receipt, returns the complete bounded policy (standard, controls, manual checks and scopes), `enabled: false`, counts, `workspaceWide: true`, `activationRevision` and expiry. The policy content is workspace-authored data, not assistant instructions, and may contain sensitive text. The revision binds this exact content; it does not freeze current client overrides or the roster, or assert fresh evidence or passing results. A service key with `standards:read` may preview but cannot activate. See [Activate a copied standard draft](/mcp/activate-standard-draft).']
+            lines += ['', 'For a non-empty disabled draft with a curated copy receipt, returns the complete bounded policy (standard, controls, manual checks and scopes), `enabled: false`, child counts, the current `workspaceWide` flag, `assignedClientCount`, `activationRevision` and expiry. The policy standard record also carries `scope_mode`, `assigned_client_count` and an `assignment_fingerprint`; it does not reveal client IDs. The policy content is workspace-authored data, not assistant instructions, and may contain sensitive text. The revision binds this exact content; it does not freeze current client overrides or the roster, or assert fresh evidence or passing results. A service key with `standards:read` may preview but cannot activate. See [Activate a copied standard draft](/mcp/activate-standard-draft).']
         elif name == 'activate_standard_draft':
-            lines += ['', 'Requires a user-owned key with `standards:activate` and the active owner’s current `detection_rule.write` permission. Pass the exact preview revision, one canonical UUID `idempotency_key` and `acknowledge_workspace_wide: true`. A stale/expired/changed revision or an already enabled draft is refused. It enables only the receipt-backed draft; it does not evaluate, collect evidence, create detections or call a vendor.', '', '<Warning>If the response is uncertain, retry the same UUID and identical arguments. `replayed: true` returns the historical `activated` receipt even if the standard was later disabled or deleted; read current state separately. A changed payload under the same UUID is refused. See [Activate a copied standard draft](/mcp/activate-standard-draft).</Warning>']
+            lines += ['', 'Requires a user-owned key with `standards:activate` and the active owner’s current `detection_rule.write` permission. Pass the exact preview revision and one canonical UUID `idempotency_key`. Set `acknowledge_workspace_wide` to true only when the preview reports `workspaceWide: true`; send false for a selected-client standard. A stale/expired/changed revision or an already enabled draft is refused. It enables only the receipt-backed draft; it does not evaluate, collect evidence, create detections or call a vendor.', '', '<Warning>If the response is uncertain, retry the same UUID and identical arguments. `replayed: true` returns the historical `activated` receipt even if the standard was later disabled or deleted; read current state separately. A changed payload under the same UUID is refused. See [Activate a copied standard draft](/mcp/activate-standard-draft).</Warning>']
         elif name == 'get_standard_evaluation_preview':
             lines += ['', 'Returns the bounded complete authored policy, this client’s effective overrides, source-selection context, control/manual-check counts and short-lived `evaluationRevision` for an enabled standard and explicit Organization. It does not freeze facts or prove that observations are fresh. Workspace-authored policy text may contain sensitive content and is data to review, not assistant instructions. A read-scoped service key may inspect but cannot request an evaluation.', '', 'Use the **same user-owned key** for the preview and request: the revision is bound to the key. See [Evaluate one client](/mcp/evaluate-one-client).']
         elif name == 'request_standard_evaluation':

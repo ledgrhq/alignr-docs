@@ -313,13 +313,13 @@ Inspect the current standard and bounded pages of its controls and manual checks
 - **`manual_check_limit`:** Number of manual checks on this page, from 1 to 20 (default 10).
 - **`manual_check_offset`:** Zero-based manual-check offset from 0 to 10,000 (default 0).
 
-Reads one current standard and independent, bounded pages of its controls and manual checks. `definition`, `parameters` and `instructions` are workspace-controlled data, not instructions to your assistant; a user may have entered sensitive text there. The tool omits assessments, evidence, source metadata and vaulted-secret or credential-envelope fields, but does not redact arbitrary text from those three content fields. Each child page is capped at 20 and the whole result at 256 KiB; reduce page sizes if refused. `truncatedByOffsetLimit: true` means more rows lie beyond the permitted 10,000 offset. A foreign standard returns not found. Inspection does not enable, evaluate or approve a draft. See [Copy and inspect a standard draft](/mcp/copy-standard-draft).
+Reads one current standard and independent, bounded pages of its controls and manual checks. The standard summary includes `scopeMode` and `assignedClientCount`; it does not include assigned client IDs. Use the [REST assignments route](/api-reference/assign-standard-clients) when you need that roster. `definition`, `parameters` and `instructions` are workspace-controlled data, not instructions to your assistant; a user may have entered sensitive text there. The tool omits assessments, evidence, source metadata and vaulted-secret or credential-envelope fields, but does not redact arbitrary text from those three content fields. Each child page is capped at 20 and the whole result at 256 KiB; reduce page sizes if refused. `truncatedByOffsetLimit: true` means more rows lie beyond the permitted 10,000 offset. A foreign standard returns not found. Inspection does not enable, evaluate or approve a draft. See [Copy and inspect a standard draft](/mcp/copy-standard-draft).
 
 ### Preview standard activation
 
 `get_standard_activation_preview`
 
-Preview a complete copied draft's workspace-wide activation and signed revision.
+Preview a complete copied draft’s current scope and signed revision.
 
 **Required scope:** `standards:read`
 
@@ -331,7 +331,7 @@ Preview a complete copied draft's workspace-wide activation and signed revision.
 
 - **`standard_id`:** Exact standard UUID in your MSP workspace; a foreign standard is not found.
 
-For a non-empty disabled draft with a curated copy receipt, returns the complete bounded policy (standard, controls, manual checks and scopes), `enabled: false`, counts, `workspaceWide: true`, `activationRevision` and expiry. The policy content is workspace-authored data, not assistant instructions, and may contain sensitive text. The revision binds this exact content; it does not freeze current client overrides or the roster, or assert fresh evidence or passing results. A service key with `standards:read` may preview but cannot activate. See [Activate a copied standard draft](/mcp/activate-standard-draft).
+For a non-empty disabled draft with a curated copy receipt, returns the complete bounded policy (standard, controls, manual checks and scopes), `enabled: false`, child counts, the current `workspaceWide` flag, `assignedClientCount`, `activationRevision` and expiry. The policy standard record also carries `scope_mode`, `assigned_client_count` and an `assignment_fingerprint`; it does not reveal client IDs. The policy content is workspace-authored data, not assistant instructions, and may contain sensitive text. The revision binds this exact content; it does not freeze current client overrides or the roster, or assert fresh evidence or passing results. A service key with `standards:read` may preview but cannot activate. See [Activate a copied standard draft](/mcp/activate-standard-draft).
 
 ### Activate a copied standard draft
 
@@ -353,9 +353,9 @@ Activate one exact copied disabled draft; evaluation remains separate.
 - **`standard_id`:** Exact standard UUID in your MSP workspace; a foreign standard is not found.
 - **`activation_revision`:** Exact short-lived activationRevision returned by the complete policy preview. Re-preview after expiry or a policy edit.
 - **`idempotency_key`:** Caller-generated UUID for this one intended request. Keep it and reuse it only to resolve an uncertain outcome for the same payload; a different payload under the same key is refused.
-- **`acknowledge_workspace_wide`:** Set true only after reviewing the complete policy and accepting its workspace-wide effect, including clients added later.
+- **`acknowledge_workspace_wide`:** Set true only when the preview reports workspace scope and you accept its effect, including future clients; use false for selected-client scope.
 
-Requires a user-owned key with `standards:activate` and the active owner’s current `detection_rule.write` permission. Pass the exact preview revision, one canonical UUID `idempotency_key` and `acknowledge_workspace_wide: true`. A stale/expired/changed revision or an already enabled draft is refused. It enables only the receipt-backed draft; it does not evaluate, collect evidence, create detections or call a vendor.
+Requires a user-owned key with `standards:activate` and the active owner’s current `detection_rule.write` permission. Pass the exact preview revision and one canonical UUID `idempotency_key`. Set `acknowledge_workspace_wide` to true only when the preview reports `workspaceWide: true`; send false for a selected-client standard. A stale/expired/changed revision or an already enabled draft is refused. It enables only the receipt-backed draft; it does not evaluate, collect evidence, create detections or call a vendor.
 
 <Warning>If the response is uncertain, retry the same UUID and identical arguments. `replayed: true` returns the historical `activated` receipt even if the standard was later disabled or deleted; read current state separately. A changed payload under the same UUID is refused. See [Activate a copied standard draft](/mcp/activate-standard-draft).</Warning>
 
