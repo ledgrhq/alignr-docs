@@ -877,3 +877,27 @@ export-guide link resolves to the retained Activity section anchor. Screenshots:
 and `/private/tmp/audit-docs-mobile-security.png`. Preview and dedicated browser
 were stopped. No hosted publication, hosted search or production workflow test
 is claimed. Independent content review and matching app release remain required.
+
+## 2026-10-01 — Per-control live-score eligibility (held)
+
+Updated the daily review, Workspace health and client report guides against the
+alignment scoring refinement in application commit
+`4da5d2a5f3c4b03ad102bae11259875bbe67385b` and saved-report consumer follow-up
+`5f33b867cf6def951866fbd630697f39ca253bc4`. The copy explains that each
+control needs its own current live evidence from a connected selected source,
+collected no later than evaluation. Missing, stale, simulated and later-collected
+evidence remains unknown; unrelated stale client information remains a warning
+without cancelling an otherwise eligible control result. Saved reports remain
+historical snapshots. No API, MCP or schema contract changed, so generated
+references are unchanged. This draft is held pending the matching application
+release; it makes no production availability claim.
+
+Validation: `check-docs-vault.py`, `mint openapi-check` and `mint a11y` passed;
+`git diff --check` passed. The available Mint CLI is 4.2.229 under Node 22, while
+the repository pins 4.2.939. Attempting `npx mint@4.2.939` stalled without
+output and was stopped. The available CLI does not implement `mint validate`.
+Its `mint broken-links` check reports only the existing README links to
+maintainer-only `AGENTS.md` and `vault/MOC.md`. Local preview could not start
+because ports 3000–3009 were already occupied. No hosted preview or publication
+was performed. Before publication, reconcile this draft with the held Workspace
+health Docs25 change so its table-controls guidance is preserved.
