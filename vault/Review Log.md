@@ -480,3 +480,16 @@ the two pre-existing maintainer README links to intentionally excluded
 does not provide `mint validate`. Local preview was not available during the
 prior PR11 validation; the post-release browser readback confirms hosted text,
 not app behavior or responsive rendering.
+
+## 2026-10-01 — Held workspace Billing navigation
+
+Updated `guides/billing-and-support.mdx` to direct readers from the Settings directory
+to **Billing**, matching the isolated app candidate's `/settings/billing` route. The
+candidate reuses the existing billing view and keeps `billing.read` for page access
+and `billing.manage` for mutations; it removes billing from personal `/account` and
+redirects legacy checkout-return hints to the new route. No public API or MCP contract
+changed, so generated references were not changed. Source comparison is against app
+base `a7347a9` plus the unmerged candidate at `/private/tmp/alignr-billing-ui`; tests,
+independent review and the full application gate remain pending. This docs branch is
+held for that matching app release and has not been published or read back from the
+hosted site.
