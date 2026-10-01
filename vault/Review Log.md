@@ -601,3 +601,21 @@ passed, and `mint validate` passed. The merge whitespace check also passed.
 No responsive preview was repeated because the public billing guide did not
 change in this merge; the branch remains held for the matching application
 release and independent review.
+
+## 2026-10-01 — Held standard activation paging reference provenance
+
+The generated REST/MCP reference and activation workflow guides in draft docs
+PR #17 were generated against application source `86fa7439a5228c0a023babdceca600538ac8981f`
+([app PR #44](https://github.com/ledgrhq/ledgr/pull/44)). The final app source
+commit retained the same OpenAPI and MCP contract inputs, so the generated
+reference files remain aligned; no regeneration was needed after that source
+commit. The docs change is [PR #17](https://github.com/ledgrhq/alignr-docs/pull/17)
+and remains draft/held pending the app release. Validation run `36839569397`
+passed on the docs candidate.
+
+The requested separate local runtime audit of Clients and Integrations is
+unverified: a fresh agent-browser session authenticated and loaded Overview,
+but navigation stalled before page screenshots or layout measurements could
+be captured. No desktop/mobile rendering claim is made for this docs work;
+see `/private/tmp/client-integration-runtime-audit-2026-10-01.md` for the
+standalone audit record. No customer data or mutations were involved.
