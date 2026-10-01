@@ -220,6 +220,112 @@
         ],
         "summary": "List standards",
         "operationId": "list_standards_api_v1_standards_get",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 200
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Case-insensitive search across standard name, slug, description and setup domain.",
+              "title": "Q"
+            },
+            "description": "Case-insensitive search across standard name, slug, description and setup domain."
+          },
+          {
+            "name": "enabled",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter by enabled state.",
+              "title": "Enabled"
+            },
+            "description": "Filter by enabled state."
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "name_asc",
+                    "name_desc",
+                    "controls_asc",
+                    "controls_desc",
+                    "clients_asc",
+                    "clients_desc",
+                    "enabled_asc",
+                    "enabled_desc"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Whitelisted standard index sort order.",
+              "title": "Sort"
+            },
+            "description": "Whitelisted standard index sort order."
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "One-based result page (defaults to 1).",
+              "title": "Page"
+            },
+            "description": "One-based result page (defaults to 1)."
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "maximum": 100,
+                  "minimum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Rows per page (1\u2013100). Filtered requests default to 25; a bare GET retains the complete-list response for compatibility.",
+              "title": "Pagesize"
+            },
+            "description": "Rows per page (1\u2013100). Filtered requests default to 25; a bare GET retains the complete-list response for compatibility."
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -227,6 +333,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/StandardPage"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
                 }
               }
             }
@@ -1329,6 +1445,37 @@
                 }
               ],
               "title": "Sourcesystem"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "subject",
+                "predicate",
+                "value",
+                "sourceSystem",
+                "observedAt"
+              ],
+              "type": "string",
+              "default": "observedAt",
+              "title": "Sort"
+            }
+          },
+          {
+            "name": "direction",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "asc",
+                "desc"
+              ],
+              "type": "string",
+              "default": "desc",
+              "title": "Direction"
             }
           },
           {
