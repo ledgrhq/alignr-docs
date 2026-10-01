@@ -35,7 +35,12 @@ With Node 22.13.1 and the locally cached Mintlify 4.2.939 package, the docs vaul
 guard, `mint broken-links`, `mint openapi-check api-reference/openapi.json`,
 `mint a11y`, `mint validate`, Python generator compilation, JSON parsing and
 `git diff --check` passed. The first validator attempt lacked access to the
-shared Mintlify preview cache; the authorised rerun passed. A local `mint dev`
+shared Mintlify preview cache; the authorised rerun passed. Root's independent
+review caught that the older offset-paged standard definition reader has a
+10,000-offset limit and should not be a prerequisite for a full scalable review.
+REST/MCP first steps now use it only for identity/scope sanity checks; the v2
+summary and all policy pages are the authoritative complete review. Root
+re-read and accepted the corrected contract explanations. A local `mint dev`
 preview could not start because ports 3000–3009 were already occupied, so no
 desktop/mobile visual read is claimed. This docs pass did not run application
 suites; app focused evidence and the full gate are owned by the application
