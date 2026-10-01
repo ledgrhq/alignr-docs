@@ -396,7 +396,7 @@
         "tags": [
           "Standards"
         ],
-        "summary": "Preview copied-standard activation",
+        "summary": "Preview copied-standard activation (legacy)",
         "operationId": "get_standard_activation_preview_api_v1_standards__standard_id__activation_preview_get",
         "parameters": [
           {
@@ -430,6 +430,12 @@
                 }
               }
             }
+          },
+          "413": {
+            "description": "Policy is larger than the legacy one-response preview bounds; use the summary and pages routes."
+          },
+          "409": {
+            "description": "The draft is not eligible for activation preview; review its current state."
           }
         },
         "security": [
@@ -437,7 +443,155 @@
             "BearerAuth": []
           }
         ],
-        "description": "Requires `detection_rule.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability. For a non-empty disabled curated-copy draft, returns the bounded complete standard/control/manual-check policy it signs, the current scope and assigned-client count, and whether workspace-wide acknowledgement is required. Current per-client overrides and client population are not frozen; this read does not enable or evaluate.",
+        "description": "Requires `detection_rule.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability. Legacy full-policy preview for a non-empty disabled curated-copy draft. Returns the complete policy, current scope and assigned-client count, and whether workspace-wide acknowledgement is required. This compatibility route is bounded to 50 controls, 50 manual checks, 200 rule-scope rows and 240 KiB. Use the summary and pages routes for larger drafts. Current per-client overrides and client population are not frozen; this read does not enable or evaluate.",
+        "x-ledgr-permission": "detection_rule.read"
+      }
+    },
+    "/api/v1/standards/{standard_id}/activation-preview/summary": {
+      "get": {
+        "tags": [
+          "Standards"
+        ],
+        "summary": "Read standard activation summary",
+        "operationId": "get_standard_activation_summary_api_v1_standards__standard_id__activation_preview_summary_get",
+        "parameters": [
+          {
+            "name": "standard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Standard Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardActivationPagedPreviewRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The activation revision or cursor is stale, expired or invalid, or the draft is not eligible. Request a fresh summary and review its policy again."
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "description": "Requires `detection_rule.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability. Starts the paged activation-review protocol for a non-empty disabled curated-copy draft. Returns child, rule-scope and assignment counts plus a short-lived v2 activation revision; it does not return child arrays. The fingerprint covers the complete authored standard policy and saved assignment set, with no legacy 50-control, 50-manual-check or 200-rule-scope row ceiling, but the full scan must finish within the 10-second service budget. It does not freeze the overall client roster or per-client overrides. A service key may read but cannot activate; a user-owned key must use the same identity for summary, pages and activation. This read does not enable or evaluate.",
+        "x-ledgr-permission": "detection_rule.read"
+      }
+    },
+    "/api/v1/standards/{standard_id}/activation-preview/pages": {
+      "get": {
+        "tags": [
+          "Standards"
+        ],
+        "summary": "Read standard activation page",
+        "operationId": "get_standard_activation_page_api_v1_standards__standard_id__activation_preview_pages_get",
+        "parameters": [
+          {
+            "name": "standard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Standard Id"
+            }
+          },
+          {
+            "name": "activationRevision",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200,
+              "title": "Activationrevision"
+            }
+          },
+          {
+            "name": "section",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "enum": [
+                "controls",
+                "manualChecks",
+                "ruleScopes"
+              ],
+              "type": "string",
+              "title": "Section"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 512
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Cursor"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardActivationPageRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The activation revision or cursor is stale, expired or invalid, or the draft is not eligible. Request a fresh summary and review its policy again."
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "description": "Requires `detection_rule.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability. Reads one page from the complete authored standard policy bound to the v2 revision returned by the summary route. Choose `controls`, `manualChecks` or `ruleScopes`; follow `nextCursor` until null, keeping the exact revision and same key. Each response contains at most 25 rows and is capped at 240 KiB; a single item that cannot fit is refused. Pages expire with the 15-minute revision and return 409 if standard policy or saved assignments change. No total row ceiling is imposed by this paged protocol; each page has a 10-second service budget, while summary and final activation recheck the whole policy within 10 and 5 seconds respectively. The overall client roster and per-client overrides are not frozen.",
         "x-ledgr-permission": "detection_rule.read"
       }
     },
@@ -2400,6 +2554,121 @@
         "title": "StandardEvaluationPreviewRead"
       },
       "JsonValue": {},
+      "StandardActivationPageRead": {
+        "properties": {
+          "standardId": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Standardid"
+          },
+          "activationRevision": {
+            "type": "string",
+            "title": "Activationrevision"
+          },
+          "section": {
+            "type": "string",
+            "enum": [
+              "controls",
+              "manualChecks",
+              "ruleScopes"
+            ],
+            "title": "Section"
+          },
+          "items": {
+            "items": {
+              "additionalProperties": {
+                "$ref": "#/components/schemas/JsonValue"
+              },
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "nextCursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Nextcursor"
+          }
+        },
+        "type": "object",
+        "required": [
+          "standardId",
+          "activationRevision",
+          "section",
+          "items",
+          "nextCursor"
+        ],
+        "title": "StandardActivationPageRead",
+        "description": "One bounded page from the signed activation review snapshot."
+      },
+      "StandardActivationPagedPreviewRead": {
+        "properties": {
+          "standardId": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Standardid"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "enabled": {
+            "type": "boolean",
+            "const": false,
+            "title": "Enabled"
+          },
+          "controlCount": {
+            "type": "integer",
+            "title": "Controlcount"
+          },
+          "manualCheckCount": {
+            "type": "integer",
+            "title": "Manualcheckcount"
+          },
+          "ruleScopeCount": {
+            "type": "integer",
+            "title": "Rulescopecount"
+          },
+          "workspaceWide": {
+            "type": "boolean",
+            "title": "Workspacewide"
+          },
+          "assignedClientCount": {
+            "type": "integer",
+            "title": "Assignedclientcount"
+          },
+          "activationRevision": {
+            "type": "string",
+            "title": "Activationrevision"
+          },
+          "revisionExpiresAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Revisionexpiresat"
+          }
+        },
+        "type": "object",
+        "required": [
+          "standardId",
+          "name",
+          "enabled",
+          "controlCount",
+          "manualCheckCount",
+          "ruleScopeCount",
+          "workspaceWide",
+          "assignedClientCount",
+          "activationRevision",
+          "revisionExpiresAt"
+        ],
+        "title": "StandardActivationPagedPreviewRead",
+        "description": "Summary for the additive, bounded activation review protocol."
+      },
       "StandardActivationPreviewRead": {
         "properties": {
           "standardId": {

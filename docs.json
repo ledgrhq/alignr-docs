@@ -246,6 +246,8 @@
               "GET /api/v1/standards/{standard_id}/controls",
               "GET /api/v1/standards/{standard_id}/assignments",
               "GET /api/v1/standards/{standard_id}/activation-preview",
+              "GET /api/v1/standards/{standard_id}/activation-preview/summary",
+              "GET /api/v1/standards/{standard_id}/activation-preview/pages",
               "GET /api/v1/standards/{standard_id}/evaluation-preview",
               "GET /api/v1/standards/{standard_id}/evaluation-requests/{operation_id}"
             ]
