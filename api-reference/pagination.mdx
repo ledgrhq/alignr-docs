@@ -35,3 +35,12 @@ Cursor responses may have null page numbers or totals. Check the operation’s s
 ## Filters
 
 Keep the same filters while moving through a result set. For example, the Organizations list accepts `q` for name search and `health` for health filtering. Inspect the returned items as well as the HTTP status to confirm that your request selected the intended results.
+
+
+## Search and order issues
+
+`GET /detections` accepts `q` (up to 200 characters) for English full-text search across finding reference, title, subject and explanation. It matches word tokens, not arbitrary substrings. Use a complete email address when searching an email subject. Client names and source labels are outside this text search; use the endpoint's scope filters.
+
+Choose `sort=risk` (the default), `severity_desc`, `title_asc` or `title_desc`. Unknown values return 422. The default orders by risk score, then severity; every order uses the finding ID as a final tie-breaker. Search and filters apply before both `total` and page selection. Keep `q`, `sort` and the other filters unchanged as you fetch subsequent pages.
+
+For example: `/api/v1/detections?status=open&q=backup&sort=severity_desc&page=1&pageSize=25`.
