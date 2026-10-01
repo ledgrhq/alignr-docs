@@ -896,8 +896,10 @@ The daily-review text distinguishes the UI's **No live checks to score** state
 for existing clients from **Not assessed yet** when the workspace has no clients.
 Its example uses four eligible checks (two passing and two failing) plus an
 unrelated stale asset to show that a 50% score is not an overall health grade.
-The report guide also warns that older snapshots without saved eligibility
-counts retain their recorded label and value; readers must not infer or
+New automated report snapshots identify the score policy with
+`scoring_policy: per_control_v1`. The report guide warns that older unmarked
+snapshots may still contain counts from the earlier policy; readers must retain
+their recorded label and value, not infer per-control eligibility or
 recalculate historical eligibility.
 
 Validation: `check-docs-vault.py`, `mint openapi-check` and `mint a11y` passed;

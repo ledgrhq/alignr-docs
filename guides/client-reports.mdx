@@ -48,7 +48,7 @@ Later work does not rewrite an earlier saved report. Select the appropriate save
 
 The report's **Alignment from eligible live checks** label identifies the saved score basis. If no check had eligible live evidence, the report shows **No eligible live score** rather than treating unknown checks as zero per cent. The separate broad evidence status may still show that some client information needs verification. Prepare a new report after a later assessment when you need an updated snapshot.
 
-Older saved reports may predate the per-control eligibility counts and retain their recorded alignment label and value. Read those snapshots as recorded at the time; do not infer eligibility that the report did not store or recalculate its history. A new report uses the eligibility details available to that assessment.
+New reports mark the automated snapshot with `scoring_policy: per_control_v1` to identify this score basis. Older saved reports have no such marker; they may still contain pass/fail counts, but those counts were recorded under the earlier scoring policy. Read the displayed label, value and counts as recorded at the time. Do not treat unmarked counts as per-control eligibility or recalculate the saved report.
 
 ## Reports and the client portal
 
