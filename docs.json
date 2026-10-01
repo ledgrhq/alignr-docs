@@ -219,7 +219,8 @@
               "api-reference/link-source-clients",
               "api-reference/create-standard-recipe",
               "api-reference/activate-standard-draft",
-              "api-reference/evaluate-one-client"
+              "api-reference/evaluate-one-client",
+              "api-reference/assign-standard-clients"
             ]
           },
           {
@@ -243,6 +244,7 @@
               "GET /api/v1/standards",
               "GET /api/v1/standards/{standard_id}",
               "GET /api/v1/standards/{standard_id}/controls",
+              "GET /api/v1/standards/{standard_id}/assignments",
               "GET /api/v1/standards/{standard_id}/activation-preview",
               "GET /api/v1/standards/{standard_id}/evaluation-preview",
               "GET /api/v1/standards/{standard_id}/evaluation-requests/{operation_id}"
