@@ -25,7 +25,7 @@ the existing optional `email-validator` package notice; output generation exited
 enabled, the eight sort choices, optional page defaulting to one, and `pageSize`
 1–100 with the 25/default and bare-list compatibility description. Inspected
 `/api/v1/facts` sort values `subject`, `predicate`, `value`, `sourceSystem`,
-`observedAt` and directions `asc`/`desc`. Full Mintlify build/preview, independent
+`observedAt` and directions `asc`/`desc`. Full local Mintlify preview, independent
 docs review, application full gate, publication and hosted readback remain pending;
 this draft makes no deployment claim.
 
@@ -35,16 +35,18 @@ MDX files, Python JSON parsing passed and `git diff --check` passed. `mint broke
 reported two links in the unchanged docs `README.md` pointing to `AGENTS.md` and
 `vault/MOC.md`; neither is a changed public guide. The installed Mintlify CLI is
 4.2.229 and has no `validate` command, so `mint validate` is unsupported. No local
-desktop/mobile preview, docs CI, hosted publication or hosted-page readback has
-been run for this candidate.
+desktop/mobile preview, hosted publication or hosted-page readback has been run.
+Draft PR #19 workflow run `36862745797` passed its `validate` job at initial head
+`5d77f02c5796547b5a4651f918562db40f10e03d`; Mintlify Deployment was skipped for
+the draft. This workflow check validates the candidate but does not establish
+publication.
 
 I also tried `npm exec --package=@mintlify/cli@4.2.939 -- mint --version` under
 Node 22.13.1; npm returned `ETARGET` because that package version is unavailable
 from the registry. The installed `mint` CLI remains 4.2.229. The branch
-`docs/standards-index-search-paging` is in draft docs PR #19, head
-`5d77f02c5796547b5a4651f918562db40f10e03d`, based on updated docs main after
-Docs18. It must remain held until the matching application release and required
-documentation review/validation are complete.
+`docs/standards-index-search-paging` is in draft docs PR #19, based on updated
+docs main after Docs18. It must remain held until the matching application
+release and required documentation review are complete.
 
 ## 2026-10-01 — Held paged standard activation reference
 
