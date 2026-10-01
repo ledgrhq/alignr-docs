@@ -189,6 +189,17 @@ matching Controls app PR52 was verified live. PR21 merged as
 passed. PR22 remains a held draft for app PR53; its dependency on the now-published
 PR21 has been reconciled to main, but PR22 is not released or hosted-accepted.
 
+## Held Workspace health table controls — 1 October 2026
+
+The existing Workspace health guide now explains both tables' full loaded-collection
+search, state/readiness filters, heading cycles, equivalent selector choices and
+25/50/100-row paging. It distinguishes local array paging from server pagination
+and retains full-workspace summary semantics. Source verified against final application
+`90c9d0ea6a1821ae99f0f02cd1c0f8c2b617ffe4`; the composed 9a4518c candidate has
+identical feature source. Coordinator independent content review cleared the
+guide. Publication remains held until the matching Health application release. No API or MCP
+contract changes or generated reference updates are implied.
+
 ## Held Activity collection controls — 1 October 2026
 
 Daily review and security/data export guidance now cover full-collection search,
