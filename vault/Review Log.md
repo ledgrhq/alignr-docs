@@ -450,3 +450,33 @@ release PR40 is live at `app.alignr.io`, aliasing deployment
 `dpl_2f2dBJtaNaVnmjN7ENHhEaRN6hU8` from source `a7347a9435cccbea5622106ee2dab92ed518a671`;
 API deployment workflow `36815756972` succeeded. Hosted docs readback will be
 recorded after all approved guides are published.
+
+## 2026-10-01 — PR11 and PR13 hosted documentation readback
+
+PR #13 merged to docs `main` as `26fdcc14ffe3d4aee47716b242c2eadc02099290`
+after successful GitHub validation and Mintlify Deployment checks. The public
+readback was performed on `https://docs.alignr.io` after deployment, using
+agent-browser. On Organizations and clients, the published client list guidance
+says sorting cycles ascending, descending and default, applies to matching
+clients before pagination, and has no separate sort menu. The Standards and
+Build or import a standard pages confirm guided save creates an active
+selected-client standard with no clients assigned, followed by Choose clients;
+assignments do not run checks. Daily review describes Run all checks for enabled
+automated checks on that client using collected evidence and distinguishes
+Current assessment counts/coverage from the Check coverage bar and total.
+
+The Issues guide and Pagination API reference read back the `q` search fields,
+200-character API bound, word-token behavior, four sort values (`risk`,
+`severity_desc`, `title_asc`, `title_desc`), tie-breaking and filtering before
+count/page selection. The Assign standard clients page says an empty selected
+scope means no clients; the activation guide says activation preserves saved
+scope. No sign-in or customer data was used for this readback.
+
+For the PR13 reconciled branch, the vault guard, OpenAPI check, accessibility
+scan (95 MDX files) and `git diff --check` passed. GitHub `validate` and
+Mintlify Deployment checks passed on PR13. `mint broken-links` reported only
+the two pre-existing maintainer README links to intentionally excluded
+`AGENTS.md` and `vault/MOC.md`; no public MDX links failed. Mintlify CLI 4.2.229
+does not provide `mint validate`. Local preview was not available during the
+prior PR11 validation; the post-release browser readback confirms hosted text,
+not app behavior or responsive rendering.
