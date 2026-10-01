@@ -827,3 +827,18 @@ state filters, sortable headings, paging, grouping and draft-retention guidance.
 PR22 remains an unpublished draft matched to app PR53. Its PR21 dependency is
 reconciled with the published main branch; this does not release PR22. No hosted
 PR22 content or app PR53 release is claimed.
+
+## 2026-10-01 — Workspace health table guidance (held preparation)
+
+Separate main-based branch from e131b1f, with no Docs23/24 dependency. The routed
+component is frontend/src/features/operations/OperationalHealthPage.tsx, imported
+by router.tsx for /health. App143b92 and the owner's working clarity refinement
+were inspected read-only. The draft describes sources searched by name/type/hint,
+clients searched by name, independent state/readiness filters, local full-array
+sorting before paging, missing dates last, and unchanged workspace counters.
+Clear filters preserves sorting in the refinement; final commit must confirm it.
+No publication until final source and independent review are verified.
+
+Preparation checks passed: pinned mint@4.2.939 broken-links and validate under
+Node22, check-docs-vault and whitespace validation. No browser preview, final
+source-pin comparison or independent content review yet; these remain pending.

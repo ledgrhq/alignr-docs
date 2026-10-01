@@ -161,3 +161,13 @@ matching Controls app PR52 was verified live. PR21 merged as
 `63b422fc02e744a343442a7d1c18d07ae9689e85`; main validation run `36893332012`
 passed. PR22 remains a held draft for app PR53; its dependency on the now-published
 PR21 has been reconciled to main, but PR22 is not released or hosted-accepted.
+
+## Held Workspace health table controls — 1 October 2026
+
+The existing Workspace health guide now explains both tables' full loaded-collection
+search, state/readiness filters, heading cycles, equivalent selector choices and
+25/50/100-row paging. It distinguishes local array paging from server pagination
+and retains full-workspace summary semantics. Drafted from app143b92 plus the
+owner's in-progress column-label/filter-reset refinement. Final source pin and
+independent content verification are required before publication. No API or MCP
+contract changes or generated reference updates are implied.

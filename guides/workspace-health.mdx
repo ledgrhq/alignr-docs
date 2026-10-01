@@ -26,6 +26,8 @@ The **What needs attention** section links to recovery work. Warnings clear when
 
 The **Sources** table shows each source's state, last successful collection, latest attempt, next expected collection and client links.
 
+Use **Search sources…** to find a source by name, source type or recovery hint, then choose a state to narrow the results. Search ignores letter case and outer spaces. It covers all sources in the loaded health report, including those beyond the displayed page.
+
 | State | Meaning and next step |
 | --- | --- |
 | Current | A successful collection is within the source's expected cadence. Inspect client coverage next. |
@@ -43,7 +45,7 @@ Use **Manage sources** to review connections. If client links are awaiting match
 
 ## Read client coverage
 
-Search for a client in **Client coverage**, then open it to inspect individual controls and evidence requirements.
+Use **Search clients…** in **Client coverage** to find a client by name. Choose **All readiness**, **Current results** or **Needs attention** to narrow the table. Search ignores letter case and outer spaces and includes clients beyond the displayed page. Open a client to inspect individual controls and evidence requirements.
 
 | Column | What it tells you |
 | --- | --- |
@@ -56,6 +58,18 @@ Search for a client in **Client coverage**, then open it to inspect individual c
 The **Current assessment** label requires live evidence, at least one assessed outcome, an evaluation within the last 24 hours, and no outstanding need-evidence or no-coverage results. An old result count alone does not satisfy that check.
 
 For example, Acme can have current assessment coverage while an administrator's MFA check is failing. Alignr has enough evidence to answer the question; the answer still needs attention. A missing MFA observation is an evidence gap instead.
+
+## Order and page through the tables
+
+Each table has its own search, filter, order and page controls. Click a column heading to cycle ascending → descending → default order. For example, use **Last success** to compare collection times or **Need evidence** to compare counts. Missing timestamps appear after recorded timestamps in either direction.
+
+Use **Sort sources** or **Sort clients** for the same choices, including on a narrow screen. The choices describe the column: names use A–Z/Z–A, counts use Low–high/High–low, and dates use their time direction. **Default order** restores the health report's original order, currently by name, with no active heading arrow.
+
+Choose **25**, **50** or **100** rows per page and use the page controls to browse. Search, filters and ordering apply to the complete collection already loaded in the health report before rows are divided into pages. These are local table controls; changing pages does not fetch a separate server page. Changing search, filter, order or page size returns that table to its first page.
+
+**Clear filters** removes the table's search and state or readiness filter while keeping its ordering. To reset ordering, choose **Default order** or complete the heading's three-click cycle. If nothing matches, use **Clear search and filters** to restore the table's matching rows.
+
+Table controls do not change the workspace summary cards, warning list, manual-review totals or remediation counts. The pagination total describes the filtered table; the summary still describes the whole workspace.
 
 ## Recover in the right order
 
