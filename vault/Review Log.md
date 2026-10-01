@@ -2,6 +2,32 @@
 
 Append dated entries. Keep evidence precise and do not turn planned checks into passed checks.
 
+## 2026-10-01 — Held Users and API Keys table guides
+
+Updated `guides/account-and-team.mdx` and `guides/api-keys.mdx` against the
+reachable page source in app candidates `b3eff8eb2382c567ff88827ac6977dd24087d4a7`
+(Users) and `460da6bf88c9d0d448328f37856514051d9c4d12` (API Keys). The Users
+guide names the search fields, status and role filters including **No role**,
+sortable table headings, 25-row display pages and the **Sort users** mobile
+control. The source fetches all API pages then filters, sorts and slices in the
+browser; this guide does not claim server-side query support. The API Keys guide
+documents search by name/prefix/owner, status filtering, all six sortable
+headings, the **Sort API keys** mobile control and the pre-existing **Name A–Z**
+default; null owner/date values stay last in either direction.
+
+No OpenAPI or MCP reference changed because neither candidate changes an API
+contract. The pages were checked against the two isolated application commits
+and existing public-page structure. This is a held documentation draft, not a
+live availability claim. Full docs validation, independent review, matching app
+releases and hosted readback are pending; publication must wait for both
+applications to be released.
+
+`python3 scripts/check-docs-vault.py` passed with 14 indexed notes and
+publication boundaries; `git diff --check` passed. `mint broken-links` did not
+run: the installed Mint CLI executed under Node 16 and exited before checking
+files with `ReferenceError: Blob is not defined`. No docs build, full Mintlify
+validation, responsive preview, hosted readback or application tests were run.
+
 ## 2026-10-01 — Held Standards and Facts table search/sort docs
 
 Updated `guides/standards.mdx` for the routed Standards table and
