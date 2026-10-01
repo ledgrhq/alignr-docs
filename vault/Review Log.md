@@ -908,6 +908,40 @@ and `/private/tmp/audit-docs-mobile-security.png`. Preview and dedicated browser
 were stopped. No hosted publication, hosted search or production workflow test
 is claimed. Independent content review and matching app release remain required.
 
+## 2026-10-01 — Per-control live-score eligibility (held)
+
+Updated the daily review, Workspace health and client report guides against the
+alignment scoring refinement in application commit
+`4da5d2a5f3c4b03ad102bae11259875bbe67385b` and saved-report consumer follow-up
+`5f33b867cf6def951866fbd630697f39ca253bc4`. The copy explains that each
+control needs its own current live evidence from a connected selected source,
+collected no later than evaluation. Missing, stale, simulated and later-collected
+evidence remains unknown; unrelated stale client information remains a warning
+without cancelling an otherwise eligible control result. Saved reports remain
+historical snapshots. No API, MCP or schema contract changed, so generated
+references are unchanged. This draft is held pending the matching application
+release; it makes no production availability claim.
+
+The daily-review text distinguishes the UI's **No live checks to score** state
+for existing clients from **Not assessed yet** when the workspace has no clients.
+Its example uses four eligible checks (two passing and two failing) plus an
+unrelated stale asset to show that a 50% score is not an overall health grade.
+New automated report snapshots identify the score policy with
+`scoring_policy: per_control_v1`. The report guide warns that older unmarked
+snapshots may still contain counts from the earlier policy; readers must retain
+their recorded label and value, not infer per-control eligibility or
+recalculate historical eligibility.
+
+Validation: `check-docs-vault.py`, `mint openapi-check` and `mint a11y` passed;
+`git diff --check` passed. The available Mint CLI is 4.2.229 under Node 22, while
+the repository pins 4.2.939. Attempting `npx mint@4.2.939` stalled without
+output and was stopped. The available CLI does not implement `mint validate`.
+Its `mint broken-links` check reports only the existing README links to
+maintainer-only `AGENTS.md` and `vault/MOC.md`. Local preview could not start
+because ports 3000–3009 were already occupied. No hosted preview or publication
+was performed. Before publication, reconcile this draft with the held Workspace
+health Docs25 change so its table-controls guidance is preserved.
+
 ## 2026-10-01 — Health guide release reconciliation
 
 Merged published documentation main `5335f8a` into the Health guide branch.
@@ -918,3 +952,14 @@ publication remains held until the matching API and frontend are verified live.
 No additional local browser or build was started, respecting the owner's laptop
 resource constraint. Structural and whitespace checks were rerun; remote docs
 validation must pass this merged head before publication.
+
+## 2026-10-01 — Combined Health and scoring guidance
+
+Reconciled scoring PR26 with Health PR25 at `2db5a6a`, retaining both internal
+review records. The public Health page now includes both table controls and the
+per-control eligibility explanation. Daily review and saved-report guidance,
+including `scoring_policy: per_control_v1` and legacy snapshot preservation, are
+unchanged. Both guide updates remain held for application PR58 API and frontend
+deployment verification. Vault and whitespace checks passed on the combined tree;
+remote documentation validation remains required for this exact head. No new
+local build or browser session was started.

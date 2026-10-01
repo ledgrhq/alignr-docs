@@ -55,7 +55,7 @@ Use **Search clients…** in **Client coverage** to find a client by name. Choos
 | Excluded | Controls outside the client's assessment scope. Exclusion is not a pass. |
 | Last evaluation | When the client's assessment was last evaluated. |
 
-The **Current assessment** label requires live evidence, at least one assessed outcome, an evaluation within the last 24 hours, and no outstanding need-evidence or no-coverage results. An old result count alone does not satisfy that check.
+The **Current assessment** label requires current live evidence for the controls being assessed, at least one eligible pass or fail, an evaluation within the last 24 hours, and no outstanding need-evidence or no-coverage results. For a result to be eligible, that control's required observations must be current, live, from a connected source selected for the control, and collected no later than its evaluation. Missing, stale, simulated, disconnected or later-collected evidence does not establish a pass or fail. A client-wide evidence warning can still point to unrelated information that needs attention; it does not erase another control's result when that control has eligible evidence. An old result count alone does not satisfy the current-assessment check.
 
 For example, Acme can have current assessment coverage while an administrator's MFA check is failing. Alignr has enough evidence to answer the question; the answer still needs attention. A missing MFA observation is an evidence gap instead.
 

@@ -23,7 +23,7 @@ See [the report preparation screen](/journeys/visual-tour#5-prepare-the-client-d
   <Step title="Read the supporting detail">
     Review the control inventory, manual assessments, risk acceptance history, open assessment work, review assignments and roadmap. Imported checklist lineage helps explain where a manual definition originated.
 
-    Distinguish recorded outcomes from current live-score eligibility. An absent value or unassessed check must stay visible as a gap.
+    Distinguish recorded outcomes from current live-score eligibility. A saved alignment percentage counts only checks whose own required evidence was current and live, came from a connected source selected for that check, and was collected no later than the evaluation. Missing, stale, simulated or otherwise unverified evidence remains unknown and cannot count as a pass or fail. A broader client evidence warning may describe unrelated records without changing the eligible score. An absent value or unassessed check must stay visible as a gap.
   </Step>
   <Step title="Export for the intended recipient">
     Select **Print or save PDF** to use your browser's print dialogue, or **Export report data (JSON)** for the saved structured report. Inspect the output, client identity and included evidence before sharing it through your approved channel.
@@ -45,6 +45,10 @@ flowchart TD
 ```
 
 Later work does not rewrite an earlier saved report. Select the appropriate saved review when discussing historical progress.
+
+The report's **Alignment from eligible live checks** label identifies the saved score basis. If no check had eligible live evidence, the report shows **No eligible live score** rather than treating unknown checks as zero per cent. The separate broad evidence status may still show that some client information needs verification. Prepare a new report after a later assessment when you need an updated snapshot.
+
+New reports mark the automated snapshot with `scoring_policy: per_control_v1` to identify this score basis. Older saved reports have no such marker; they may still contain pass/fail counts, but those counts were recorded under the earlier scoring policy. Read the displayed label, value and counts as recorded at the time. Do not treat unmarked counts as per-control eligibility or recalculate the saved report.
 
 ## Reports and the client portal
 
