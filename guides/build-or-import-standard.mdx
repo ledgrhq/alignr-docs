@@ -18,7 +18,7 @@ For a scoped assistant workflow, a user-owned key can [copy a curated library te
 
 Open **Standards → Set up a domain**, or choose a domain card in the setup wizard's Standards step. Each card opens that domain's dedicated setup page, outside the workspace wizard. When you arrive from workspace setup, **← Setup** returns to the Standards step; after saving, **Return to Standards setup** offers the same route. Start with **Identity**, then add other domains when you are ready. Each guided setup creates a separate standard.
 
-The domain chooser lists standards already saved for that domain and whether each is **On** or **Off**. Open one to review it, or choose **Build another** for a separate standard. General or mixed standards remain under **All standards**.
+The domain chooser lists standards already saved for that domain and whether each is **On** or **Off**. Open one to review it, or choose **Build another** for a separate standard.
 
 - **Identity:** Choose MFA registration for every enabled account or Global Administrators, and when an unused enabled account needs attention.
 - **Devices:** Set how recently managed devices must check in, with optional patch-compliance and MDM encryption checks.
@@ -29,7 +29,7 @@ The domain chooser lists standards already saved for that domain and whether eac
   <Step title="Answer one question at a time">
     The setup page has three stages: **Questions**, **Sources** and **Review**. In Questions, each screen presents **Yes** and **No** answer cards. A new browser draft starts with neither selected; answer each question before moving on. Choose **Yes** to include the check and show related settings, such as account scope or a time window, on the same page. Choose **No** to leave it out; an excluded check does not need its follow-up answer. The question rail marks the active item **Current** or **Current · Yes/No**, answered items **Yes** or **No**, the next item **Up next**, and later items **Locked**. You can jump back to answered questions or forward to the next one; later questions and stages remain unavailable until their prerequisites are complete. You may revisit a completed stage.
 
-    A resumed browser draft keeps its saved answers. The full list appears at final review, while a compact count shows how many checks are selected. Answers are held in browser storage; they are not yet a server-side standard. Selecting **Create standard** on Review creates an active selected-client standard with no clients assigned. These answers define what you want to assess; they are not evidence that a client meets it.
+    A resumed browser draft keeps its saved answers. The full list appears at final review, while a compact count shows how many checks are selected. Answers are held in browser storage; they are not yet a server-side standard. Selecting **Create active standard** on Review creates an active selected-client standard with no clients assigned. These answers define what you want to assess; they are not evidence that a client meets it.
 
     For Identity, MFA registration does not prove enforcement at every sign-in. The dormant-account check flags accounts for review; creating the standard does not disable accounts.
   </Step>
@@ -39,9 +39,9 @@ The domain chooser lists standards already saved for that domain and whether eac
     After saving a connection, use **Match clients** to link its records to the correct Alignr clients. Return to domain setup to continue. A saved connection alone does not prove usable coverage: check its collection status and client mapping.
   </Step>
   <Step title="Review your standard">
-    Name the standard and review every proposed check, including which ones are automated or manual. Include only the checks you need; at least one must remain selected. Select **Create standard**. Guided standards are active immediately but assigned to no clients. If the save result cannot be confirmed, your answers stay locked. Use **Retry and check standard** to reconcile that same save instead of starting another standard.
+    Name the standard and review every proposed check, including which ones are automated or manual. Include only the checks you need; at least one must remain selected. Select **Create active standard**. Guided standards are active immediately but assigned to no clients. If the save result cannot be confirmed, your answers stay locked. Use **Retry and check standard** to reconcile that same save instead of starting another standard.
 
-    Select **Deploy to clients** to choose the clients this standard applies to, then **Save assignments**. This changes scope only; it does not run checks. Once at least one client is assigned, use **Run checks** as a separate step. For disabled workspace-wide drafts created from the library, checklist import or blank/general creation, select **Review & enable standard** after reviewing the complete standard. Enabling those standards applies their defaults across the workspace, subject to each client's overrides. Selecting clients in **Run checks** chooses that run; it does not narrow a workspace-wide standard.
+    After saving, select **Choose clients** to open client assignment. You can also select **Deploy to clients** from the standard details. Choose the clients this standard applies to, then **Save assignments**. This changes scope only; it does not run checks. Once at least one client is assigned, use **Run checks** as a separate step. For disabled workspace-wide drafts created from the library, checklist import or blank/general creation, select **Review & enable standard** after reviewing the complete standard. Enabling those standards applies their defaults across the workspace, subject to each client's overrides. Selecting clients in **Run checks** chooses that run; it does not narrow a workspace-wide standard.
   </Step>
 </Steps>
 
@@ -50,6 +50,8 @@ Your unfinished answers are saved in the browser and restored when you return wi
 **Checkpoint:** a named standard contains your intended checks and saved scope. For a guided standard, assign the intended clients before running checks. For a disabled workspace-wide standard, review and enable it deliberately. Confirm source collection and client mapping; manual assessments are completed separately.
 
 Use **Set up another domain** when you are ready to add another area. You do not need to configure every domain before assessing the first one.
+
+The earlier guided baseline questionnaire follows the same scope: **Save baseline** creates an active selected-client standard with no clients assigned, and **Choose clients** opens assignment. Existing saved standards retain their actual active state and scope.
 
 ## Prepare a questionnaire
 
