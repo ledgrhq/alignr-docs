@@ -963,3 +963,12 @@ unchanged. Both guide updates remain held for application PR58 API and frontend
 deployment verification. Vault and whitespace checks passed on the combined tree;
 remote documentation validation remains required for this exact head. No new
 local build or browser session was started.
+
+
+## Held workspace shell candidate — 2 October 2026
+
+Source: application PR61, frozen commit `3837e3f7daf50a511923b2c4d08b568ce1dad947`, ADR-0051. Introduction and daily review explain the sidebar, client filter, utility bar and remembered theme choices. Settings, account/team and billing guides distinguish the workspace menu from the personal account menu and retain existing Settings paths. Team and billing links retain their read/manage permission boundaries. The Settings directory's previously omitted Billing row is now documented. No Inbox rename, workspace switching, new billing behaviour or score changes are claimed.
+
+Publication is held until the matching app release is verified. Source review is separate from rendered acceptance; desktop/390px/light/dark/keyboard and changed docs previews remain outstanding. Refresh affected visual-tour screenshots from authorised non-sensitive UI before publication, or explicitly retain them as dated prior-layout examples. No new screenshots were fabricated. Public `docs.json` navigation and reference catalogues are unchanged because pages, API/MCP contracts, predicates and controls did not move or change.
+
+Independent source review by `run_diagnostics` found two label/scope mismatches: Introduction implied the mobile navigation menu included personal Account settings, and daily review retained the old Main navigation label. Root clarified the separate account menu and changed the trigger label to Open navigation; the daily summary now qualifies permission-gated Team members and Billing. Structural vault and whitespace checks pass. Remote validation and rendered acceptance remain pending.
