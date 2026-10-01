@@ -625,17 +625,21 @@ standalone audit record. No customer data or mutations were involved.
 Updated `guides/ask-alignr.mdx` to describe the expected structure for risk
 questions: state the recorded condition, explain only a cited possible
 significance, and give a specific verification step. It says that when no
-authored risk rationale is recorded, Ask Alignr should state that and avoid
+explanation of the risk is recorded, Ask Alignr should state that and avoid
 guessing impact; a control description states an expectation, not an observed
 outcome. This aligns with application PR #47 (`83102664798093f9e16ba1b129695d3c30ed1944`),
 where the prompt and citation context support this response and preserve exact
 claim grounding. Existing Ask guidance already required users to inspect the
 client, subject, time and supporting citations; this addition makes the risk
-interpretation limit explicit.
+interpretation limit explicit. Wording was revised from “authored risk
+rationale” to “explanation of the risk” so the public guidance avoids evaluator
+terminology.
 
 No API or MCP tool, permission or generated reference changed. The application
-candidate's focused grounding tests pass (3); no live AI/model response was
-requested or observed. `check-docs-vault.py`, `mint openapi-check`, `mint a11y`
+candidate's three focused grounding tests passed before the wording-only
+refinement; they were not rerun afterward because Docker access was denied in
+the current shell. No live AI/model response was requested or observed.
+`check-docs-vault.py`, `mint openapi-check`, `mint a11y`
 and `git diff --check` passed. `mint broken-links` reported only the two existing
 README links to intentionally excluded `AGENTS.md` and `vault/MOC.md`; no public
 MDX link failed. The installed Mintlify CLI is 4.2.229 and does not implement
