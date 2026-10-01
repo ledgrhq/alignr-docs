@@ -151,8 +151,33 @@ Source: composed app PR53 `a9be8793a6e09dc429d8864f4ff289614ee74963`.
 No action, rollback, approval, verification or MCP capability changes are claimed.
 This branch builds on docs PR21 at reconciled head
 `730321933759c4fd3fbd4b9c13a0f6acff3d6d63`; Docs PR20 has since published.
-PR21 remains held for the Controls app release. PR22 remains held for app PR53
-and the PR21 dependency. This is a source-aligned candidate, not hosted acceptance.
+At this candidate checkpoint PR21 was still held for the Controls app release.
+PR22 was held for app PR53 and the PR21 dependency. This was source-aligned
+candidate evidence, not hosted acceptance; see the later PR21 publication and
+PR22 reconciliation record below.
+
+## 2026-10-01 — Global Organization filter and Fix history picker (held)
+
+The separate picker follow-up branch updates [Daily review](../guides/daily-review.mdx),
+[Review remediation](../guides/remediation.mdx) and [Standalone detection rules](../controls/standalone-rules.mdx)
+against application source head
+`8dfaf3aec4db46b9678146a284b779809f194bf4` in
+`/private/tmp/alignr-client-picker-composed`. The global Organization filter
+and Fix history picker are present at
+`d8f586785c961c621ad381b982bf88dd1700a0ef`; the Monitoring RuleScope picker
+and its permission-retention correction are included in the pinned head. The
+RuleScope file matches independently reviewed commit
+`41b26d82f9a7cc2805ba4a85e9198d8e5d391bd9` byte-for-byte.
+The guides explain name/slug search, 25-row directory pages, explicit selection,
+clearing and permission-denied behavior. Fix history has a separate run search,
+an `organization.read`-guarded picker with **Load more**, and a URL-scoped client
+filter that takes precedence over the global filter. Monitoring explains
+**Every organization** versus **Selected clients only**, independent retention
+of selections while browsing, a non-removable final selection and retained scope
+when directory access is denied. The Organization list API search/page contract
+is existing; no API/OpenAPI/MCP or permission change is documented. Keep this
+draft stacked on Docs PR22 and unpublished pending matching app release and
+final docs checks.
 
 ## 2026-10-01 — Docs PR21 publication and PR22 reconciliation
 
@@ -172,3 +197,16 @@ and retains full-workspace summary semantics. Source verified against final appl
 identical feature source. Coordinator independent content review cleared the
 guide. Publication remains held until the matching Health application release. No API or MCP
 contract changes or generated reference updates are implied.
+
+## Held Activity collection controls — 1 October 2026
+
+Daily review and security/data export guidance now cover full-collection search,
+heading/mobile ordering, pagination, URL-over-header client scope, matching export
+filters/order, query metadata privacy and CSV formula-safe presentation. Source:
+application `18fada94c706c3b6cc2c547c3606b423238ccc9f`, identical feature source to
+reviewed `0d27682`. Publication is held until the matching application release.
+Audit routes are absent from curated generator GROUPS, so this slice does not add
+or regenerate public OpenAPI operations. The existing 50,000-row cap is a current
+implementation limitation, not an accepted new policy. The owner's direction to
+remove collection/export limits remains outstanding application work; do not
+claim unlimited export before implementation and verification.

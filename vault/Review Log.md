@@ -814,6 +814,31 @@ The draft targets `docs/controls-table-controls` (docs PR21), now based on main.
 Docs PR20 is published; PR21 remains draft pending its matching Controls app
 release. Keep PR22 draft until app PR53 is live and PR21 is published.
 
+## 2026-10-01 — Global Organization filter and Fix history picker (held)
+
+Updated the separate public-guidance draft stacked on Docs PR22, preserving that
+PR's alignment with the app PR53 collection controls. The global header selector
+and Remediations picker were checked against composed application commit
+`d8f586785c961c621ad381b982bf88dd1700a0ef`; the Monitoring RuleScope picker was
+checked against candidate head
+`8dfaf3aec4db46b9678146a284b779809f194bf4` in
+`/private/tmp/alignr-client-picker-composed`. Its component matches the
+independently reviewed `41b26d82f9a7cc2805ba4a85e9198d8e5d391bd9`
+byte-for-byte. The global header selector searches Organizations by
+name/slug and pages 25 at a time; only selecting a client or **All organizations**
+changes the filter. Fix history uses `AsyncSelect` with **Load more** for further
+25-row pages, separately from run-history search. Its explicit Organization URL
+filter overrides the global filter; clearing it returns to header scope. The
+Monitoring scope editor distinguishes **Every organization** from **Selected
+clients only**, retains selected IDs while searching or paging, prevents removing
+the final selected client, and retains scope when `organization.read` is absent.
+Viewing Fix history still requires `remediation.read`.
+
+No API, OpenAPI or MCP contract changed: these pickers use the existing
+Organization list/detail endpoints and existing Remediations filters. No browser
+preview or hosted readback has been performed; the copy remains held pending the
+matching app release and docs CI.
+
 ## 2026-10-01 — Docs PR21 publication and PR22 reconciliation
 
 Docs PR21 was approved for publication after the matching application PR52 was
@@ -857,3 +882,39 @@ Pinned Mintlify accessibility, vault and whitespace checks passed. Earlier
 links/build checks apply to the unchanged public MDX; only this internal evidence
 was added afterwards. Dedicated browser and preview were stopped. No hosted
 publication or production Health acceptance is claimed.
+
+## 2026-10-01 — Activity collection and export safety (held)
+
+Prepared from docs main `63b422fc02e744a343442a7d1c18d07ae9689e85`, independently
+of held Docs22/23. The prior uncommitted export-scope draft was preserved in its
+original checkout. Claims were checked against committed application source
+`18fada94c706c3b6cc2c547c3606b423238ccc9f`; the application working tree had unrelated
+Docker/compose/vault changes, which were excluded by reading committed blobs.
+No new API reference group or MCP claim is introduced. Public guide changes cover
+search/filter/order/paging, client scope parity and the CSV apostrophe boundary.
+The 50,000-row limit is described honestly while its removal remains outstanding.
+Publication and hosted acceptance are held pending the matching app release.
+Validation and preview results follow before the candidate freeze.
+
+Validation passed using Node 22.13.1 and pinned mint@4.2.939: broken-links,
+openapi-check, validate, a11y, check-docs-vault and git diff --check. OpenAPI check
+validated the unchanged curated snapshot; no audit operation is selected there.
+Desktop 1440×1000 and mobile 390×844 previews were inspected using agent-browser.
+Search/order/client-scope guidance, CSV example and cap warning render legibly;
+mobile document width equals the 390px viewport. The security guide's existing
+export-guide link resolves to the retained Activity section anchor. Screenshots:
+`/private/tmp/audit-docs-desktop.png`, `/private/tmp/audit-docs-mobile-export.png`
+and `/private/tmp/audit-docs-mobile-security.png`. Preview and dedicated browser
+were stopped. No hosted publication, hosted search or production workflow test
+is claimed. Independent content review and matching app release remain required.
+
+## 2026-10-01 — Health guide release reconciliation
+
+Merged published documentation main `5335f8a` into the Health guide branch.
+The conflicts were append-only internal review and coverage records; both the
+Health and Activity records were retained. The reviewed Health MDX is unchanged.
+Application PR58 has passed its production repository gate and is deploying;
+publication remains held until the matching API and frontend are verified live.
+No additional local browser or build was started, respecting the owner's laptop
+resource constraint. Structural and whitespace checks were rerun; remote docs
+validation must pass this merged head before publication.
