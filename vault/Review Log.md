@@ -813,3 +813,17 @@ preview and dedicated browser session were stopped.
 The draft targets `docs/controls-table-controls` (docs PR21), now based on main.
 Docs PR20 is published; PR21 remains draft pending its matching Controls app
 release. Keep PR22 draft until app PR53 is live and PR21 is published.
+
+## 2026-10-01 — Docs PR21 publication and PR22 reconciliation
+
+Docs PR21 was approved for publication after the matching application PR52 was
+verified live. Exact PR21 head `730321933759c4fd3fbd4b9c13a0f6acff3d6d63`
+merged at 16:36:59 UTC as `63b422fc02e744a343442a7d1c18d07ae9689e85`. Main
+documentation validation run `36893332012` passed vault validation, broken-link
+checks, OpenAPI checks and Mint validation. Hosted readback of
+`https://docs.alignr.io/controls/parameters` confirmed the search, category and
+state filters, sortable headings, paging, grouping and draft-retention guidance.
+
+PR22 remains an unpublished draft matched to app PR53. Its PR21 dependency is
+reconciled with the published main branch; this does not release PR22. No hosted
+PR22 content or app PR53 release is claimed.
