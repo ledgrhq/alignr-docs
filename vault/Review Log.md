@@ -757,7 +757,7 @@ is verified.
 
 ## 2026-10-01 — Remediations collection candidate (held)
 
-Based on held docs PR21 `498af123ddec1f136d97165b52bab86c14af6e82`. Read
+Based on held docs PR21 at reconciled head `730321933759c4fd3fbd4b9c13a0f6acff3d6d63`, now targeting main. Read
 AGENTS/MOC, decisions, architecture, editorial/workflow and review checklist.
 Claimed scope: `guides/remediation.mdx`, curated reference generator/output and
 its navigation group, Documentation Coverage and this review log. Compared
@@ -810,7 +810,6 @@ paths remain semantically unchanged; only the two reviewed GET operations
 and their reachable schemas were added. MCP tools are unchanged. The local
 preview and dedicated browser session were stopped.
 
-The draft targets `docs/controls-table-controls` (docs PR21), which itself
-targets `docs/users-api-keys-table-sort` (docs PR20), then main. Both were open
-drafts when checked. Do not publish until app PR53 is live and docs PR20/21
-are published, including the matching Controls release required by PR21.
+The draft targets `docs/controls-table-controls` (docs PR21), now based on main.
+Docs PR20 is published; PR21 remains draft pending its matching Controls app
+release. Keep PR22 draft until app PR53 is live and PR21 is published.
