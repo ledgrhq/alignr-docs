@@ -754,3 +754,28 @@ preview attempt could not start because Mint reported no available port in its
 3115–3124 range, so desktop/mobile rendering and hosted readback remain
 unverified. Keep this docs change unpublished until the matching app release
 is verified.
+
+## 2026-10-01 — Activity collection and export safety (held)
+
+Prepared from docs main `63b422fc02e744a343442a7d1c18d07ae9689e85`, independently
+of held Docs22/23. The prior uncommitted export-scope draft was preserved in its
+original checkout. Claims were checked against committed application source
+`18fada94c706c3b6cc2c547c3606b423238ccc9f`; the application working tree had unrelated
+Docker/compose/vault changes, which were excluded by reading committed blobs.
+No new API reference group or MCP claim is introduced. Public guide changes cover
+search/filter/order/paging, client scope parity and the CSV apostrophe boundary.
+The 50,000-row limit is described honestly while its removal remains outstanding.
+Publication and hosted acceptance are held pending the matching app release.
+Validation and preview results follow before the candidate freeze.
+
+Validation passed using Node 22.13.1 and pinned mint@4.2.939: broken-links,
+openapi-check, validate, a11y, check-docs-vault and git diff --check. OpenAPI check
+validated the unchanged curated snapshot; no audit operation is selected there.
+Desktop 1440×1000 and mobile 390×844 previews were inspected using agent-browser.
+Search/order/client-scope guidance, CSV example and cap warning render legibly;
+mobile document width equals the 390px viewport. The security guide's existing
+export-guide link resolves to the retained Activity section anchor. Screenshots:
+`/private/tmp/audit-docs-desktop.png`, `/private/tmp/audit-docs-mobile-export.png`
+and `/private/tmp/audit-docs-mobile-security.png`. Preview and dedicated browser
+were stopped. No hosted publication, hosted search or production workflow test
+is claimed. Independent content review and matching app release remain required.

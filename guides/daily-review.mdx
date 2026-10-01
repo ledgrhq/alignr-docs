@@ -61,11 +61,29 @@ Open **Activity** to choose:
 | **Fix history** | Review runs, verification and supported rollback. | `remediation.read`; `remediation.rollback` to reverse eligible runs. |
 | **Audit trail** | Inspect recorded actors, actions and affected records. | `audit.read`. |
 
-The Audit trail destination opens the **Audit trail** page. Filter by **Actor kind**, **Action**, **Record type**, **Record id**, **From** and **To**. A closed issue's **view audit trail** action opens its record-specific history.
+The Audit trail destination opens the **Audit trail** page. A closed issue's **view audit trail** action opens its record-specific history.
 
-Select **Export filtered CSV** to export the matching records, or **Export CSV** without filters. Export uses the whole matching result set rather than only the displayed page, up to **50,000 rows**. If the export message says the row limit was reached, narrow the date range and export the remaining periods. Do not treat a truncated file as the complete trail.
+### Find and order records
 
-Filters are reflected in the page URL, so an authorised colleague can open the same filtered view. Exported files should follow your organisation's handling rules for operational records.
+Use **Search audit trail** to match part of an action, actor label, record type or client name. Search ignores letter case and treats characters such as `%` and `_` literally. It searches the matching collection, including records beyond the current page; it does not search event metadata.
+
+Combine search with **Actor kind**, **Action**, **Record type**, **Record id**, **From** and **To**. Click **Time**, **Actor** or **Event** to cycle ascending → descending → default order. On a narrow screen, use **Sort audit trail** for the same choices. Default order is newest first. Search, filters and ordering apply before pagination; changing them returns to the first page. Sorting alone does not count as a filter: **Reset order** returns to the default.
+
+### Check the client scope
+
+The current header **Organization filter** applies unless the URL specifies a client. An explicit URL client takes precedence. The header selection is separate from the URL, so it does not travel when you share a link. Clearing the page's filters removes its URL client filter and returns to the current header scope.
+
+A client-scoped view includes events associated with that client; events without a client are excluded. Choose **All organizations** and clear any URL client filter to inspect the workspace-wide trail. Check both the header and URL when reviewing a shared link.
+
+### Export the same view
+
+Select **Export filtered CSV** to export matching records, or **Export CSV** without filters. The file uses the table's effective client scope, search, filters and ordering across the matching collection, including records beyond the displayed page.
+
+Exports currently contain up to **50,000 rows**. If the export message says the row limit was reached, narrow the date range and export the remaining periods. Do not treat a truncated file as the complete trail.
+
+Text that could be interpreted as a spreadsheet formula receives a leading apostrophe in the CSV. For example, `=SUM(1,2)` is exported as `'=SUM(1,2)`. This is a spreadsheet-safety presentation change: stored audit values and structured JSON values remain unchanged. A CSV parser may show the apostrophe explicitly.
+
+Each export is recorded in the audit trail with its row count and selected filters. Raw search text is not retained in that export event; it records whether search was applied. Page filters and ordering remain in the page URL. Exported files should follow your organisation's handling rules for operational records.
 
 ## Distinguish alerts from completed work
 
