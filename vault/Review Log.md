@@ -40,6 +40,20 @@ app owner's final 9/9 focused tests, red/green proof and static checks, and root
 build, full Mintlify validation, docs responsive preview or hosted readback was
 run. Publication remains held for the matching app releases.
 
+### Local preview follow-up for draft PR #20
+
+Started `mint dev --port 3011` with Node 22.13.1 and read both changed guides
+through a browser session against `http://localhost:3011`. At 1440×900 and
+390×844, `document.documentElement.scrollWidth` matched the viewport width for
+both pages (1440 and 390 respectively). The rendered Users controls text block
+measured 576×168 at desktop and 308×308 at mobile; the API Keys block measured
+576×224 and 308×420. Both paragraphs rendered with the documented labels and
+order; no `vault`/review-log links appeared on either page. The browser session
+was read-only and closed after inspection; the local preview was stopped with
+Ctrl-C. Screenshot capture hung and was stopped, so there are no saved captures
+or pixel-level screenshot claims. This preview does not establish hosted
+publication or application runtime behavior.
+
 ## 2026-10-01 — Held Standards and Facts table search/sort docs
 
 Updated `guides/standards.mdx` for the routed Standards table and
