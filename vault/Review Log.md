@@ -2,6 +2,48 @@
 
 Append dated entries. Keep evidence precise and do not turn planned checks into passed checks.
 
+## 2026-10-01 — Held paged standard activation reference
+
+Prepared an additive REST/MCP documentation candidate against frozen source in
+`/private/tmp/alignr-standard-authoring-scaling`, based on application
+`ffecfd01929f24abbd196c607388f26211bd397e` with activation summary/pages and
+migration 0079 present in the worktree. The candidate adds the REST summary and
+page routes to the selected OpenAPI reference and documents
+`get_standard_activation_summary` and `get_standard_activation_page` under the
+existing `standards:read` scope. Existing legacy preview/activation contracts
+and MCP scopes remain available.
+
+The guides lead with the paged flow: one 15-minute revision, three complete
+sections, up to 25 rows and 240 KiB per page, and a new review after a stale
+revision. They retain the legacy one-response preview and its 50-control,
+50-check and 200-rule-scope bounds. Summary and page reads have a 10-second
+service budget; final activation has a 5-second full-policy recheck budget. The
+revision signs authored policy and saved assignments, not per-client overrides
+or the full client roster; adding a client alone does not invalidate it. Copy
+distinguishes these processing bounds from initial 30-control / 30 manual-check
+create batches and the 5,000-ID assignment replacement request bound; it does
+not claim unlimited total standard capacity. Activation still requires the same
+user-owned key, current permission, explicit workspace acknowledgement when
+applicable and an idempotency UUID. No evaluation, evidence collection or vendor
+action is implied.
+
+`scripts/sync-reference.py` ran in the isolated activation-validation API image
+with `--no-deps`; it did not start a database or application stack. The source
+registry produced 18 selected REST reads and 33 MCP tools. Generated output was
+inspected for route parameters, schemas, error statuses, scopes and tool names.
+With Node 22.13.1 and the locally cached Mintlify 4.2.939 package, the docs vault
+guard, `mint broken-links`, `mint openapi-check api-reference/openapi.json`,
+`mint a11y`, `mint validate`, Python generator compilation, JSON parsing and
+`git diff --check` passed. The first validator attempt lacked access to the
+shared Mintlify preview cache; the authorised rerun passed. A local `mint dev`
+preview could not start because ports 3000–3009 were already occupied, so no
+desktop/mobile visual read is claimed. This docs pass did not run application
+suites; app focused evidence and the full gate are owned by the application
+workstream. Independent review and the final application commit remain
+outstanding. Branch is based on docs main
+`3e368670c584daadb4e22973623a2da0c3a7620b` and remains held until the matching
+app release; no production availability or hosted readback is claimed.
+
 ## 2026-09-27 — Held setup continuity and five-step visual refresh
 
 Prepared `guides/setup-wizard.mdx` and `journeys/visual-tour.mdx` against application UI source `506cf71` after checking `SetupWizardPage` and `BaselineIntakePage`. The guide now explains the Standards-to-baseline hand-off, Back to the Standards step, account-scoped same-browser Resume/Start again and inactive-save review boundary. It does not describe the later requested Microsoft domain lookup or separate admin-consent flow, which are not in this release candidate.

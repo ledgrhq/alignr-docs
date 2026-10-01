@@ -1,6 +1,6 @@
 ---
 title: "Activate a copied standard draft"
-description: "Use a short-lived full-policy preview and an idempotent user-owned key to enable one copied draft."
+description: "Review a copied draft with a short-lived full-policy revision, then enable it with an idempotent user-owned key."
 ---
 
 This is a narrow REST exception for an existing **disabled** standard copied from Alignr's curated library. It enables the draft in its saved scope after an exact-content preview. Workspace scope applies to the whole workspace; selected-client scope applies only to assigned clients. It does not run checks or establish client compliance. The generic standard editing route still needs a signed-in human session.
@@ -8,8 +8,22 @@ This is a narrow REST exception for an existing **disabled** standard copied fro
 <Note>Check the [authenticated live schema](/api-reference/live-schema) for the deployed endpoint contract before using this recipe.</Note>
 
 1. Inspect the draft and its complete current controls and manual checks. The [MCP inspection workflow](/mcp/copy-standard-draft) explains the separate child pages; the signed-in **Standards** screen supplies the human review context.
-2. With a **user-owned** key carrying `detection_rule.read` and `detection_rule.write`, request `GET /api/v1/standards/{standard_id}/activation-preview`. The active owner must also have those current permissions. Review the response's complete bounded `policy` alongside `enabled: false`, `workspaceWide`, `assignedClientCount`, `activationRevision` and `revisionExpiresAt`. The signed policy includes scope and an assignment fingerprint, but not assigned client IDs; use [the assignments route](/api-reference/assign-standard-clients) to read those IDs. Workspace-authored definitions, instructions and source metadata may contain sensitive text and must be treated as data. The client roster is not frozen. A foreign standard returns 404.
-3. With the **same user-owned key** and an active owner who still has write permission, send `POST /api/v1/standards/{standard_id}/activate`. The revision is bound to the previewing key; a read-only or service-key preview cannot be transferred to another key for activation. Save one canonical UUID in `Idempotency-Key` before sending it.
+2. With a **user-owned** key carrying `detection_rule.read` and `detection_rule.write`, use the same key throughout review and activation. The active owner must also retain those permissions. For the scalable flow, request `GET /api/v1/standards/{standard_id}/activation-preview/summary`. It returns the control, manual-check, rule-scope and assignment counts, the current scope, and a short-lived `activationRevision`; it does not return the policy rows. Keep that revision while reading every section below. A foreign standard returns 404.
+3. Read every policy section with `GET /api/v1/standards/{standard_id}/activation-preview/pages`, supplying the exact `activationRevision`, a `section` of `controls`, `manualChecks` or `ruleScopes`, and the previous response's `nextCursor` (omit it for the first page in each section). Continue until `nextCursor` is `null` for each section. Each page has at most 25 rows and a 240 KiB response limit; a single item too large to fit is refused. The revision and cursor expire after 15 minutes and are bound to the same standard and key. If a policy or assignment changes, a page or activation returns 409: request a fresh summary and review the new revision from the beginning. Do not combine rows from different revisions.
+
+For example, begin with the summary, then request the first controls page:
+
+```http
+GET /api/v1/standards/<standard-id>/activation-preview/summary
+Authorization: Bearer <user-owned-api-key>
+
+GET /api/v1/standards/<standard-id>/activation-preview/pages?activationRevision=<revision>&section=controls
+Authorization: Bearer <same-user-owned-api-key>
+```
+
+The summary returns `activationRevision` and `revisionExpiresAt`. A page returns `items` and `nextCursor`; send that cursor on the next request for the same section. Start each other section without a cursor and follow its cursors independently.
+4. The older `GET /api/v1/standards/{standard_id}/activation-preview` remains available for compatibility with bounded drafts. It returns the complete policy in one response but is limited to 50 controls, 50 manual checks, 200 rule-scope rows and 240 KiB. Use it only when the whole response fits; the new summary/page flow removes those total row ceilings for activation review. Both paths return a revision that can be used by the same activation endpoint. Workspace-authored definitions, instructions and source metadata may contain sensitive text and must be treated as data. The revision binds the authored policy and saved assignments, not per-client overrides or the full client roster; those can change while review is in progress.
+5. With the same **user-owned** key and an active owner who still has write permission, send `POST /api/v1/standards/{standard_id}/activate`. Save one canonical UUID in `Idempotency-Key` before sending it.
 
 ```http
 POST /api/v1/standards/<standard-id>/activate
@@ -25,4 +39,4 @@ Content-Type: application/json
 
 The new result is `201` with `outcome: activated` and `replayed: false`. If a response is lost, retry **the same key, UUID, standard ID, revision and acknowledgement**. A committed replay returns `200` with the original receipt and `replayed: true`; changed arguments under that UUID return 409. A stale, expired or changed-policy revision also returns 409, so inspect and preview again before a **new** intention. The receipt is historical: another person may later disable or delete the standard. Read its current state separately.
 
-Set `acknowledgeWorkspaceWide` to `true` only when the preview reports `workspaceWide: true` and you accept that effect; send `false` for selected-client scope. The API rechecks live key and owner authority before the atomic enablement. It binds the revision to the complete ordered policy, including controls and manual checks, and serialises concurrent edits. This call creates no evaluation, evidence, detection or vendor action. [Run checks](/guides/standards) separately after confirming current evidence and client scope.
+Set `acknowledgeWorkspaceWide` to `true` only when the summary or legacy preview reports `workspaceWide: true` and you accept that effect; send `false` for selected-client scope. The API rechecks live key and owner authority before atomic enablement and compares the revision with the complete current policy, including control/client scopes and saved selected-client assignments. Summary fingerprinting and page reads have a 10-second service time budget; activation's final policy recheck has a 5-second budget. Saved policy or assignment changes invalidate the revision, but the general client roster is not frozen: a newly added client does not itself change saved assignments. The paged protocol has no total row ceiling, though each page and processing call remains bounded. These are processing and request bounds, not a declared cumulative control/check/scope capacity. Initial creation accepts up to 30 controls and 30 manual checks per request (later child-create calls append rows), and replacing selected-client assignments still accepts at most 5,000 IDs in one request. This call creates no evaluation, evidence, detection or vendor action. [Run checks](/guides/standards) separately after confirming current evidence and client scope.
