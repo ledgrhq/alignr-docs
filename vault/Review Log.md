@@ -54,7 +54,7 @@ Ctrl-C. Screenshot capture hung and was stopped, so there are no saved captures
 or pixel-level screenshot claims. This preview does not establish hosted
 publication or application runtime behavior.
 
-## 2026-10-01 — Held Standards and Facts table search/sort docs
+## 2026-10-01 — Published Standards and Facts table search/sort docs
 
 Updated `guides/standards.mdx` for the routed Standards table and
 `guides/evidence.mdx` for Facts heading sorting. The Standards copy explains
@@ -84,7 +84,25 @@ available” so it does not imply withheld objects are exposed. The matching
 application work is [PR #50](https://github.com/ledgrhq/ledgr/pull/50), currently
 open and not released. Full local Mintlify preview, application release,
 publication and hosted readback remain pending; this draft makes no availability
-claim.
+claim. The exact Docs PR #19 head `eafc2b40e91d6cd44667657e4bf901564e0f5f74`
+merged to main as `0f7ab8ba229c2c97e6e29cc20dadb853f100103e` at 13:58:29 UTC,
+after application PR #50 was promoted. Main workflow `36872717239` succeeded,
+including the docs-vault check, broken-link check, OpenAPI check and `mint validate`
+with the pinned CI Mintlify version.
+
+Hosted readback at 14:01 UTC confirmed the Standards guide at
+`https://docs.alignr.io/guides/standards`, Facts guide at
+`https://docs.alignr.io/guides/evidence`, and curated schema at
+`https://docs.alignr.io/api-reference/openapi.json`. The Standards text states the
+search and page-size bounds, eight sort orders and bare-list compatibility. The
+Facts text states full-result sort order, newest-first default and safe displayed
+value ordering. The hosted OpenAPI schema exposes the documented query options,
+including `q` max length 200; `enabled`; the eight standard sorts; page size 1–100;
+Facts sort values `subject`, `predicate`, `value`, `sourceSystem`, `observedAt`;
+and directions `asc`/`desc`. The hosted response reported Mintlify version
+`dpl_5WfBKS6uvB3ch6FqbAMNWRNXnopx`. No live application endpoint call or hosted
+visual inspection was performed. Docs PR #20 remains held for its matching app
+release and is not included in this publication.
 
 For this draft, `python3 scripts/check-docs-vault.py` passed with 14 indexed notes,
 `mint openapi-check api-reference/openapi.json` passed, `mint a11y` passed across 95
@@ -100,10 +118,10 @@ publication.
 
 I also tried `npm exec --package=@mintlify/cli@4.2.939 -- mint --version` under
 Node 22.13.1; npm returned `ETARGET` because that package version is unavailable
-from the registry. The installed `mint` CLI remains 4.2.229. The branch
-`docs/standards-index-search-paging` is in draft docs PR #19, based on updated
-docs main after Docs18. Its matching app work is PR #50. Keep docs PR #19 in draft
-until PR #50 is released and hosted documentation publication is authorized.
+from the registry. The local installed Mintlify CLI was 4.2.229, so the `mint
+validate` check was performed by the pinned CI workflow instead. Branch
+`docs/standards-index-search-paging` was merged in Docs PR #19 after its matching
+app PR #50 was released. Docs PR #20 remains held until its matching app release.
 
 ## 2026-10-01 — Held paged standard activation reference
 
