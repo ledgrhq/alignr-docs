@@ -49,6 +49,10 @@ outstanding. Branch is based on docs main
 `3e368670c584daadb4e22973623a2da0c3a7620b` and remains held until the matching
 app release; no production availability or hosted readback is claimed.
 
+The candidate is in draft docs PR #17 on branch `docs/standard-activation-paging`
+(reviewed content through `3f9d38b`). It remains intentionally unmerged until
+the matching application change passes its full gate and is released.
+
 ## 2026-09-27 — Held setup continuity and five-step visual refresh
 
 Prepared `guides/setup-wizard.mdx` and `journeys/visual-tour.mdx` against application UI source `506cf71` after checking `SetupWizardPage` and `BaselineIntakePage`. The guide now explains the Standards-to-baseline hand-off, Back to the Standards step, account-scoped same-browser Resume/Start again and inactive-save review boundary. It does not describe the later requested Microsoft domain lookup or separate admin-consent flow, which are not in this release candidate.
