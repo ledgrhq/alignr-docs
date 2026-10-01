@@ -853,6 +853,36 @@ PR22 remains an unpublished draft matched to app PR53. Its PR21 dependency is
 reconciled with the published main branch; this does not release PR22. No hosted
 PR22 content or app PR53 release is claimed.
 
+## 2026-10-01 — Workspace health table guidance (held preparation)
+
+Separate main-based branch from e131b1f, with no Docs23/24 dependency. The routed
+component is frontend/src/features/operations/OperationalHealthPage.tsx, imported
+by router.tsx for /health. App143b92 and the owner's working clarity refinement
+were inspected read-only. The draft describes sources searched by name/type/hint,
+clients searched by name, independent state/readiness filters, local full-array
+sorting before paging, missing dates last, and unchanged workspace counters.
+Clear filters preserves sorting in the refinement; final commit must confirm it.
+No publication until final source and independent review are verified.
+
+Preparation checks passed: pinned mint@4.2.939 broken-links and validate under
+Node22, check-docs-vault and whitespace validation. No browser preview, final
+source-pin comparison or independent content review yet; these remain pending.
+
+Final source pin: `90c9d0ea6a1821ae99f0f02cd1c0f8c2b617ffe4`. Coordinator verified
+three feature files byte-identical in composed candidate9a4518c and independently
+cleared the guide's claims. Final source comparison confirms column-specific sort
+labels and Clear filters preserving ordering. Public API remains unchanged.
+Browser preview results follow. Publication is held for the Health app release.
+
+Final preview inspected at 1440×1000 and 390×844 with agent-browser against the
+unchanged reviewed guide. The ordering, local paging and preserved-sort guidance
+render legibly; mobile document width equals 390px. Screenshots are
+`/private/tmp/health-docs-desktop.png` and `/private/tmp/health-docs-mobile.png`.
+Pinned Mintlify accessibility, vault and whitespace checks passed. Earlier
+links/build checks apply to the unchanged public MDX; only this internal evidence
+was added afterwards. Dedicated browser and preview were stopped. No hosted
+publication or production Health acceptance is claimed.
+
 ## 2026-10-01 — Activity collection and export safety (held)
 
 Prepared from docs main `63b422fc02e744a343442a7d1c18d07ae9689e85`, independently
@@ -877,3 +907,14 @@ export-guide link resolves to the retained Activity section anchor. Screenshots:
 and `/private/tmp/audit-docs-mobile-security.png`. Preview and dedicated browser
 were stopped. No hosted publication, hosted search or production workflow test
 is claimed. Independent content review and matching app release remain required.
+
+## 2026-10-01 — Health guide release reconciliation
+
+Merged published documentation main `5335f8a` into the Health guide branch.
+The conflicts were append-only internal review and coverage records; both the
+Health and Activity records were retained. The reviewed Health MDX is unchanged.
+Application PR58 has passed its production repository gate and is deploying;
+publication remains held until the matching API and frontend are verified live.
+No additional local browser or build was started, respecting the owner's laptop
+resource constraint. Structural and whitespace checks were rerun; remote docs
+validation must pass this merged head before publication.
