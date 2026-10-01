@@ -6,14 +6,17 @@ Append dated entries. Keep evidence precise and do not turn planned checks into 
 
 Updated `guides/account-and-team.mdx` and `guides/api-keys.mdx` against the
 reachable page source in app candidates `b3eff8eb2382c567ff88827ac6977dd24087d4a7`
-(Users) and `460da6bf88c9d0d448328f37856514051d9c4d12` (API Keys). The Users
+(Users) and final API Keys candidate `fc179c3498bd28a08c5ae2cab660113681880c5f`.
+The Users
 guide names the search fields, status and role filters including **No role**,
 sortable table headings, 25-row display pages and the **Sort users** mobile
 control. The source fetches all API pages then filters, sorts and slices in the
 browser; this guide does not claim server-side query support. The API Keys guide
 documents search by name/prefix/owner, status filtering, all six sortable
-headings, the **Sort API keys** mobile control and the pre-existing **Name A–Z**
-default; null owner/date values stay last in either direction.
+headings, desktop heading buttons and the **Sort API keys** mobile control. The
+existing **Name A–Z** default remains; null owner/date values stay last in either
+direction. The final API Keys revision removed the desktop selector; the guide
+now identifies headings as desktop controls and the selector as mobile-only.
 
 No OpenAPI or MCP reference changed because neither candidate changes an API
 contract. The pages were checked against the two isolated application commits
@@ -23,10 +26,19 @@ releases and hosted readback are pending; publication must wait for both
 applications to be released.
 
 `python3 scripts/check-docs-vault.py` passed with 14 indexed notes and
-publication boundaries; `git diff --check` passed. `mint broken-links` did not
-run: the installed Mint CLI executed under Node 16 and exited before checking
-files with `ReferenceError: Blob is not defined`. No docs build, full Mintlify
-validation, responsive preview, hosted readback or application tests were run.
+publication boundaries; `git diff --check`, `mint openapi-check
+api-reference/openapi.json` and `mint a11y` across 95 MDX files passed under
+Node 22.13.1. `mint broken-links` completed and found only the two existing
+`README.md` links to excluded `AGENTS.md` and `vault/MOC.md`; neither public guide
+link failed. An earlier invocation under Node 16 exited before checking files
+with `ReferenceError: Blob is not defined`. Docs review checked the visible labels
+and collection behaviour against the two pinned application sources. The final
+API Keys app pin uses column-heading buttons on desktop and retains the
+**Sort API keys** select only below the desktop breakpoint. Root reports the
+app owner's final 9/9 focused tests, red/green proof and static checks, and root's
+390px/1440px visual review; those checks were not rerun by docs work. No docs
+build, full Mintlify validation, docs responsive preview or hosted readback was
+run. Publication remains held for the matching app releases.
 
 ## 2026-10-01 — Held Standards and Facts table search/sort docs
 
