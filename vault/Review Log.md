@@ -384,6 +384,12 @@ passed. `mint broken-links` found only the two existing maintainer README links
 to intentionally excluded `AGENTS.md` and `vault/MOC.md`; no public MDX link
 failed. This CLI does not support `mint validate`. Local preview could not start
 because all ports 3000–3009 are occupied; desktop/mobile rendering remains
-unverified. A remote fetch failed because this environment could not resolve
-`github.com`, so remote PR checks and hosted docs readback remain unverified.
-No authenticated app action was performed.
+unverified. The initial sandboxed fetch could not resolve `github.com`; an
+authorised fetch then confirmed the PR branch was still at its base before the
+commit. No authenticated app action or hosted docs readback was performed.
+`1286ddf2192d744ce77399be93dfdceed508f203` was pushed to the existing PR
+branch after `git fetch` confirmed the remote branch was at its base commit.
+GitHub reports PR #11 head `1286ddf2192d744ce77399be93dfdceed508f203` and its
+Mintlify Deployment check completed successfully. The branch remains unmerged;
+the hosted docs were not read back, and the change remains held until the app
+release.
