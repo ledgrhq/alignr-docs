@@ -404,3 +404,29 @@ whitespace check passed again for this correction; broken-links still reports
 only the two excluded README maintainer links. Mintlify CLI 4.2.229 still lacks
 `validate`, and preview remains unavailable on ports 3000–3009. No hosted
 readback was performed.
+
+
+## 2026-10-01 — Held roles, API-key and detected-risk table controls
+
+Updated `guides/account-and-team.mdx`, `guides/api-keys.mdx` and `guides/risk-and-roadmap.mdx` against the uncommitted table-controls candidate in `/private/tmp/alignr-client-checks-clarity` (application base `d349133548c901b262d72d998482eda6433058d6`, branch `feat/admin-risk-table-controls`). Source comparison covered `RolesPage.tsx`, `ApiKeysPage.tsx`, `RiskTab.tsx`, and the role/API-key list routes and services. The role and API-key list endpoints return the complete collection permitted to the caller; search, filters, sort and 25/50/100-row pagination then operate on that collection. Role search covers name/description, type filters cover all/system/custom, and sorting covers name, user count and granted-permission count. API-key search covers name, prefix and owner name/email, with status and owner/name sorting. Detected risks retain search across title/reference/client and severity/decision filters; sort choices are rank score, severity and name. Pagination applies to detected risks; manual assessment risks remain separate. No API/MCP contract changed, so generated references were not regenerated.
+
+This is source inspection of an unmerged app candidate and an unpublished documentation draft. It does not establish app test results, authenticated interaction, deployment or public availability. Hold publication until the application owner verifies the implementation and release.
+
+For this candidate, `python3 scripts/check-docs-vault.py`, `git diff --check`, `mint openapi-check api-reference/openapi.json` and `mint a11y` passed (94 MDX files) with Node 22.13.1 and Mint 4.2.229. `mint broken-links` found only the pre-existing README links to the intentionally excluded `AGENTS.md` and `vault/MOC.md`; no public MDX links failed. This CLI does not provide the prescribed `mint validate` command. Mint's `--port` option was not shown by `mint dev --help`, but the CLI accepted `mint dev --no-open --port 3100`; it started after `lsof` confirmed no listeners on 3100–3110 and local bind permission was granted. I stopped only this preview process. With agent-browser, I reviewed all three changed paragraphs at 1440×900 and 390×844; text wrapped within the content column without horizontal overflow. Captures are in `/private/tmp/alignr-docs-roles-anchor-desktop.png`, `/private/tmp/alignr-docs-roles-mobile-paragraph.png`, `/private/tmp/alignr-docs-api-keys-desktop.png`, `/private/tmp/alignr-docs-api-keys-mobile.png`, `/private/tmp/alignr-docs-risk-desktop.png` and `/private/tmp/alignr-docs-risk-mobile.png`. These are local documentation renders only. No app tests, authenticated interaction, hosted readback or publication were performed.
+
+## 2026-10-01 — PR11 conflict reconciliation
+
+Fetched docs `origin/main` at `62bc54d` (PR #12) and merged it into the held
+PR11 branch. The only merge conflict was the append-only Review Log: preserved
+both PR11's active-standard/client summary, Run all checks, sorting and label
+records and PR #12's roles, API-key and risk table-controls record. PR #12's
+published account/team, API-key and risk guides are also retained unchanged.
+The PR11 candidate remains draft; neither PR is being merged as part of this
+conflict resolution. The matching app release remains the publication gate.
+With Node 22.13.1 and Mintlify CLI 4.2.229, the vault guard (14 indexed notes),
+OpenAPI check, accessibility scan (95 MDX files) and `git diff --check` passed.
+`mint broken-links` reports only the two pre-existing maintainer README links to
+intentionally excluded `AGENTS.md` and `vault/MOC.md`; no public MDX links fail.
+This CLI does not support `mint validate`. A local preview was attempted but did
+not become available, so desktop/mobile rendering remains unverified. No hosted
+docs readback or authenticated application check was performed.
