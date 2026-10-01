@@ -221,7 +221,7 @@
     "name": "patch_status",
     "label": "Patch state",
     "description": "The patching state reported by the management source.",
-    "interpretation": "State vocabularies and source coverage matter; do not assume every vendor means the same thing."
+    "interpretation": "Datto's `unknown` is missing evidence, not a pass or failure. A complete, validated inventory that omits patch status withdraws Datto's previous observation; an incomplete inventory leaves that observation subject to freshness rules."
   },
   {
     "group": "Endpoint management and patching",
