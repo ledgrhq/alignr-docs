@@ -414,6 +414,16 @@ This is source inspection of an unmerged app candidate and an unpublished docume
 
 For this candidate, `python3 scripts/check-docs-vault.py`, `git diff --check`, `mint openapi-check api-reference/openapi.json` and `mint a11y` passed (94 MDX files) with Node 22.13.1 and Mint 4.2.229. `mint broken-links` found only the pre-existing README links to the intentionally excluded `AGENTS.md` and `vault/MOC.md`; no public MDX links failed. This CLI does not provide the prescribed `mint validate` command. Mint's `--port` option was not shown by `mint dev --help`, but the CLI accepted `mint dev --no-open --port 3100`; it started after `lsof` confirmed no listeners on 3100–3110 and local bind permission was granted. I stopped only this preview process. With agent-browser, I reviewed all three changed paragraphs at 1440×900 and 390×844; text wrapped within the content column without horizontal overflow. Captures are in `/private/tmp/alignr-docs-roles-anchor-desktop.png`, `/private/tmp/alignr-docs-roles-mobile-paragraph.png`, `/private/tmp/alignr-docs-api-keys-desktop.png`, `/private/tmp/alignr-docs-api-keys-mobile.png`, `/private/tmp/alignr-docs-risk-desktop.png` and `/private/tmp/alignr-docs-risk-mobile.png`. These are local documentation renders only. No app tests, authenticated interaction, hosted readback or publication were performed.
 
+
+
+## 1 October — Issues search and sorting candidate
+
+Draft guides explain indexed word search, exact email tokens, scope limits and named sort orders over the full result set. Application candidate: `/private/tmp/alignr-issues-search-sort`; no deployment claim. Curated OpenAPI regeneration and validation are part of this workstream. Hold publication until the API contract and UI are released together; the existing backend scan hold is not waived.
+
+Prior table guides PR12 merged as `62bc54d`; main validation passed. Live Roles, API keys and risk guide paragraphs were checked, and hosted search found the risk guide. Matching application PR38 frontend is live; authenticated tenant workflows were not repeated in production.
+
+Reference generation used the Issues candidate and produced its q/sort parameters. Unrelated unreleased standard-scope component changes were excluded from this PR; held PR11 owns those schema changes. This branch retains the baseline schema except the generated detections operation.
+
 ## 2026-10-01 — PR11 conflict reconciliation
 
 Fetched docs `origin/main` at `62bc54d` (PR #12) and merged it into the held
@@ -430,3 +440,13 @@ intentionally excluded `AGENTS.md` and `vault/MOC.md`; no public MDX links fail.
 This CLI does not support `mint validate`. A local preview was attempted but did
 not become available, so desktop/mobile rendering remains unverified. No hosted
 docs readback or authenticated application check was performed.
+
+
+## 2026-10-01 — PR11 public release
+
+PR #11 merged to docs `main` as `4d7bc3124b60cebdc5fde28d4f07f282c832de97`
+following successful GitHub validation and Mintlify Deployment checks. Application
+release PR40 is live at `app.alignr.io`, aliasing deployment
+`dpl_2f2dBJtaNaVnmjN7ENHhEaRN6hU8` from source `a7347a9435cccbea5622106ee2dab92ed518a671`;
+API deployment workflow `36815756972` succeeded. Hosted docs readback will be
+recorded after all approved guides are published.

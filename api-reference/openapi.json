@@ -862,6 +862,33 @@
             }
           },
           {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 200,
+              "default": "",
+              "title": "Q"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "risk",
+                "severity_desc",
+                "title_asc",
+                "title_desc"
+              ],
+              "type": "string",
+              "default": "risk",
+              "title": "Sort"
+            }
+          },
+          {
             "name": "page",
             "in": "query",
             "required": false,
