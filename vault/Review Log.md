@@ -619,3 +619,27 @@ but navigation stalled before page screenshots or layout measurements could
 be captured. No desktop/mobile rendering claim is made for this docs work;
 see `/private/tmp/client-integration-runtime-audit-2026-10-01.md` for the
 standalone audit record. No customer data or mutations were involved.
+
+## 2026-10-01 — Held Ask risk-answer clarity guidance
+
+Updated `guides/ask-alignr.mdx` to describe the expected structure for risk
+questions: state the recorded condition, explain only a cited possible
+significance, and give a specific verification step. It says that when no
+authored risk rationale is recorded, Ask Alignr should state that and avoid
+guessing impact; a control description states an expectation, not an observed
+outcome. This aligns with application PR #47 (`83102664798093f9e16ba1b129695d3c30ed1944`),
+where the prompt and citation context support this response and preserve exact
+claim grounding. Existing Ask guidance already required users to inspect the
+client, subject, time and supporting citations; this addition makes the risk
+interpretation limit explicit.
+
+No API or MCP tool, permission or generated reference changed. The application
+candidate's focused grounding tests pass (3); no live AI/model response was
+requested or observed. `check-docs-vault.py`, `mint openapi-check`, `mint a11y`
+and `git diff --check` passed. `mint broken-links` reported only the two existing
+README links to intentionally excluded `AGENTS.md` and `vault/MOC.md`; no public
+MDX link failed. The installed Mintlify CLI is 4.2.229 and does not implement
+`mint validate`. A local `mint dev --no-open` attempt could not start because
+ports 3000 through 3009 were already occupied; no other preview server was
+stopped or changed. Desktop/mobile rendering and hosted readback remain pending.
+Keep this docs change unpublished until the matching app release is verified.
