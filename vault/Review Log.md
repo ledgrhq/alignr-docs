@@ -481,6 +481,25 @@ does not provide `mint validate`. Local preview was not available during the
 prior PR11 validation; the post-release browser readback confirms hosted text,
 not app behavior or responsive rendering.
 
+## 2026-10-01 — Held workspace Billing navigation
+
+Updated `guides/billing-and-support.mdx` to direct readers from the Settings directory
+to **Billing**, matching the composed app candidate's `/settings/billing` route. Source
+inspection at app commit `d5587da4e986b3c609625c3dba54fead7852d4c1` confirms that the
+page requires `billing.read`, mutations require `billing.manage`, Account no longer
+contains Billing, and legacy `/account?checkout=return` hints redirect to the new
+route while preserving the server lookup hint. The provider route maps the
+allowlisted `configuration_incompatible` response to HTTP 409 with the safe message
+“Billing portal setup is incomplete. Contact support to finish setup.”; other provider
+failures keep the generic temporary-unavailability response. The guide gives those
+two distinct next steps. It does not claim that the provider's Chargebee Login versus
+Single Sign On API setting has been changed, or that portal opening now succeeds.
+There is no API/MCP contract or catalogue change, so generated references were not
+changed. App test source and the combined candidate were inspected; this docs review
+did not run application suites because the root agent owns the active serial gate.
+The docs branch remains draft/held for app42 release and has not been published or
+read back from the hosted site.
+
 ## 2026-10-01 — Held Datto unknown patch-status guidance
 
 Prepared a documentation candidate against application commits `cd99774`
@@ -512,3 +531,22 @@ paragraphs wrapped without horizontal overflow (`scrollWidth` matched the
 `/private/tmp/alignr-docs-datto-endpoints-final-desktop.png` and
 `/private/tmp/alignr-docs-datto-endpoints-final-mobile.png`. This is a local
 render only; hosted readback and app test execution are not claimed.
+
+## 2026-10-01 — PR16 reconciliation with docs main
+
+Merged docs `origin/main` at `2df1c88` into the held billing-settings branch.
+The merge retained the PR16 Settings → **Billing** guide and its HTTP 409 setup
+recovery versus temporary HTTP 503 guidance; it also retained the PR11/PR13
+hosted-readback entry and the incoming PR15 Datto unknown-status guide, coverage
+record and review evidence. The billing guide itself was unchanged by the merge.
+The only conflict was this append-only review log, resolved by keeping both the
+PR16 billing candidate entry and PR15 Datto entry. No provider settings, public
+publication or hosted readback were changed or performed.
+
+With Node 22.13.1 and Mintlify CLI 4.2.939, `python3
+scripts/check-docs-vault.py` passed (14 indexed notes), `mint broken-links`
+reported no broken links, `mint openapi-check api-reference/openapi.json`
+passed, and `mint validate` passed. The merge whitespace check also passed.
+No responsive preview was repeated because the public billing guide did not
+change in this merge; the branch remains held for the matching application
+release and independent review.
