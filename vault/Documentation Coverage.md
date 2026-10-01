@@ -156,17 +156,23 @@ and the PR21 dependency. This is a source-aligned candidate, not hosted acceptan
 
 ## 2026-10-01 — Global Organization filter and Fix history picker (held)
 
-The separate picker follow-up branch updates [Daily review](../guides/daily-review.mdx)
-and [Review remediation](../guides/remediation.mdx) against application source
-`d8f586785c961c621ad381b982bf88dd1700a0ef` in
-`/private/tmp/alignr-client-picker-composed`. It explains the global
-Organization filter's name/slug search, 25-row directory pages, explicit
-selection, clearing and permission-denied behavior. It also explains Fix
-history's `organization.read`-guarded, searchable Organization picker,
-**Load more**, and how its URL-scoped client filter takes precedence over the
-global filter until **Clear filters** removes it. Run-history search remains a
-separate control. This documentation does not describe the still-pending
-Monitoring RuleScopeField picker. The Organization list API and its search/page
-contract are existing; no API/OpenAPI/MCP or permission change is documented.
-Keep this draft stacked on Docs PR22 and unpublished pending independent app
-review, the matching app release and final docs checks.
+The separate picker follow-up branch updates [Daily review](../guides/daily-review.mdx),
+[Review remediation](../guides/remediation.mdx) and [Standalone detection rules](../controls/standalone-rules.mdx)
+against application source head
+`8dfaf3aec4db46b9678146a284b779809f194bf4` in
+`/private/tmp/alignr-client-picker-composed`. The global Organization filter
+and Fix history picker are present at
+`d8f586785c961c621ad381b982bf88dd1700a0ef`; the Monitoring RuleScope picker
+and its permission-retention correction are included in the pinned head. The
+RuleScope file matches independently reviewed commit
+`41b26d82f9a7cc2805ba4a85e9198d8e5d391bd9` byte-for-byte.
+The guides explain name/slug search, 25-row directory pages, explicit selection,
+clearing and permission-denied behavior. Fix history has a separate run search,
+an `organization.read`-guarded picker with **Load more**, and a URL-scoped client
+filter that takes precedence over the global filter. Monitoring explains
+**Every organization** versus **Selected clients only**, independent retention
+of selections while browsing, a non-removable final selection and retained scope
+when directory access is denied. The Organization list API search/page contract
+is existing; no API/OpenAPI/MCP or permission change is documented. Keep this
+draft stacked on Docs PR22 and unpublished pending matching app release and
+final docs checks.
