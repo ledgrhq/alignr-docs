@@ -18,7 +18,7 @@ Overview requires `dashboard.read`. Its **Next step** points towards unfinished 
 
 Read alignment alongside coverage. In an illustrative example, ten passing results and ten checks without usable evidence do not establish that all twenty expectations are met. **Not assessed yet** means there are no current verified results to score; it is not a score of zero.
 
-Open a client and select **Checks** to inspect individual results. The client overview stays above its tabs: **Current assessment** summarises the latest result, **Check coverage** shows counts by status, and **Open issues** links to that client's findings when your role can read issues. The chart includes all checks, including those needing evidence, not covered or excluded; it is not a history or trend. **Next steps** is collapsed by default; expand it to see checks needing review and their suggested follow-up. Collection and scheduled-check summaries are also compact disclosures; expand **Details** for counts, source outcomes and error codes. A warning remains visible in the summary when work needs attention.
+Open a client to see its overview before the tabs. **Current assessment** shows passing checks as a count of assessed checks (for example, **2 of 4 assessed checks passing**); **Check coverage** shows how many active checks have been assessed and the status counts, with excluded checks shown separately. The coverage percentage uses assessed, unknown and not-covered active checks; exclusions are outside that denominator. Simulated or unverified results do not count as live passes or failures. The chart is a current status distribution, not a history or trend. **Open issues** links to that client's findings when your role can read issues. **Next steps** is collapsed by default; expand it to see checks needing review and their suggested follow-up. Collection and scheduled-check summaries are also compact disclosures; expand **Details** for counts, source outcomes and error codes. A warning remains visible in the summary when work needs attention.
 
 The overview remains in place while you switch client tabs. When you return to a client or bring its page back into focus, Alignr refreshes stale data; if that refresh fails, the last loaded result stays visible with a warning that it may be out of date. **Tool health** is workspace-wide; open **Workspace health** for detailed collection and coverage checks.
 
@@ -29,6 +29,8 @@ Select **Refresh evidence** when you need a discovery sweep. This requires both 
 Review the sweep outcome and each source's result. A finished attempt with no facts is not proof of a healthy environment: a source may have failed or supplied no usable observations.
 
 Evidence collection and evaluation are distinct milestones. After confirming the intended evidence is available, use the relevant **Run checks** workflow and inspect its evaluation time. Refreshing the dashboard alone does not establish a fresh assessment.
+
+On a client's page, **Run all checks** queues the enabled automated checks from enabled standards that apply to that client. It runs each standard for this client only and uses evidence already collected; it does not refresh a source or complete manual checks. If evidence is missing or stale, refresh it first, then run checks and review the results in **Checks**.
 
 ## Choose your next task
 
@@ -59,7 +61,7 @@ Open **Activity** to choose:
 | **Fix history** | Review runs, verification and supported rollback. | `remediation.read`; `remediation.rollback` to reverse eligible runs. |
 | **Audit trail** | Inspect recorded actors, actions and affected records. | `audit.read`. |
 
-The Audit trail destination opens **Logs**. Filter by **Actor kind**, **Action**, **Record type**, **Record id**, **From** and **To**. A closed issue's **view audit trail** action opens its record-specific history.
+The Audit trail destination opens the **Audit trail** page. Filter by **Actor kind**, **Action**, **Record type**, **Record id**, **From** and **To**. A closed issue's **view audit trail** action opens its record-specific history.
 
 Select **Export filtered CSV** to export the matching records, or **Export CSV** without filters. Export uses the whole matching result set rather than only the displayed page, up to **50,000 rows**. If the export message says the row limit was reached, narrow the date range and export the remaining periods. Do not treat a truncated file as the complete trail.
 

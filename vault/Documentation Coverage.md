@@ -54,6 +54,8 @@ The historical audit notes retain the complete route inventory. Recovery now cov
 
 The 2026-09-30 client overview candidate is covered by [Your daily review](../guides/daily-review.mdx) and [Run a client review](../guides/client-reviews.mdx): current versus last-loaded assessment, recorded-result counts, permission-dependent open issues, expandable next steps and run details, focus refresh with retained cached results on failure, and updated standard coverage after recording a manual outcome. These claims were checked against the isolated application candidate and remain held for its release; no generated API/MCP references change.
 
+The 2026-10-01 first-day clarity update extends [Your daily review](../guides/daily-review.mdx) with the evidence-eligible pass count and active-check coverage denominator, one-client **Run all checks** semantics, and the renamed **Audit trail** page title. [Organizations and clients](../guides/organizations.mdx) now explains client-table heading sort cycles and order of search/filter → sort → pagination. The standards guides use the current **Create standard** entry label. These are app UI changes; no public API/MCP contract or generated reference changed. The docs candidate remains held for the matching app release.
+
 Standalone `/monitoring` remains directly routed but absent from the main shell. Its advanced guide states that boundary explicitly. Portal contact access currently needs administrator/support setup because the current People & views screen lacks the required editor; do not invent a self-service screen.
 
 ## Deliberately excluded from new public promises

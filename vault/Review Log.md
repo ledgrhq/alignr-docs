@@ -356,3 +356,34 @@ Blank creation, imports and library copies retain disabled workspace defaults.
 Application source review includes truthful existing-standard readback; no claim
 of absent prior checks for a recovered standard. This PR remains unpublished
 until API0078 and the corresponding guided UI are verified live.
+
+## 2026-10-01 — first-day client and page clarity (held PR candidate)
+
+Updated `guides/daily-review.mdx`, `guides/organizations.mdx`,
+`guides/standards.mdx`, `guides/build-or-import-standard.mdx` and `quickstart.mdx`
+against application `feat/active-standard-setup` at `bc4b310` (count-first
+overview, client-scoped Run all checks, Create standard, and Audit trail title)
+and the isolated client-sort commit `74d8850` (heading sort cycle). Source review
+verified that the client overview displays API `scoreCounts`: the API coverage
+denominator is passing + failed + unknown + uncovered; excluded checks are
+shown separately. Non-live pass/fail states are converted to unknown before
+the API computes either percentage. The guides distinguish the one-client
+automated evaluation from source collection and manual assessment; the Clients
+guide says heading clicks cycle ascending, descending, then clear to default,
+after search/filter and before pagination. Create standard opens the domain
+chooser; workspace setup keeps its separate **Choose a domain** label. The audit
+page heading now matches the Activity destination.
+
+Updated Information Architecture, Documentation Coverage and this review log.
+The change is explanatory UI guidance; no API/MCP contract or generated
+reference changed. This is an update for held docs PR #11; it must not merge
+until the matching application release. No production availability is claimed.
+With Node 22.13.1 and Mintlify CLI 4.2.229, the vault guard (14 indexed notes),
+OpenAPI check (valid), accessibility scan (95 MDX files) and `git diff --check`
+passed. `mint broken-links` found only the two existing maintainer README links
+to intentionally excluded `AGENTS.md` and `vault/MOC.md`; no public MDX link
+failed. This CLI does not support `mint validate`. Local preview could not start
+because all ports 3000–3009 are occupied; desktop/mobile rendering remains
+unverified. A remote fetch failed because this environment could not resolve
+`github.com`, so remote PR checks and hosted docs readback remain unverified.
+No authenticated app action was performed.
