@@ -115,3 +115,16 @@ A held documentation draft now reflects the guided setup polish candidate at `/p
 This candidate aligns `quickstart.mdx`, `guides/setup-wizard.mdx`, `guides/standards.mdx`, `guides/build-or-import-standard.mdx`, `journeys/visual-tour.mdx` and `journeys/evaluate-alignr.mdx` with the guided standard's active selected-client save, empty initial assignments, explicit **Deploy to clients** assignment and separate **Run checks** assessment. It preserves disabled workspace-wide defaults for new blank/general standards, library copies and checklist imports, and the saved scope of existing standards. `guides/configure-client.mdx` now follows the saved-connection chooser; `guides/organizations.mdx` describes client-list filters as triage only; `guides/evidence.mdx` describes the Facts table as observations, not a result. The REST assignment recipe and generated read operation document replacement semantics and their permission boundary.
 
 Compared UI and route behavior with application candidate `/private/tmp/alignr-client-checks-clarity` at base `0531397` plus the selected-scope work in its uncommitted tree. This is source comparison only; the application candidate still needs its own review/release. MCP still has 31 tools with unchanged tool names and scopes, but standard-inspection and activation-preview responses now expose scope metadata and assignment counts; activation preview also signs an assignment fingerprint. The curated REST reference now includes the assignment read and selected-scope fields. No control catalogue changed.
+
+## 2026-10-01 — Datto patch-state correction (held)
+
+The held Datto correction against application commits `cd99774` and `e617d33`
+updates the Datto RMM integration summary, the `patch_status` predicate
+interpretation, and both generated endpoint baseline control explanations. It
+states that an unfamiliar Datto state is unknown evidence (`no_data`), not pass
+or fail; only a validated complete inventory can withdraw Datto's previous
+patch observation, while malformed or partial inventory preserves it subject
+to freshness rules. The canonical predicate vocabulary and control definitions
+did not change, so the generated control catalogue,
+OpenAPI and MCP references remain unchanged. Keep these pages held until PR41's
+matching application release is verified.
