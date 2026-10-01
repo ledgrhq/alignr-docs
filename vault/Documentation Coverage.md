@@ -138,3 +138,26 @@ matching application release is verified.
 The Users and API Keys table update at `/private/tmp/alignr-docs-users-api-keys` updates [Manage your account and invite teammates](../guides/account-and-team.mdx) and [Create an API key](../guides/api-keys.mdx) against Users app commit `b3eff8eb2382c567ff88827ac6977dd24087d4a7` and final API Keys app commit `fc179c3498bd28a08c5ae2cab660113681880c5f`. Users search covers name, email and role; status and role filters include the **No role** option, heading sorts cover name/email/roles/status/second factor/last login, and mobile uses **Sort users**. The Users UI loads API pages and then filters, sorts and paginates the collection locally; this is not a new server-side search or sort contract. API Keys documents the existing name/prefix/owner search and status filter plus sortable Name, Accountable to, Scopes, Last used, Expires and Status headings; desktop uses heading buttons and mobile retains **Sort API keys**; the prior default remains Name A–Z, and missing owners/dates remain last. No API schema, generated OpenAPI or MCP change is included. The matching app PR #51 is live; the docs update remains unpublished pending final docs checks, merge and hosted readback. No authenticated production interaction is claimed.
 
 The held Controls table update at `/private/tmp/alignr-docs-controls-settings` aligns [Parameters and client overrides](../controls/parameters.mdx) with application Controls candidate `cf98db8f1edf7f2b36c854f23cd1a582738dd1fc` (Controls collection and draft-settlement behavior from `fda1783a66021c0105c08a4b444fa681e11c46b7`). The follow-on `e7c500a0dd57b255be1ad5742710ec3997b3eb1f` changes only the responsive filter layout; source diff review found no handler or contract change. The guide explains search across name, identifier, description and category; category and On/Off filters; desktop heading sort and mobile selector; 25/50/100-row pages; optional category grouping; and parameter draft retention while filtering or paging, including recovery after a failed save. These are Controls-tab display/editing affordances only; no API or MCP contract, permission, generated reference or control definition changed. Hold publication until the matching app release and independent docs review; the source has not been deployed or accepted live.
+
+## 2026-10-01 — Fix history search and ordering (held)
+
+`guides/remediation.mdx` now explains whole-history literal search, composing
+Organization/result filters, five heading cycles, mobile sorting, 25-row pages
+and default newest-started ordering. The curated API selection adds only
+GET `/api/v1/remediations` and `/api/v1/approvals`, each with q200 and ten
+explicit sort values. The approval guidance retains status chips, default
+newest-requested order, missing-context behaviour and the Reset view action.
+Source: composed app PR53 `a9be8793a6e09dc429d8864f4ff289614ee74963`.
+No action, rollback, approval, verification or MCP capability changes are claimed.
+This branch builds on docs PR21 at reconciled head
+`730321933759c4fd3fbd4b9c13a0f6acff3d6d63`; Docs PR20 has since published.
+PR21 remains held for the Controls app release. PR22 remains held for app PR53
+and the PR21 dependency. This is a source-aligned candidate, not hosted acceptance.
+
+## 2026-10-01 — Docs PR21 publication and PR22 reconciliation
+
+Docs PR21 (`730321933759c4fd3fbd4b9c13a0f6acff3d6d63`) was published after the
+matching Controls app PR52 was verified live. PR21 merged as
+`63b422fc02e744a343442a7d1c18d07ae9689e85`; main validation run `36893332012`
+passed. PR22 remains a held draft for app PR53; its dependency on the now-published
+PR21 has been reconciled to main, but PR22 is not released or hosted-accepted.

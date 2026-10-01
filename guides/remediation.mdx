@@ -31,6 +31,12 @@ Approval, execution and verification answer different questions. Keep all three 
 
 A run awaiting approval has not started its actions. Open **Activity → Approvals**, select **Pending**, then **Review** the request.
 
+Use **Search approvals…** to find a request by issue title or reference, Organization name, or the requester’s displayed name. Search ignores letter case and outer spaces, accepts up to 200 characters, and treats `%` and `_` literally. Keep **Pending** selected for outstanding decisions, or choose **Approved**, **Declined** or **All** to inspect history.
+
+Select **Request**, **Organization**, **Requested by**, **Requested** or **Status** to sort the whole matching queue. Each heading cycles through ascending, descending and the default with no sort arrow. On a narrow screen, use **Sort approvals** for the same orders. Text sorts ignore letter case. Request and Organization entries with unavailable context appear last in either direction; a missing requester uses the displayed **System** label. Status sorts by the displayed label, and Requested sorts by creation time.
+
+The default is newest requested first, with a consistent order for equal values. Results are returned in pages of 25 after search, status filtering and sorting. Changing any of these controls returns to page one. **Reset view** restores **Pending**, empty search and the default order. These controls only change which requests you see; open **Review** or **View** to inspect an individual request.
+
 Viewing requires `approval.read`; deciding requires `remediation.approve`. The person who requested the run cannot approve their own request. Ask a different authorised approver to review it.
 
 1. Wait for the current run and proposed fix to load. Confirm the client, finding, proposed steps, risk and each displayed action and target. Account or client resource targets appear where the action requires one. **Approve** stays unavailable if that review context fails to load or a required target is missing; use **Retry review details** after a load error. **Decline** remains available to an authorised reviewer.
@@ -41,7 +47,23 @@ Viewing requires `approval.read`; deciding requires `remediation.approve`. The p
 
 ## Read fix history
 
-Open **Activity → Fix history**; the page is titled **Remediations** and requires `remediation.read`. Filter by Organization and result to find the relevant run.
+Open **Activity → Fix history**; the page is titled **Remediations** and requires `remediation.read`.
+
+Use **Search remediations…** to find a run by its action summary, issue title or reference, or Organization name. Search ignores letter case and outer spaces, accepts up to 200 characters, and treats `%` and `_` as ordinary characters. Combine it with the **Organization** and **result** filters to narrow the whole history, including runs beyond the current page.
+
+Select **Action**, **Organization**, **Detection**, **When** or **Result** to sort the matching runs. The first click sorts ascending, the second descending, and the third restores the default with no sort arrow. On a narrow screen, use **Sort remediations** above the cards for the same choices.
+
+| Heading | What determines the order |
+| --- | --- |
+| Action | The action summary, falling back to the issue title. |
+| Organization | The client name. |
+| Detection | The displayed issue reference. |
+| When | Start time, falling back to finish time; runs without either date appear last in both directions. |
+| Result | The primary run-state label, separate from verification and simulation badges. |
+
+The default shows the newest **started** runs first, with unstarted runs last. Text sorting ignores letter case, and equal values have a consistent order. Search, filters and sorting apply before the server returns each page of 25 runs. Changing any of them returns to page one. **Clear filters** restores all Organizations, all results, empty search and the default order.
+
+For example, search for fictional **Acme**, choose **Failed**, then sort **When** descending to inspect its most recent failed runs. Searching or sorting does not retry a run or change its rollback eligibility.
 
 | Run state | What to check |
 | --- | --- |

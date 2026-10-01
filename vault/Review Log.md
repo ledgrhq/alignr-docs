@@ -754,3 +754,76 @@ preview attempt could not start because Mint reported no available port in its
 3115–3124 range, so desktop/mobile rendering and hosted readback remain
 unverified. Keep this docs change unpublished until the matching app release
 is verified.
+
+## 2026-10-01 — Remediations collection candidate (held)
+
+Based on held docs PR21 at reconciled head `730321933759c4fd3fbd4b9c13a0f6acff3d6d63`, now targeting main. Read
+AGENTS/MOC, decisions, architecture, editorial/workflow and review checklist.
+Claimed scope: `guides/remediation.mdx`, curated reference generator/output and
+its navigation group, Documentation Coverage and this review log. Compared
+the exact composed application source `a9be8793a6e09dc429d8864f4ff289614ee74963`
+in `/private/tmp/alignr-remediations-composed` (clean) with the implemented
+Remediations page/list router/service. No application code or tests changed.
+
+The guide explains q search fields/literal semantics and length bound, combining
+existing filters, all five heading cycles, mobile selector, complete-collection
+server paging, missing-date placement, default started-time order and reset.
+Result sorting is distinct from verification/simulation; collection controls do
+not invoke actions or change rollback eligibility. Existing approval and rollback
+guidance is preserved. DOC-R02/03/04/07 source checks completed; browser and
+published acceptance remain separate gates.
+
+Regenerated using the application Python environment with PYTHONPATH pointing
+to the exact composed source, without lifespan, database or vendor access:
+`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/private/tmp/alignr-remediations-composed/api
+<application-python> scripts/sync-reference.py`. The generated selection is now
+20 read endpoints and 33 unchanged MCP tools. Semantic comparison found no
+changed prior endpoint: only GET `/api/v1/remediations` and `/api/v1/approvals` were added. Both generated
+schemas have q maxLength200 and their ten sort values. Existing Remediations
+Organization aliases and Approvals subject-type filters remain. Permissions
+remain remediation.read and approval.read respectively, with tenant scoping.
+Mintlify official OpenAPI setup/CLI documentation was consulted for validation.
+
+Validation results are recorded before the candidate commit. Hold publication
+until app PR53 is verified live and docs PR21 plus its dependencies are published.
+
+Scope expanded, at the coordinator's request, to the independently reviewed
+Approvals list controls batched in the same app PR53. The exact combined source
+above is clean; its feature blobs match the reviewed candidates. The guide
+explains requester/title/reference/client search, status chips, five heading
+cycles, mobile ordering, reset and page changes. Existing named-human decision,
+review-context and rollback instructions were not changed.
+
+Local preview used pinned Mint4.2.939 with Node22.13.1 at localhost3245, in an
+isolated agent-browser session. Inspected both changed sections at1440x1000 and
+390x844: readable text and table, no page-level horizontal overflow (390 document
+width equals390 viewport width). Screenshots are local `/private/tmp/fix-history-
+docs-1440.png`, `fix-history-docs-390.png`, `approvals-docs-1440.png` and
+`approvals-docs-390.png`. These are candidate docs previews, not live app/public
+site evidence. The read-fix-history TOC link was exercised.
+
+Final validation of the combined candidate: `check-docs-vault.py` passed
+(14 indexed notes); pinned Mint4.2.939 `broken-links` found no broken links,
+`openapi-check` passed (with its CLI deprecation notice), `a11y` passed
+(94 MDX files) and `validate` passed. `git diff --check` passed. Existing API
+paths remain semantically unchanged; only the two reviewed GET operations
+and their reachable schemas were added. MCP tools are unchanged. The local
+preview and dedicated browser session were stopped.
+
+The draft targets `docs/controls-table-controls` (docs PR21), now based on main.
+Docs PR20 is published; PR21 remains draft pending its matching Controls app
+release. Keep PR22 draft until app PR53 is live and PR21 is published.
+
+## 2026-10-01 — Docs PR21 publication and PR22 reconciliation
+
+Docs PR21 was approved for publication after the matching application PR52 was
+verified live. Exact PR21 head `730321933759c4fd3fbd4b9c13a0f6acff3d6d63`
+merged at 16:36:59 UTC as `63b422fc02e744a343442a7d1c18d07ae9689e85`. Main
+documentation validation run `36893332012` passed vault validation, broken-link
+checks, OpenAPI checks and Mint validation. Hosted readback of
+`https://docs.alignr.io/controls/parameters` confirmed the search, category and
+state filters, sortable headings, paging, grouping and draft-retention guidance.
+
+PR22 remains an unpublished draft matched to app PR53. Its PR21 dependency is
+reconciled with the published main branch; this does not release PR22. No hosted
+PR22 content or app PR53 release is claimed.
