@@ -842,3 +842,18 @@ No publication until final source and independent review are verified.
 Preparation checks passed: pinned mint@4.2.939 broken-links and validate under
 Node22, check-docs-vault and whitespace validation. No browser preview, final
 source-pin comparison or independent content review yet; these remain pending.
+
+Final source pin: `90c9d0ea6a1821ae99f0f02cd1c0f8c2b617ffe4`. Coordinator verified
+three feature files byte-identical in composed candidate9a4518c and independently
+cleared the guide's claims. Final source comparison confirms column-specific sort
+labels and Clear filters preserving ordering. Public API remains unchanged.
+Browser preview results follow. Publication is held for the Health app release.
+
+Final preview inspected at 1440×1000 and 390×844 with agent-browser against the
+unchanged reviewed guide. The ordering, local paging and preserved-sort guidance
+render legibly; mobile document width equals 390px. Screenshots are
+`/private/tmp/health-docs-desktop.png` and `/private/tmp/health-docs-mobile.png`.
+Pinned Mintlify accessibility, vault and whitespace checks passed. Earlier
+links/build checks apply to the unchanged public MDX; only this internal evidence
+was added afterwards. Dedicated browser and preview were stopped. No hosted
+publication or production Health acceptance is claimed.
