@@ -633,7 +633,9 @@ claim grounding. Existing Ask guidance already required users to inspect the
 client, subject, time and supporting citations; this addition makes the risk
 interpretation limit explicit. Wording was revised from “authored risk
 rationale” to “explanation of the risk” so the public guidance avoids evaluator
-terminology.
+terminology. The corresponding prompt and guide wording are integrated in
+application PR #49 (candidate `042454a`), which retains PR #47 as the component
+change's provenance; this docs candidate remains held for PR49's release.
 
 No API or MCP tool, permission or generated reference changed. The application
 candidate's three focused grounding tests passed before the wording-only
