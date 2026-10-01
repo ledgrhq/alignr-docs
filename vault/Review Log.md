@@ -813,3 +813,25 @@ preview and dedicated browser session were stopped.
 The draft targets `docs/controls-table-controls` (docs PR21), now based on main.
 Docs PR20 is published; PR21 remains draft pending its matching Controls app
 release. Keep PR22 draft until app PR53 is live and PR21 is published.
+
+## 2026-10-01 — Global Organization filter and Fix history picker (held)
+
+Prepared a separate public-guidance draft stacked on Docs PR22, preserving that
+PR's alignment with the app PR53 collection controls. Source comparison used
+composed application commit `d8f586785c961c621ad381b982bf88dd1700a0ef` in
+`/private/tmp/alignr-client-picker-composed`; later commits on that candidate
+only update internal review notes. The global header selector searches the
+Organization directory by name/slug, pages 25 at a time and changes scope only
+after a user selects a client or **All organizations**. The Remediations page
+uses the existing `AsyncSelect` to search Organizations and load additional
+25-row pages; the run-history search is separate. A page-specific Organization
+URL filter overrides the global selector, and clearing that explicit filter
+returns to the header scope. Browsing client choices requires
+`organization.read`; viewing history still requires `remediation.read`.
+
+No API, OpenAPI or MCP contract changed: the picker uses the existing
+Organization list/detail endpoints and existing Remediations list filters. This
+draft does not cover Monitoring's RuleScopeField picker, whose selection
+retention and scope behavior remain a separate pending review. No browser preview
+or hosted readback has been performed; the copy remains held pending independent
+application review, app release and docs CI.

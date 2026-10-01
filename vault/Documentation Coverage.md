@@ -153,3 +153,20 @@ This branch builds on docs PR21 at reconciled head
 `730321933759c4fd3fbd4b9c13a0f6acff3d6d63`; Docs PR20 has since published.
 PR21 remains held for the Controls app release. PR22 remains held for app PR53
 and the PR21 dependency. This is a source-aligned candidate, not hosted acceptance.
+
+## 2026-10-01 — Global Organization filter and Fix history picker (held)
+
+The separate picker follow-up branch updates [Daily review](../guides/daily-review.mdx)
+and [Review remediation](../guides/remediation.mdx) against application source
+`d8f586785c961c621ad381b982bf88dd1700a0ef` in
+`/private/tmp/alignr-client-picker-composed`. It explains the global
+Organization filter's name/slug search, 25-row directory pages, explicit
+selection, clearing and permission-denied behavior. It also explains Fix
+history's `organization.read`-guarded, searchable Organization picker,
+**Load more**, and how its URL-scoped client filter takes precedence over the
+global filter until **Clear filters** removes it. Run-history search remains a
+separate control. This documentation does not describe the still-pending
+Monitoring RuleScopeField picker. The Organization list API and its search/page
+contract are existing; no API/OpenAPI/MCP or permission change is documented.
+Keep this draft stacked on Docs PR22 and unpublished pending independent app
+review, the matching app release and final docs checks.

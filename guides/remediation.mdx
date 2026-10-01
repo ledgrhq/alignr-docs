@@ -49,6 +49,10 @@ Viewing requires `approval.read`; deciding requires `remediation.approve`. The p
 
 Open **Activity → Fix history**; the page is titled **Remediations** and requires `remediation.read`.
 
+Use **Filter by organization** to find a client by name or slug. The picker loads 25 choices at a time; select **Load more** to browse further. This searches the client directory, separately from **Search remediations…**, which searches run details. Browsing the directory requires `organization.read`; if you do not have it, the picker explains why and keeps an existing page filter.
+
+A client-specific link opens Fix history with that Organization selected. This page filter takes precedence over the header's global Organization filter. **Clear filters** removes the page-specific selection; the header filter still applies where supported, so check both scopes before interpreting the history.
+
 Use **Search remediations…** to find a run by its action summary, issue title or reference, or Organization name. Search ignores letter case and outer spaces, accepts up to 200 characters, and treats `%` and `_` as ordinary characters. Combine it with the **Organization** and **result** filters to narrow the whole history, including runs beyond the current page.
 
 Select **Action**, **Organization**, **Detection**, **When** or **Result** to sort the matching runs. The first click sorts ascending, the second descending, and the third restores the default with no sort arrow. On a narrow screen, use **Sort remediations** above the cards for the same choices.
