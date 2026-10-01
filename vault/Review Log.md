@@ -963,3 +963,19 @@ unchanged. Both guide updates remain held for application PR58 API and frontend
 deployment verification. Vault and whitespace checks passed on the combined tree;
 remote documentation validation remains required for this exact head. No new
 local build or browser session was started.
+
+## 2026-10-01 — Aggregate fact capacity guidance (held)
+
+Prepared against application PR59 (`2abd6fb`, with a test-only review follow-up
+pending) on top of Health PR25 and scoring PR26. REST and MCP evaluation guides
+explain the removed 5,000-current-fact snapshot rejection and partial outcomes
+without equating zero failed rules with completion. Workspace health explains the
+removed aggregate scheduled evidence ceiling while retaining per-rule/provider
+limitations. The implementation preserves source eligibility, receipt encoding,
+API schemas, predicates and control definitions; generated references are unchanged.
+
+The candidate must remain unpublished until PR59 is verified live. Structural vault
+and whitespace checks pass; remote validation and independent content review are
+pending. No local browser or build was started because of the owner's laptop
+resource constraint. Earlier guide screenshots do not establish visual acceptance
+of the added paragraphs.
