@@ -1121,3 +1121,8 @@ Independent source review confirmed the setup action labels and corrected the di
 ### Issue properties and source-reference follow-up
 
 Updated the triage guide for Properties before Evidence and the Source record dialog. Source review also found and removed one remaining global-client-scope claim and reconciled Snooze, Dismiss, reason and audit-history labels with WorkspaceIssueDetail/WorkspaceIssueTriageDialog. No status transition or evidence semantics changed. Final application source and publication evidence are pending.
+
+
+## 2026-10-02 — import and connection-readiness follow-up
+
+Updated Organizations and Integrations guides for the compact Source row, Refresh records, Record status filter, linked/review counts and Create unmatched confirmation. The integrations guide also explains that setup displays **Setting up your tenant** while connection-key protection is prepared and opens connection choices automatically when the matching tenant is ready; retry remains available when setup needs attention. Verified labels and the tenant-matched readiness gate against application candidate `1256007777cb70dfef53a220622d417b5b36dbf8` in `fix/setup-ui-refinement`. This does not claim production readiness or change API, mapping or evidence semantics. Publication remains paired with app PR66.
