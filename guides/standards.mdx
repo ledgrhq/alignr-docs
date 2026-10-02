@@ -71,6 +71,8 @@ For a scoped assistant workflow, a user-owned key can [preview the complete copi
 
 **Run checks** evaluates available evidence. It does not start source collection or automatically retry a failed client run.
 
+You can open **Issues** before the run finishes. Rule-based standard batches save each verified finding as it is ready, then continue across the selected clients. The queue refreshes automatically while open. Refuted candidates do not appear as open issues, and the run stays in progress until its remaining checks finish. AI-assisted standards may publish findings in groups.
+
 | Outcome | What to do |
 | --- | --- |
 | Automated results were recorded. | Open the client's results and inspect the evidence and evaluation time. A completed run does not imply all controls passed. |

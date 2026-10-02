@@ -1152,3 +1152,13 @@ release verification. Vault checks and remote documentation validation follow.
 ### 2 October 2026 — delegated mailbox boundary
 
 Application candidate `6e32d8346e63a90121e30ab45a12811dcda78dc0` excludes tenant-wide mailbox reads from Partner Center. Updated Microsoft guides and the three predicate interpretation notes; regenerated predicate reference from that checkout. Publication remains held for application release.
+
+### 2 October 2026 — progressive issue publication candidate
+
+Updates `guides/triage-issues.mdx` and `guides/standards.mdx` against application
+PR79 source `3b933424bf82c0f2e581acbe4006db5ae9b3b4bc`. Rule-based standard batches
+commit one verified candidate per chunk; visible Issues list polling is five
+seconds. Explicitly retain complete-collection and generated-rule boundaries.
+No new UI controls, diagrams, API schema, predicates or MCP scopes; no generated
+references require changes. Publication is held until the matching app candidate
+passes remote tests and ships. Validation is pending; no production claim.
