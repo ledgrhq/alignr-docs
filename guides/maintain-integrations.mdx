@@ -22,7 +22,7 @@ A connection needs ongoing care when credentials expire, endpoints change or cli
     **Checkpoint:** the saved configuration can access the intended account. If saving fails, read the error and inspect the saved configuration before assuming the replacement took effect.
   </Step>
   <Step title="Verify collection recovery">
-    Review **Clients & sites** so the source still maps to the intended clients. For evidence sources, use **Sync now**, inspect **Sync history** and confirm relevant observations have a fresh time. Then run the affected checks again.
+    Review **Client mapping** so the source still maps to the intended clients. For evidence sources, use **Collect now**, inspect **Collection history** and confirm relevant observations have a fresh time. Then run the affected checks again.
 
     For directory-only sources, use **Import clients** and **Refresh client records**; these sources do not collect control evidence.
   </Step>
@@ -64,6 +64,16 @@ flowchart TD
 ```
 
 The diagram describes a planned replacement. Deletion is a separate explicit action, not an automatic result of adding a new connection.
+
+## Inspect a collection attempt
+
+Open **Integrations → select connection → Collection history**. The table shows each attempt's start time, result, records read, facts written and duration. Select the row or **View details** to inspect it.
+
+For a failed attempt, read the full explanation first. Where recorded, **Attempt details** includes the HTTP status, request method and request category. **Response body** shows the saved diagnostic fields, with sensitive values omitted. This can distinguish missing Microsoft consent from a different failure that also returns HTTP 400.
+
+**Records read** counts source records processed during the attempt. **Facts written** counts evidence saved. An attempt can read records and still fail before saving evidence. A populated client directory therefore does not prove that evidence collection succeeded.
+
+Older attempts may have no response details. Their original response cannot be recovered from this view. After addressing the reported problem, use **Collect now** and inspect the new attempt. **Refresh** updates history; it does not start a collection.
 
 ## A useful recovery record
 

@@ -281,3 +281,12 @@ The triage guide now covers Properties before Evidence and the optional Source r
 
 
 Import page follow-up (2026-10-02): `guides/organizations.mdx` and `guides/integrations.mdx` cover the compact Source selector, Refresh records and Record status filtering, with bulk-create safeguards retained. The integrations guide also explains the automatic tenant-protection wait before connection forms open. Candidate app source `1256007777cb70dfef53a220622d417b5b36dbf8`; held for paired release.
+
+## Connector recovery follow-up — 2 October 2026 (held)
+
+Collection history details, response-field limits, customer-scoped Microsoft
+checks, authorised on-demand partner consent, accepted optional-capability gaps,
+Direct setup and top-level Connection health are covered in the updated maintenance,
+client Microsoft, Microsoft prerequisites, health and settings guides. Publication
+is coupled to application PRs 69/70/73/74; do not present the pending source as a
+verified production release. Existing API/MCP catalogues remain unchanged.

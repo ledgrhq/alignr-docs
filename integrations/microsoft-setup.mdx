@@ -79,11 +79,15 @@ For a custom application, review its **API permissions** in Microsoft Entra, cho
 ## Partner: authorise the MSP, then the customer
 
 1. In **Settings → Microsoft**, choose **Partner Center · use your partner account**, select or add the partner connection and **Save Microsoft defaults**. When adding a connection, **Find tenant ID by domain** can look up your MSP partner tenant's ID from its Microsoft domain: enter the domain, select **Look up tenant**, confirm the result and select **Use tenant ID**. Public metadata does not prove tenant ownership or grant access. This route requires the separate Partner platform application when using Alignr's shared registration; Direct application credentials cannot replace it.
-2. Select **1. Request admin consent**. Review Microsoft's screen with an administrator of your MSP partner tenant. Returning to Alignr records only that the consent flow returned; it does not verify a grant or customer access. If the return fails, correct the problem and start this step again.
-3. Select **2. Authorise partner account** and sign in to the intended MSP partner tenant with MFA. This separate delegated authorisation requests Partner Center `user_impersonation`, `offline_access`, and Graph `User.Read` / `User.Read.All` for the MSP staff-directory preview. It is not customer Graph consent. [Partner Center authentication](https://learn.microsoft.com/en-us/partner-center/developer/partner-center-authentication).
+2. Select **Request admin consent**. Review Microsoft's screen with an administrator of your MSP partner tenant. Returning to Alignr records only that the consent flow returned; it does not verify a grant or customer access. If the return fails, correct the problem and start this step again.
+3. Select **Authorise partner account** and sign in to the intended MSP partner tenant with MFA. This separate delegated authorisation requests Partner Center `user_impersonation`, `offline_access`, and Graph `User.Read` / `User.Read.All` for the MSP staff-directory preview. It is not customer Graph consent. [Partner Center authentication](https://learn.microsoft.com/en-us/partner-center/developer/partner-center-authentication).
 4. Review and assign the customer's tenant to its Alignr client. Use that customer's tenant ID, not the MSP partner tenant ID entered for the partner connection.
-5. Open the client's **Connections**, confirm the saved Partner Center route and tenant ID, then select **Connect client**.
+5. Open the client's **Connections**, confirm the saved Partner Center route and tenant ID, open **Sites and Microsoft access**, then select **Check access**.
 6. Review the result. This action checks access and can request missing customer read consent where authorised; it does not create GDAP relationships or grant the partner user new customer roles.
+
+On a client page, **Check access** checks only the Microsoft tenant linked to that client. From the connection page, it checks the selected customers. An explicit **Collect now** request also prepares access for the selected customers before collection. Where your partner account is authorised to do so, these actions request missing customer app consent through Partner Center. Scheduled collection does not create new consent grants.
+
+If the app grant has already been accepted for the same customer, application and saved assignment, a remaining optional capability gap does not cause repeated consent requests. The unavailable capability remains visible so you can review its GDAP roles, licensing or workload availability. Changing the assignment or application requires a fresh check.
 
 The current customer-consent request contains these delegated Graph permissions:
 
@@ -113,7 +117,7 @@ flowchart TD
     E --> F["Run the reviewed standard"]
 ```
 
-Each arrow is a task to complete, not an automatic trigger. Use **Sync now** on the relevant integration and inspect **Sync history**. Then inspect current observations for a known client account or device and run the standard.
+Each arrow is a task to complete, not an automatic trigger. Use **Collect now** on the relevant integration and inspect **Collection history**. Then inspect current observations for a known client account or device and run the standard.
 
 ## Resolve the specific gap
 

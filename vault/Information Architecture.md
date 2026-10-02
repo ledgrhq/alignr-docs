@@ -95,3 +95,11 @@ The held October 2 candidate reuses one connection-creation dialog across worksp
 The candidate setup refinement keeps the existing five steps and routes. Saved connection actions remain inline, Connect another tool opens the shared catalogue dialog, and Microsoft Setup guidance opens the method-specific help dialog. The optional staff directory opens from Use your Microsoft staff directory. Standards use compact domain rows; the completion screen keeps Overview and readiness separate. Standard Sources readouts use client names and focused requirement/gap dialogs. These layout changes do not alter evidence, authorisation, evaluation or assignment semantics.
 
 The issue detail panel presents Properties before Evidence. Keep the triage guide focused on client, source, severity and observation times first; Source record opens the optional internal fact reference without placing UUIDs in the main reading flow.
+
+## Connection health and recovery follow-up
+
+The next workspace navigation places Connection health immediately below
+Integrations, retaining the main shell. It is removed from the Settings workspace
+list. Microsoft client entry separates Link Partner Center connection and Add
+Microsoft connection; collection troubleshooting leads to Collection history and
+View details. Existing public guide URLs stay stable; no docs.json change is needed.
