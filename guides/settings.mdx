@@ -3,18 +3,17 @@ title: "Workspace settings"
 description: "Find the right place to manage setup, access, Microsoft connections and the client portal."
 ---
 
-Open **Workspace settings** from the top-left workspace menu, or **Settings** in the sidebar, for the workspace directory. On a narrow screen, open **Open navigation** first. It groups related pages into **Workspace**, **Access** and **Client services**. Links are shown according to your permissions; being able to view a page does not necessarily let you change it.
+Choose **Workspace settings** from the top-left workspace menu, or **Settings** under **Manage** in the sidebar. The Settings area has its own navigation, with **Workspace**, **Access**, **Client services** and **Personal** groups. It also has a separate search field for settings. On a narrow screen, open **Open navigation** to move between settings pages or choose **Back to app**. Links are shown according to your permissions; being able to view a page does not necessarily let you change it. The workspace menu also links to **Team members** and **Billing** when your role permits; the same menu also contains **Account settings** and **Sign out** for your personal account.
 
 ## Workspace
 
 | Page | Use it to | What completing it means |
 | --- | --- | --- |
-| **Setup checklist** | Find the next setup tasks for your MSP workspace. | Review each milestone; a completed connection is not a completed assessment. |
-| **Workspace health** | Investigate connection and evidence health. | Identify the source or evidence problem to resolve before relying on results. |
+| **Setup** | Find the next setup tasks for your MSP workspace. | Review each milestone; a completed connection is not a completed assessment. |
+| **Connection health** | Investigate connection and evidence health. | Identify the source or evidence problem to resolve before relying on results. |
 | **Billing** | Review this workspace's billing connection and open its portal. | A connected profile is separate from a charge or payment outcome. |
-| **Account** | Manage your profile, authenticators and workspace authority settings. | Confirm the profile, security key or policy change was saved. |
 
-Setup checklist and Workspace health require `dashboard.read`. Billing requires `billing.read` to view and `billing.manage` to connect a profile or open its portal. Account is available to signed-in workspace users, with individual changes permission-gated.
+Setup and Connection health require `dashboard.read`. Billing requires `billing.read` to view and `billing.manage` to connect a profile or open its portal. **My account** is under the separate Personal group and is available to signed-in workspace users, with individual changes permission-gated.
 
 Follow the [setup wizard](/guides/setup-wizard) for initial configuration or [Workspace health](/guides/workspace-health) to investigate an existing workspace.
 
@@ -28,7 +27,7 @@ Use [Your account and team](/guides/account-and-team) for account security and c
 | --- | --- | --- |
 | **Team members** | Invite colleagues and review their roles, status and effective permissions. Opens the Users page. | `user.read` to view; `user.manage` to change users. |
 | **Roles & permissions** | Define the reusable permissions assigned to colleagues. Opens the Roles page. | `role.read` to view; `role.manage` to change custom roles. System roles are protected. |
-| **MCP/API Tokens** | Create credentials for supported API or assistant workflows. | Select only the scopes needed for the task; tokens are separate from a human's password. |
+| **MCP/API tokens** | Create credentials for supported API or assistant workflows. | Select only the scopes needed for the task; tokens are separate from a human's password. |
 
 Start with [inviting teammates](/guides/account-and-team#invite-a-colleague) for human access, or [API keys](/guides/api-keys) for a programmatic connection. An API token is not required to use Alignr's app.
 

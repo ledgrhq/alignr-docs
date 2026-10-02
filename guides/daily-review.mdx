@@ -7,9 +7,9 @@ Start at **Overview** to decide what needs attention. Use **Workspace health** f
 
 ## Keep your workspace and client in view
 
-Use the sidebar to move between daily tasks. The workspace menu contains shared settings, plus team members and billing when your role permits; the account menu contains your own account settings and sign-out.
+Use the sidebar to move between daily tasks. The top-left workspace menu contains shared settings, plus team members and billing when your role permits. It also contains **Account settings** and **Sign out** for your personal account.
 
-The client filter sits beneath the workspace menu on desktop and beside **Open navigation** on a narrow screen. Check the selected client and the page title before acting. A client page has its own explicit scope; some workspace-wide actions, including **Refresh evidence**, remain workspace-wide.
+There is no global client filter. Client pages use the client in their route, while workspace pages that support client scope provide their own client controls. Check the page's scope label and controls before acting. Some actions, including **Refresh evidence**, remain workspace-wide even when you arrived from a client page.
 
 Search, **Ask Alignr** when permitted, and the **Colour theme** menu stay in the toolbar. Choose **System**, **Light** or **Dark** without leaving your task.
 
@@ -32,7 +32,7 @@ The overview remains in place while you switch client tabs. When you return to a
 
 ## Refresh evidence deliberately
 
-Select **Refresh evidence** when you need a discovery sweep. This requires both `sweep.execute` and `sweep.read`. It requests workspace collection; the global client selector does not turn this action into a single-client sync.
+Select **Refresh evidence** when you need a discovery sweep. This requires both `sweep.execute` and `sweep.read`. It requests workspace collection; opening it from a client page does not turn this action into a single-client sync.
 
 Review the sweep outcome and each source's result. A finished attempt with no facts is not proof of a healthy environment: a source may have failed or supplied no usable observations.
 
@@ -51,15 +51,15 @@ On a client's page, **Run all checks** queues the enabled automated checks from 
 
 ## Find your way around
 
-The main navigation separates daily work—**Overview**, **Clients**, **Issues**, **Reviews**, **Activity**—from workspace configuration such as **Standards**, **Integrations**, **MCP** and **Settings**. On a narrow screen, open **Open navigation** for the same permitted destinations.
+The sidebar groups daily work—**Overview**, **Issues**, **Reviews** and **Activity**—separately from workspace destinations (**Clients**, **Standards**, **Integrations**) and management (**MCP**, **Settings**). On a narrow screen, open **Open navigation** for the same permitted destinations.
 
-Use the workspace **Client filter** to find a client: search by its name or slug, then use **Previous page** or **Next page** to browse 25 choices at a time. Searching and changing pages only changes the choices shown; select a client to change the global filter. Choose **All organizations** to clear it. If your role cannot browse the client directory, the menu explains this and retains the current filter; you can still choose **All organizations** to clear it.
+Open **Clients** from the sidebar to find a client by name. Workspace pages that support a client scope expose their own client controls and URL state; changing one page does not set a global client filter for other pages. If a page offers an all-clients option, use it to return to the workspace-wide view.
 
-A page reached from a specific client or control may carry its own explicit filter, which takes precedence over the workspace selection. Check the page's scope labels as well as the client filter before interpreting counts or asking the assistant to explain them.
+A page reached from a specific client or control may carry its own explicit client filter. Check the page's scope labels and any client controls before interpreting counts or asking the assistant to explain them. Client scope is page-specific and is not carried over as a global workspace selection.
 
 Press **⌘K** on macOS or **Ctrl+K** to open search. It offers page shortcuts immediately and searches clients and issues after at least two characters. Use the arrow keys and Enter to open a result. This app search is separate from the documentation site's search.
 
-The utility bar provides search, **Ask Alignr**, theme switching and the **Account menu**, including **Account settings** and **Sign out**. Open help from the bottom of the desktop sidebar or **Documentation** in mobile navigation. Permission-dependent pages and actions may be hidden.
+The utility bar provides search, **Ask Alignr** and theme switching. The top-left workspace menu includes **Account settings** and **Sign out** alongside workspace actions. Open help from the bottom of the desktop sidebar or **Documentation** in mobile navigation. Permission-dependent pages and actions may be hidden.
 
 ## Inspect Activity and export audit history
 
@@ -81,9 +81,9 @@ Combine search with **Actor kind**, **Action**, **Record type**, **Record id**, 
 
 ### Check the client scope
 
-The workspace **Client filter** applies unless the URL specifies a client. An explicit URL client takes precedence. The workspace selection is separate from the URL, so it does not travel when you share a link. Clearing the page's filters removes its URL client filter and returns to the current workspace selection.
+The page's client scope comes from its URL or its own client control. An explicit client URL travels with a shared link; clearing that page's client filter returns the view to all clients where the page supports that choice. No global client selection is applied.
 
-A client-scoped view includes events associated with that client; events without a client are excluded. Choose **All organizations** and clear any URL client filter to inspect the workspace-wide trail. Check both the client filter and URL when reviewing a shared link.
+A client-scoped view includes events associated with that client; events without a client are excluded. Clear the page's client filter to inspect the workspace-wide trail. Check the page scope and URL when reviewing a shared link.
 
 ### Export the same view
 

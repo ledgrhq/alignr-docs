@@ -223,6 +223,54 @@ claim unlimited export before implementation and verification.
 
 ## Held workspace shell candidate — 2 October 2026
 
-Source: application PR61, frozen commit `3837e3f7daf50a511923b2c4d08b568ce1dad947`, ADR-0051. Introduction and daily review explain the sidebar, client filter, utility bar and remembered theme choices. Settings, account/team and billing guides distinguish the workspace menu from the personal account menu and retain existing Settings paths. Team and billing links retain their read/manage permission boundaries. The Settings directory's previously omitted Billing row is now documented. No Inbox rename, workspace switching, new billing behaviour or score changes are claimed.
+The initial draft described a global client selector. The latest app direction removes that selector; the Introduction, daily review, Issues, Ask Alignr and Fix history guides now describe route- or page-control-specific client scope instead. The prior source pin `3837e3f7daf50a511923b2c4d08b568ce1dad947` is superseded for this behavior. Final source-pin review, docs checks and rendered preview remain pending.
+
+Settings, account/team and billing guides distinguish workspace-specific and personal-account actions inside the same top-left workspace menu and retain existing Settings paths. Team and billing links retain their read/manage permission boundaries. The Settings directory's previously omitted Billing row is now documented. No Inbox rename, workspace switching, new billing behaviour or score changes are claimed.
 
 Publication is held until the matching app release is verified. Source review is separate from rendered acceptance; desktop/390px/light/dark/keyboard and changed docs previews remain outstanding. Refresh affected visual-tour screenshots from authorised non-sensitive UI before publication, or explicitly retain them as dated prior-layout examples. No new screenshots were fabricated. Public `docs.json` navigation and reference catalogues are unchanged because pages, API/MCP contracts, predicates and controls did not move or change.
+
+
+## Held Linear workspace navigation and setup guides — 2 October 2026
+
+Updated Introduction, daily review, Settings, account/team, billing, setup, client,
+integration, standards and issue-triage wording against app candidate
+`/private/tmp/alignr-linear-ui-rebuild` at `719c9bd7d1cbf8e68e677b258ed3c5f4f65bf399`.
+Relevant route commits include shell `b1a0e0d`, Standards/integration setup `b40b7ed`,
+Clients list `487e1fa`, and Issues list/details `2fff1e6` plus four-status correction
+`b36ebd8`. The guides describe the sidebar's
+Overview/Issues/Reviews/Activity, Clients/Standards/Integrations and MCP/Settings
+groups; the top-left logo menu contains both workspace actions and personal-account actions; the
+Settings directory and permission-dependent links; current compact integration and
+standards entry points; guided questionnaire/source/review stages and safe return
+links; and the Issues search/filter/display controls with the persistent desktop
+detail pane. The Clients guide matches the current four sortable headings and four filters. The Standards detail **← Standards** link was checked to retain `q`, `state`, `page` and `pageSize` when returning. The
+issue page incorporates the functional clarifications prepared on
+`docs/issues-workspace` without claiming an unsupported **All statuses** option or
+obsolete heading-sort interaction. No API/MCP schema, endpoint, generated reference
+or Mintlify navigation configuration changed.
+
+
+The public guide revisions now align with application PR65, merged as `00d3962`
+from reviewed source `35f0a13`; remote UI/CI acceptance is recorded in Review Log.
+The production frontend promotion and hosted readback remain outstanding at this
+checkpoint. No authenticated product journey is claimed here.
+
+
+Final UI release source: application PR65 merged candidate `35f0a13` as `00d3962`
+on 2 October 2026. The documented navigation and inline setup flows remain aligned
+with that source; see the final validation entry in Review Log. Public prose is
+ready, with publication and hosted readback pending the application promotion.
+
+
+## Visual-tour screenshot navigation disclosure — 2 October 2026
+
+The visual-tour client-checks, Ask Alignr and client-reports images remain captures
+from the prior horizontal-navigation layout. They were not replaced with synthetic
+browser-proof images because the public documentation editorial standard requires
+screenshots from the actual current UI, not simulated fixtures. Their captions now
+identify the earlier layout and direct readers to current navigation: the Clients
+sidebar destination and its **More → Review reports** action, or Ask Alignr in the
+utility bar. The images still illustrate demo data and page content only; they are
+not evidence of current shell geometry or a live customer assessment. Refresh them
+from an authorised current UI before treating the visual tour as a current-layout
+gallery. No product behaviour or API/MCP reference changed.

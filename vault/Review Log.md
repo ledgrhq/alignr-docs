@@ -967,11 +967,11 @@ local build or browser session was started.
 
 ## Held workspace shell candidate — 2 October 2026
 
-Source: application PR61, frozen commit `3837e3f7daf50a511923b2c4d08b568ce1dad947`, ADR-0051. Introduction and daily review explain the sidebar, client filter, utility bar and remembered theme choices. Settings, account/team and billing guides distinguish the workspace menu from the personal account menu and retain existing Settings paths. Team and billing links retain their read/manage permission boundaries. The Settings directory's previously omitted Billing row is now documented. No Inbox rename, workspace switching, new billing behaviour or score changes are claimed.
+Source: application PR61, frozen commit `3837e3f7daf50a511923b2c4d08b568ce1dad947`, ADR-0051. Introduction and daily review explain the sidebar, client filter, utility bar and remembered theme choices. Settings, account/team and billing guides distinguish workspace options from personal-account options within the same top-left logo dropdown and retain existing Settings paths. Team and billing links retain their read/manage permission boundaries. The Settings directory's previously omitted Billing row is now documented. No Inbox rename, workspace switching, new billing behaviour or score changes are claimed.
 
 Publication is held until the matching app release is verified. Source review is separate from rendered acceptance; desktop/390px/light/dark/keyboard and changed docs previews remain outstanding. Refresh affected visual-tour screenshots from authorised non-sensitive UI before publication, or explicitly retain them as dated prior-layout examples. No new screenshots were fabricated. Public `docs.json` navigation and reference catalogues are unchanged because pages, API/MCP contracts, predicates and controls did not move or change.
 
-Independent source review by `run_diagnostics` found two label/scope mismatches: Introduction implied the mobile navigation menu included personal Account settings, and daily review retained the old Main navigation label. Root clarified the separate account menu and changed the trigger label to Open navigation; the daily summary now qualifies permission-gated Team members and Billing. Structural vault and whitespace checks pass. Remote validation and rendered acceptance remain pending.
+Independent source review by `run_diagnostics` found two label/scope mismatches: Introduction implied the mobile navigation menu included personal Account settings, and daily review retained the old Main navigation label. The trigger label changed to Open navigation; the daily summary now qualifies permission-gated Team members and Billing. A later source check corrected an inaccurate statement in this entry: `WorkspaceMenu` puts Account settings and Sign out in the same top-left logo dropdown as workspace settings, teammates and billing; there is no separate top-right account menu in this candidate. Structural vault and whitespace checks pass. Remote validation and rendered acceptance remain pending.
 
 Final source review against application merge `2c80354b33d714d420f6d6365ff7d7c0d213b8d8` caught a remaining reference to the old header Organization filter in the Audit trail section. Replaced it with the workspace Client filter and retained explicit URL precedence, share-link behaviour and reset semantics, verified against `LogsPage.tsx` and its scope tests. This is a location/copy correction only; no API or catalogue regeneration applies. Matching app promotion and hosted documentation verification remain pending.
 
@@ -994,3 +994,119 @@ resource constraint. Earlier guide screenshots do not establish visual acceptanc
 of the added paragraphs.
 
 Reconciled published capacity docs main `4fd460c` into this candidate before publication. The only conflict was appended review-log history; both records are retained. Navigation MDX stayed unchanged. The previous conflict prevented GitHub pull-request validation from starting on recent heads; exact merged-head validation is now required.
+
+
+## Held Linear workspace navigation and setup guides — 2 October 2026
+
+Updated `introduction.mdx`, `guides/daily-review.mdx`, `guides/settings.mdx`,
+`guides/account-and-team.mdx`, `guides/billing-and-support.mdx`,
+`guides/setup-wizard.mdx`, `guides/organizations.mdx`, `guides/configure-client.mdx`,
+`guides/integrations.mdx`, `guides/standards.mdx` and `guides/triage-issues.mdx`
+against the application redesign candidate in
+`/private/tmp/alignr-linear-ui-rebuild`, including Standards setup and questionnaire
+source in `frontend/src/features/workspace-standards/`, connection list/setup/detail
+in `frontend/src/features/workspace-integrations/`, navigation in
+`frontend/src/features/workspace/WorkspaceShell.tsx`, and Issues in
+`frontend/src/features/workspace-issues/`. The checked source was candidate HEAD
+`719c9bd7d1cbf8e68e677b258ed3c5f4f65bf399`; relevant feature commits are shell
+`b1a0e0d6e6306c8e203fc4c4379c5861b0486465`, Standards and integration setup
+`b40b7ed9701edd2edb53aee51289607c3bc1aeed`, Clients list `487e1fa647b7bf1bcc1d948d01b79ba71bb72433`, Issues view
+`2fff1e6b0705ca750d47ce6f98f3a0b0d0ea43ab` and filter/status correction
+`b36ebd8edc2ea14c7de1ea0b262e8cdf7f444d1c`. The app branch was clean at that
+pin, but release validation is still pending.
+
+The copy uses the four explicit issue statuses (Open, Snoozed, Resolved, Dismissed),
+not an All-status choice; it describes search/filter/display controls and retains the
+PR29 functional clarifications around URL state, filter chips, client scoping and
+email-domain versus technical-category semantics. The Clients guide reflects the current search/filter/page controls and headings.
+The copy preserves current routes, permission language, and the separate
+questionnaire save, assignment and assessment steps. No API/MCP contract or generated reference changed.
+A follow-up source review corrected the earlier mistaken description of a top-right account menu: `WorkspaceMenu` places workspace links and Account settings/Sign out in one top-left logo dropdown. The Standards detail link rebuilds the list URL with `q`, `state`, `page` and `pageSize`; the guide now names **← Standards** and no longer repeats the compact-list summary.
+
+This is source review only: docs CI, Mintlify validation, rendered preview, hosted
+readback, application tests and authenticated browser journey were not run. The
+matching app release is pending; do not publish until its exact final source and
+release are verified.
+
+### Global client selector removal — documentation correction
+
+The app owner removed the global workspace client selector after the source pin
+used by this held draft. Updated `introduction.mdx`, `guides/daily-review.mdx`,
+`guides/triage-issues.mdx`, `guides/ask-alignr.mdx` and `guides/remediation.mdx` to
+remove claims that a shared selection scopes other pages. The current copy states
+that client scope comes from the route or a page's own controls and that a client
+link's URL carries its own scope. Activity export instructions remain page-URL
+scoped. Historical review entries describing the earlier selector are preserved;
+the latest Documentation Coverage entry marks that source pin superseded.
+
+This correction is source-copy only. It does not assert final app release parity;
+the exact final source pin, docs checks, rendered preview and hosted readback are
+still pending. Do not publish until those checks are complete.
+
+### 2 October — inline setup and method selection reconciliation
+
+Updated setup, integration, guided-standard and quickstart instructions against
+application candidate `1948d88` and `aa834fc`, retaining the held release status.
+Microsoft setup now explicitly chooses Direct or Partner Center; provider cards
+and Add connection use one inline dialog, preserving the current stage/draft and
+allowing another connection. Corrected the stale Setup checklist label. No API,
+predicate, baseline or evaluator behavior changed in this presentation pass, so
+no reference regeneration is needed.
+
+The owner explicitly authorised all required publishing/deployment work. This
+resolves the earlier docs-push approval question. Source/structural checks are
+separate from the pending remote Mintlify checks and final hosted readback.
+
+### Setup labels and OAuth return path — source review correction
+
+Independent review compared the setup and integration guides with the current
+workspace UI and Microsoft callback route. The inline connection dialog labels its
+repeat action **Add another connection**, not **Add another**; corrected the setup
+wizard and guided-standard instructions to match. Setup-origin Microsoft OAuth
+returns directly to `/setup?step=microsoft&oauth=...`; it does not display a
+**Return to setup** link. Updated the Microsoft paragraph in the integrations guide
+to describe the direct return while retaining **Return to standard setup** for
+guided-standard connection flows. Assignment remains separate from **Run checks**.
+
+Evidence: `WorkspaceSetupMicrosoftConnection.tsx` sends `returnContext: "setup"`,
+`api/v1/microsoft_connections.py` redirects to the wizard route, and
+`WorkspaceConnectionSetupPage.tsx` labels the inline action **Add another
+connection**. This is source review only; no docs build, rendered preview,
+application test, or hosted readback was run. Publication remains held for the
+matching app release and required documentation validation.
+
+
+### 2 October — final UI source and release validation
+
+Reconciled this guide update with application candidate
+`35f0a138b215c0897b793e1945c5dfe264d3c4f5`, now merged by application PR65 as
+`00d3962a29f9f39cbac557c74af211a39abfb275`. The merge and candidate have the same
+source tree. Later application fixes concern responsive layout, accessible field
+labels, report headers and test cleanup; they do not change the documented setup
+actions or separate activation, assignment and evaluation milestones.
+
+Application CI 36981959892 passed (5,045 backend and 3,664 frontend tests). The
+clean-stack `make check` step in 36981987817 also passed; its synthetic browser
+proof passed 344 checks. Focused jobs in 36985648886 passed external-portal and
+short-screen coverage plus real disposable-API creation and persisted client
+assignment for Identity, Backup and Device standards. These checks do not prove
+third-party authorisation against customer credentials.
+
+Documentation candidate `691e39535593e4dd2c9b74a1465d61ea135ba415` passed remote
+validation run 36977198604 and Mintlify preview deployment. This appended evidence
+record changes no public prose. Publication remains held for production frontend
+promotion after application API release run 36986239142; hosted documentation
+readback follows publication. No API, MCP or predicate reference regeneration is
+needed for this UI-only change.
+
+### Visual-tour screenshot review — 2 October 2026
+
+Compared the embedded client-checks, Ask Alignr and client-reports screenshots with
+the merged workspace navigation. Each shows the former horizontal app header. The
+proof-run captures use synthetic fixtures, so they are not suitable as public
+product screenshots under the screenshot policy. Retained the existing demo images
+with explicit earlier-layout captions and current entry-point directions rather
+than presenting them as current shell captures. Setup-wizard captures remain in
+their dedicated setup flow. Source: application PR65 merge `00d3962`; no application
+source changes. This is a documentation source review only; Mintlify build, hosted
+preview and production readback remain outstanding for these caption changes.
