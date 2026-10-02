@@ -1,5 +1,12 @@
 # Application documentation coverage
 
+Fact-volume capacity candidate: REST and MCP one-client evaluation guides explain
+streamed current-fact snapshots and truthful partial outcomes; Workspace health
+distinguishes the removed aggregate scheduled-evidence ceiling from remaining
+per-rule and provider constraints. Held for the matching capacity release, after
+Health PR25 and scoring PR26. No route, schema, predicate or control definition
+changed, so generated references remain unchanged.
+
 Living coverage map. Last audited 2026-09-26 against application `565fae53f166e14dae4f3d872572ab3e3bdfdc28` and published documentation `0bf7785de4d97ac9f8a759bb9626d837fa4feeca`. The audit used three independent subagents plus the coordinator, followed by a separate review of the immediate corrections.
 
 ## What this review proves
