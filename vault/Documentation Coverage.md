@@ -213,6 +213,22 @@ implementation limitation, not an accepted new policy. The owner's direction to
 remove collection/export limits remains outstanding application work; do not
 claim unlimited export before implementation and verification.
 
+## 2026-10-02 — Issues workspace filter guidance (held)
+
+Updated [Review and triage issues](../guides/triage-issues.mdx) against application
+PR63 HEAD `8fc0358d1f559bc29fdde4704522d7bf2f2e514f`. Its frontend implementation
+is unchanged from commit `44700715385255427af9166714b729238f01b8b6`; the HEAD
+follow-up only corrects the Vault requirement for this public guide. The page now
+places **Issue type**, **Source** and technical **Domain** under **More filters**;
+explains removable filter chips, URL persistence for filters, search, sort, page
+and page size, supported 25/50/100 page sizes, and the distinction between technical
+category and the legacy email-domain URL filter. Client scope after clearing
+page filters remains explicit. No API/MCP contract or generated reference changed.
+
+Publication is held until application PR63 is released. This source-aligned copy
+has not had an independent docs-content review, Mintlify validation, rendered
+desktop/mobile preview or hosted-page readback. Those checks remain outstanding.
+
 
 ## Held workspace shell candidate — 2 October 2026
 

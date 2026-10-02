@@ -976,3 +976,24 @@ Independent source review by `run_diagnostics` found two label/scope mismatches:
 Final source review against application merge `2c80354b33d714d420f6d6365ff7d7c0d213b8d8` caught a remaining reference to the old header Organization filter in the Audit trail section. Replaced it with the workspace Client filter and retained explicit URL precedence, share-link behaviour and reset semantics, verified against `LogsPage.tsx` and its scope tests. This is a location/copy correction only; no API or catalogue regeneration applies. Matching app promotion and hosted documentation verification remain pending.
 
 Independent follow-up review found a second old header-filter instruction in the same guide. Root searched the public guides for sibling references and corrected daily review, issue triage and remediation to use the workspace client filter; daily review also now places help in the desktop sidebar/mobile navigation, matching the released-candidate shell. Existing client/URL precedence is unchanged. No reference regeneration is needed for these navigation-copy corrections.
+
+
+## Held Issues workspace filter guide — 2 October 2026
+
+Updated `guides/triage-issues.mdx` from docs base
+`518ed1db9ce35ec153ab9748464a51c9530344ef`, against application PR63 HEAD
+`8fc0358d1f559bc29fdde4704522d7bf2f2e514f`. Its frontend implementation remains
+unchanged from `44700715385255427af9166714b729238f01b8b6`; the HEAD follow-up is
+Vault-only and records the required held guide update. The guide now directs
+readers to the **More filters** disclosure for Issue type, Source and technical
+Domain; describes per-filter chips and **Clear filters**; preserves the workspace
+client-scope behaviour; documents URL-backed search, filters, sort, page and page
+size; and distinguishes a technical Domain category from the legacy email-domain
+URL filter. No API/MCP contract or generated snapshot changed.
+
+Source review only. The application PR remains an unreleased candidate, so docs
+publication is held until matching release verification. This reviewer did not
+run a docs build, Mintlify/vault validation, rendered desktop/mobile preview,
+hosted-page readback or authenticated app journey. An independent docs-content
+review and remote docs validation are still pending; do not treat the guide as
+published or visually accepted.

@@ -11,7 +11,7 @@ You need `detection.read` to view issues, `detection.write` to snooze or dismiss
 
 <Steps>
   <Step title="Confirm the scope">
-    Check any client or issue-type filter carried into the page. Select **Status**, then use **Client**, **Issue type**, **Source**, **Domain** or **Severity** to narrow the list. **Domain** is the finding's technical category, not an email domain. Its choices come from matching issues rather than a fixed list. The default status is **Open**; **Snoozed**, **Resolved** and **Dismissed** are separate views.
+    Check any client or issue-type filter carried into the page. Use **Client**, **Status** and **Severity** to narrow the list; open **More filters** for **Issue type**, **Source** and **Domain**. **Domain** is the finding's technical category, not an email domain. Its choices come from matching issues rather than a fixed list. The default status is **Open**; **Snoozed**, **Resolved** and **Dismissed** are separate views. Applied filters appear as chips. Select a chip's **×** to remove just that filter, or **Clear filters** to reset the page filters. A client selected in the workspace still scopes the list after page filters are cleared.
   </Step>
   <Step title="Open the issue">
     Select a finding to open its details. Confirm the client, subject and finding reference, then read the explanation and cited evidence. Check observation times and whether the evidence still describes the intended account or device.
@@ -21,11 +21,11 @@ You need `detection.read` to view issues, `detection.write` to snooze or dismiss
   </Step>
 </Steps>
 
-Use **Search issues** to find words in a finding's reference, title, subject or explanation. For an email address, enter the complete address. Search does not match arbitrary parts of a word or search client names; use **Client** for client scope. Choose **Risk score**, severity or finding-name order. Search and sorting apply before pagination, and changing either returns to the first page. The URL retains your search and order for sharing.
+Use **Search issues** to find words in a finding's reference, title, subject or explanation. For an email address, enter the complete address. Search does not match arbitrary parts of a word or search client names; use **Client** for client scope. Choose risk, severity or finding-name order from the sort control; the **Finding** heading also cycles through A–Z, Z–A and the default risk order. Search, sorting and filters apply before pagination. Changing a filter, search, sort or page size returns to the first page. Choose 25, 50 or 100 rows per page. The URL retains your filters, search, order, page and page size for sharing.
 
-The filter choices come from the full matching issue set, not just the page you are viewing. Changing a filter narrows the other choices. A client selected in the workspace client filter still scopes the queue when there is no explicit client filter in the page URL.
+The filter choices come from the full matching issue set, not just the page you are viewing. Changing a filter narrows the other choices. **More filters** opens inline; a deep-linked filter stays visible as a chip without opening the extra controls. A client selected in the workspace client filter still scopes the queue when there is no explicit client filter in the page URL.
 
-Older links with a `domain` URL filter still narrow issues by an email address's domain or a domain subject. The page shows **Email domain: …** with **Remove email filter** when that filter is active. Remove it to see issues outside that email domain; use **Domain** for technical categories.
+Older links with a `domain` URL filter still narrow issues by an email address's domain or a domain subject. The page shows an **Email domain: …** chip when that filter is active. Select its **×** to remove it and see issues outside that email domain; use **Domain** under **More filters** for technical categories.
 
 **Checkpoint:** you can explain what was observed, why it matters, which client and subject it concerns, and what action follows.
 
