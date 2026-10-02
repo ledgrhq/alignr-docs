@@ -1056,3 +1056,21 @@ no reference regeneration is needed.
 The owner explicitly authorised all required publishing/deployment work. This
 resolves the earlier docs-push approval question. Source/structural checks are
 separate from the pending remote Mintlify checks and final hosted readback.
+
+### Setup labels and OAuth return path — source review correction
+
+Independent review compared the setup and integration guides with the current
+workspace UI and Microsoft callback route. The inline connection dialog labels its
+repeat action **Add another connection**, not **Add another**; corrected the setup
+wizard and guided-standard instructions to match. Setup-origin Microsoft OAuth
+returns directly to `/setup?step=microsoft&oauth=...`; it does not display a
+**Return to setup** link. Updated the Microsoft paragraph in the integrations guide
+to describe the direct return while retaining **Return to standard setup** for
+guided-standard connection flows. Assignment remains separate from **Run checks**.
+
+Evidence: `WorkspaceSetupMicrosoftConnection.tsx` sends `returnContext: "setup"`,
+`api/v1/microsoft_connections.py` redirects to the wizard route, and
+`WorkspaceConnectionSetupPage.tsx` labels the inline action **Add another
+connection**. This is source review only; no docs build, rendered preview,
+application test, or hosted readback was run. Publication remains held for the
+matching app release and required documentation validation.
