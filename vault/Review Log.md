@@ -1152,3 +1152,7 @@ release verification. Vault checks and remote documentation validation follow.
 ### 2 October 2026 — delegated mailbox boundary
 
 Application candidate `6e32d8346e63a90121e30ab45a12811dcda78dc0` excludes tenant-wide mailbox reads from Partner Center. Updated Microsoft guides and the three predicate interpretation notes; regenerated predicate reference from that checkout. Publication remains held for application release.
+
+### 3 October 2026 — scoped refresh and compact assessment UI (held)
+
+Checked application PR80 source: selected standards intersect active assigned clients; changed policy targets are blocked individually; bulk assignment is search-scoped and preserves hidden selections until explicit save; Evidence uses a row-end View JSON value menu. Updated three guides and their living coverage records. No customer information added and no generated contracts changed. App PR78 has shipped, but this additional docs revision remains held for PR80 release. Vault checks and remote validation follow; rendering not yet reviewed for this revision.
