@@ -994,3 +994,34 @@ resource constraint. Earlier guide screenshots do not establish visual acceptanc
 of the added paragraphs.
 
 Reconciled published capacity docs main `4fd460c` into this candidate before publication. The only conflict was appended review-log history; both records are retained. Navigation MDX stayed unchanged. The previous conflict prevented GitHub pull-request validation from starting on recent heads; exact merged-head validation is now required.
+
+
+## Held Linear workspace navigation and setup guides — 2 October 2026
+
+Updated `introduction.mdx`, `guides/daily-review.mdx`, `guides/settings.mdx`,
+`guides/account-and-team.mdx`, `guides/billing-and-support.mdx`,
+`guides/setup-wizard.mdx`, `guides/organizations.mdx`, `guides/configure-client.mdx`,
+`guides/integrations.mdx`, `guides/standards.mdx` and `guides/triage-issues.mdx`
+against the application redesign candidate in
+`/private/tmp/alignr-linear-ui-rebuild`, including Standards setup and questionnaire
+source in `frontend/src/features/workspace-standards/`, connection list/setup/detail
+in `frontend/src/features/workspace-integrations/`, navigation in
+`frontend/src/features/workspace/WorkspaceShell.tsx`, and Issues in
+`frontend/src/features/workspace-issues/`. The checked source was candidate HEAD
+`719c9bd7d1cbf8e68e677b258ed3c5f4f65bf399`; relevant feature commits are shell
+`b1a0e0d6e6306c8e203fc4c4379c5861b0486465`, Standards and integration setup
+`b40b7ed9701edd2edb53aee51289607c3bc1aeed`, Clients list `487e1fa647b7bf1bcc1d948d01b79ba71bb72433`, Issues view
+`2fff1e6b0705ca750d47ce6f98f3a0b0d0ea43ab` and filter/status correction
+`b36ebd8edc2ea14c7de1ea0b262e8cdf7f444d1c`. The app branch was clean at that
+pin, but release validation is still pending.
+
+The copy uses the four explicit issue statuses (Open, Snoozed, Resolved, Dismissed),
+not an All-status choice; it describes search/filter/display controls and retains the
+PR29 functional clarifications around URL state, filter chips, client scoping and
+email-domain versus technical-category semantics. The Clients guide reflects the current search/filter/page controls and headings.
+The copy preserves current routes, permission language, and the separate
+questionnaire save, assignment and assessment steps. No API/MCP contract or generated reference changed.
+This is source review only: docs CI, Mintlify validation, rendered preview, hosted
+readback, application tests and authenticated browser journey were not run. The
+matching app release is pending; do not publish until its exact final source and
+release are verified.

@@ -226,3 +226,28 @@ claim unlimited export before implementation and verification.
 Source: application PR61, frozen commit `3837e3f7daf50a511923b2c4d08b568ce1dad947`, ADR-0051. Introduction and daily review explain the sidebar, client filter, utility bar and remembered theme choices. Settings, account/team and billing guides distinguish the workspace menu from the personal account menu and retain existing Settings paths. Team and billing links retain their read/manage permission boundaries. The Settings directory's previously omitted Billing row is now documented. No Inbox rename, workspace switching, new billing behaviour or score changes are claimed.
 
 Publication is held until the matching app release is verified. Source review is separate from rendered acceptance; desktop/390px/light/dark/keyboard and changed docs previews remain outstanding. Refresh affected visual-tour screenshots from authorised non-sensitive UI before publication, or explicitly retain them as dated prior-layout examples. No new screenshots were fabricated. Public `docs.json` navigation and reference catalogues are unchanged because pages, API/MCP contracts, predicates and controls did not move or change.
+
+
+## Held Linear workspace navigation and setup guides — 2 October 2026
+
+Updated Introduction, daily review, Settings, account/team, billing, setup, client,
+integration, standards and issue-triage wording against app candidate
+`/private/tmp/alignr-linear-ui-rebuild` at `719c9bd7d1cbf8e68e677b258ed3c5f4f65bf399`.
+Relevant route commits include shell `b1a0e0d`, Standards/integration setup `b40b7ed`,
+Clients list `487e1fa`, and Issues list/details `2fff1e6` plus four-status correction
+`b36ebd8`. The guides describe the sidebar's
+Overview/Issues/Reviews/Activity, Clients/Standards/Integrations and MCP/Settings
+groups; separate top-left workspace and top-right personal account menus; the
+Settings directory and permission-dependent links; current compact integration and
+standards entry points; guided questionnaire/source/review stages and safe return
+links; and the Issues search/filter/display controls with the persistent desktop
+detail pane. The Clients guide matches the current four sortable headings and four filters. The
+issue page incorporates the functional clarifications prepared on
+`docs/issues-workspace` without claiming an unsupported **All statuses** option or
+obsolete heading-sort interaction. No API/MCP schema, endpoint, generated reference
+or Mintlify navigation configuration changed.
+
+This documents a held app candidate, not a released workflow. The app worktree is
+still active, so the exact final source pin and remote UI/CI acceptance remain to be
+reconciled before publication. No hosted readback, rendered docs preview,
+authenticated product journey or app test is claimed here.

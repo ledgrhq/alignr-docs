@@ -11,7 +11,7 @@ You need `detection.read` to view issues, `detection.write` to snooze or dismiss
 
 <Steps>
   <Step title="Confirm the scope">
-    Check any client or issue-type filter carried into the page. Select **Status**, then use **Client**, **Issue type**, **Source**, **Domain** or **Severity** to narrow the list. **Domain** is the finding's technical category, not an email domain. Its choices come from matching issues rather than a fixed list. The default status is **Open**; **Snoozed**, **Resolved** and **Dismissed** are separate views.
+    Check any client or issue-type filter carried into the page. The default queue is **Open**. Open the filter icon button to choose **Open**, **Snoozed**, **Resolved** or **Dismissed**, then add filters such as **Client**, **Severity**, **Issue type**, **Source**, **Category** or **Email domain**. Search the filter fields, choose one, then search its available values. **Category** is the finding's technical category; **Email domain** matches an address or domain subject. Applied filters appear as removable chips. Select a chip's **×** to remove that filter, or **Clear filters** to reset page filters. A client selected in the workspace still scopes the list after page filters are cleared.
   </Step>
   <Step title="Open the issue">
     Select a finding to open its details. Confirm the client, subject and finding reference, then read the explanation and cited evidence. Check observation times and whether the evidence still describes the intended account or device.
@@ -21,11 +21,11 @@ You need `detection.read` to view issues, `detection.write` to snooze or dismiss
   </Step>
 </Steps>
 
-Use **Search issues** to find words in a finding's reference, title, subject or explanation. For an email address, enter the complete address. Search does not match arbitrary parts of a word or search client names; use **Client** for client scope. Choose **Risk score**, severity or finding-name order. Search and sorting apply before pagination, and changing either returns to the first page. The URL retains your search and order for sharing.
+Use the magnifying-glass **Search issues** button to open the search field. Search covers a finding's reference, title, subject or explanation. For an email address, enter the complete address. Search does not match arbitrary parts of a word or search client names; use the **Client** filter for client scope. **Display options** chooses risk, severity or finding-name order. Search, sorting and filters apply before pagination. Changing a filter, search, sort or page size returns to the first page. Choose 25, 50 or 100 rows per page. The URL retains your filters, search, order, page and page size for sharing.
 
-The filter choices come from the full matching issue set, not just the page you are viewing. Changing a filter narrows the other choices. A client selected in the workspace client filter still scopes the queue when there is no explicit client filter in the page URL.
+Filter choices come from matching issues, not just the page you are viewing. Changing a filter narrows the other choices. If a URL already carries a filter, it remains visible as a chip while the filter popover is closed. On desktop, the issue list and detail pane keep their side-by-side proportions when you open a finding; before selection, the right pane stays in place with an empty state. On a narrow screen, selecting a finding opens its detail view, with a control to return to the list. A client selected in the workspace client selector still scopes the queue when there is no explicit client filter in the page URL.
 
-Older links with a `domain` URL filter still narrow issues by an email address's domain or a domain subject. The page shows **Email domain: …** with **Remove email filter** when that filter is active. Remove it to see issues outside that email domain; use **Domain** for technical categories.
+Older links with a `domain` URL filter still narrow issues by an email address's domain or a domain subject. The page shows an **Email domain: …** chip when that filter is active. Select its **×** to remove it and see issues outside that email domain; use **Category** for the finding's technical category.
 
 **Checkpoint:** you can explain what was observed, why it matters, which client and subject it concerns, and what action follows.
 
