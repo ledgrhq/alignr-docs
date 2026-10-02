@@ -1027,3 +1027,18 @@ This is source review only: docs CI, Mintlify validation, rendered preview, host
 readback, application tests and authenticated browser journey were not run. The
 matching app release is pending; do not publish until its exact final source and
 release are verified.
+
+### Global client selector removal — documentation correction
+
+The app owner removed the global workspace client selector after the source pin
+used by this held draft. Updated `introduction.mdx`, `guides/daily-review.mdx`,
+`guides/triage-issues.mdx`, `guides/ask-alignr.mdx` and `guides/remediation.mdx` to
+remove claims that a shared selection scopes other pages. The current copy states
+that client scope comes from the route or a page's own controls and that a client
+link's URL carries its own scope. Activity export instructions remain page-URL
+scoped. Historical review entries describing the earlier selector are preserved;
+the latest Documentation Coverage entry marks that source pin superseded.
+
+This correction is source-copy only. It does not assert final app release parity;
+the exact final source pin, docs checks, rendered preview and hosted readback are
+still pending. Do not publish until those checks are complete.
