@@ -1098,3 +1098,15 @@ record changes no public prose. Publication remains held for production frontend
 promotion after application API release run 36986239142; hosted documentation
 readback follows publication. No API, MCP or predicate reference regeneration is
 needed for this UI-only change.
+
+### Visual-tour screenshot review — 2 October 2026
+
+Compared the embedded client-checks, Ask Alignr and client-reports screenshots with
+the merged workspace navigation. Each shows the former horizontal app header. The
+proof-run captures use synthetic fixtures, so they are not suitable as public
+product screenshots under the screenshot policy. Retained the existing demo images
+with explicit earlier-layout captions and current entry-point directions rather
+than presenting them as current shell captures. Setup-wizard captures remain in
+their dedicated setup flow. Source: application PR65 merge `00d3962`; no application
+source changes. This is a documentation source review only; Mintlify build, hosted
+preview and production readback remain outstanding for these caption changes.

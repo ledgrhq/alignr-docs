@@ -249,13 +249,28 @@ issue page incorporates the functional clarifications prepared on
 obsolete heading-sort interaction. No API/MCP schema, endpoint, generated reference
 or Mintlify navigation configuration changed.
 
-This documents a held app candidate, not a released workflow. The app worktree is
-still active, so the exact final source pin and remote UI/CI acceptance remain to be
-reconciled before publication. No hosted readback, rendered docs preview,
-authenticated product journey or app test is claimed here.
+
+The public guide revisions now align with application PR65, merged as `00d3962`
+from reviewed source `35f0a13`; remote UI/CI acceptance is recorded in Review Log.
+The production frontend promotion and hosted readback remain outstanding at this
+checkpoint. No authenticated product journey is claimed here.
 
 
 Final UI release source: application PR65 merged candidate `35f0a13` as `00d3962`
 on 2 October 2026. The documented navigation and inline setup flows remain aligned
 with that source; see the final validation entry in Review Log. Public prose is
 ready, with publication and hosted readback pending the application promotion.
+
+
+## Visual-tour screenshot navigation disclosure — 2 October 2026
+
+The visual-tour client-checks, Ask Alignr and client-reports images remain captures
+from the prior horizontal-navigation layout. They were not replaced with synthetic
+browser-proof images because the public documentation editorial standard requires
+screenshots from the actual current UI, not simulated fixtures. Their captions now
+identify the earlier layout and direct readers to current navigation: the Clients
+sidebar destination and its **More → Review reports** action, or Ask Alignr in the
+utility bar. The images still illustrate demo data and page content only; they are
+not evidence of current shell geometry or a live customer assessment. Refresh them
+from an authorised current UI before treating the visual tour as a current-layout
+gallery. No product behaviour or API/MCP reference changed.
