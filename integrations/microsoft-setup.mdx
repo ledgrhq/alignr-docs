@@ -104,7 +104,7 @@ MailboxSettings.Read
 
 The Partner platform registration also needs Partner Center delegated `user_impersonation` and `offline_access`. It has no Graph or Partner Center application permissions. Your MSP's partner account, customer consent and GDAP roles still determine which customers and workloads are accessible.
 
-The assigned GDAP roles must also permit the workload reads. For example, the registration-report API documents delegated roles including Reports Reader, Security Reader, Security Administrator and Global Reader. A consented scope alone is insufficient. Delegated mailbox settings access also does not establish access to every customer's mailbox; inspect the sampled check and collected evidence before relying on it.
+The assigned GDAP roles must also permit the workload reads. For example, the registration-report API documents delegated roles including Reports Reader, Security Reader, Security Administrator and Global Reader. A consented scope alone is insufficient. Partner Center does not collect mailbox type, time zone or automatic replies. Those tenant-wide reads require a Direct Microsoft application connection with mailbox permission. A missing mailbox capability does not block supported identity evidence.
 
 ## Complete the evidence loop
 

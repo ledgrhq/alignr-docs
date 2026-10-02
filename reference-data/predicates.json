@@ -151,21 +151,21 @@
     "name": "mailbox_type",
     "label": "Mailbox type",
     "description": "The type of mailbox reported by the source.",
-    "interpretation": "Use it to distinguish mailbox kinds, not to infer security configuration."
+    "interpretation": "Use it to distinguish mailbox kinds, not to infer security configuration. Microsoft Partner Center delegated connections do not supply this evidence; use a Direct Microsoft application connection with mailbox access."
   },
   {
     "group": "Mailboxes and directory domains",
     "name": "mailbox_timezone",
     "label": "Mailbox time zone",
     "description": "The time zone configured for the mailbox.",
-    "interpretation": "This is a mailbox setting; Alignr evidence timestamps remain UTC."
+    "interpretation": "This is a mailbox setting; Alignr evidence timestamps remain UTC. Microsoft Partner Center delegated connections do not supply this evidence; use a Direct Microsoft application connection with mailbox access."
   },
   {
     "group": "Mailboxes and directory domains",
     "name": "mailbox_auto_reply",
     "label": "Automatic reply setting",
     "description": "The automatic-reply setting reported for the mailbox.",
-    "interpretation": "Interpret the source value; it does not prove a message was delivered."
+    "interpretation": "Interpret the source value; it does not prove a message was delivered. Microsoft Partner Center delegated connections do not supply this evidence; use a Direct Microsoft application connection with mailbox access."
   },
   {
     "group": "Mailboxes and directory domains",

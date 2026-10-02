@@ -1142,3 +1142,13 @@ Microsoft capability routes. No exposed curated contract, predicate or control
 changed, so reference regeneration is not required. This does not claim that
 these candidates are live. Publication remains held for corresponding application
 release verification. Vault checks and remote documentation validation follow.
+
+### 2 October 2026 — unanswered refresh recovery
+
+- Application PR 76 adds one automatic reconciliation of the original request on returning to Overview.
+- Updated `guides/maintain-integrations.mdx`; retain draft publication until the application release.
+- No generated API or predicate references changed.
+
+### 2 October 2026 — delegated mailbox boundary
+
+Application candidate `6e32d8346e63a90121e30ab45a12811dcda78dc0` excludes tenant-wide mailbox reads from Partner Center. Updated Microsoft guides and the three predicate interpretation notes; regenerated predicate reference from that checkout. Publication remains held for application release.
