@@ -976,3 +976,21 @@ Independent source review by `run_diagnostics` found two label/scope mismatches:
 Final source review against application merge `2c80354b33d714d420f6d6365ff7d7c0d213b8d8` caught a remaining reference to the old header Organization filter in the Audit trail section. Replaced it with the workspace Client filter and retained explicit URL precedence, share-link behaviour and reset semantics, verified against `LogsPage.tsx` and its scope tests. This is a location/copy correction only; no API or catalogue regeneration applies. Matching app promotion and hosted documentation verification remain pending.
 
 Independent follow-up review found a second old header-filter instruction in the same guide. Root searched the public guides for sibling references and corrected daily review, issue triage and remediation to use the workspace client filter; daily review also now places help in the desktop sidebar/mobile navigation, matching the released-candidate shell. Existing client/URL precedence is unchanged. No reference regeneration is needed for these navigation-copy corrections.
+
+## 2026-10-01 — Aggregate fact capacity guidance (held)
+
+Prepared against application PR59 (`2abd6fb`, with a test-only review follow-up
+pending) on top of Health PR25 and scoring PR26. REST and MCP evaluation guides
+explain the removed 5,000-current-fact snapshot rejection and partial outcomes
+without equating zero failed rules with completion. Workspace health explains the
+removed aggregate scheduled evidence ceiling while retaining per-rule/provider
+limitations. The implementation preserves source eligibility, receipt encoding,
+API schemas, predicates and control definitions; generated references are unchanged.
+
+The candidate must remain unpublished until PR59 is verified live. Structural vault
+and whitespace checks pass; remote validation and independent content review are
+pending. No local browser or build was started because of the owner's laptop
+resource constraint. Earlier guide screenshots do not establish visual acceptance
+of the added paragraphs.
+
+Reconciled published capacity docs main `4fd460c` into this candidate before publication. The only conflict was appended review-log history; both records are retained. Navigation MDX stayed unchanged. The previous conflict prevented GitHub pull-request validation from starting on recent heads; exact merged-head validation is now required.

@@ -33,8 +33,10 @@ The `202` response contains the durable `id`, `state`, counts, stage timestamps 
 | `pending` | The request committed; no completed assessment is claimed. |
 | `controls_committed` | Automated control rows and counts committed; detection work remains. |
 | `completed` | This run's detection transaction committed without captured rule errors. Individual controls may still fail or lack evidence. |
-| `completed_with_errors` | Results committed, but one or more rule evaluations failed; inspect `detectionCounts.failed_rules` and the current result separately. |
+| `completed_with_errors` | Partial results committed, but work remains or a rule failed. Inspect `safeErrorCode`, the detection counters and the current result separately; zero `failed_rules` does not establish completion. |
 | `interrupted` | The run stopped on a known condition such as changed policy or authority. Earlier committed control counts, if any, remain historical. |
 | `unknown` | A provider or commit outcome cannot be classified safely. Alignr does not automatically replay billed provider work; review the operation and current evidence before a deliberate new request. |
 
 The receipt reports what happened **during that operation**, not whether the client's current controls pass. Missing or stale evidence never counts as passing. Manual checks, source collection and standard deployment remain separate workflows. See [control statuses](/guides/control-status) and the [standards workflow](/guides/standards).
+
+The current-fact snapshot is streamed, so this stage does not reject a client merely for having more than 5,000 current facts. This does not remove every evaluation or provider limit. In particular, `candidate_limit` means verification stopped before all candidate findings were processed; earlier verified results remain saved. Poll the original receipt after a lost response, and review its outcome before deliberately starting a new run. Replaying a terminal receipt does not resume its unfinished work.
