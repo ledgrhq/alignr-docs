@@ -1110,3 +1110,10 @@ than presenting them as current shell captures. Setup-wizard captures remain in
 their dedicated setup flow. Source: application PR65 merge `00d3962`; no application
 source changes. This is a documentation source review only; Mintlify build, hosted
 preview and production readback remain outstanding for these caption changes.
+
+
+## Setup refinement follow-up — 2 October 2026 (candidate)
+
+Reviewed against application branch `fix/setup-ui-refinement` based on production `00d3962a29f9f39cbac557c74af211a39abfb275`; application candidate `7b13efc538d2564ad9d6889b131043036dbc3f38` (PR66). Updated setup action labels, shared catalogue entry, staff-directory dialog entry and Standards Sources guidance. DOC-R02/03/04/07 source comparison performed. No API, MCP, predicate or baseline changes, so no reference regeneration required. Remote validation and publication are pending. No new screenshots or live vendor claims are included.
+
+Independent source review confirmed the setup action labels and corrected the distinction between requirement observations and source-gap suggestions. Publication remains held for the application release and remote documentation checks.
