@@ -1074,3 +1074,27 @@ Evidence: `WorkspaceSetupMicrosoftConnection.tsx` sends `returnContext: "setup"`
 connection**. This is source review only; no docs build, rendered preview,
 application test, or hosted readback was run. Publication remains held for the
 matching app release and required documentation validation.
+
+
+### 2 October — final UI source and release validation
+
+Reconciled this guide update with application candidate
+`35f0a138b215c0897b793e1945c5dfe264d3c4f5`, now merged by application PR65 as
+`00d3962a29f9f39cbac557c74af211a39abfb275`. The merge and candidate have the same
+source tree. Later application fixes concern responsive layout, accessible field
+labels, report headers and test cleanup; they do not change the documented setup
+actions or separate activation, assignment and evaluation milestones.
+
+Application CI 36981959892 passed (5,045 backend and 3,664 frontend tests). The
+clean-stack `make check` step in 36981987817 also passed; its synthetic browser
+proof passed 344 checks. Focused jobs in 36985648886 passed external-portal and
+short-screen coverage plus real disposable-API creation and persisted client
+assignment for Identity, Backup and Device standards. These checks do not prove
+third-party authorisation against customer credentials.
+
+Documentation candidate `691e39535593e4dd2c9b74a1465d61ea135ba415` passed remote
+validation run 36977198604 and Mintlify preview deployment. This appended evidence
+record changes no public prose. Publication remains held for production frontend
+promotion after application API release run 36986239142; hosted documentation
+readback follows publication. No API, MCP or predicate reference regeneration is
+needed for this UI-only change.

@@ -253,3 +253,9 @@ This documents a held app candidate, not a released workflow. The app worktree i
 still active, so the exact final source pin and remote UI/CI acceptance remain to be
 reconciled before publication. No hosted readback, rendered docs preview,
 authenticated product journey or app test is claimed here.
+
+
+Final UI release source: application PR65 merged candidate `35f0a13` as `00d3962`
+on 2 October 2026. The documented navigation and inline setup flows remain aligned
+with that source; see the final validation entry in Review Log. Public prose is
+ready, with publication and hosted readback pending the application promotion.
