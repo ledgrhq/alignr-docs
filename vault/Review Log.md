@@ -991,9 +991,13 @@ client-scope behaviour; documents URL-backed search, filters, sort, page and pag
 size; and distinguishes a technical Domain category from the legacy email-domain
 URL filter. No API/MCP contract or generated snapshot changed.
 
-Source review only. The application PR remains an unreleased candidate, so docs
-publication is held until matching release verification. This reviewer did not
-run a docs build, Mintlify/vault validation, rendered desktop/mobile preview,
-hosted-page readback or authenticated app journey. An independent docs-content
-review and remote docs validation are still pending; do not treat the guide as
-published or visually accepted.
+Independent docs-content review by `adoption_review` cleared exact guide commit
+`5d326f247269262b808cd35f4bd1f9285a4daef9` against the application frontend
+implementation `44700715385255427af9166714b729238f01b8b6`. It confirmed filter
+labels, chip removal, email-domain versus technical Domain semantics, heading
+sort cycle, 25/50/100 page sizes, first-page reset, URL persistence and inherited
+client scope. This was source review only. The application PR remains unreleased,
+so docs publication is held until matching release verification. No docs build,
+Mintlify/vault validation, rendered desktop/mobile preview, hosted-page readback
+or authenticated app journey was performed; the guide is not published or visually
+accepted.

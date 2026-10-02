@@ -226,8 +226,9 @@ category and the legacy email-domain URL filter. Client scope after clearing
 page filters remains explicit. No API/MCP contract or generated reference changed.
 
 Publication is held until application PR63 is released. This source-aligned copy
-has not had an independent docs-content review, Mintlify validation, rendered
-desktop/mobile preview or hosted-page readback. Those checks remain outstanding.
+was independently reviewed against the frontend implementation by `adoption_review`
+at docs commit `5d326f247269262b808cd35f4bd1f9285a4daef9`. Mintlify validation,
+rendered desktop/mobile preview and hosted-page readback remain outstanding.
 
 
 ## Held workspace shell candidate — 2 October 2026
