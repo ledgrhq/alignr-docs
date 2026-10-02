@@ -93,3 +93,5 @@ The held October 2 candidate reuses one connection-creation dialog across worksp
 ## Setup refinement follow-up — 2 October 2026
 
 The candidate setup refinement keeps the existing five steps and routes. Saved connection actions remain inline, Connect another tool opens the shared catalogue dialog, and Microsoft Setup guidance opens the method-specific help dialog. The optional staff directory opens from Use your Microsoft staff directory. Standards use compact domain rows; the completion screen keeps Overview and readiness separate. Standard Sources readouts use client names and focused requirement/gap dialogs. These layout changes do not alter evidence, authorisation, evaluation or assignment semantics.
+
+The issue detail panel presents Properties before Evidence. Keep the triage guide focused on client, source, severity and observation times first; Source record opens the optional internal fact reference without placing UUIDs in the main reading flow.

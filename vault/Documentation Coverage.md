@@ -274,3 +274,7 @@ utility bar. The images still illustrate demo data and page content only; they a
 not evidence of current shell geometry or a live customer assessment. Refresh them
 from an authorised current UI before treating the visual tour as a current-layout
 gallery. No product behaviour or API/MCP reference changed.
+
+### 2 October — issue detail refinement
+
+The triage guide now covers Properties before Evidence and the optional Source record dialog, with current Snooze/Dismiss/audit action labels and page-owned client scope. Checked against the PR66 workspace issue components; publication remains tied to that application release.

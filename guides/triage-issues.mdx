@@ -11,10 +11,10 @@ You need `detection.read` to view issues, `detection.write` to snooze or dismiss
 
 <Steps>
   <Step title="Confirm the scope">
-    Check any client or issue-type filter carried into the page. The default queue is **Open**. Open the filter icon button to choose **Open**, **Snoozed**, **Resolved** or **Dismissed**, then add filters such as **Client**, **Severity**, **Issue type**, **Source**, **Category** or **Email domain**. Search the filter fields, choose one, then search its available values. **Category** is the finding's technical category; **Email domain** matches an address or domain subject. Applied filters appear as removable chips. Select a chip's **×** to remove that filter, or **Clear filters** to reset page filters. A client selected in the workspace still scopes the list after page filters are cleared.
+    Check any client or issue-type filter carried into the page. The default queue is **Open**. Open the filter icon button to choose **Open**, **Snoozed**, **Resolved** or **Dismissed**, then add filters such as **Client**, **Severity**, **Issue type**, **Source**, **Category** or **Email domain**. Search the filter fields, choose one, then search its available values. **Category** is the finding's technical category; **Email domain** matches an address or domain subject. Applied filters appear as removable chips. Select a chip's **×** to remove that filter, or **Clear filters** to reset page filters.
   </Step>
   <Step title="Open the issue">
-    Select a finding to open its details. Confirm the client, subject and finding reference, then read the explanation and cited evidence. Check observation times and whether the evidence still describes the intended account or device.
+    Select a finding to open its details. Confirm the subject and finding reference, then use **Properties** to check status, severity, client, source and observation times. Read the explanation and **Evidence** to decide whether the finding still describes the intended account or device. Evidence uses readable labels; select **Source record** when you need its internal fact reference.
   </Step>
   <Step title="Choose a follow-up">
     Review a supported remediation plan, snooze work awaiting a known event, or dismiss a finding you have established is not a problem. Keep the decision distinct from the automated control result.
@@ -35,24 +35,24 @@ Older links with a `domain` URL filter still narrow issues by an email address's
 | --- | --- | --- |
 | The finding is supported and a suitable change is available. | Review [remediation](/guides/remediation). | Review the plan, authority and target before execution. |
 | The finding needs attention, but work is waiting on a known event. | **Snooze**. | Temporarily remove it from the open queue until the chosen date. |
-| You have established that this finding is not a problem. | **Not a problem**, then **Dismiss detection**. | Record the decision and suppress this finding for the same subject. |
+| You have established that this finding is not a problem. | **Dismiss**, then **Mark not a problem**. | Record the decision and suppress this finding for the same subject. |
 | You cannot yet establish what happened. | Investigate evidence and source context. | Uncertainty is not grounds for calling the environment healthy. |
 
 ### Snooze with a reason
 
-Select **Snooze**, choose **Come back in**, and explain **Why is this being parked?** before confirming. Options include tomorrow, one week, two weeks, 30 days and 90 days.
+Select **Snooze**, choose **Bring it back**, and explain **Why are you parking this issue?** before confirming **Snooze issue**. Options include tomorrow, one week, two weeks, 30 days and 90 days.
 
 For example, in a fictional Acme case: “The client approved a maintenance window next week; Morgan owns the change.” Choose a review date that corresponds to that plan.
 
-The finding leaves the Open view and returns when the snooze expires. The engine does not re-raise it while snoozed. Find it under **Status → Snoozed**; **Re-snooze** lets you record a revised wait. Snoozing does not fix the underlying condition or establish a passing control result.
+The finding leaves the Open view and returns when the snooze expires. The engine does not re-raise it while snoozed. Find it under **Status → Snoozed**; select **Snooze** again to record a revised wait. Snoozing does not fix the underlying condition or establish a passing control result.
 
 ### Dismiss deliberately
 
-Select **Not a problem**, explain **Why is this not a problem?**, and confirm **Dismiss detection**. The reason is required and remains part of the record.
+Select **Dismiss**, explain **Why is this not a problem?**, and confirm **Mark not a problem**. The reason is required and remains part of the record.
 
 Dismissal suppresses re-raising the finding for that subject. Use it for a supported triage conclusion, not simply to clear the queue. A dismissed finding is not the same as a verified fix, nor does dismissal change the standard's expectation.
 
-Find previous decisions under **Status → Dismissed**. Open a closed finding and select **Dismissed — view audit trail** or **Resolved — view audit trail** to inspect its recorded history. Closed findings cannot be snoozed or dismissed again.
+Find previous decisions under **Status → Dismissed**. Open a closed finding and select **View audit history** to inspect its recorded history. Closed findings cannot be snoozed or dismissed again.
 
 ## If the next action is unavailable
 

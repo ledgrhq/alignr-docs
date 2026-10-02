@@ -1117,3 +1117,7 @@ preview and production readback remain outstanding for these caption changes.
 Reviewed against application branch `fix/setup-ui-refinement` based on production `00d3962a29f9f39cbac557c74af211a39abfb275`; application candidate `7b13efc538d2564ad9d6889b131043036dbc3f38` (PR66). Updated setup action labels, shared catalogue entry, staff-directory dialog entry and Standards Sources guidance. DOC-R02/03/04/07 source comparison performed. No API, MCP, predicate or baseline changes, so no reference regeneration required. Remote validation and publication are pending. No new screenshots or live vendor claims are included.
 
 Independent source review confirmed the setup action labels and corrected the distinction between requirement observations and source-gap suggestions. Publication remains held for the application release and remote documentation checks.
+
+### Issue properties and source-reference follow-up
+
+Updated the triage guide for Properties before Evidence and the Source record dialog. Source review also found and removed one remaining global-client-scope claim and reconciled Snooze, Dismiss, reason and audit-history labels with WorkspaceIssueDetail/WorkspaceIssueTriageDialog. No status transition or evidence semantics changed. Final application source and publication evidence are pending.
