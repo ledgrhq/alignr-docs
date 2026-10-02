@@ -1110,3 +1110,19 @@ than presenting them as current shell captures. Setup-wizard captures remain in
 their dedicated setup flow. Source: application PR65 merge `00d3962`; no application
 source changes. This is a documentation source review only; Mintlify build, hosted
 preview and production readback remain outstanding for these caption changes.
+
+
+## Setup refinement follow-up — 2 October 2026 (candidate)
+
+Reviewed against application branch `fix/setup-ui-refinement` based on production `00d3962a29f9f39cbac557c74af211a39abfb275`; application candidate `7b13efc538d2564ad9d6889b131043036dbc3f38` (PR66). Updated setup action labels, shared catalogue entry, staff-directory dialog entry and Standards Sources guidance. DOC-R02/03/04/07 source comparison performed. No API, MCP, predicate or baseline changes, so no reference regeneration required. Remote validation and publication are pending. No new screenshots or live vendor claims are included.
+
+Independent source review confirmed the setup action labels and corrected the distinction between requirement observations and source-gap suggestions. Publication remains held for the application release and remote documentation checks.
+
+### Issue properties and source-reference follow-up
+
+Updated the triage guide for Properties before Evidence and the Source record dialog. Source review also found and removed one remaining global-client-scope claim and reconciled Snooze, Dismiss, reason and audit-history labels with WorkspaceIssueDetail/WorkspaceIssueTriageDialog. No status transition or evidence semantics changed. Final application source and publication evidence are pending.
+
+
+## 2026-10-02 — import and connection-readiness follow-up
+
+Updated Organizations and Integrations guides for the compact Source row, Refresh records, Record status filter, linked/review counts and Create unmatched confirmation. The integrations guide also explains that setup displays **Setting up your tenant** while connection-key protection is prepared and opens connection choices automatically when the matching tenant is ready; retry remains available when setup needs attention. Verified labels and the tenant-matched readiness gate against application candidate `1256007777cb70dfef53a220622d417b5b36dbf8` in `fix/setup-ui-refinement`. This does not claim production readiness or change API, mapping or evidence semantics. Publication remains paired with app PR66.

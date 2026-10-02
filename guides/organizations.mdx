@@ -15,12 +15,12 @@ You need access to clients and integrations, permission to manage mappings, and 
 
 <Steps>
   <Step title="Choose the source">
-    Open **Clients → Import clients**. Choose a connected source in **Import source**. Where available, select **Refresh client records** to retrieve its current directory.
+    Open **Clients → Import clients**. Choose a connected **Source** at the top of the page. Select **Refresh records** to retrieve its current directory, or **Manage source** to review the connection.
 
     **Checkpoint:** the source you selected is the one that holds the client records you intend to import. A simulated source uses saved example records and does not contact the provider.
   </Step>
   <Step title="Check the record's identity">
-    Find the source company, tenant or site. Compare its displayed **ID** and name with the intended client's environment. A suggested match is a starting point for review; it has not linked the record for you.
+    Use the search and **Record status** filter to find the source company, tenant or site. Choose **Awaiting review** to focus on records that still need linking. Compare its displayed **ID** and name with the intended client's environment. A suggested match is a starting point for review; it has not linked the record for you.
 
     **Checkpoint:** you can explain why this source record belongs to this client, beyond a similar name.
   </Step>
@@ -30,6 +30,8 @@ You need access to clients and integrations, permission to manage mappings, and 
     **Checkpoint:** the record is shown as linked to the intended client. Repeat for any other source records that belong to that client.
   </Step>
 </Steps>
+
+The summary above the records shows how many are linked and how many await review. For supported sources, **Create unmatched** creates clients only from eligible unmatched records; possible name matches and invalid names remain for individual review. Review the confirmation before continuing.
 
 If the selected Microsoft connection requires a client assignment or consent before discovery, follow the instructions shown for that connection. Refreshing a directory does not grant customer access.
 
