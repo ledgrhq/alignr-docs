@@ -223,7 +223,7 @@ claim unlimited export before implementation and verification.
 
 ## Held workspace shell candidate — 2 October 2026
 
-Source: application PR61, frozen commit `3837e3f7daf50a511923b2c4d08b568ce1dad947`, ADR-0051. Introduction and daily review explain the sidebar, client filter, utility bar and remembered theme choices. Settings, account/team and billing guides distinguish the workspace menu from the personal account menu and retain existing Settings paths. Team and billing links retain their read/manage permission boundaries. The Settings directory's previously omitted Billing row is now documented. No Inbox rename, workspace switching, new billing behaviour or score changes are claimed.
+Source: application PR61, frozen commit `3837e3f7daf50a511923b2c4d08b568ce1dad947`, ADR-0051. Introduction and daily review explain the sidebar, client filter, utility bar and remembered theme choices. Settings, account/team and billing guides distinguish the workspace-specific and personal-account actions inside the same top-left workspace menu, and retain existing Settings paths. Team and billing links retain their read/manage permission boundaries. The Settings directory's previously omitted Billing row is now documented. No Inbox rename, workspace switching, new billing behaviour or score changes are claimed.
 
 Publication is held until the matching app release is verified. Source review is separate from rendered acceptance; desktop/390px/light/dark/keyboard and changed docs previews remain outstanding. Refresh affected visual-tour screenshots from authorised non-sensitive UI before publication, or explicitly retain them as dated prior-layout examples. No new screenshots were fabricated. Public `docs.json` navigation and reference catalogues are unchanged because pages, API/MCP contracts, predicates and controls did not move or change.
 
@@ -237,11 +237,11 @@ Relevant route commits include shell `b1a0e0d`, Standards/integration setup `b40
 Clients list `487e1fa`, and Issues list/details `2fff1e6` plus four-status correction
 `b36ebd8`. The guides describe the sidebar's
 Overview/Issues/Reviews/Activity, Clients/Standards/Integrations and MCP/Settings
-groups; separate top-left workspace and top-right personal account menus; the
+groups; the top-left logo menu contains both workspace actions and personal-account actions; the
 Settings directory and permission-dependent links; current compact integration and
 standards entry points; guided questionnaire/source/review stages and safe return
 links; and the Issues search/filter/display controls with the persistent desktop
-detail pane. The Clients guide matches the current four sortable headings and four filters. The
+detail pane. The Clients guide matches the current four sortable headings and four filters. The Standards detail **← Standards** link was checked to retain `q`, `state`, `page` and `pageSize` when returning. The
 issue page incorporates the functional clarifications prepared on
 `docs/issues-workspace` without claiming an unsupported **All statuses** option or
 obsolete heading-sort interaction. No API/MCP schema, endpoint, generated reference
