@@ -3,7 +3,7 @@ title: "Workspace settings"
 description: "Find the right place to manage setup, access, Microsoft connections and the client portal."
 ---
 
-Open **Settings** for the workspace directory. It groups related pages into **Workspace**, **Access** and **Client services**. Links are shown according to your permissions; being able to view a page does not necessarily let you change it.
+Open **Workspace settings** from the top-left workspace menu, or **Settings** in the sidebar, for the workspace directory. On a narrow screen, open **Open navigation** first. It groups related pages into **Workspace**, **Access** and **Client services**. Links are shown according to your permissions; being able to view a page does not necessarily let you change it.
 
 ## Workspace
 
@@ -11,11 +11,14 @@ Open **Settings** for the workspace directory. It groups related pages into **Wo
 | --- | --- | --- |
 | **Setup checklist** | Find the next setup tasks for your MSP workspace. | Review each milestone; a completed connection is not a completed assessment. |
 | **Workspace health** | Investigate connection and evidence health. | Identify the source or evidence problem to resolve before relying on results. |
+| **Billing** | Review this workspace's billing connection and open its portal. | A connected profile is separate from a charge or payment outcome. |
 | **Account** | Manage your profile, authenticators and workspace authority settings. | Confirm the profile, security key or policy change was saved. |
 
-Setup checklist and Workspace health require `dashboard.read`. Account is available to signed-in workspace users, with individual changes permission-gated.
+Setup checklist and Workspace health require `dashboard.read`. Billing requires `billing.read` to view and `billing.manage` to connect a profile or open its portal. Account is available to signed-in workspace users, with individual changes permission-gated.
 
 Follow the [setup wizard](/guides/setup-wizard) for initial configuration or [Workspace health](/guides/workspace-health) to investigate an existing workspace.
+
+Billing belongs to the MSP workspace. Use [Billing and support](/guides/billing-and-support) for its setup and recovery steps.
 
 Use [Your account and team](/guides/account-and-team) for account security and colleague onboarding.
 
