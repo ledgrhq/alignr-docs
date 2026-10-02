@@ -12,20 +12,22 @@ See the [visual tour](/journeys/visual-tour) to recognise these screens before y
 ## Walk through the five steps
 
 <Steps>
-  <Step title="Microsoft partner access">
-    Connect your MSP's Microsoft partner account to access customer directories through your authorised relationships. Prepare a dedicated account in the partner tenant and keep MFA enabled. After selecting an enabled live partner connection, use **1. Request admin consent** for an administrator to review the request, then **2. Authorise partner account** for the separate partner sign-in. A return from the first step is not proof of access; check each customer's access after connecting it.
+  <Step title="Connect Microsoft">
+    Choose **Direct** or **Partner Center**, then select **Save method**. This sets a workspace default; each client can use its own method. Direct access is approved by the client administrator from that client’s Connections tab. See [client Microsoft connections](/guides/client-microsoft-connections) for the access steps.
+
+    For Partner Center, connect your MSP's Microsoft partner account to access customer directories through your authorised relationships. Prepare a dedicated account in the partner tenant and keep MFA enabled. After selecting an enabled live partner connection, use **1. Request admin consent** for an administrator to review the request, then **2. Authorise partner account** for the separate partner sign-in. A return from the first step is not proof of access; check each customer's access after connecting it.
 
     A partner connection does not create customer consent or a GDAP relationship. When adding that connection, **Find tenant ID by domain** can look up your MSP partner tenant ID from its Microsoft domain. Confirm the returned ID before use; the lookup does not prove ownership or grant consent. For clients outside your Partner Center, use the [client Microsoft connection guide](/guides/client-microsoft-connections) to choose a direct connection.
 
     After authorisation, review and import customer Organizations. Your own staff directory is handled separately in the teammate step.
   </Step>
   <Step title="Connect your PSA">
-    Choose **ConnectWise Manage**, **HaloPSA** or **Autotask**, then enter its API credentials in the connection form. Review the saved connection and match its client records to the right Alignr clients.
+    Choose **ConnectWise Manage**, **HaloPSA** or **Autotask**, to open its connection form in a dialog without leaving setup. Enter the requested API credentials and save. Close the dialog to return to the same step; you can add another connection when needed. Review the saved connection and match its client records to the right Alignr clients.
 
     PSA client records can be reviewed under **Clients → Import clients** to create or link Alignr clients. Connecting a client directory is different from collecting assessment evidence. Follow the [PSA and RMM guide](/integrations/psa-rmm) to check what each source supplies.
   </Step>
   <Step title="Connect your RMM">
-    Choose **Datto RMM** or **NinjaOne** for device observations. **ConnectWise Automate** is shown as unavailable. These are RMM sources, separate from the PSA and its service-ticket context. Enter credentials in the connection form, then review and match source sites or organisations to the right Alignr clients.
+    Choose **Datto RMM** or **NinjaOne** for device observations. **ConnectWise Automate** is shown as unavailable. These are RMM sources, separate from the PSA and its service-ticket context. The provider card opens its connection form in a dialog. Save it, return to the same setup step, then review and match source sites or organisations to the right Alignr clients.
 
     RMM sites or organisations can also supply client records under **Clients → Import clients**; review each and create or link the correct Alignr client. Importing a client does not prove device evidence is current. Collect, check the source and observation time, then run a reviewed standard. See [Organizations and clients](/guides/organizations) for the import decisions. You may skip this step and return to it later.
   </Step>
@@ -39,7 +41,7 @@ See the [visual tour](/journeys/visual-tour) to recognise these screens before y
 
     If custom standards already exist, the wizard offers **View standards** and **Choose another domain**. The domain chooser shows its saved standards and their On/Off state, so you can review existing work before building another.
 
-    Connector selection starts with tools relevant to the chosen domain. You can switch to any available category or **All tools**. Reuse existing connections and match their client records; saving a connection is separate from collecting evidence and running checks. If you add a connector or open **Match clients**, the return link brings you back to this domain setup, rather than sending you to an arbitrary URL.
+    Connector selection starts with tools relevant to the chosen domain. You can switch to any available category or **All tools**. Reuse existing connections and match their client records; saving a connection is separate from collecting evidence and running checks. **Add a connector** opens a dialog over the Sources step. Save a connection, close the dialog or choose **Add another**, and your questionnaire answers stay in place. **Match clients** opens the connection’s mapping page with a return link to the domain setup.
 
     The domain page has three stages: **Questions**, **Sources** and **Review**. The question rail labels each item **Current**, **Current · Yes/No**, **Yes**, **No**, **Up next** or **Locked**. You can return to answered questions and move to the next question; later questions and stages stay locked until their prerequisites are complete. The stage navigation lets you revisit completed stages.
 

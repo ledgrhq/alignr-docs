@@ -1042,3 +1042,17 @@ the latest Documentation Coverage entry marks that source pin superseded.
 This correction is source-copy only. It does not assert final app release parity;
 the exact final source pin, docs checks, rendered preview and hosted readback are
 still pending. Do not publish until those checks are complete.
+
+### 2 October — inline setup and method selection reconciliation
+
+Updated setup, integration, guided-standard and quickstart instructions against
+application candidate `1948d88` and `aa834fc`, retaining the held release status.
+Microsoft setup now explicitly chooses Direct or Partner Center; provider cards
+and Add connection use one inline dialog, preserving the current stage/draft and
+allowing another connection. Corrected the stale Setup checklist label. No API,
+predicate, baseline or evaluator behavior changed in this presentation pass, so
+no reference regeneration is needed.
+
+The owner explicitly authorised all required publishing/deployment work. This
+resolves the earlier docs-push approval question. Source/structural checks are
+separate from the pending remote Mintlify checks and final hosted readback.
