@@ -1184,3 +1184,12 @@ staff build promoted. One Microsoft-cited issue was independently confirmed in
 production and by the owner. PR32 published as658643b; this branch reconciles its
 final compact-UI guide changes with progressive findings. Both append-only vault
 records are retained. Public remote validation and hosted readback remain gates.
+
+### 3 October — readable issue explanations (held for application PR82)
+
+Triage guide follows application3465ff2698f53d85432299970ea25c20344c5c37: recorded
+account state/date, historical inactivity limit only when known, registration vs
+enforcement and observation dates. No API/predicate/control definition contract
+change; generated references need no regeneration. No customer data or screenshot
+is published. Existing prose layout/components unchanged. App focused regression
+and1440/390px render proofs passed; full gate/publication still pending.
