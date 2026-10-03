@@ -1126,3 +1126,33 @@ Updated the triage guide for Properties before Evidence and the Source record di
 ## 2026-10-02 — import and connection-readiness follow-up
 
 Updated Organizations and Integrations guides for the compact Source row, Refresh records, Record status filter, linked/review counts and Create unmatched confirmation. The integrations guide also explains that setup displays **Setting up your tenant** while connection-key protection is prepared and opens connection choices automatically when the matching tenant is ready; retry remains available when setup needs attention. Verified labels and the tenant-matched readiness gate against application candidate `1256007777cb70dfef53a220622d417b5b36dbf8` in `fix/setup-ui-refinement`. This does not claim production readiness or change API, mapping or evidence semantics. Publication remains paired with app PR66.
+
+## 2026-10-02 — connector recovery and collection diagnostics (held)
+
+Updated maintain-integrations, client-microsoft-connections, microsoft-setup,
+workspace-health and settings against application d1eb6c0d (scoped automatic
+partner consent), e6d98451 (accepted optional grants), c0565267 (collection
+history), and d26d2a64 (client Direct setup and navigation). Reviewed the actual
+client preparation endpoint and corrected a source-review discovery: the general
+catalogue excludes Microsoft in a client context, so Direct now uses its dedicated
+dialog. No public screenshots or customer operational data added.
+
+The curated OpenAPI/MCP generator does not include the internal sync-history or
+Microsoft capability routes. No exposed curated contract, predicate or control
+changed, so reference regeneration is not required. This does not claim that
+these candidates are live. Publication remains held for corresponding application
+release verification. Vault checks and remote documentation validation follow.
+
+### 2 October 2026 — unanswered refresh recovery
+
+- Application PR 76 adds one automatic reconciliation of the original request on returning to Overview.
+- Updated `guides/maintain-integrations.mdx`; retain draft publication until the application release.
+- No generated API or predicate references changed.
+
+### 2 October 2026 — delegated mailbox boundary
+
+Application candidate `6e32d8346e63a90121e30ab45a12811dcda78dc0` excludes tenant-wide mailbox reads from Partner Center. Updated Microsoft guides and the three predicate interpretation notes; regenerated predicate reference from that checkout. Publication remains held for application release.
+
+### 3 October 2026 — scoped refresh and compact assessment UI (held)
+
+Checked application PR80 source: selected standards intersect active assigned clients; changed policy targets are blocked individually; bulk assignment is search-scoped and preserves hidden selections until explicit save; Evidence uses a row-end View JSON value menu. Updated three guides and their living coverage records. No customer information added and no generated contracts changed. App PR78 has shipped, but this additional docs revision remains held for PR80 release. Vault checks and remote validation follow; rendering not yet reviewed for this revision.

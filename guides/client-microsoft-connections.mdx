@@ -1,156 +1,82 @@
 ---
 title: "Microsoft connections for each client"
-description: "Set your usual Microsoft connection, then use Direct access for clients outside your partner relationship."
+description: "Connect a client directly or link its Microsoft tenant through your Partner Center account."
 ---
 
-You can use **Partner Center** for most clients and **Direct** access for an exception in the same workspace. A client does not have to be in your partner customer list to use a direct connection: an administrator of that client's Microsoft tenant authorises access instead.
+Open **Clients → select client → Connections**. For a client without a Microsoft connection, choose one of two actions:
 
-For example, your MSP uses Partner Center for Acme, but a newly onboarded client has no GDAP relationship with you. Keep the workspace default and select **Direct** for that client.
+| Action | Use it when |
+| --- | --- |
+| **Link Partner Center connection** | Your saved partner account contains this customer and has the required delegated access. |
+| **Add Microsoft connection** | A client administrator will authorise Direct access, including clients outside your partner relationship. |
 
-Review [Microsoft prerequisites and permissions](/integrations/microsoft-setup) before authorising a tenant.
+Both routes connect the client's Microsoft tenant. Your MSP's tenant ID and the client's Alignr Organization ID are not substitutes for that Microsoft tenant ID. Review [Microsoft prerequisites and permissions](/integrations/microsoft-setup) before authorising access.
 
-Alignr's shared Direct and Partner Center routes use separate platform applications when both are configured. Choosing one route does not reuse the other route's application credentials or consent.
-
-## Before you begin
-
-- Create or identify the correct [Alignr client](/guides/organizations).
-- Have the **Microsoft tenant ID belonging to that client**, rather than your MSP's tenant ID or its Alignr Organization ID. Separately, the **Add connection** form for Microsoft or Partner Center can look up the connection's tenant ID from its Microsoft domain; confirm that result before using it.
-- Use a role with `integration.read` to view connection settings and `integration.manage` to change them. You also need access to the client.
-- For Direct, arrange for a client administrator who can approve the requested Microsoft application permissions. For Partner Center, your partner authorisation, customer consent and GDAP access must be in place.
-
-**GDAP** is Microsoft's granular delegated admin privileges relationship between a partner and a customer. Selecting Partner Center in Alignr does not create that relationship or give your partner user additional roles. See [Microsoft’s GDAP introduction](https://learn.microsoft.com/en-us/partner-center/customers/gdap-introduction) for the underlying access model.
-
-## Understand the default and the client choice
-
-| Client's Connection method | Method used | What still needs configuring |
-| --- | --- | --- |
-| **Use workspace default** | The method saved in workspace Microsoft settings. | That client's tenant identity, connection and authorisation. |
-| **Direct** | Direct access, even when the workspace default is Partner Center. | The client's direct application connection and Microsoft consent. |
-| **Partner Center** | Partner access, even when the workspace default is Direct. | The partner account selected in workspace settings, this customer's assignment and access. |
-
-The default chooses a method; it does not authorise every client. The partner account itself is selected at workspace level. There is no separate partner-account picker in the client form.
-
-```mermaid
-flowchart TD
-    A["Client preference"] --> B{"Inherit default?"}
-    B -->|Yes| C["Workspace method"]
-    B -->|No| D["Client method"]
-    C --> E["Verify tenant and connection"]
-    D --> E
-    E --> F["Authorise access"]
-    F --> G["Collect current evidence"]
-```
-
-Alignr uses the selected route for Microsoft evidence. If it is incomplete, the client has a visible setup gap; Alignr does not silently switch to the other route to fill it.
+Viewing requires `integration.read`; setup and access checks require `integration.manage`. You also need access to the client.
 
 ## Set your usual workspace connection
 
-Open **Settings → Microsoft**. Under **How your clients connect**, choose **Default connection method**:
+Open **Settings → Microsoft** and choose **Default connection method**. For Partner Center, select the saved partner account and choose **Save Microsoft defaults**. Complete **Request admin consent** and **Authorise partner account** if they are outstanding. The setup wizard also saves Partner Center as the workspace default when you connect a partner account there.
 
-<Tabs sync={false}>
-  <Tab title="Usually Partner Center">
-    1. Choose **Partner Center · use your partner account**.
-    2. Choose an enabled live **Partner account**, or select **Add partner connection**. The add form can look up your MSP partner tenant ID by domain, but it does not prove ownership or authorise the account.
-    3. Select **Save Microsoft defaults**.
-    4. Select **1. Request admin consent** and have an administrator review Microsoft's request. A return to Alignr is a dated record of the consent flow, not verification of the grant.
-    5. Select **2. Authorise partner account** and complete the separate partner sign-in. Then return to each client's **Connections** tab to confirm its customer assignment and check access.
+The default applies to clients that inherit it. A client with an explicit Direct or Partner Center choice keeps that choice. Saving a default does not establish customer access: the customer assignment, Microsoft consent and delegated roles still need to match.
 
-    Use the Microsoft 365 partner-access connection for these identity checks. The separate Partner Center connection that supplies customer lists and purchased subscriptions does not itself grant this Graph access.
-  </Tab>
-  <Tab title="Usually Direct">
-    1. Choose **Direct · authorise each client**.
-    2. Select **Save Microsoft defaults**.
-    3. Open each client's **Connections** tab and set up its own direct access.
+Alignr's shared Direct and Partner Center routes use separate platform applications. One route's authorisation does not authorise the other route.
 
-    Saving the default does not share one client's authorisation with another. Each client needs its own reviewed tenant and consent.
-  </Tab>
-</Tabs>
+## Connect a client directly
 
-**Checkpoint:** the workspace default is saved. Client setup remains a separate task.
-
-## Connect a client outside your partner relationship
-
-This is the **Direct (non-GDAP)** setup path for a client that is not in your Partner Center.
-
-Use this path when the client is not in Partner Center, has no suitable GDAP relationship, or needs the supported Direct route for Intune device checks.
+Use Direct when the client is outside your partner relationship or needs the supported Direct route for Intune device evidence.
 
 <Steps>
-  <Step title="Open the client's Microsoft settings">
-    Open **Clients**, select the client, then **Connections**. Find **How this client connects** in the Microsoft section.
-
-    Check the client name before making changes. This is a client preference, so you do not need to change the workspace default for your other clients.
+  <Step title="Open Direct setup">
+    In the client's **Connections** tab, select **Add Microsoft connection**. This opens **Connect Microsoft directly** for the current client.
   </Step>
-  <Step title="Save a Direct preference">
-    Set **Connection method** to **Direct**. Enter the client's **Microsoft tenant ID** and select **Save preference**.
+  <Step title="Identify the client tenant">
+    Enter the client's **Microsoft tenant ID**. If needed, use the domain lookup and confirm that the result belongs to the intended client.
 
-    **Checkpoint:** the saved summary says **Currently using Direct**. Choosing an option without saving has not changed the active route.
+    Leave **Use my own Microsoft application** off to use the configured Alignr Direct application. For a custom application, enable it and enter **Application client ID** and **Application secret**.
   </Step>
-  <Step title="Prepare the direct connection">
-    Under **Authorise this client directly**, leave **Use my own Microsoft application** unticked to use the Alignr application. Select **Set up direct connection**.
+  <Step title="Prepare and authorise">
+    Select **Prepare direct connection**. Alignr prepares the client's Entra ID and Intune connections, maps the tenant and saves the Direct route.
 
-    Alignr prepares the client's Entra ID and Intune connections and their client mappings. Preparing those records is not Microsoft consent.
-
-    If this client already has a direct connection, review the existing connection panel instead of creating another. For a different application or tenant, see [Replace an existing connection](#replace-an-existing-connection).
+    In the resulting access panel, select **Request administrator consent**. Have an administrator of the client tenant review and approve Microsoft's request. Preparing the connection alone does not grant access.
   </Step>
-  <Step title="Authorise the client tenant">
-    Select **Authorise Microsoft** in the direct-access panel. Complete the Microsoft authorisation with an administrator of the intended client tenant. Review the requested access on Microsoft's screen.
+  <Step title="Check and collect">
+    Return to the client's **Connections** tab. Open **Sites and Microsoft access** and select **Check access**. This checks only the tenant linked to this client.
 
-    Alignr uses the client's direct consent for this route; a partner GDAP relationship is not its prerequisite. Do not authorise your MSP tenant in place of the client's tenant.
-  </Step>
-  <Step title="Check access, then collect">
-    Return to the client's connection and select **Check access**. Review the available and unavailable capabilities. For device evidence, also follow **Check Microsoft Intune access** and review that connection.
-
-    Once the required access is available, open the relevant integration, use **Sync now** when available and inspect **Sync history**. Confirm fresh evidence belongs to the intended client before [running checks](/guides/standards).
-
-    **Checkpoint:** the client uses Direct, its tenant is correct, and current observations come from its selected connection.
+    Open the relevant integration and select **Collect now**. Inspect **Collection history**, then the client's **Evidence** tab. For device evidence, also review the Intune connection and its collection.
   </Step>
 </Steps>
 
-<Tip>
-Setting up a direct connection saves an explicit **Direct** client preference. If you want the client to follow later workspace default changes, select **Use workspace default** and **Save preference** after reviewing what that default currently means.
-</Tip>
+**Checkpoint:** the connection belongs to the intended client tenant, required access is available and current observations are visible before you run the client's checks.
 
-## Connect a client through your partner account
+## Link a Partner Center customer
 
-In **Clients → select client → Connections**, choose **Use workspace default** when that default is Partner Center, or explicitly choose **Partner Center**. Confirm **Microsoft tenant ID** and select **Save preference**.
+1. Confirm the intended partner account is selected in **Settings → Microsoft** and has completed partner authorisation.
+2. In the client's **Connections** tab, select **Link Partner Center connection**. Choose the saved partner account if prompted.
+3. Find the Microsoft customer belonging to this client and select **Link to client**. Use **Refresh sites** if its directory needs updating. Customers already assigned elsewhere must be reviewed in the connection's **Client mapping** before moving them.
+4. Open **Sites and Microsoft access** for the linked connection and select **Check access**.
+5. Review the result, then open the integration and use **Collect now**. Inspect the new attempt and current client evidence before running checks.
 
-Under **Connect this Microsoft customer**:
+When customer app consent is missing, an explicit access check can request it through your authorised Partner Center account. This uses the existing delegated relationship and roles; it does not create a GDAP relationship or add roles to your partner user. **GDAP** means Microsoft's granular delegated admin privileges. See [Microsoft's introduction](https://learn.microsoft.com/en-us/partner-center/customers/gdap-introduction).
 
-1. Confirm that the displayed customer name and tenant ID belong to this client.
-2. If an assignment is missing, use **Assign Microsoft customer** to review and link the correct customer record.
-3. Select **Connect client**. This checks access and, where authorised, requests missing customer read consent. Your existing GDAP roles must allow it.
-4. Review any unavailable capabilities. The access check does not create a GDAP relationship, collect evidence or run the client's controls.
-5. Sync the selected connection, inspect collected observations and then run the assessment.
+A client-page access check tests that client's linked tenant. An integration-page check covers the selected customers for that connection. Collection covers the connection's eligible mapped clients, so a successful check for one client does not prove every customer can be collected.
 
-Managed-device checks are currently available through **Direct**. If you need that route for the client, use the direct walkthrough above rather than assuming partner access supplies Intune evidence.
+## Read the result
 
-## Change a preference deliberately
+The partner panel shows completed partner setup separately from customer access. A completed administrator-consent return and a saved partner authorisation are setup milestones; the customer result tells you which reads currently work.
 
-Changing the workspace default affects clients that inherit it. Clients explicitly set to **Direct** or **Partner Center** keep their chosen method. A client explicitly using Partner Center still depends on the partner account selected in workspace settings.
+If some reads work and others are unavailable, review the specific missing capability. Licensing, workload availability and GDAP roles can affect it even when app consent has succeeded. Repeating an already accepted, unchanged app grant does not repair those conditions.
 
-To restore inheritance, open the client's **Connections**, choose **Use workspace default** and select **Save preference**. Read the **Currently using…** summary to confirm the resolved method. If workspace setup is incomplete, the form asks you to finish it or choose a client-specific method.
-
-After a route change, review access, collect current evidence and evaluate again. A previous result does not prove the new connection is working.
+Use **Collection history → View details** for the saved failure explanation and available response fields. [Collection troubleshooting](/guides/maintain-integrations#inspect-a-collection-attempt) explains the difference between records read and facts written, and the limits of older attempts without diagnostics.
 
 ## Replace an existing connection
 
-For an existing Direct connection, expand **Use a different Microsoft application or tenant** and select **Set up a different connection**. Then prepare and authorise the intended new connection.
+Review the saved client route, tenant and mappings before replacing a connection. A replacement application or tenant requires its own authorisation and fresh evidence. Keep the old connection's history available while verifying the replacement, and follow [integration maintenance](/guides/maintain-integrations) before retiring it.
 
-Current Microsoft evidence stops contributing until the replacement is authorised and synced. Previous connections and history remain in **Integrations**. Review the tenant ID before proceeding; changing the client setting is not permission to use evidence from a different business.
+Direct setup will reject a conflicting saved client tenant or application instead of silently changing it. Resolve the existing client configuration before trying again. Never use an unrelated customer assignment to work around that conflict.
 
-If your organisation needs its own application registration, select **Use my own Microsoft application** during direct setup and provide **Application client ID** and **Application secret**. That application still needs the required Microsoft permissions and consent. Keep the secret in the connection form, never in assessment notes or support screenshots.
+**Finish when:** the intended connection has supplied fresh evidence and the client's assessment can be traced to it. Consent, access checking, collection and assessment are separate milestones.
 
-## If setup needs attention
+## Mailbox evidence
 
-| What you see | What to check |
-| --- | --- |
-| The client cannot inherit the default. | Finish **Settings → Microsoft**, including a usable partner account when Partner Center is selected. |
-| The customer cannot be assigned through the partner account. | Confirm the customer relationship and tenant ID. Use Direct if this client should connect independently. |
-| A tenant mismatch or ambiguous tenant message. | Compare the client's saved Microsoft tenant ID with its selected connection and assignments. Do not select another client just to clear the message. |
-| Authorisation is required. | Complete Microsoft consent for the selected route; a saved preference alone is insufficient. |
-| Some capabilities remain unavailable. | Review the reported permission, consent or GDAP gap. Check Intune through Direct when device evidence is required. |
-| Access is verified but results are missing. | Collect evidence and then run controls. Access checks do neither automatically. |
-
-You are ready to continue when you can name the client's selected method, its Microsoft tenant, the connection supplying its evidence and any capabilities still unavailable.
-
-<Card title="Next: check collection and coverage" icon="arrow-right" href="/guides/integrations">Confirm that authorised access produces the observations your controls need.</Card>
+Partner Center collects supported identity evidence. Mailbox type, time zone and automatic replies require a Direct Microsoft application connection with mailbox access. The Partner access check keeps mailbox settings unavailable; it does not treat missing mailbox data as passing evidence.
