@@ -35,6 +35,14 @@ Older links with a `domain` URL filter still narrow issues by an email address's
 
 **Checkpoint:** you can explain what was observed, why it matters, which client and subject it concerns, and what action follows.
 
+## Read what was found
+
+**What was found** describes the recorded setting in plain language. For example, a dormant-account finding says that the account remains enabled, gives its last recorded sign-in date, and includes the inactivity limit used by the check when that historical limit is available. An older finding may name the check without giving a limit; do not assume today’s settings were used for that earlier result.
+
+An MFA registration finding means no multi-factor authentication method was recorded for that enabled account. Registration and enforcement are different: this finding does not establish whether a sign-in policy requires MFA.
+
+**First observed** and **Last observed** are observation dates for the finding. They are separate from the sign-in timestamp shown in its evidence.
+
 ## Choose the appropriate outcome
 
 | Your conclusion | Action | What it means |
