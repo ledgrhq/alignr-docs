@@ -103,3 +103,7 @@ Integrations, retaining the main shell. It is removed from the Settings workspac
 list. Microsoft client entry separates Link Partner Center connection and Add
 Microsoft connection; collection troubleshooting leads to Collection history and
 View details. Existing public guide URLs stay stable; no docs.json change is needed.
+
+## Compact assessment follow-up — 3 October 2026
+
+Keep bulk assignment instructions with Standards, refresh scope and changed-target recovery with Maintain integrations, and end-of-row JSON inspection with Evidence. Setup header alignment and the Standards pointer affordance do not change the navigation or workflow.

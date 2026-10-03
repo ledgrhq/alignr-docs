@@ -1172,3 +1172,15 @@ Source: application d002b35f, control-engine resolved-policy handoff and uncache
 UTC verifier clock. No predicate, control-definition, API or MCP changes, so the
 generated references remain unchanged. Remote app regression37082512776 passed;
 public validation follows. Keep publication held until application PR79 ships.
+### 3 October 2026 — scoped refresh and compact assessment UI (held)
+
+Checked application PR80 source: selected standards intersect active assigned clients; changed policy targets are blocked individually; bulk assignment is search-scoped and preserves hidden selections until explicit save; Evidence uses a row-end View JSON value menu. Updated three guides and their living coverage records. No customer information added and no generated contracts changed. App PR78 has shipped, but this additional docs revision remains held for PR80 release. Vault checks and remote validation follow; rendering not yet reviewed for this revision.
+
+
+### 3 October 2026 — paired product release verified
+
+Application PR79 (including PR80) is deployed at eebdbce1, with the coordinated
+staff build promoted. One Microsoft-cited issue was independently confirmed in
+production and by the owner. PR32 published as658643b; this branch reconciles its
+final compact-UI guide changes with progressive findings. Both append-only vault
+records are retained. Public remote validation and hosted readback remain gates.

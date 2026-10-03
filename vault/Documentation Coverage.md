@@ -300,3 +300,6 @@ docs PR32 remains independently releasable.
 
 
 The progressive issue guide candidate also explains per-client effective thresholds at verification (application d002b35f). Existing worked examples and catalogue defaults remain valid; no new predicates or API contracts. Publication follows PR79.
+### 3 October 2026 — refresh scope and compact controls
+
+Application PR80 is covered by Standards bulk selection, Maintain integrations scoped refresh handling and Evidence row-menu inspection. No API, MCP, predicate or control catalogue contract changed; generated references need no regeneration for this patch. Publication remains paired with PR80.
