@@ -291,6 +291,15 @@ client Microsoft, Microsoft prerequisites, health and settings guides. Publicati
 is coupled to application PRs 69/70/73/74; do not present the pending source as a
 verified production release. Existing API/MCP catalogues remain unchanged.
 
+## Progressive findings candidate — 2 October 2026
+
+Issue triage and Standards guides explain reviewing verified findings during a
+run, automatic queue refresh, incomplete coverage and later failures. This maps
+to application PR79 and must publish only after its release. Connector recovery
+docs PR32 remains independently releasable.
+
+
+The progressive issue guide candidate also explains per-client effective thresholds at verification (application d002b35f). Existing worked examples and catalogue defaults remain valid; no new predicates or API contracts. Publication follows PR79.
 ### 3 October 2026 — refresh scope and compact controls
 
 Application PR80 is covered by Standards bulk selection, Maintain integrations scoped refresh handling and Evidence row-menu inspection. No API, MCP, predicate or control catalogue contract changed; generated references need no regeneration for this patch. Publication remains paired with PR80.
