@@ -1162,3 +1162,13 @@ seconds. Explicitly retain complete-collection and generated-rule boundaries.
 No new UI controls, diagrams, API schema, predicates or MCP scopes; no generated
 references require changes. Publication is held until the matching app candidate
 passes remote tests and ships. Validation is pending; no production claim.
+
+
+### 3 October 2026 — verification policy context
+
+`guides/standards.mdx` now explains effective client thresholds and the distinction
+between a failed control and a verified issue, with a 30-/90-day worked example.
+Source: application d002b35f, control-engine resolved-policy handoff and uncached
+UTC verifier clock. No predicate, control-definition, API or MCP changes, so the
+generated references remain unchanged. Remote app regression37082512776 passed;
+public validation follows. Keep publication held until application PR79 ships.

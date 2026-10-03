@@ -297,3 +297,6 @@ Issue triage and Standards guides explain reviewing verified findings during a
 run, automatic queue refresh, incomplete coverage and later failures. This maps
 to application PR79 and must publish only after its release. Connector recovery
 docs PR32 remains independently releasable.
+
+
+The progressive issue guide candidate also explains per-client effective thresholds at verification (application d002b35f). Existing worked examples and catalogue defaults remain valid; no new predicates or API contracts. Publication follows PR79.
