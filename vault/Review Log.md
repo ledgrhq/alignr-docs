@@ -1193,3 +1193,14 @@ enforcement and observation dates. No API/predicate/control definition contract
 change; generated references need no regeneration. No customer data or screenshot
 is published. Existing prose layout/components unchanged. App focused regression
 and1440/390px render proofs passed; full gate/publication still pending.
+
+
+### 3 October 2026 — scoped Standard Run checks (candidate; held)
+
+Drafted [Standards and controls](../guides/standards.mdx), the new [scoped Standard Run checks REST recipe](../api-reference/run-scoped-standard-checks.mdx), and cross-links from the assignment, refresh and API introduction pages against app candidate `744b659e` in `/private/tmp/alignr-standard-runs`. Source review checked the request schema, route permissions, durable request handling, progress response and modal selection behaviour. The docs describe one standard and 1–200 selected applicable active clients, collection before assessment, exact key/body recovery, and no assignment changes. This is source-aligned candidate copy, not production acceptance.
+
+The docs worktree is a clean branch from locally available `origin/main` at `00ed898`; fetching a newer remote head failed because the environment could not resolve `github.com`. No generated reference changed: the curated OpenAPI selection does not include write operations, and the new request is documented as a recipe rather than added to its read-only snapshot. No Mintlify checks, hosted preview, publication or hosted readback have run. Reconcile against the matching app release, refresh the docs base if needed, then complete vault/link/Mintlify and independent review gates before publication.
+
+### 3 October 2026 — scoped Standard Run review correction (held)
+
+Reviewed the docs against app source `fc426173e6d25e0c8e05ba3f6f96d0e193d2dff1` in `/private/tmp/alignr-standard-runs`; test-only fixes remain pending. Corrected the scope description: selected-client evidence alone is published and assessed, while some connected sources may read a broader provider inventory. Clarified that signed-in human authentication is supported alongside a user-owned API key. The curated OpenAPI generator selects GET routes only and excludes `POST /sweeps`; the request is explained in the manual recipe, so generated references/catalogues do not need regeneration. Not live; matching app release, full docs checks, preview and publication remain pending.
