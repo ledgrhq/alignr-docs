@@ -30,7 +30,7 @@ The available tabs and actions depend on your permissions.
 | What you want to do | Where to go |
 | --- | --- |
 | Link tools and their client sites. | Client → **Connections**. |
-| Choose inherited, Partner Center or Direct Microsoft access. | Client → **Connections → Microsoft setup**. |
+| Review a client's Microsoft tenant access. | Client → **Connections** → Microsoft connection → **Client sites and access**. |
 | Configure public DNS checks for client domains. | Client → **Domains**. |
 | Inspect control results and coverage gaps. | Client → **Checks**. |
 | Review recorded risks and planned improvements. | Client → **Risk register** or **Roadmap**. |
@@ -43,19 +43,19 @@ The current client page does not expose a general **Edit client** form for chang
 
 ## Connect the client's tools
 
-Under **Connections → Tools serving this client**, choose **Link existing connection** to reuse a configured source. Select its connection type, search the saved connections, then select the named connection. Use **Refresh sites** where available. Compare each site's name and identifier with the client's environment, then link the appropriate unassigned record. Nothing is linked until you choose a site. To set up a new source instead, choose **Add connection** (or **Create a new connection** from the chooser).
+Under **Connections**, each assigned source has a site-access control. Microsoft connections call it **Client sites and access**; other connections call it **Client site access**. Open the control to see the sites linked to this client and, for Microsoft, the access check for the selected tenant. Choose **Link existing** to reuse a configured source: select its connection type and saved connection, refresh its sites if needed, compare the site name and identifier with the client's environment, then link the appropriate unassigned record. Nothing is linked until you choose a site. To set up a new source instead, choose **Add connection**.
 
 Confirm **Assigned to this client**. If a site already belongs to another client, review its existing mapping before changing it through the integration's **Clients & sites** tab.
 
 A shared connection can serve several clients through separate mappings. Several sites can belong to one client. The [mapping guide](/guides/organizations) explains how to keep those identities straight.
 
-For Microsoft, use **Microsoft setup** in the same tab. Your workspace can default to Partner Center while one client uses Direct because it has no suitable partner relationship. Follow [Microsoft connections for each client](/guides/client-microsoft-connections) to save and authorise the correct method.
+For Microsoft, select **Add Microsoft connection** to set up Direct access for the client, or **Link Partner Center connection** to choose an existing partner account and customer. After a Microsoft connection is assigned, open **Client sites and access** to inspect its linked sites and the client's tenant access. Your workspace may default to Partner Center while a client uses Direct because it has no suitable partner relationship. Follow [Microsoft connections for each client](/guides/client-microsoft-connections) for the exact steps.
 
 ## Choose domains to check
 
-Open the client's **Domains** tab. Review **Domains from Microsoft**, which uses verified custom domains from the selected Microsoft connection, and untick any you want to leave out. Add other client-owned domains under **Other domains**, one per line.
+Open the client's **Domains** tab. Review **Discovered domains**, which lists verified custom domains from the selected Microsoft connection, and untick any you want to leave out. Add other client-owned domains under **Manual domains**, one per line.
 
-Review **Enable domain checks**, then select **Save domain settings**. When enabled, with saved domains and no unsaved changes, use **Check now** to request a check.
+Use **Run domain checks** to enable or pause scheduled checks, then select **Save settings**. When checks are enabled, domains are saved and there are no unsaved changes, use **Check now** to request a check.
 
 These checks inspect public DNS for SPF, DMARC, MX and nameservers. They do not perform port scanning or prove that every aspect of email security is correctly configured. Use the [email and domain baseline](/controls/baselines/email) to understand the automated observations and separate human reviews.
 

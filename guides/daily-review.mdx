@@ -34,6 +34,8 @@ The overview remains in place while you switch client tabs. When you return to a
 
 Select **Refresh evidence** when you need a discovery sweep. This requires both `sweep.execute` and `sweep.read`. It requests workspace collection; opening it from a client page does not turn this action into a single-client sync.
 
+When Overview is still loading, wait for its current workspace data and any saved refresh receipt to be checked before interpreting collection progress. If **Retry status** appears, it reads the status of that same accepted refresh; it does not start another collection. If Alignr could not confirm whether the original request was accepted, use **Check refresh** to reconcile that request before starting anything new.
+
 Review the sweep outcome and each source's result. A finished attempt with no facts is not proof of a healthy environment: a source may have failed or supplied no usable observations.
 
 Evidence collection and evaluation are distinct milestones. After confirming the intended evidence is available, use the relevant **Run checks** workflow and inspect its evaluation time. Refreshing the dashboard alone does not establish a fresh assessment.
