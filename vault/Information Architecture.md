@@ -107,3 +107,15 @@ View details. Existing public guide URLs stay stable; no docs.json change is nee
 ## Compact assessment follow-up — 3 October 2026
 
 Keep bulk assignment instructions with Standards, refresh scope and changed-target recovery with Maintain integrations, and end-of-row JSON inspection with Evidence. Setup header alignment and the Standards pointer affordance do not change the navigation or workflow.
+
+## October 3 — Overview receipt and client workspace polish (held)
+
+Keep Overview loading and saved-receipt checking distinct from current collection
+progress. **Retry status** reads the accepted receipt again; uncertain request
+reconciliation checks the original request before a new refresh. Client guidance
+uses the current **Discovered domains**/**Manual domains** and **Client sites and
+access** labels. Risk and manual-failure tables have separate filter menus; the
+manual-failure menu filters standard and category. Explain pending saves only for
+valid in-flight changes, and retain the draft after a rejected roadmap save.
+These are app presentation/recovery details; do not claim successful-activity
+semantics, Exchange coverage or a new scoped-run modal.

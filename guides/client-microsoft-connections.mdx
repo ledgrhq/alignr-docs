@@ -3,7 +3,7 @@ title: "Microsoft connections for each client"
 description: "Connect a client directly or link its Microsoft tenant through your Partner Center account."
 ---
 
-Open **Clients → select client → Connections**. For a client without a Microsoft connection, choose one of two actions:
+Open **Clients → select client → Connections**. For each assigned Microsoft connection, select **Client sites and access** to inspect which sites supply data to this client and open the tenant-access panel. For a client without a Microsoft connection, choose one of two actions:
 
 | Action | Use it when |
 | --- | --- |
@@ -41,7 +41,7 @@ Use Direct when the client is outside your partner relationship or needs the sup
     In the resulting access panel, select **Request administrator consent**. Have an administrator of the client tenant review and approve Microsoft's request. Preparing the connection alone does not grant access.
   </Step>
   <Step title="Check and collect">
-    Return to the client's **Connections** tab. Open **Sites and Microsoft access** and select **Check access**. This checks only the tenant linked to this client.
+    Return to the client's **Connections** tab. Open **Client sites and access**. In the **Sites and Microsoft access** dialog, select **Check access**. This checks only the tenant linked to this client.
 
     Open the relevant integration and select **Collect now**. Inspect **Collection history**, then the client's **Evidence** tab. For device evidence, also review the Intune connection and its collection.
   </Step>
@@ -54,7 +54,7 @@ Use Direct when the client is outside your partner relationship or needs the sup
 1. Confirm the intended partner account is selected in **Settings → Microsoft** and has completed partner authorisation.
 2. In the client's **Connections** tab, select **Link Partner Center connection**. Choose the saved partner account if prompted.
 3. Find the Microsoft customer belonging to this client and select **Link to client**. Use **Refresh sites** if its directory needs updating. Customers already assigned elsewhere must be reviewed in the connection's **Client mapping** before moving them.
-4. Open **Sites and Microsoft access** for the linked connection and select **Check access**.
+4. Open **Client sites and access** for the linked connection. In the **Sites and Microsoft access** dialog, select **Check access**.
 5. Review the result, then open the integration and use **Collect now**. Inspect the new attempt and current client evidence before running checks.
 
 When customer app consent is missing, an explicit access check can request it through your authorised Partner Center account. This uses the existing delegated relationship and roles; it does not create a GDAP relationship or add roles to your partner user. **GDAP** means Microsoft's granular delegated admin privileges. See [Microsoft's introduction](https://learn.microsoft.com/en-us/partner-center/customers/gdap-introduction).

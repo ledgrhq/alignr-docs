@@ -312,3 +312,20 @@ enforcement and observation dates. No API/predicate/control definition contract
 change; generated references need no regeneration. No customer data or screenshot
 is published. Existing prose layout/components unchanged. App focused regression
 and1440/390px render proofs passed; full gate/publication still pending.
+
+## 3 October 2026 — Overview receipt and client UI polish (held)
+
+Updated `guides/daily-review.mdx`, `guides/configure-client.mdx`,
+`guides/domain-checks.mdx`, `guides/client-microsoft-connections.mdx` and
+`guides/risk-and-roadmap.mdx` against Overview source
+`35626ea9242e2ea734a43ed818f85b316fff1213` and client UI source
+`cf202d42f38889a241177943c526e4ee556d0334` in their application worktrees.
+Overview distinguishes loading and checking a saved receipt from current
+progress; **Retry status** reads that accepted receipt, while **Check refresh**
+reconciles the original uncertain request. Client pages use the current
+Domains, Connections, risk/manual filter and roadmap save-state language. No
+successful-activity semantics, Exchange scope or scoped-run modal are described.
+No API/MCP contract, permission, predicate, control definition or generated
+catalogue changed, so no API references were regenerated. Source-aligned
+candidate only: application release and docs review remain outstanding;
+hosted/rendered acceptance is not claimed.
