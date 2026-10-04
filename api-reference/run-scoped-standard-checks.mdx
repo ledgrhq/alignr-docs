@@ -9,13 +9,13 @@ This scoped request does not change the standard's assignments. Every selected c
 
 ## Permissions and request
 
-Use a signed-in human with current `sweep.execute`, `sweep.read`, `organization.read` and `detection_rule.write` permissions, or a user-owned API key whose active owner has those permissions. The write request checks the execution and standard/client permissions; polling uses `sweep.read`. Permission or sign-in changes can prevent remaining work from continuing.
+Use a signed-in human with current `sweep.execute`, `sweep.read`, `organization.read` and `detection_rule.write` permissions. The write request checks the execution and standard/client permissions; polling uses `sweep.read`. This write route requires a human access token; a user-owned API key cannot start the scoped run. Permission or sign-in changes can prevent remaining work from continuing.
 
 Generate and save a canonical UUID for the `Idempotency-Key` before sending the request. Include both `standardId` and `organizationIds`; do not include `integrationId` in this mode.
 
 ```http
 POST /api/v1/sweeps
-Authorization: Bearer <user-owned-api-key>
+Authorization: Bearer <human-access-token>
 Idempotency-Key: <one-canonical-uuid>
 Content-Type: application/json
 
@@ -38,7 +38,7 @@ Poll the returned sweep:
 
 ```http
 GET /api/v1/sweeps/<sweep-id>
-Authorization: Bearer <user-owned-api-key>
+Authorization: Bearer <human-access-token>
 ```
 
 The response includes `progress` with the selected-client count, overall collection and assessment states, per-source outcomes, per-standard assessment outcomes and per-client collection and assessment states. `phase` distinguishes collection (`collecting`), evaluation (`checking`) and terminal outcomes. A completed sweep does not mean every control passed: review client results and cited evidence. Missing or stale evidence is not a pass.
