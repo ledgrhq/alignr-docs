@@ -1270,3 +1270,18 @@ Generator execution and whitespace checks are not application acceptance. Remote
 Mintlify checks and rendered/public readback remain pending. Keep this draft held
 until the matching application producer, reviewed saved-rule upgrades, fresh
 collection and reassessment are verified. No public publication has occurred.
+
+
+## 2026-10-04 — Successful activity publication boundary (draft follow-up)
+
+Root owns this update to PR37 under the owner's explicit Microsoft/standards work and public-documentation maintenance instructions. Updated predicate guide, guided-standard explanation, curated predicate interpretation and control generator plus its Identity output against PR92 current-publication implementation. Collection freshness is seven days; inactivity uses the reported successful event time and effective control threshold. A fresh collection can therefore legitimately report a 120-day-old sign-in. Missing activity remains unknown for that subject; a different genuine failure still fails the control. Existing saved definitions require a reviewed update, fresh collection and reassessment. No new Exchange/mailbox support or UI upgrade button is claimed.
+
+An earlier subagent edit was automatically rejected because its narrower context was classified as loading-orb-only. Root rechecked the explicit user authorisation and applied the same intended changes in the same draft files; no public deployment occurred. Generated references and remote validation/rendered review remain to be refreshed. App PR92 still has outstanding type-check and fixture-count failures; no production acceptance or docs currency claim is made.
+
+Independent source review found a stale Information Architecture restriction and
+provider-language overreach. Root corrected both: Microsoft wording now promises
+successful interactive/background authentication without identifying Outlook or
+mailbox usage, and Google's documented user-list lastLoginTime accuracy caveat is
+visible in the guide, baseline and curated reference. Primary Microsoft Graph
+signInActivity and Google Directory manage-users references were checked on
+4 October. The Identity generator and rendered output were changed together.

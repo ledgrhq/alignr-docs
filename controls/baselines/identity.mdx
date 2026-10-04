@@ -154,9 +154,11 @@ Part of **Alignr Baseline (seeded)**.
 
 Accounts with an enabled-state observation.
 
-Only accounts whose reported successful sign-in is older than the configured inactivity limit are selected. Microsoft includes successful interactive and background app sign-ins, including desktop Outlook access. Google supplies its reported last account login; this does not establish every kind of background OAuth activity.
+Only accounts whose reported successful sign-in is older than the configured inactivity limit are selected. Microsoft includes successful interactive and background sign-ins, without identifying which app was used. Google supplies its reported last account login; its user-list response may be inaccurate and does not establish every kind of background OAuth activity. Confirm the individual Google account before acting on suspected dormancy.
 
 A mailbox is not required: service and non-mailbox accounts remain eligible. Missing successful sign-in history is unknown, not proof of dormancy. Failed login attempts do not count as successful activity. Mailbox activity is not currently part of this condition.
+
+The selected connection must report account state and activity in the same completed collection, no more than seven days old. That limit concerns collection time, not the age of the sign-in. A later account read without activity makes its older activity unavailable for current checks. [Understand successful sign-in evidence](/guides/predicates#successful-sign-in-activity).
 
 **Default settings**
 

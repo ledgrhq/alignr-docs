@@ -117,5 +117,11 @@ uses the current **Discovered domains**/**Manual domains** and **Client sites an
 access** labels. Risk and manual-failure tables have separate filter menus; the
 manual-failure menu filters standard and category. Explain pending saves only for
 valid in-flight changes, and retain the draft after a rejected roadmap save.
-These are app presentation/recovery details; do not claim successful-activity
-semantics, Exchange coverage or a new scoped-run modal.
+These presentation/recovery changes do not themselves establish successful-activity
+semantics, Exchange coverage or scoped-run support. The later successful-activity
+section records its separately held candidate; scoped-run guidance has its own release review.
+
+
+## Held successful-activity publication guidance — 4 October 2026
+
+The successful-sign-in guide, curated predicate reference and generated Identity explanation distinguish the seven-day collection freshness limit from the configured inactivity limit (90 days by default). Current evidence must come from the selected mapped connection, with account state and activity in the same completed collection. A later account read without activity cannot borrow an older successful value or another connection's publication. Unknown subjects do not establish absence or a pass; genuine contrary evidence for other subjects still establishes a failure. Mailboxes remain optional. Existing saved controls require deliberate review and fresh collection/reassessment; history and open findings are not rewritten merely because activity becomes unavailable. This remains draft guidance for application PR92, held from publication pending release and verification.
