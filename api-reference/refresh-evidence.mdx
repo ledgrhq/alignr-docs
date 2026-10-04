@@ -5,6 +5,8 @@ description: "Start a recoverable connection-wide collection with an idempotency
 
 These key-compatible REST routes request and read an evidence refresh for one integration. The refresh covers **all clients mapped to that source**, not a client supplied by the caller. It collects evidence; it does not import client records or promise a completed assessment.
 
+For a run limited to one standard and selected clients, use [Run checks for selected clients](/api-reference/run-scoped-standard-checks). That workflow collects through sources mapped to those clients and then evaluates the named standard. Some sources may read an account-wide provider inventory, but only selected-client evidence is published and assessed by that run. It is separate from this connection-wide refresh.
+
 Use a user-owned API key with `integration.manage` and an active owner who currently holds that permission to start a request. A signed-in human with `integration.manage` can also call it. Polling requires `integration.read`; a read-only service key can poll when granted that scope. A service key cannot start collection.
 
 ## Start a request

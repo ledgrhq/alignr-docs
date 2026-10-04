@@ -313,6 +313,12 @@ change; generated references need no regeneration. No customer data or screensho
 is published. Existing prose layout/components unchanged. App focused regression
 and1440/390px render proofs passed; full gate/publication still pending.
 
+### 3 October 2026 — scoped Standard Run checks (held)
+
+The [Standards guide](../guides/standards.mdx), new [scoped Standard Run checks REST recipe](../api-reference/run-scoped-standard-checks.mdx), assignment guide, evidence-refresh guide and API introduction cover the paired `standardId` and `organizationIds` request, 1–200 unique applicable active clients, mapped evidence coverage, collection before assessment, exact-request recovery, permissions and progress polling. Source: app candidate `744b659e` in `/private/tmp/alignr-standard-runs`. No curated reference route or generated data contract changed; the OpenAPI snapshot remains read-only. This source-aligned copy is held for the matching app release and docs review.
+
+Follow-up against application candidate `fc426173e6d25e0c8e05ba3f6f96d0e193d2dff1` (test-only fixes remain pending) clarifies that connected sources may read a broader provider inventory while selected-client evidence alone is published and assessed; signed-in human authentication is also documented. `scripts/sync-reference.py` explicitly selects GET routes only, so `POST /sweeps` is excluded from the curated read-only OpenAPI snapshot. No generated reference/catalogue regeneration applies. Docs remain held and are not live pending matching release and full docs acceptance.
+
 ## 3 October 2026 — Overview receipt and client UI polish (held)
 
 Updated `guides/daily-review.mdx`, `guides/configure-client.mdx`,

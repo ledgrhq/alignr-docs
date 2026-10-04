@@ -28,4 +28,4 @@ Content-Type: application/json
 
 `organizationIds` is the complete replacement set, not a list of additions. Send `[]` to remove all assignments. The maximum is 5,000 unique client IDs. The standard must use selected-client scope; workspace-scoped standards cannot use this operation. Foreign, missing or archived clients are rejected rather than silently assigned.
 
-The response returns the saved scope and client IDs. If you need to confirm a change, read the assignments again. After a successful assignment, run checks separately from the app's **Run checks** workflow when you are ready to assess current evidence. A saved assignment does not establish a result.
+The response returns the saved scope and client IDs. If you need to confirm a change, read the assignments again. After a successful assignment, use the app's **Run checks** workflow when you are ready to collect evidence and assess the standard for the applicable clients. A saved assignment does not collect evidence or establish a result. To run for only some applicable clients, choose that subset in the run dialog; this does not alter the saved assignment.
