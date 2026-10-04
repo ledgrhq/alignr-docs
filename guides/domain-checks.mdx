@@ -11,17 +11,17 @@ Open **Clients → select client → Domains**. Viewing requires integration-rea
 
 <Steps>
   <Step title="Review discovered domains">
-    Under **Domains from Microsoft**, review verified custom domains reported by the client's selected Microsoft connection. Untick any domain you want to leave out.
+    Under **Discovered domains**, review verified custom domains reported by the client's selected Microsoft connection. Untick any domain you want to leave out.
 
-    If discovery is unavailable, follow **Review Microsoft connection**. A saved connection may still need authorisation and a successful sync before domain observations are available.
+    If discovery is unavailable, follow **Review connection**. A saved connection may still need authorisation and a successful sync before domain observations are available.
   </Step>
   <Step title="Add other client-owned domains">
-    Under **Other domains → Additional domains**, enter one domain per line. You can use manual targets even when Microsoft discovery is unavailable.
+    Under **Manual domains**, enter one client-owned domain per line. You can use manual targets even when Microsoft discovery is unavailable.
 
     For example, a fictional Acme client might have its Microsoft-discovered domain and a separately managed marketing domain. Review both ownership and intended scope before including them.
   </Step>
   <Step title="Save the intended scope">
-    Review **Enable domain checks**, then select **Save domain settings**. Confirm **Domain settings saved** before running a check.
+    Set **Run domain checks** as intended, then select **Save settings**. While the save is in progress, the inputs are disabled and the button shows **Saving…**. Confirm the saved state before running a check.
 
     Checks support up to 50 selected domains. If more are discovered, exclude unwanted domains and reduce the manual list before enabling and saving. The target set combines discovered and manual domains, then removes exclusions.
   </Step>
@@ -60,7 +60,7 @@ Choosing a domain does not query DNS. A completed DNS check supplies observation
 | Symptom | Next action |
 | --- | --- |
 | Microsoft domains are missing. | Check the selected client connection and its latest successful sync. Manual targets are available when discovery cannot supply them. |
-| An excluded domain still needs checking. | Re-select it under **Domains from Microsoft**, save, then collect again. |
+| An excluded domain still needs checking. | Re-select it under **Discovered domains**, save, then collect again. |
 | **Check now** is unavailable. | Confirm permissions, enabled saved settings, at least one target and no unsaved edits or active save/check. |
 | The 50-domain limit prevents saving. | Reduce the selected target set. Adding the same domain manually does not override its exclusion. |
 | **Last check could not complete** is shown. | Read the source error, confirm domain spelling and collection status, then retry after resolving the cause. |

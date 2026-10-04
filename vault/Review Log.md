@@ -1213,3 +1213,63 @@ JWT. The recipe and examples now match that route. No API permission is broadene
 This supersedes the API-key sentence in the earlier review record. Prior docs head
 13cf99b passed remote validation; the correction requires its own remote check.
 Publication stays held until the composed scoped-checks application release.
+
+## 3 October 2026 — Overview receipt and client UI polish (held)
+
+Updated `guides/daily-review.mdx`, `guides/configure-client.mdx`,
+`guides/domain-checks.mdx`, `guides/client-microsoft-connections.mdx` and
+`guides/risk-and-roadmap.mdx` against app source
+`35626ea9242e2ea734a43ed818f85b316fff1213` and
+`cf202d42f38889a241177943c526e4ee556d0334`. Source review verified that the
+Overview Retry status callback refetches the saved sweep receipt and does not
+call the collection-start mutation; uncertain acceptance uses the existing
+request reconciliation path. Client copy now follows the discovered/manual
+domain groups, explicit client sites/access action, separate risk/manual
+filter menus and conditional roadmap save state. No successful-activity
+semantics, Exchange claims or new scoped-run modal are included.
+
+No API, MCP, permission, predicate or control-definition contract changed; no
+generated references were required. The vault structural check passed (14
+indexed notes and publication boundaries), and `git diff --check` passed.
+Review covers source and prose only, not a Mintlify build, rendered
+desktop/mobile preview, app/browser acceptance or hosted readback. Publication
+stays held for matching application release and independent docs review.
+
+### 3 October 2026 — Independent client UI copy review
+
+Compared the held client UI guides with active application sources at
+`35626ea9242e2ea734a43ed818f85b316fff1213` and
+`cf202d42f38889a241177943c526e4ee556d0334`. Corrected one remaining
+`Domains from Microsoft` label, distinguished the Microsoft **Client sites and
+access** action from other sources' **Client site access** action, and replaced
+the obsolete client-tab **Microsoft setup** navigation with current add/link
+actions. Clarified that **Sites and Microsoft access** is the dialog title and
+**Check access** is its action.
+
+Source review confirms Overview **Retry status** refetches the saved sweep ID;
+**Check refresh** reconciles the same retained request. Domain save/check
+conditions, separate risk/manual filters, and valid-pending/invalid-disabled
+roadmap behaviour match source. Vault structural check and `git diff --check`
+passed. This was a source/prose review only: no Mintlify build, rendered or
+browser acceptance, app deployment, hosted readback or publication was done.
+Publication remains held for the matching application release and review.
+
+
+### UI guide candidate final source binding — 2026-10-03
+
+Root accepted the independent label/path corrections. Current reviewed app UI
+candidate is `a0d99aa5ea9127cc276527121c57a84f8986f7e5` (PR86), which includes
+the PR84 orb/status release `ae8a2b4f382bc8053e559e00a9e2ccddd16227d9`.
+This update changes prose only; no schema/predicate/control/MCP catalogue changed.
+Draft PR validation must run remotely. Publication remains held until matching
+app release; hosted readback and rendered guide review remain unverified.
+
+
+### 4 October — composed scoped-run documentation validation
+
+Reconciled this candidate with published main ae2e763, retaining both independent
+append-only review histories. The previously conflicting base prevented GitHub's
+pull-request validation workflow from running on f0bb28f, although Mintlify passed.
+The resolved branch requires fresh remote validation and rendered desktop/mobile
+acceptance. Application PR93 is merged as3fe5a298 and deployment37225095097 is
+running. These public changes remain held until the matching staff release is live.

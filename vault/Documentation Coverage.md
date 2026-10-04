@@ -318,3 +318,20 @@ and1440/390px render proofs passed; full gate/publication still pending.
 The [Standards guide](../guides/standards.mdx), new [scoped Standard Run checks REST recipe](../api-reference/run-scoped-standard-checks.mdx), assignment guide, evidence-refresh guide and API introduction cover the paired `standardId` and `organizationIds` request, 1–200 unique applicable active clients, mapped evidence coverage, collection before assessment, exact-request recovery, permissions and progress polling. Source: app candidate `744b659e` in `/private/tmp/alignr-standard-runs`. No curated reference route or generated data contract changed; the OpenAPI snapshot remains read-only. This source-aligned copy is held for the matching app release and docs review.
 
 Follow-up against application candidate `fc426173e6d25e0c8e05ba3f6f96d0e193d2dff1` (test-only fixes remain pending) clarifies that connected sources may read a broader provider inventory while selected-client evidence alone is published and assessed; signed-in human authentication is also documented. `scripts/sync-reference.py` explicitly selects GET routes only, so `POST /sweeps` is excluded from the curated read-only OpenAPI snapshot. No generated reference/catalogue regeneration applies. Docs remain held and are not live pending matching release and full docs acceptance.
+
+## 3 October 2026 — Overview receipt and client UI polish (held)
+
+Updated `guides/daily-review.mdx`, `guides/configure-client.mdx`,
+`guides/domain-checks.mdx`, `guides/client-microsoft-connections.mdx` and
+`guides/risk-and-roadmap.mdx` against Overview source
+`35626ea9242e2ea734a43ed818f85b316fff1213` and client UI source
+`cf202d42f38889a241177943c526e4ee556d0334` in their application worktrees.
+Overview distinguishes loading and checking a saved receipt from current
+progress; **Retry status** reads that accepted receipt, while **Check refresh**
+reconciles the original uncertain request. Client pages use the current
+Domains, Connections, risk/manual filter and roadmap save-state language. No
+successful-activity semantics, Exchange scope or scoped-run modal are described.
+No API/MCP contract, permission, predicate, control definition or generated
+catalogue changed, so no API references were regenerated. Source-aligned
+candidate only: application release and docs review remain outstanding;
+hosted/rendered acceptance is not claimed.
