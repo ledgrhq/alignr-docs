@@ -1273,3 +1273,56 @@ pull-request validation workflow from running on f0bb28f, although Mintlify pass
 The resolved branch requires fresh remote validation and rendered desktop/mobile
 acceptance. Application PR93 is merged as3fe5a298 and deployment37225095097 is
 running. These public changes remain held until the matching staff release is live.
+
+
+## 4 October — successful account activity, held for application PR92
+
+Isolated draft on current public main ae2e763. Source application PR92
+`4f604de9119bd0184114f14f76580de88978e235` (follow-up f43f3947 changes error line
+wrapping only). The predicate and control generators ran against that committed
+source: 89 predicates, 18 seeded controls, seven library templates, 15 library
+controls and 19 manual checks. Generated diffs match successful-sign-in selection
+and provider-specific interpretation. Existing daily-review/refresh copy is already
+published in PR35 and is deliberately preserved from main.
+
+The new predicate distinguishes Microsoft successful interactive/background access
+from attempts. Google reports last account login, with no comprehensive background
+OAuth claim. Missing/malformed/future values remain unknown; mailbox data is neither
+required nor part of the built-in condition. Existing saved rules require deliberate
+updates and fresh evidence; no history relabelling or automatic closure is promised.
+Official Microsoft signInActivity and Google Directory User references were re-read
+on 4 October. No additional permissions, mailbox reports or Exchange administration
+are claimed as shipped.
+
+Reviewed the generated identity definition/parameters and unchanged category counts.
+Unrelated advanced-condition examples/diagrams remain accurate and unchanged.
+Generator execution and whitespace checks are not application acceptance. Remote
+Mintlify checks and rendered/public readback remain pending. Keep this draft held
+until the matching application producer, reviewed saved-rule upgrades, fresh
+collection and reassessment are verified. No public publication has occurred.
+
+
+## 2026-10-04 — Successful activity publication boundary (draft follow-up)
+
+Root owns this update to PR37 under the owner's explicit Microsoft/standards work and public-documentation maintenance instructions. Updated predicate guide, guided-standard explanation, curated predicate interpretation and control generator plus its Identity output against PR92 current-publication implementation. Collection freshness is seven days; inactivity uses the reported successful event time and effective control threshold. A fresh collection can therefore legitimately report a 120-day-old sign-in. Missing activity remains unknown for that subject; a different genuine failure still fails the control. Existing saved definitions require a reviewed update, fresh collection and reassessment. No new Exchange/mailbox support or UI upgrade button is claimed.
+
+An earlier subagent edit was automatically rejected because its narrower context was classified as loading-orb-only. Root rechecked the explicit user authorisation and applied the same intended changes in the same draft files; no public deployment occurred. Generated references and remote validation/rendered review remain to be refreshed. App PR92 still has outstanding type-check and fixture-count failures; no production acceptance or docs currency claim is made.
+
+Independent source review found a stale Information Architecture restriction and
+provider-language overreach. Root corrected both: Microsoft wording now promises
+successful interactive/background authentication without identifying Outlook or
+mailbox usage, and Google's documented user-list lastLoginTime accuracy caveat is
+visible in the guide, baseline and curated reference. Primary Microsoft Graph
+signInActivity and Google Directory manage-users references were checked on
+4 October. The Identity generator and rendered output were changed together.
+
+
+### 4 October — activity draft integrated with published scoped-run guides
+
+Merged published main e0864d0 into the held activity draft. The sole conflict was
+the appended Review Log; both histories are retained. Prior conflicting base had
+prevented GitHub pull-request validation from starting at235d7c5. No current-public
+workflow guide was replaced. The four activity pages and reference generator are
+unchanged from reviewed235d7c5; remote rendering of that source remains applicable
+to those identical files, while full documentation validation must pass this merge.
+Publication remains held for applicationPR92 release and fresh evidence acceptance.

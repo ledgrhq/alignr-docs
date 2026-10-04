@@ -7,7 +7,7 @@ Use this reference when choosing evidence for a control or reading a technical r
 
 ## How to use this reference
 
-This catalogue covers **88 registered predicates** in the application vocabulary. Availability depends on your connected sources and deployment. Check client-specific coverage and actual observations before using a predicate in a control.
+This catalogue covers **89 registered predicates** in the application vocabulary. Availability depends on your connected sources and deployment. Check client-specific coverage and actual observations before using a predicate in a control.
 
 Use the docs search to find a technical identifier, or the page contents to jump to a topic category.
 
@@ -41,23 +41,33 @@ Whether the directory reports the account enabled.
 
 </Accordion>
 
-<Accordion title="Last interactive sign-in">
+<Accordion title="Last sign-in reported">
 
 `last_sign_in`
 
-When the identity source reports the last interactive sign-in.
+The sign-in timestamp supplied by the identity source.
 
-**Interpretation:** A fresh collection can report an old sign-in. Do not substitute a different vendor authentication event.
+**Interpretation:** For Microsoft this is the latest interactive attempt, which can fail. Google reports lastLoginTime. Do not treat the Microsoft attempt as successful access or use it alone to decide dormancy.
 
 </Accordion>
 
-<Accordion title="Last non-interactive sign-in">
+<Accordion title="Last non-interactive sign-in attempt">
 
 `last_non_interactive_sign_in`
 
-When the source reports the last non-interactive sign-in.
+The latest background sign-in attempt reported by Microsoft.
 
-**Interpretation:** Background activity is different from a person actively signing in.
+**Interpretation:** This includes failed attempts. Use last_successful_sign_in to assess successful access across interactive and background sign-ins.
+
+</Accordion>
+
+<Accordion title="Last successful sign-in">
+
+`last_successful_sign_in`
+
+The last successful account access reported by the identity source. Microsoft includes interactive and background app sign-ins; Google supplies its reported last account login.
+
+**Interpretation:** Microsoft does not backfill this field. Google Directory does not establish comprehensive background OAuth activity, and its user-list last-login value may be inaccurate. Confirm an individual Google account before acting on suspected dormancy. The selected mapped connection must report account state and activity in the same completed collection, no more than seven days old. This freshness limit concerns collection time, not the sign-in date. A later account read without activity makes the older activity unavailable for current checks. Missing, malformed or future timestamps remain unknown. A mailbox is not required, so service and non-mailbox accounts remain eligible.
 
 </Accordion>
 

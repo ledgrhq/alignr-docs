@@ -63,7 +63,7 @@
     {
       "name": "Dormant accounts are disabled",
       "slug": "dormant-accounts-are-disabled",
-      "description": "An account with no sign-in for longer than the configured window should be disabled, not left enabled and unattended \u2014 the classic shape of an incomplete offboarding or a forgotten test account.",
+      "description": "An account with no successful sign-in for longer than the configured window should be disabled. Microsoft includes successful background app sign-ins; a mailbox is not required.",
       "severity": "high",
       "category": "Identity",
       "autonomy": "change_ticket",
@@ -73,7 +73,7 @@
         },
         "where": [
           {
-            "fact": "last_sign_in",
+            "fact": "last_successful_sign_in",
             "op": "older_than_days",
             "value": {
               "param": "dormant_days"
@@ -91,7 +91,7 @@
         "title": "Dormant account is still enabled",
         "evidence": [
           "account_enabled",
-          "last_sign_in"
+          "last_successful_sign_in"
         ]
       },
       "parameters": {
@@ -101,7 +101,7 @@
           "min": 1,
           "max": 365,
           "label": "Dormant after (days)",
-          "help": "How long an account may go without an interactive sign-in before it should have been disabled."
+          "help": "How long an account may go without a successful sign-in before it should have been disabled."
         }
       }
     },

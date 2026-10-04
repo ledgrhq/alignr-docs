@@ -82,3 +82,39 @@ The readable label is an explanation; the identifier is what you select in the e
   <Card title="Predicate reference" icon="book-open" href="/guides/predicate-reference">Look up the meaning of each registered observation.</Card>
   <Card title="Build a control" icon="list-check" href="/controls/create-custom">Turn observations into a clear expectation.</Card>
 </Columns>
+
+## Successful sign-in activity
+
+Use **Last successful sign-in** (`last_successful_sign_in`) when assessing inactivity.
+Microsoft reports the latest successful interactive or non-interactive sign-in.
+This includes background authentication, but does not identify which app was used.
+The separate attempt timestamps can include failed logins, so they are not
+substitutes. Google supplies its reported last account login; this does not
+establish all background OAuth activity. See the [Microsoft field definition](https://learn.microsoft.com/en-us/graph/api/resources/signinactivity?view=graph-rest-1.0)
+and [Google account fields](https://developers.google.com/workspace/admin/directory/reference/rest/v1/users).
+Google also warns that its user-list response can contain an inaccurate last-login
+value; [confirm the individual account](https://developers.google.com/workspace/admin/directory/v1/guides/manage-users#retrieve_all_account_users)
+before acting on a suspected dormant Google account.
+
+Missing successful history is unknown. An account does not need a mailbox to be
+assessed: service and non-mailbox accounts remain eligible when sign-in evidence
+is available. Incoming email alone would not prove that an account is in use.
+The current built-in condition does not inspect mailbox activity.
+
+Alignr needs the selected, mapped connection to report the account state and its
+successful sign-in value in the same completed collection. If a later account read
+omits that value, an older stored value cannot stand in for it. The collection must
+be no more than seven days old; the sign-in itself can be much older. For example,
+a collection completed today can report a successful sign-in from 120 days ago.
+
+Missing, invalid or future-dated activity leaves that account unknown. Check the
+connection's access and client mapping, then collect again. Other accounts with
+usable evidence can still establish a failure; an unknown account cannot establish
+a pass or prove that no successful activity occurred.
+
+Existing saved controls keep their definitions until deliberately updated. Supplied
+definitions that have not been customised can be upgraded through a reviewed
+operator action; customised conditions and source choices need separate review.
+Collect fresh evidence and reassess after an update. Old attempt facts are not
+converted into successful events, and unavailable activity does not close existing
+findings. Review those findings against the new evidence before taking action.

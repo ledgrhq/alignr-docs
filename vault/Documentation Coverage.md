@@ -335,3 +335,13 @@ No API/MCP contract, permission, predicate, control definition or generated
 catalogue changed, so no API references were regenerated. Source-aligned
 candidate only: application release and docs review remain outstanding;
 hosted/rendered acceptance is not claimed.
+
+
+### Held successful-account activity correction — 4 October
+
+Application PR92 pairs the predicate descriptions/reference, identity baseline
+generator/catalogue, predicate guide and guided standard-creation explanation.
+Microsoft background success and Google last-account-login coverage are distinct.
+Existing saved controls and historical facts are not silently rewritten. Remote
+verification, matching production collection/reassessment and public publication
+remain gates; full Exchange and optional mailbox activity are not documented as live.
