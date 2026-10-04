@@ -1,0 +1,48 @@
+---
+title: "Run checks for selected clients"
+description: "Collect evidence and evaluate one standard for a bounded set of clients."
+---
+
+Use this request when a script needs to collect fresh evidence for a selected set of clients and then evaluate one standard against that evidence. It is distinct from a connection-wide [evidence refresh](/api-reference/refresh-evidence), which collects for every client mapped to one source, and from [one-client evaluation](/api-reference/evaluate-one-client), which evaluates available evidence without starting collection.
+
+This scoped request does not change the standard's assignments. Every selected client must be active, currently applicable to the standard and covered by a mapped evidence-producing source. The standard must be enabled and have at least one enabled automated control. The maximum is 200 distinct clients per request.
+
+## Permissions and request
+
+Use a signed-in human with current `sweep.execute`, `sweep.read`, `organization.read` and `detection_rule.write` permissions. The write request checks the execution and standard/client permissions; polling uses `sweep.read`. This write route requires a human access token; a user-owned API key cannot start the scoped run. Permission or sign-in changes can prevent remaining work from continuing.
+
+Generate and save a canonical UUID for the `Idempotency-Key` before sending the request. Include both `standardId` and `organizationIds`; do not include `integrationId` in this mode.
+
+```http
+POST /api/v1/sweeps
+Authorization: Bearer <human-access-token>
+Idempotency-Key: <one-canonical-uuid>
+Content-Type: application/json
+
+{
+  "standardId": "<standard-uuid>",
+  "organizationIds": [
+    "<first-active-client-uuid>",
+    "<second-active-client-uuid>"
+  ]
+}
+```
+
+The request accepts 1–200 unique client IDs. The server checks that each client is in the current applicable set and has mapped evidence coverage before accepting the run. A successful request returns HTTP `202` and a durable sweep `id`. Evidence collection runs first; the named standard is then evaluated for those selected clients. Some sources may read an account-wide provider inventory, but only selected-client evidence is published and assessed by this run; other standards are not assessed.
+
+## Recover and read the result
+
+If the POST response is uncertain, resend the **identical standard, client IDs and Idempotency-Key**. The same request returns its existing durable sweep. Reusing a key with a different standard or client set returns `409`; do not create a new key until you have reconciled the original request.
+
+Poll the returned sweep:
+
+```http
+GET /api/v1/sweeps/<sweep-id>
+Authorization: Bearer <human-access-token>
+```
+
+The response includes `progress` with the selected-client count, overall collection and assessment states, per-source outcomes, per-standard assessment outcomes and per-client collection and assessment states. `phase` distinguishes collection (`collecting`), evaluation (`checking`) and terminal outcomes. A completed sweep does not mean every control passed: review client results and cited evidence. Missing or stale evidence is not a pass.
+
+If permissions change or a source/client/standard no longer meets the request conditions, inspect the durable progress and safe error code. Resolve the underlying issue before deliberately starting a new request. The app's **Run checks** dialog keeps the original request identity so it can be reconciled after an uncertain response.
+
+This page documents the scoped `POST /sweeps` mode. Existing unscoped and single-integration sweep requests retain their existing request behavior. Check the authenticated [live schema](/api-reference/live-schema) for the routes and permissions available to your deployment.

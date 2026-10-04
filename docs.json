@@ -220,6 +220,7 @@
               "api-reference/create-standard-recipe",
               "api-reference/activate-standard-draft",
               "api-reference/evaluate-one-client",
+              "api-reference/run-scoped-standard-checks",
               "api-reference/assign-standard-clients"
             ]
           },

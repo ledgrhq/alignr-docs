@@ -1194,6 +1194,26 @@ change; generated references need no regeneration. No customer data or screensho
 is published. Existing prose layout/components unchanged. App focused regression
 and1440/390px render proofs passed; full gate/publication still pending.
 
+
+### 3 October 2026 — scoped Standard Run checks (candidate; held)
+
+Drafted [Standards and controls](../guides/standards.mdx), the new [scoped Standard Run checks REST recipe](../api-reference/run-scoped-standard-checks.mdx), and cross-links from the assignment, refresh and API introduction pages against app candidate `744b659e` in `/private/tmp/alignr-standard-runs`. Source review checked the request schema, route permissions, durable request handling, progress response and modal selection behaviour. The docs describe one standard and 1–200 selected applicable active clients, collection before assessment, exact key/body recovery, and no assignment changes. This is source-aligned candidate copy, not production acceptance.
+
+The docs worktree is a clean branch from locally available `origin/main` at `00ed898`; fetching a newer remote head failed because the environment could not resolve `github.com`. No generated reference changed: the curated OpenAPI selection does not include write operations, and the new request is documented as a recipe rather than added to its read-only snapshot. No Mintlify checks, hosted preview, publication or hosted readback have run. Reconcile against the matching app release, refresh the docs base if needed, then complete vault/link/Mintlify and independent review gates before publication.
+
+### 3 October 2026 — scoped Standard Run review correction (held)
+
+Reviewed the docs against app source `fc426173e6d25e0c8e05ba3f6f96d0e193d2dff1` in `/private/tmp/alignr-standard-runs`; test-only fixes remain pending. Corrected the scope description: selected-client evidence alone is published and assessed, while some connected sources may read a broader provider inventory. Clarified that signed-in human authentication is supported alongside a user-owned API key. The curated OpenAPI generator selects GET routes only and excludes `POST /sweeps`; the request is explained in the manual recipe, so generated references/catalogues do not need regeneration. Not live; matching app release, full docs checks, preview and publication remain pending.
+
+### 4 October 2026 — scoped-run authentication correction (held)
+
+Independent review against application PR93 a26a2ebc found the prior API-key claim
+incorrect: POST /sweeps depends on get_current_user, which requires a human access
+JWT. The recipe and examples now match that route. No API permission is broadened.
+This supersedes the API-key sentence in the earlier review record. Prior docs head
+13cf99b passed remote validation; the correction requires its own remote check.
+Publication stays held until the composed scoped-checks application release.
+
 ## 3 October 2026 — Overview receipt and client UI polish (held)
 
 Updated `guides/daily-review.mdx`, `guides/configure-client.mdx`,
@@ -1243,3 +1263,13 @@ the PR84 orb/status release `ae8a2b4f382bc8053e559e00a9e2ccddd16227d9`.
 This update changes prose only; no schema/predicate/control/MCP catalogue changed.
 Draft PR validation must run remotely. Publication remains held until matching
 app release; hosted readback and rendered guide review remain unverified.
+
+
+### 4 October — composed scoped-run documentation validation
+
+Reconciled this candidate with published main ae2e763, retaining both independent
+append-only review histories. The previously conflicting base prevented GitHub's
+pull-request validation workflow from running on f0bb28f, although Mintlify passed.
+The resolved branch requires fresh remote validation and rendered desktop/mobile
+acceptance. Application PR93 is merged as3fe5a298 and deployment37225095097 is
+running. These public changes remain held until the matching staff release is live.
