@@ -1243,3 +1243,30 @@ the PR84 orb/status release `ae8a2b4f382bc8053e559e00a9e2ccddd16227d9`.
 This update changes prose only; no schema/predicate/control/MCP catalogue changed.
 Draft PR validation must run remotely. Publication remains held until matching
 app release; hosted readback and rendered guide review remain unverified.
+
+
+## 4 October — successful account activity, held for application PR92
+
+Isolated draft on current public main ae2e763. Source application PR92
+`4f604de9119bd0184114f14f76580de88978e235` (follow-up f43f3947 changes error line
+wrapping only). The predicate and control generators ran against that committed
+source: 89 predicates, 18 seeded controls, seven library templates, 15 library
+controls and 19 manual checks. Generated diffs match successful-sign-in selection
+and provider-specific interpretation. Existing daily-review/refresh copy is already
+published in PR35 and is deliberately preserved from main.
+
+The new predicate distinguishes Microsoft successful interactive/background access
+from attempts. Google reports last account login, with no comprehensive background
+OAuth claim. Missing/malformed/future values remain unknown; mailbox data is neither
+required nor part of the built-in condition. Existing saved rules require deliberate
+updates and fresh evidence; no history relabelling or automatic closure is promised.
+Official Microsoft signInActivity and Google Directory User references were re-read
+on 4 October. No additional permissions, mailbox reports or Exchange administration
+are claimed as shipped.
+
+Reviewed the generated identity definition/parameters and unchanged category counts.
+Unrelated advanced-condition examples/diagrams remain accurate and unchanged.
+Generator execution and whitespace checks are not application acceptance. Remote
+Mintlify checks and rendered/public readback remain pending. Keep this draft held
+until the matching application producer, reviewed saved-rule upgrades, fresh
+collection and reassessment are verified. No public publication has occurred.

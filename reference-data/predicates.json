@@ -16,16 +16,23 @@
   {
     "group": "Identity and access",
     "name": "last_sign_in",
-    "label": "Last interactive sign-in",
-    "description": "When the identity source reports the last interactive sign-in.",
-    "interpretation": "A fresh collection can report an old sign-in. Do not substitute a different vendor authentication event."
+    "label": "Last sign-in reported",
+    "description": "The sign-in timestamp supplied by the identity source.",
+    "interpretation": "For Microsoft this is the latest interactive attempt, which can fail. Google reports lastLoginTime. Do not treat the Microsoft attempt as successful access or use it alone to decide dormancy."
   },
   {
     "group": "Identity and access",
     "name": "last_non_interactive_sign_in",
-    "label": "Last non-interactive sign-in",
-    "description": "When the source reports the last non-interactive sign-in.",
-    "interpretation": "Background activity is different from a person actively signing in."
+    "label": "Last non-interactive sign-in attempt",
+    "description": "The latest background sign-in attempt reported by Microsoft.",
+    "interpretation": "This includes failed attempts. Use last_successful_sign_in to assess successful access across interactive and background sign-ins."
+  },
+  {
+    "group": "Identity and access",
+    "name": "last_successful_sign_in",
+    "label": "Last successful sign-in",
+    "description": "The last successful account access reported by the identity source. Microsoft includes interactive and background app sign-ins; Google supplies its reported last account login.",
+    "interpretation": "Microsoft does not backfill this field. Google Directory does not establish comprehensive background OAuth activity. Missing, malformed or future timestamps remain unknown. A mailbox is not required, so service and non-mailbox accounts remain eligible. This observation does not establish every kind of mailbox or application activity."
   },
   {
     "group": "Identity and access",

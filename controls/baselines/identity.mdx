@@ -154,7 +154,9 @@ Part of **Alignr Baseline (seeded)**.
 
 Accounts with an enabled-state observation.
 
-Only accounts whose recorded last sign-in is older than the configured inactivity limit are selected.
+Only accounts whose reported successful sign-in is older than the configured inactivity limit are selected. Microsoft includes successful interactive and background app sign-ins, including desktop Outlook access. Google supplies its reported last account login; this does not establish every kind of background OAuth activity.
+
+A mailbox is not required: service and non-mailbox accounts remain eligible. Missing successful sign-in history is unknown, not proof of dormancy. Failed login attempts do not count as successful activity. Mailbox activity is not currently part of this condition.
 
 **Default settings**
 
@@ -181,13 +183,13 @@ Review the selected account population and its business purpose before acting. A
 
 **Account enabled** (`account_enabled`) has an observation.
 
-- Filter: **Last interactive sign-in** (`last_sign_in`) is more than this many days in the past: parameter `dormant_days`.
+- Filter: **Last successful sign-in** (`last_successful_sign_in`) is more than this many days in the past: parameter `dormant_days`.
 
 **Expected evidence**
 
 - **Account enabled** (`account_enabled`) equals `false`.
 
-**Required predicates:** `account_enabled`, `last_sign_in`.
+**Required predicates:** `account_enabled`, `last_successful_sign_in`.
 
 ```json
 {
@@ -196,7 +198,7 @@ Review the selected account population and its business purpose before acting. A
   },
   "where": [
     {
-      "fact": "last_sign_in",
+      "fact": "last_successful_sign_in",
       "op": "older_than_days",
       "value": {
         "param": "dormant_days"
@@ -214,7 +216,7 @@ Review the selected account population and its business purpose before acting. A
   "title": "Dormant account is still enabled",
   "evidence": [
     "account_enabled",
-    "last_sign_in"
+    "last_successful_sign_in"
   ]
 }
 ```

@@ -117,7 +117,8 @@ for key,(title,desc) in groups.items():
   lines += [explanations[e['fact']] for e in d['expect']]
   lines += ['', f'Part of **{source}**.', '', '**Applies to**', '', population, '']
   for w in d.get('where',[]):
-   if w['fact']=='last_sign_in': lines += ['Only accounts whose recorded last sign-in is older than the configured inactivity limit are selected.', '']
+   if w['fact']=='last_successful_sign_in': lines += ['Only accounts whose reported successful sign-in is older than the configured inactivity limit are selected. Microsoft includes successful interactive and background app sign-ins, including desktop Outlook access. Google supplies its reported last account login; this does not establish every kind of background OAuth activity.', '', 'A mailbox is not required: service and non-mailbox accounts remain eligible. Missing successful sign-in history is unknown, not proof of dormancy. Failed login attempts do not count as successful activity. Mailbox activity is not currently part of this condition.', '']
+   elif w['fact']=='last_sign_in': lines += ['Only accounts whose recorded sign-in value is older than the configured inactivity limit are selected. Microsoft reports interactive attempts here, including failures; this historical condition does not establish last successful access.', '']
    elif w['fact']=='os_platform': lines += ['The operating-system name must also match the case-sensitive pattern `Server`.', '']
    else: lines += [condition(w), '']
   params=c.get('parameters',{})

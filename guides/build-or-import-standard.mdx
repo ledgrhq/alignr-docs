@@ -31,7 +31,7 @@ The domain chooser lists standards already saved for that domain and whether eac
 
     A resumed browser draft keeps its saved answers. The full list appears at final review, while a compact count shows how many checks are selected. Answers are held in browser storage; they are not yet a server-side standard. Selecting **Create active standard** on Review creates an active selected-client standard with no clients assigned. These answers define what you want to assess; they are not evidence that a client meets it.
 
-    For Identity, MFA registration does not prove enforcement at every sign-in. The dormant-account check flags accounts for review; creating the standard does not disable accounts.
+    For Identity, MFA registration does not prove enforcement at every sign-in. The dormant-account check uses successful sign-in evidence. Microsoft includes background app access such as Outlook; Google supplies its reported last account login. Service accounts do not need a mailbox to be checked. Missing sign-in history needs investigation; it is not evidence of dormancy. Creating the standard does not disable accounts.
   </Step>
   <Step title="Connect your tools">
     Reuse a saved connection or select **Add a connector**. The connection dialog starts with tools relevant to your domain. Choose another category or **All tools** to widen the list, and search within that selection. **Email & domains** uses a human review and does not need a connector. You can continue without adding a tool and connect it later.

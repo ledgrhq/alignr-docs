@@ -82,3 +82,23 @@ The readable label is an explanation; the identifier is what you select in the e
   <Card title="Predicate reference" icon="book-open" href="/guides/predicate-reference">Look up the meaning of each registered observation.</Card>
   <Card title="Build a control" icon="list-check" href="/controls/create-custom">Turn observations into a clear expectation.</Card>
 </Columns>
+
+## Successful sign-in activity
+
+Use **Last successful sign-in** (`last_successful_sign_in`) when assessing inactivity.
+For Microsoft, it includes successful interactive access and background app sign-ins,
+including desktop Outlook. The separate Microsoft interactive and non-interactive
+attempt timestamps can include failed logins, so they are not substitutes. Google
+supplies its reported last account login; this does not establish all background
+OAuth activity. See the [Microsoft field definition](https://learn.microsoft.com/en-us/graph/api/resources/signinactivity?view=graph-rest-1.0)
+and [Google account fields](https://developers.google.com/workspace/admin/directory/reference/rest/v1/users).
+
+Missing successful history is unknown. An account does not need a mailbox to be
+assessed: service and non-mailbox accounts remain eligible when sign-in evidence
+is available. Incoming email alone would not prove that an account is in use.
+The current built-in condition does not inspect mailbox activity.
+
+Existing saved controls keep their definitions until deliberately updated. A new
+successful-sign-in condition needs fresh collection and reassessment; old attempt
+facts are not converted into successful events. Review existing findings against
+the new evidence before taking action.
