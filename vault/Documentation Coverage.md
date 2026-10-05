@@ -345,3 +345,24 @@ Microsoft background success and Google last-account-login coverage are distinct
 Existing saved controls and historical facts are not silently rewritten. Remote
 verification, matching production collection/reassessment and public publication
 remain gates; full Exchange and optional mailbox activity are not documented as live.
+
+### 5 October — Standards-only authoring and guest scope (held)
+
+The legacy standalone-rule URL now points in-app authors to Standards, and its
+navigation entry is removed while retained REST mutation compatibility is
+documented accurately. The guest-population wording in
+`guides/control-conditions.mdx` and `controls/advanced-definitions.mdx` is limited
+to structured deterministic account checks, including role-anchored checks.
+Explicit Guest selection remains supported, including a control parameter after
+resolution. Existing unstructured LLM-assisted rule processing is unchanged and
+remains a known residual.
+
+The prose was checked against Standards-only UI source `e81eb80b149f5c74a09449aa9a98b148a1da988b`
+and the current, uncommitted guest app candidate based on
+`d050a21e4caeb38c284e081307b8a9ea82dff3ba`. The identity baseline and
+`scripts/build-control-reference.py` were updated together. The generator could
+not run because the matching API virtual environment is absent and the available
+Python lacks SQLAlchemy; rerun it in the matching app environment and inspect
+generated diffs before publication. Neither app release nor production availability
+is claimed. Mintlify validation, rendered review and hosted readback remain
+outstanding.

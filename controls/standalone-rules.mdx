@@ -3,12 +3,12 @@ title: "Build and manage checks in Standards"
 description: "Use standards to create and maintain the checks that assess client environments."
 ---
 
-Create and manage automated checks through **Standards**. Open a standard to add or edit its controls and review the expectations assessed for its applicable clients. Start with [creating a standard](/controls/create-custom).
+Create and manage in-app automated checks through **Standards**. Open a standard to add or edit its controls and review the expectations assessed for its applicable clients. The staff app no longer offers standalone rule creation or editing. Start with [creating a standard](/controls/create-custom).
 
 The standalone detection-rule editor has been retired from the Alignr app. **Issues** is where you review verified findings; it is not a rule-authoring page.
 
 ## Existing REST operations
 
-The backend retains detection-rule mutation routes where they are available in your deployment. These routes require a signed-in human session. A REST API key with `detection_rule.write` does not make a human-session route key-compatible. Check your deployment's [live API schema](/api-reference/live-schema) and [authentication requirements](/api-reference/authentication) before using an existing integration.
+The backend retains standalone detection-rule mutation routes for compatibility where they are available in your deployment. These are existing API operations, not another staff-app authoring path. They require a signed-in human session; a REST API key with `detection_rule.write` does not make a human-session route key-compatible. Check your deployment's [live API schema](/api-reference/live-schema) and [authentication requirements](/api-reference/authentication) before using an existing integration.
 
 The public MCP tools do not create or edit standalone detection rules. They support standards workflows such as [copying a standard draft](/mcp/copy-standard-draft) and [activating a reviewed draft](/mcp/activate-standard-draft).

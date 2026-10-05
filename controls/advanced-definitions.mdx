@@ -38,7 +38,9 @@ In plain English: **select accounts observed as enabled, then check that each se
 
 ## Select guest accounts explicitly
 
-General account checks exclude a Microsoft identity only when the selected source has a current `user_type` observation of `Guest`. Missing or stale account-type evidence is unknown and prevents a complete passing assessment for that subject; it does not turn the account into a Member or Guest. Member service and non-mailbox accounts remain eligible. A guest-specific check must select `Guest` explicitly as part of its population. For example, this definition checks MFA registration for observed guests:
+For structured, deterministic account checks, the app applies a default member population to controls and standalone rules, including checks anchored on account roles. A Microsoft account is classified only from a current, live `user_type` observation from the same selected integration as the account evidence. A confirmed Guest is excluded from a general member check; missing, non-live or otherwise unverified classification remains unknown rather than being treated as Member or Guest. Member service and non-mailbox accounts remain in scope.
+
+This default applies to structured deterministic definitions. It does not change existing unstructured LLM-assisted rule processing, so review the scope of those retained rules individually. The app’s explicit Guest selection remains supported: use the observed `Guest` value in the effective population condition. For controls, this can be a literal or a parameter whose resolved value is `Guest`. For example, this definition checks MFA registration for observed guests:
 
 ```json
 {
@@ -55,7 +57,7 @@ General account checks exclude a Microsoft identity only when the selected sourc
 }
 ```
 
-The same explicit population can be expressed in a `where` filter when the check starts from a broader account anchor. Use the selected source's account-type observation; do not infer guest status from the control name, evidence list or email/UPN pattern. If account type is missing or stale, investigate the evidence rather than treating the subject as a Member or Guest.
+The same explicit population can be expressed in a `where` filter when the check starts from a broader account anchor. Use the selected source's account-type observation; do not infer guest status from the control name, evidence list or email/UPN pattern. If account classification is missing or unverified, investigate the evidence rather than treating the subject as a Member or Guest.
 
 ## Add filters only when they express the intended scope
 

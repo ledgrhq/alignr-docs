@@ -1328,44 +1328,53 @@ to those identical files, while full documentation validation must pass this mer
 Publication remains held for applicationPR92 release and fresh evidence acceptance.
 
 
-## 2026-10-05 — guest account population guidance (held)
+## 2026-10-05 — guest account population guidance (candidate reconciled; held)
 
-Drafted `scripts/build-control-reference.py`, its generated
-`controls/baselines/identity.mdx` output, `guides/control-conditions.mdx` and
-`controls/advanced-definitions.mdx` from the application workstream handoff. The
-copy states that general account checks exclude only confirmed, current
-selected-source Microsoft Guest identities; missing or stale account type remains
-unknown and prevents a complete passing assessment for that subject; Member
-service/non-mailbox accounts remain eligible. Guest-specific
-checks require an explicit `user_type = Guest` population condition in `match` or
-`where`; labels, evidence lists and address patterns do not select guests.
+Reconciled `guides/control-conditions.mdx` and `controls/advanced-definitions.mdx`
+against the uncommitted guest-scope candidate in `/private/tmp/alignr-guest-account-checks`
+(working tree based on `d050a21e4caeb38c284e081307b8a9ea82dff3ba`). The candidate
+covers structured deterministic account checks, including role-anchored checks.
+It requires a current live classification from the same selected integration as
+the account evidence; missing, non-live or unverified classifications remain
+unknown. Explicit Guest selection remains supported, including a control parameter
+after its effective value resolves. The policy does not change existing
+unstructured LLM-assisted rule processing; its scope remains a known residual.
 
-The final application source revision has not yet been provided for reconciliation.
-The baseline catalogue and generated reference were intentionally not regenerated.
-This is draft guidance, not a claim that the correction is live. Reconcile the exact
-selection and freshness behaviour with the final application source, review affected
-baseline applicability and examples, then regenerate the catalogue if its source
-definitions changed. Mintlify checks, rendered preview, hosted readback and
-publication have not run; hold publication for the matching application release
-and root review.
+The public editable guidance and `scripts/build-control-reference.py` now reflect
+those boundaries. The generator's `identity` note and generated
+`controls/baselines/identity.mdx` were updated together. The documented generator
+command could not run: neither checkout has `api/.venv/bin/python`, and the
+available `python3` lacks SQLAlchemy (`ModuleNotFoundError`). I kept the generated
+identity note text identical to the generator's source string and reviewed the
+diff; before publication, run
+`PYTHONPATH=/private/tmp/alignr-guest-account-checks/api /private/tmp/alignr-guest-account-checks/api/.venv/bin/python scripts/build-control-reference.py /private/tmp/alignr-guest-account-checks`
+with the app environment available, then inspect all generated-file diffs. No
+catalogue definition changed in the inspected candidate. App source is uncommitted
+and release status is unknown; this review does not claim production availability.
+Mintlify checks, rendered preview, hosted readback and publication remain
+outstanding.
 
 
 ## 2026-10-05 — Standards-only in-app check authoring (held)
 
 Updated the legacy `controls/standalone-rules.mdx` URL to direct in-app authors to
 Standards, explain that Issues is for reviewing findings, and separate the retired
-standalone editor from retained REST detection mutations. Removed the page from
+staff-app editor from retained REST detection mutations. Removed the page from
 public navigation while preserving its URL for existing links. Qualified the
-standalone-rule semantics in `controls/advanced-definitions.mdx`; the guest-account
-population guidance on that page is preserved. REST mutation availability remains
-deployment-specific and human-session authenticated; the existing MCP catalogue
-contains standards draft workflows, not standalone rule create/edit tools. No
-application API/MCP contract or generated reference changed, so reference
-generation was not run.
+standalone-rule semantics in `controls/advanced-definitions.mdx`; the guest-scope
+paragraphs now describe the structured deterministic policy and its LLM-assisted
+residual. The identity baseline and its generator source were corrected together;
+the exact generator command still needs to run in the matching app Python
+environment, with generated diffs reviewed, before publication. REST mutation
+availability remains deployment-specific and human-session authenticated; the
+existing MCP catalogue contains standards draft workflows, not standalone rule
+create/edit tools. No application API/MCP contract or API reference changed. The
+control catalogue generator was not run because the matching app Python environment
+is absent.
 
-This copy follows the owner's Standards-only authoring direction and the held app
-route-removal workstream. The final application source SHA and release status have
-not been supplied; no production availability or completed app acceptance is
-claimed. `git diff --check` is the only local validation. Mintlify checks, rendered
-desktop/mobile review, hosted readback and publication remain outstanding until
-the matching app release is confirmed and root completes the docs review.
+Compared the direction with the Standards-only UI candidate at
+`e81eb80b149f5c74a09449aa9a98b148a1da988b`. The exact guest-policy source is still
+an uncommitted working candidate, and neither application release nor production
+availability is claimed. `git diff --check` is the only local validation.
+Mintlify checks, rendered desktop/mobile review, hosted readback and publication
+remain outstanding.
