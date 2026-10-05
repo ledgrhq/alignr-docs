@@ -358,11 +358,13 @@ resolution. Existing unstructured LLM-assisted rule processing is unchanged and
 remains a known residual.
 
 The prose was checked against Standards-only UI source `e81eb80b149f5c74a09449aa9a98b148a1da988b`
-and the current, uncommitted guest app candidate based on
-`d050a21e4caeb38c284e081307b8a9ea82dff3ba`. The identity baseline and
-`scripts/build-control-reference.py` were updated together. The generator could
-not run because the matching API virtual environment is absent and the available
-Python lacks SQLAlchemy; rerun it in the matching app environment and inspect
-generated diffs before publication. Neither app release nor production availability
-is claimed. Mintlify validation, rendered review and hosted readback remain
-outstanding.
+and guest app source `6f6297d3a4241b489a727bfc190936b2c650948d` in the app candidate
+worktree. The identity baseline generator completed against that source with
+18 seeded controls, 7 library templates, 15 library controls and 19 manual checks;
+the generated identity note matches the generator source. `python3
+scripts/check-docs-vault.py` passed. With Node 22 and installed Mint CLI v4.2.229,
+`mint openapi-check api-reference/openapi.json` passed; `mint broken-links`
+reported README links to repository-only AGENTS/vault files, and `mint validate`
+is unsupported by this older CLI. The PR workflow installs v4.2.939 on Node 22 and
+remains the required validation gate. App release and production availability are
+not claimed. Rendered review and hosted readback remain outstanding.

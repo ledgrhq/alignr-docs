@@ -1331,28 +1331,30 @@ Publication remains held for applicationPR92 release and fresh evidence acceptan
 ## 2026-10-05 — guest account population guidance (candidate reconciled; held)
 
 Reconciled `guides/control-conditions.mdx` and `controls/advanced-definitions.mdx`
-against the uncommitted guest-scope candidate in `/private/tmp/alignr-guest-account-checks`
-(working tree based on `d050a21e4caeb38c284e081307b8a9ea82dff3ba`). The candidate
-covers structured deterministic account checks, including role-anchored checks.
+against guest-scope source `6f6297d3a4241b489a727bfc190936b2c650948d` in
+`/private/tmp/alignr-guest-account-checks`. The candidate covers structured
+deterministic account checks, including role-anchored checks.
 It requires a current live classification from the same selected integration as
 the account evidence; missing, non-live or unverified classifications remain
 unknown. Explicit Guest selection remains supported, including a control parameter
 after its effective value resolves. The policy does not change existing
 unstructured LLM-assisted rule processing; its scope remains a known residual.
 
-The public editable guidance and `scripts/build-control-reference.py` now reflect
-those boundaries. The generator's `identity` note and generated
-`controls/baselines/identity.mdx` were updated together. The documented generator
-command could not run: neither checkout has `api/.venv/bin/python`, and the
-available `python3` lacks SQLAlchemy (`ModuleNotFoundError`). I kept the generated
-identity note text identical to the generator's source string and reviewed the
-diff; before publication, run
-`PYTHONPATH=/private/tmp/alignr-guest-account-checks/api /private/tmp/alignr-guest-account-checks/api/.venv/bin/python scripts/build-control-reference.py /private/tmp/alignr-guest-account-checks`
-with the app environment available, then inspect all generated-file diffs. No
-catalogue definition changed in the inspected candidate. App source is uncommitted
-and release status is unknown; this review does not claim production availability.
-Mintlify checks, rendered preview, hosted readback and publication remain
-outstanding.
+The public editable guidance and `scripts/build-control-reference.py` reflect those
+boundaries. Generation completed against the exact app source using the available
+root API virtual environment:
+`PYTHONPATH=/private/tmp/alignr-guest-account-checks/api /Users/harveycoplestone/Documents/work/ledgr/api/.venv/bin/python scripts/build-control-reference.py /private/tmp/alignr-guest-account-checks`
+It reported 18 seeded controls, 7 library templates, 15 library controls and 19
+manual checks; generated outputs matched the working tree, including the identity
+note. `python3 scripts/check-docs-vault.py` passed. Using Node 22 and installed
+Mint CLI v4.2.229, `mint openapi-check api-reference/openapi.json` passed;
+`mint broken-links` reported README links to repository-only AGENTS/vault files,
+and `mint validate` is unsupported by that CLI version. Run the PR workflow's
+Mint v4.2.939 checks on Node 22; `broken-links` results should be reviewed against
+the repository's pre-existing README links. No catalogue definition changed. The
+source is committed, but application release and
+production availability are not claimed. Rendered preview, hosted readback and
+publication remain outstanding.
 
 
 ## 2026-10-05 — Standards-only in-app check authoring (held)
@@ -1364,13 +1366,10 @@ public navigation while preserving its URL for existing links. Qualified the
 standalone-rule semantics in `controls/advanced-definitions.mdx`; the guest-scope
 paragraphs now describe the structured deterministic policy and its LLM-assisted
 residual. The identity baseline and its generator source were corrected together;
-the exact generator command still needs to run in the matching app Python
-environment, with generated diffs reviewed, before publication. REST mutation
+generation completed and its output matched the reviewed tree. REST mutation
 availability remains deployment-specific and human-session authenticated; the
 existing MCP catalogue contains standards draft workflows, not standalone rule
-create/edit tools. No application API/MCP contract or API reference changed. The
-control catalogue generator was not run because the matching app Python environment
-is absent.
+create/edit tools. No application API/MCP contract or API reference changed.
 
 Compared the direction with the Standards-only UI candidate at
 `e81eb80b149f5c74a09449aa9a98b148a1da988b`. The exact guest-policy source is still
