@@ -1372,8 +1372,34 @@ existing MCP catalogue contains standards draft workflows, not standalone rule
 create/edit tools. No application API/MCP contract or API reference changed.
 
 Compared the direction with the Standards-only UI candidate at
-`e81eb80b149f5c74a09449aa9a98b148a1da988b`. The exact guest-policy source is still
-an uncommitted working candidate, and neither application release nor production
-availability is claimed. `git diff --check` is the only local validation.
-Mintlify checks, rendered desktop/mobile review, hosted readback and publication
-remain outstanding.
+`e81eb80b149f5c74a09449aa9a98b148a1da988b`. The guest-policy source is committed
+as `6f6297d3a4241b489a727bfc190936b2c650948d`; neither
+application release nor production availability is claimed. The remote PR
+workflow later passed its Mint v4.2.939 vault, link, OpenAPI and validation checks.
+The rendered preview and its visual review are recorded below; hosted readback and
+publication remain outstanding.
+
+### 5 October — Remote guest and Standards documentation preview (held)
+
+The remote preview used docs commit `d48a6a36ed9a7ad885536131b56e52b880f249e6`,
+which pins guest-policy generation and rendering to app source
+`6f6297d3a4241b489a727bfc190936b2c650948d`. Harness commit
+`b8b840e1cae778685b2863589b0d58f3b22d5410` excludes navigation links from visible
+text targeting so the desktop advanced-definition capture lands on the guest
+paragraph rather than its table of contents. The final remote run
+[37254651570](https://github.com/ledgrhq/ledgr/actions/runs/37254651570) regenerated
+the identity control reference without a diff and rendered eight captures: the
+Standards guide, advanced definitions, identity baseline and retained standalone
+rules URL at 1440px and 390px. Each had its expected H1 and required copy, a visible
+article target and logo, and no horizontal overflow. Root reviewed the final
+desktop advanced-definition capture and mobile legacy-recovery capture and found
+them readable, on-brand and without visible overflow. The screenshot artifact is
+[guest-standards-docs-rendered-preview](https://github.com/ledgrhq/ledgr/actions/runs/37254651570/artifacts/11322415146).
+
+The first capture run placed the desktop guest target on the right-hand contents
+link; the final harness corrected that before the reviewed run. An intermediate
+semantic-tag-only selector failed to find Mintlify's Standards copy and was also
+corrected. The successful workflow guarantees browser and preview-server cleanup.
+These are remote rendered-docs checks, not hosted-site readback or production
+acceptance. Docs PR #38 remains a draft until matching application acceptance and
+release; do not publish based on this preview alone.

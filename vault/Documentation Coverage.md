@@ -366,5 +366,13 @@ scripts/check-docs-vault.py` passed. With Node 22 and installed Mint CLI v4.2.22
 `mint openapi-check api-reference/openapi.json` passed; `mint broken-links`
 reported README links to repository-only AGENTS/vault files, and `mint validate`
 is unsupported by this older CLI. The PR workflow installs v4.2.939 on Node 22 and
-remains the required validation gate. App release and production availability are
-not claimed. Rendered review and hosted readback remain outstanding.
+completed vault, broken-link, OpenAPI and validation checks. A separate remote
+preview regenerated the control references against the pinned app source and
+rendered the Standards guide, advanced guest definitions, identity baseline and
+retained legacy URL at 1440px and 390px. The final screenshots had the expected
+headings and copy, visible target sections and Alignr branding, with no reported
+horizontal overflow. Root reviewed the final advanced-definition desktop and
+legacy-recovery mobile captures and accepted their readability and layout. See the
+dated Review Log for run, source and artifact pins. App release, hosted readback
+and public publication are still outstanding; docs PR #38 remains a draft pending
+the matching application acceptance.
