@@ -41,7 +41,7 @@ All thirteen audited documentation gaps now have source-backed guides. This clos
 | Build/import standards | [guides/build-or-import-standard](../guides/build-or-import-standard.mdx) |
 | Daily review | [guides/daily-review](../guides/daily-review.mdx) |
 | Domain operations | [guides/domain-checks](../guides/domain-checks.mdx) |
-| Standalone rules | [controls/standalone-rules](../controls/standalone-rules.mdx) |
+| Standards-first rule guidance (legacy URL) | [controls/standalone-rules](../controls/standalone-rules.mdx) |
 | API/MCP assessment recipe | [api-reference/client-assessment-recipe](../api-reference/client-assessment-recipe.mdx) |
 
 ## Immediate corrections completed in this audit
@@ -51,7 +51,7 @@ All thirteen audited documentation gaps now have source-backed guides. This clos
 - Corrected the claim that the authenticated schema is the full mounted API: it filters retired reference roots.
 - Generated MCP catalogue now states that retained tools may require scopes not offered by the current token form. The server tools are not described as removed.
 - Generator only gives optional/workspace-wide Organization advice for actually optional arguments.
-- Added the control-versus-standalone-rule semantic distinction to advanced definitions; an editor tutorial remains conditional on intended discoverability.
+- Added the control-versus-standalone-rule semantic distinction to advanced definitions. The standalone editor walkthrough is retired; the retained REST model is labelled separately from in-app Standards authoring.
 - Extended the vault guard to nested evidence notes and verified it rejects an unindexed nested note.
 - Narrowed “all 19 supplied manual checks” to the 19 in standard-library templates; guided intake supplies additional configurable manual areas.
 
@@ -67,7 +67,7 @@ The 2026-10-01 Ask risk-context candidate updates [Use the AI assistant](../guid
 
 The held per-control scoring clarification updates [Your daily review](../guides/daily-review.mdx), [Workspace health](../guides/workspace-health.mdx) and [Prepare a client report](../guides/client-reports.mdx) against the alignment scoring refinement in app commit `4da5d2a5f3c4b03ad102bae11259875bbe67385b` and the saved-report consumer follow-up `5f33b867cf6def951866fbd630697f39ca253bc4`. The guides explain that each control's result depends on its own current live required evidence from selected connected sources, while unrelated stale client evidence remains a warning without erasing an otherwise eligible result. Missing, stale, simulated and later-collected evidence stays unknown; historical reports remain snapshots. New automated report snapshots carry `scoring_policy: per_control_v1`; unmarked older snapshots may still contain counts but do not establish per-control eligibility. This adds no route or generated OpenAPI/MCP schema, so reference generation is unchanged. Hold this copy until the matching application release is verified; these source commits are not a production-availability claim.
 
-Standalone `/monitoring` remains directly routed but absent from the main shell. Its advanced guide states that boundary explicitly. Portal contact access currently needs administrator/support setup because the current People & views screen lacks the required editor; do not invent a self-service screen.
+The held app candidate retires standalone `/monitoring` rule authoring and directs in-app authors to Standards; Issues remains the place to review verified findings. The existing public URL now gives that Standards-first direction and is removed from docs navigation. Backend REST detection mutations remain unchanged and require a signed-in human session where available; retain their deployment-specific detail in the authenticated live schema. This copy remains held until the matching app source and release are confirmed. Portal contact access currently needs administrator/support setup because the current People & views screen lacks the required editor; do not invent a self-service screen.
 
 ## Deliberately excluded from new public promises
 

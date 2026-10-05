@@ -11,9 +11,9 @@ This page explains the definition format, not a JSON-import button in the UI. Fo
 
 These definitions describe controls within a standard. Their `match` and `where` select a population; `expect` describes what should hold for that population.
 
-Standalone detection rules use different semantics: matching `match` and `where` identifies a candidate violation. For example, selecting enabled accounts is a useful control population, but using that selection alone as a standalone rule would flag enabled accounts as candidates—including healthy ones.
+Existing REST standalone detection rules use different semantics: matching `match` and `where` identifies a candidate violation. For example, selecting enabled accounts is a useful control population, but using that selection alone as a standalone rule would flag enabled accounts as candidates—including healthy ones. This distinction applies when maintaining a retained rule through the authenticated API; it is not another in-app authoring path.
 
-Do not copy a control population into a standalone rule and assume it still describes a passing requirement. Review the kind of rule and the question it is intended to answer before using its definition.
+Create and edit in-app checks through **Standards**. If you maintain a retained standalone rule through REST, do not copy a control population into it and assume it still describes a passing requirement. Review the rule's purpose and current definition in your deployment's [live API schema](/api-reference/live-schema).
 
 ## Worked example: enabled accounts have MFA registered
 

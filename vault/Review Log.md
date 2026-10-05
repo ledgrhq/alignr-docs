@@ -1348,3 +1348,24 @@ baseline applicability and examples, then regenerate the catalogue if its source
 definitions changed. Mintlify checks, rendered preview, hosted readback and
 publication have not run; hold publication for the matching application release
 and root review.
+
+
+## 2026-10-05 — Standards-only in-app check authoring (held)
+
+Updated the legacy `controls/standalone-rules.mdx` URL to direct in-app authors to
+Standards, explain that Issues is for reviewing findings, and separate the retired
+standalone editor from retained REST detection mutations. Removed the page from
+public navigation while preserving its URL for existing links. Qualified the
+standalone-rule semantics in `controls/advanced-definitions.mdx`; the guest-account
+population guidance on that page is preserved. REST mutation availability remains
+deployment-specific and human-session authenticated; the existing MCP catalogue
+contains standards draft workflows, not standalone rule create/edit tools. No
+application API/MCP contract or generated reference changed, so reference
+generation was not run.
+
+This copy follows the owner's Standards-only authoring direction and the held app
+route-removal workstream. The final application source SHA and release status have
+not been supplied; no production availability or completed app acceptance is
+claimed. `git diff --check` is the only local validation. Mintlify checks, rendered
+desktop/mobile review, hosted readback and publication remain outstanding until
+the matching app release is confirmed and root completes the docs review.
