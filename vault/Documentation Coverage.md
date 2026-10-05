@@ -376,3 +376,10 @@ legacy-recovery mobile captures and accepted their readability and layout. See t
 dated Review Log for run, source and artifact pins. App release, hosted readback
 and public publication are still outstanding; docs PR #38 remains a draft pending
 the matching application acceptance.
+
+## 5 October: Overview assessment coverage candidate
+
+`guides/daily-review.mdx` follows appPR107: current assessment coverage, historical open
+issues, one initial loader and bounded assessment read/retry preserving loaded panels.
+Automatic reassessment semantics are excluded until their matching implementation ships.
+Publication and rendered documentation checks are still pending.

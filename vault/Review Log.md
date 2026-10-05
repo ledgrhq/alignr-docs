@@ -1403,3 +1403,10 @@ corrected. The successful workflow guarantees browser and preview-server cleanup
 These are remote rendered-docs checks, not hosted-site readback or production
 acceptance. Docs PR #38 remains a draft until matching application acceptance and
 release; do not publish based on this preview alone.
+
+## 5 October: Overview incident documentation
+
+Prepared daily-review changes against PR107 merged70bbd36e and verified head7ba12813.
+Compared labels/retry behaviour with source and exact-source Chromium proof37268236005.
+No catalogue/API/MCP changes, so no generated references require regeneration.
+No public deployment claim; validation/render/publish gates are pending.
