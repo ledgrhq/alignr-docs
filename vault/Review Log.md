@@ -1326,3 +1326,80 @@ workflow guide was replaced. The four activity pages and reference generator are
 unchanged from reviewed235d7c5; remote rendering of that source remains applicable
 to those identical files, while full documentation validation must pass this merge.
 Publication remains held for applicationPR92 release and fresh evidence acceptance.
+
+
+## 2026-10-05 — guest account population guidance (candidate reconciled; held)
+
+Reconciled `guides/control-conditions.mdx` and `controls/advanced-definitions.mdx`
+against guest-scope source `6f6297d3a4241b489a727bfc190936b2c650948d` in
+`/private/tmp/alignr-guest-account-checks`. The candidate covers structured
+deterministic account checks, including role-anchored checks.
+It requires a current live classification from the same selected integration as
+the account evidence; missing, non-live or unverified classifications remain
+unknown. Explicit Guest selection remains supported, including a control parameter
+after its effective value resolves. The policy does not change existing
+unstructured LLM-assisted rule processing; its scope remains a known residual.
+
+The public editable guidance and `scripts/build-control-reference.py` reflect those
+boundaries. Generation completed against the exact app source using the available
+root API virtual environment:
+`PYTHONPATH=/private/tmp/alignr-guest-account-checks/api /Users/harveycoplestone/Documents/work/ledgr/api/.venv/bin/python scripts/build-control-reference.py /private/tmp/alignr-guest-account-checks`
+It reported 18 seeded controls, 7 library templates, 15 library controls and 19
+manual checks; generated outputs matched the working tree, including the identity
+note. `python3 scripts/check-docs-vault.py` passed. Using Node 22 and installed
+Mint CLI v4.2.229, `mint openapi-check api-reference/openapi.json` passed;
+`mint broken-links` reported README links to repository-only AGENTS/vault files,
+and `mint validate` is unsupported by that CLI version. Run the PR workflow's
+Mint v4.2.939 checks on Node 22; `broken-links` results should be reviewed against
+the repository's pre-existing README links. No catalogue definition changed. The
+source is committed, but application release and
+production availability are not claimed. Rendered preview, hosted readback and
+publication remain outstanding.
+
+
+## 2026-10-05 — Standards-only in-app check authoring (held)
+
+Updated the legacy `controls/standalone-rules.mdx` URL to direct in-app authors to
+Standards, explain that Issues is for reviewing findings, and separate the retired
+staff-app editor from retained REST detection mutations. Removed the page from
+public navigation while preserving its URL for existing links. Qualified the
+standalone-rule semantics in `controls/advanced-definitions.mdx`; the guest-scope
+paragraphs now describe the structured deterministic policy and its LLM-assisted
+residual. The identity baseline and its generator source were corrected together;
+generation completed and its output matched the reviewed tree. REST mutation
+availability remains deployment-specific and human-session authenticated; the
+existing MCP catalogue contains standards draft workflows, not standalone rule
+create/edit tools. No application API/MCP contract or API reference changed.
+
+Compared the direction with the Standards-only UI candidate at
+`e81eb80b149f5c74a09449aa9a98b148a1da988b`. The guest-policy source is committed
+as `6f6297d3a4241b489a727bfc190936b2c650948d`; neither
+application release nor production availability is claimed. The remote PR
+workflow later passed its Mint v4.2.939 vault, link, OpenAPI and validation checks.
+The rendered preview and its visual review are recorded below; hosted readback and
+publication remain outstanding.
+
+### 5 October — Remote guest and Standards documentation preview (held)
+
+The remote preview used docs commit `d48a6a36ed9a7ad885536131b56e52b880f249e6`,
+which pins guest-policy generation and rendering to app source
+`6f6297d3a4241b489a727bfc190936b2c650948d`. Harness commit
+`b8b840e1cae778685b2863589b0d58f3b22d5410` excludes navigation links from visible
+text targeting so the desktop advanced-definition capture lands on the guest
+paragraph rather than its table of contents. The final remote run
+[37254651570](https://github.com/ledgrhq/ledgr/actions/runs/37254651570) regenerated
+the identity control reference without a diff and rendered eight captures: the
+Standards guide, advanced definitions, identity baseline and retained standalone
+rules URL at 1440px and 390px. Each had its expected H1 and required copy, a visible
+article target and logo, and no horizontal overflow. Root reviewed the final
+desktop advanced-definition capture and mobile legacy-recovery capture and found
+them readable, on-brand and without visible overflow. The screenshot artifact is
+[guest-standards-docs-rendered-preview](https://github.com/ledgrhq/ledgr/actions/runs/37254651570/artifacts/11322415146).
+
+The first capture run placed the desktop guest target on the right-hand contents
+link; the final harness corrected that before the reviewed run. An intermediate
+semantic-tag-only selector failed to find Mintlify's Standards copy and was also
+corrected. The successful workflow guarantees browser and preview-server cleanup.
+These are remote rendered-docs checks, not hosted-site readback or production
+acceptance. Docs PR #38 remains a draft until matching application acceptance and
+release; do not publish based on this preview alone.

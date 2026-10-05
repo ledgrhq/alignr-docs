@@ -7,6 +7,8 @@ This category contains **7 automated control definitions** and **3 manual checks
 
 Whether the seeded Alignr Baseline is available depends on how your workspace was provisioned. Library templates are copied as disabled drafts. See [Choose a baseline](/controls/baselines/overview) before enabling anything.
 
+For structured, deterministic account checks, a default member population applies, including checks anchored on account roles. A Microsoft account is classified only from a current, live `user_type` observation from the same selected integration as its account evidence. Confirmed Guests are excluded from general member checks; missing, non-live or otherwise unverified classification remains unknown rather than being treated as Member or Guest. Member service and non-mailbox accounts remain in scope. Explicit Guest checks are supported by selecting the observed `Guest` value in the effective population condition (`match` or `where`). For controls, this can be a literal or a parameter whose resolved value is `Guest`. A title, evidence list or email/UPN pattern does not select that population. This default also applies to structured deterministic standalone rules; it does not change existing unstructured LLM-assisted rule processing.
+
 ## Automated controls
 
 Expand a control to see the exact population, expectation and defaults. A pass requires usable evidence for the selected population. A known contrary observation can prove failure; missing observations or an empty population must not become a pass.

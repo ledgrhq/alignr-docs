@@ -11,9 +11,9 @@ This page explains the definition format, not a JSON-import button in the UI. Fo
 
 These definitions describe controls within a standard. Their `match` and `where` select a population; `expect` describes what should hold for that population.
 
-Standalone detection rules use different semantics: matching `match` and `where` identifies a candidate violation. For example, selecting enabled accounts is a useful control population, but using that selection alone as a standalone rule would flag enabled accounts as candidates—including healthy ones.
+Existing REST standalone detection rules use different semantics: matching `match` and `where` identifies a candidate violation. For example, selecting enabled accounts is a useful control population, but using that selection alone as a standalone rule would flag enabled accounts as candidates—including healthy ones. This distinction applies when maintaining a retained rule through the authenticated API; it is not another in-app authoring path.
 
-Do not copy a control population into a standalone rule and assume it still describes a passing requirement. Review the kind of rule and the question it is intended to answer before using its definition.
+Create and edit in-app checks through **Standards**. If you maintain a retained standalone rule through REST, do not copy a control population into it and assume it still describes a passing requirement. Review the rule's purpose and current definition in your deployment's [live API schema](/api-reference/live-schema).
 
 ## Worked example: enabled accounts have MFA registered
 
@@ -35,6 +35,29 @@ Do not copy a control population into a standalone rule and assume it still desc
 In plain English: **select accounts observed as enabled, then check that each selected account is observed as registered for MFA**. This does not prove MFA enforcement at sign-in.
 
 `match.object` is an exact population value. Omitting it selects subjects with an `account_enabled` observation regardless of whether the observed value is true or false.
+
+## Select guest accounts explicitly
+
+For structured, deterministic account checks, the app applies a default member population to controls and standalone rules, including checks anchored on account roles. A Microsoft account is classified only from a current, live `user_type` observation from the same selected integration as the account evidence. A confirmed Guest is excluded from a general member check; missing, non-live or otherwise unverified classification remains unknown rather than being treated as Member or Guest. Member service and non-mailbox accounts remain in scope.
+
+This default applies to structured deterministic definitions. It does not change existing unstructured LLM-assisted rule processing, so review the scope of those retained rules individually. The app’s explicit Guest selection remains supported: use the observed `Guest` value in the effective population condition. For controls, this can be a literal or a parameter whose resolved value is `Guest`. For example, this definition checks MFA registration for observed guests:
+
+```json
+{
+  "match": {
+    "predicate": "user_type",
+    "object": "Guest"
+  },
+  "expect": [
+    { "fact": "mfa_registered", "op": "eq", "value": true }
+  ],
+  "severity": "high",
+  "title": "Guest accounts have MFA registered",
+  "evidence": ["user_type", "mfa_registered"]
+}
+```
+
+The same explicit population can be expressed in a `where` filter when the check starts from a broader account anchor. Use the selected source's account-type observation; do not infer guest status from the control name, evidence list or email/UPN pattern. If account classification is missing or unverified, investigate the evidence rather than treating the subject as a Member or Guest.
 
 ## Add filters only when they express the intended scope
 

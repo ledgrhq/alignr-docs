@@ -183,8 +183,7 @@
                     "group": "Control definitions",
                     "pages": [
                       "guides/control-conditions",
-                      "controls/advanced-definitions",
-                      "controls/standalone-rules"
+                      "controls/advanced-definitions"
                     ]
                   }
                 ]
