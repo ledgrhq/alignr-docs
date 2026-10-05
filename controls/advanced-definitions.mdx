@@ -36,6 +36,27 @@ In plain English: **select accounts observed as enabled, then check that each se
 
 `match.object` is an exact population value. Omitting it selects subjects with an `account_enabled` observation regardless of whether the observed value is true or false.
 
+## Select guest accounts explicitly
+
+General account checks exclude a Microsoft identity only when the selected source has a current `user_type` observation of `Guest`. Missing or stale account-type evidence is unknown and prevents a complete passing assessment for that subject; it does not turn the account into a Member or Guest. Member service and non-mailbox accounts remain eligible. A guest-specific check must select `Guest` explicitly as part of its population. For example, this definition checks MFA registration for observed guests:
+
+```json
+{
+  "match": {
+    "predicate": "user_type",
+    "object": "Guest"
+  },
+  "expect": [
+    { "fact": "mfa_registered", "op": "eq", "value": true }
+  ],
+  "severity": "high",
+  "title": "Guest accounts have MFA registered",
+  "evidence": ["user_type", "mfa_registered"]
+}
+```
+
+The same explicit population can be expressed in a `where` filter when the check starts from a broader account anchor. Use the selected source's account-type observation; do not infer guest status from the control name, evidence list or email/UPN pattern. If account type is missing or stale, investigate the evidence rather than treating the subject as a Member or Guest.
+
 ## Add filters only when they express the intended scope
 
 `where` narrows the matched subjects before the expectations run. For example, the seeded dormant-account control starts from subjects with an account-enabled observation, filters for sign-ins older than its configured limit, and expects those accounts to be disabled.

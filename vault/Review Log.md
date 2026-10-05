@@ -1326,3 +1326,25 @@ workflow guide was replaced. The four activity pages and reference generator are
 unchanged from reviewed235d7c5; remote rendering of that source remains applicable
 to those identical files, while full documentation validation must pass this merge.
 Publication remains held for applicationPR92 release and fresh evidence acceptance.
+
+
+## 2026-10-05 — guest account population guidance (held)
+
+Drafted `scripts/build-control-reference.py`, its generated
+`controls/baselines/identity.mdx` output, `guides/control-conditions.mdx` and
+`controls/advanced-definitions.mdx` from the application workstream handoff. The
+copy states that general account checks exclude only confirmed, current
+selected-source Microsoft Guest identities; missing or stale account type remains
+unknown and prevents a complete passing assessment for that subject; Member
+service/non-mailbox accounts remain eligible. Guest-specific
+checks require an explicit `user_type = Guest` population condition in `match` or
+`where`; labels, evidence lists and address patterns do not select guests.
+
+The final application source revision has not yet been provided for reconciliation.
+The baseline catalogue and generated reference were intentionally not regenerated.
+This is draft guidance, not a claim that the correction is live. Reconcile the exact
+selection and freshness behaviour with the final application source, review affected
+baseline applicability and examples, then regenerate the catalogue if its source
+definitions changed. Mintlify checks, rendered preview, hosted readback and
+publication have not run; hold publication for the matching application release
+and root review.

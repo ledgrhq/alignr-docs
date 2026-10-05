@@ -7,6 +7,8 @@ This category contains **7 automated control definitions** and **3 manual checks
 
 Whether the seeded Alignr Baseline is available depends on how your workspace was provisioned. Library templates are copied as disabled drafts. See [Choose a baseline](/controls/baselines/overview) before enabling anything.
 
+For account-level checks in this category, general account populations exclude only Microsoft identities that the selected source currently identifies as **Guest**. This applies to MFA and dormant-account checks in both the seeded baseline and library templates. A missing or stale account-type observation is unknown and prevents a complete passing assessment for that subject; it does not identify the account as a Member or Guest. Member accounts remain eligible, including service and non-mailbox accounts. A guest-specific check must select `user_type = Guest` explicitly in its population (`match` or `where`); a title, evidence list or email/UPN pattern does not make a check guest-specific.
+
 ## Automated controls
 
 Expand a control to see the exact population, expectation and defaults. A pass requires usable evidence for the selected population. A known contrary observation can prove failure; missing observations or an empty population must not become a pass.

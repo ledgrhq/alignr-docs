@@ -27,6 +27,9 @@ groups = {
  'email': ('Email and domains', 'DNS observations and the manual checks needed for broader mail protection.'),
  'external': ('External exposure', 'DNS resilience and human reviews of internet-facing assets and access.'),
 }
+group_notes = {
+ 'identity': 'For account-level checks in this category, general account populations exclude only Microsoft identities that the selected source currently identifies as **Guest**. This applies to MFA and dormant-account checks in both the seeded baseline and library templates. A missing or stale account-type observation is unknown and prevents a complete passing assessment for that subject; it does not identify the account as a Member or Guest. Member accounts remain eligible, including service and non-mailbox accounts. A guest-specific check must select `user_type = Guest` explicitly in its population (`match` or `where`); a title, evidence list or email/UPN pattern does not make a check guest-specific.',
+}
 seed_groups = {'Identity':'identity','Endpoint':'endpoints','Backup':'backup','Vulnerability':'vulnerability','Licensing':'licensing'}
 template_groups = {'bios-identity':'identity','bios-endpoint-server':'endpoints','bios-network':'network','bios-backup':'backup','bios-vulnerability-governance':'vulnerability','email-domain-protection':'email','external-exposure':'external'}
 # Fail loudly if an added or renamed template needs a deliberate category choice.
@@ -76,6 +79,8 @@ def page(path,title,desc,body):
 for key,(title,desc) in groups.items():
  auto=sum(not manual for _,_,manual in entries[key]);manual_count=sum(manual for _,_,manual in entries[key])
  lines=[f'This category contains **{auto} automated control definitions** and **{manual_count} manual check{"s" if manual_count != 1 else ""}** across the sources named below. Similar controls from different standards are listed separately because names, thresholds or severity can differ.','', 'Whether the seeded Alignr Baseline is available depends on how your workspace was provisioned. Library templates are copied as disabled drafts. See [Choose a baseline](/controls/baselines/overview) before enabling anything.','', '## Automated controls','', 'Expand a control to see the exact population, expectation and defaults. A pass requires usable evidence for the selected population. A known contrary observation can prove failure; missing observations or an empty population must not become a pass.','', '<AccordionGroup>','']
+ if key in group_notes:
+  lines[4:4] = [group_notes[key], '']
  for source,c,manual in entries[key]:
   if manual:continue
   d=c['definition'];parse_rule_definition(d)
