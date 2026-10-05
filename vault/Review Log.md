@@ -1403,3 +1403,24 @@ corrected. The successful workflow guarantees browser and preview-server cleanup
 These are remote rendered-docs checks, not hosted-site readback or production
 acceptance. Docs PR #38 remains a draft until matching application acceptance and
 release; do not publish based on this preview alone.
+
+## 5 October — Overview assessment and automatic reassessment copy (held)
+
+Updated `guides/daily-review.mdx`, `guides/standards.mdx` and
+`guides/workspace-health.mdx` on an isolated branch based on held PR38. Overview
+copy now uses **Checks passing** and **Assessment coverage**, defines the latter as
+current assessed results rather than run progress, explains the em-dash **No
+current results** state, and clarifies that a recorded issue may remain open after
+evidence becomes stale. Standards/health copy describes asynchronous reassessment
+for the supported standard/control, enablement, effective client override and
+assignment changes, using existing evidence only. It promises no completion time,
+source refresh or manual-review completion.
+
+Source review used app candidate `4f9b8597d6fb717eaa644b4edca787b38595a284` and
+`vault/09-Delivery/Automatic Reassessment Trigger Candidate 2026-10-05.md`.
+Connection-policy changes and catalogue upgrades are explicitly outside this
+initial trigger scope. No endpoint, generated reference or catalogue changed, so
+reference regeneration does not apply. This branch remains held: migration and
+database tests, remote docs validation, rendered review, independent semantic
+review, application release and public publication are pending. Do not describe
+automatic reassessment as shipped until those gates are complete.

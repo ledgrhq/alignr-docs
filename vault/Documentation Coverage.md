@@ -77,6 +77,19 @@ Unrouted legacy Ask/Overview/client editing screens; standalone agents or notifi
 
 The held one-client evaluation candidate is covered by [REST evaluation](../api-reference/evaluate-one-client.mdx), [MCP evaluation](../mcp/evaluate-one-client.mdx), authentication, standards and developer introductions, plus two curated GETs and three generated tools against application `d65fc8a`. The request write is explained in the guide and authenticated live schema, not silently added to the selected read-only snapshot. This work remains unpublished and unverified against a deployed evaluation worker; no current production availability is claimed.
 
+The 5 October Overview terminology and automatic-reassessment candidate updates
+[Your daily review](../guides/daily-review.mdx), [Standards](../guides/standards.mdx)
+and [Workspace health](../guides/workspace-health.mdx). The copy separates
+assessment coverage from run progress, explains the em-dash **No current results**
+state and preserves the distinction between current assessments and recorded open
+issues. It describes asynchronous evaluation after the supported standard, control,
+override and assignment mutations, with existing evidence only and no hard timing
+promise. Application source `4f9b8597d6fb717eaa644b4edca787b38595a284` is an
+unaccepted candidate; connection-policy/catalogue hooks remain outside that scope.
+No generated API, MCP, predicate or control reference changes apply. Keep this docs
+candidate held until application tests, queue operation and release are accepted;
+this entry does not claim the behavior is shipped.
+
 
 The setup and developer guides now have a draft update for the five-step wizard, separate Direct/Partner Microsoft registrations, token bulk-selection behaviour and Developer Console entry. The tour uses new five-step local captures and removes the video and old four-step setup images. The other client, assistant and report captures remain from the same day's local demo and need final UI comparison before publication. Publication and hosted-page verification remain pending the matching application release.
 

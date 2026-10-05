@@ -18,6 +18,7 @@ This is the source of truth for **how the public docs are designed, written and 
 - [Maintenance workflow](Maintenance%20Workflow.md) — source ownership, generators, publication and vault updates.
 - [Review checklist](Review%20Checklist.md) — repeatable criteria for independent review and re-review.
 - [Review log](Review%20Log.md) — verification, known gaps and next improvements.
+- [Overview assessment and automatic reassessment candidate](Overview%20Assessment%20and%20Automatic%20Reassessment%20Candidate%202026-10-05.md) — source-aligned Overview terminology and held reassessment guidance.
 
 ## Coverage audit
 
