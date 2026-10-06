@@ -1455,3 +1455,13 @@ Overview candidate PR #39 so its review diff stays limited to the reassessment
 addition and provenance refresh. Independent semantic review, matching application
 release, publication and hosted readback remain pending; do not describe automatic
 reassessment as shipped yet.
+
+Independent DOC-R02 review found that an added daily-review sentence cited **No live
+checks to score** and **Not assessed yet** from the retired `AlignmentPage.tsx`.
+Current routing uses `WorkspaceOverviewPage`, so the unreachable labels were removed
+and the existing Overview **No current results** explanation was preserved. The long
+automatic-reassessment paragraph in the Standards guide was split for readability
+without changing its trigger or evidence semantics. The revised daily-review and
+Standards sections rendered readably at desktop and 390 px mobile widths without
+horizontal overflow. Matching application release, publication and hosted readback
+remain pending.
