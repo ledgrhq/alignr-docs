@@ -1407,7 +1407,8 @@ release; do not publish based on this preview alone.
 ## 5 October — Overview assessment and automatic reassessment copy (held)
 
 Updated `guides/daily-review.mdx`, `guides/standards.mdx` and
-`guides/workspace-health.mdx` on an isolated branch based on held PR38. Overview
+`guides/workspace-health.mdx` on an isolated branch that integrates the existing
+Overview assessment candidate and its held documentation base. Overview
 copy now uses **Checks passing** and **Assessment coverage**, defines the latter as
 current assessed results rather than run progress, explains the em-dash **No
 current results** state, and clarifies that a recorded issue may remain open after
@@ -1416,11 +1417,38 @@ for the supported standard/control, enablement, effective client override and
 assignment changes, using existing evidence only. It promises no completion time,
 source refresh or manual-review completion.
 
-Source review used app candidate `4f9b8597d6fb717eaa644b4edca787b38595a284` and
-`vault/09-Delivery/Automatic Reassessment Trigger Candidate 2026-10-05.md`.
-Connection-policy changes and catalogue upgrades are explicitly outside this
-initial trigger scope. No endpoint, generated reference or catalogue changed, so
-reference regeneration does not apply. This branch remains held: migration and
-database tests, remote docs validation, rendered review, independent semantic
-review, application release and public publication are pending. Do not describe
-automatic reassessment as shipped until those gates are complete.
+PR107 source `7ba12813`, merged as `70bbd36e` and present in current production
+source `66433b34`, supplies the Overview labels and bounded assessment-read retry.
+The reassessment copy was refreshed against final PR108 head
+`0ffbae16de981d34e716e8c92c0a686def841dec`, whose merge base is current production
+`66433b34ae2838f5c048904c3eea291c3054c334`. Source review covered the mutation
+hooks, durable request/worker, assignment and archive rechecks, and the explicit
+boundary that native control reassessment does not synchronise detection issues.
+Connection-policy changes and catalogue upgrades remain outside this initial trigger
+scope. No API, MCP, predicate, seeded-control or template contract changed, so
+generated reference regeneration does not apply.
+
+PR108's post-Fleet focused workflow
+[`37505935404`](https://github.com/ledgrhq/ledgr/actions/runs/37505935404)
+passed its ordered PostgreSQL migration and reassessment suite, including the
+claim-loss red/green proof. PR107 exact-source rendered/regression proof
+`37268236005` covered the Overview retry.
+
+Local docs validation used Node `22.13.1` and the workflow-pinned Mint CLI
+`4.2.939`. The vault guard passed with 16 indexed notes; broken links, OpenAPI,
+accessibility across 95 MDX files, build validation and `git diff --check` all
+passed. The older globally installed Mint CLI was deliberately not used for the
+acceptance result because it lacks `validate` and reports excluded maintainer links
+that the pinned workflow version correctly omits.
+
+The local Mintlify preview rendered `guides/daily-review.mdx`,
+`guides/standards.mdx` and `guides/workspace-health.mdx` at 1440px desktop and
+390px mobile widths. Review covered the Overview metric table and bounded retry,
+the exact automatic trigger/exclusion and issue-lifecycle paragraph, and the health
+page's existing-evidence boundary. All required text was visible and readable; the
+document width equalled the viewport at both sizes, with no horizontal overflow.
+Screenshots are held outside the repository in
+`/private/tmp/alignr-docs-reassessment-render-2026-10-06/`. This proves local
+rendering only. Independent semantic review, matching application release,
+publication and hosted readback remain pending; do not describe automatic
+reassessment as shipped yet.

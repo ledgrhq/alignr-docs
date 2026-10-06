@@ -389,3 +389,14 @@ legacy-recovery mobile captures and accepted their readability and layout. See t
 dated Review Log for run, source and artifact pins. App release, hosted readback
 and public publication are still outstanding; docs PR #38 remains a draft pending
 the matching application acceptance.
+
+## 5 October: Overview assessment coverage candidate
+
+`guides/daily-review.mdx` follows app PR107: current assessment coverage, historical
+open issues, one initial loader and bounded assessment read/retry preserving loaded
+panels. `guides/standards.mdx` and `guides/workspace-health.mdx` add the held PR108
+automatic native-control reassessment contract: exact policy and assignment triggers,
+existing evidence only, missing/stale evidence remaining unknown or uncovered, skipped
+removed/archived clients, and the separate issue lifecycle. No API, MCP, predicate,
+seeded-control or template contract changed, so reference regeneration does not apply.
+Publication remains held until the matching application release and docs review.
