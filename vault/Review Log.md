@@ -1449,6 +1449,9 @@ page's existing-evidence boundary. All required text was visible and readable; t
 document width equalled the viewport at both sizes, with no horizontal overflow.
 Screenshots are held outside the repository in
 `/private/tmp/alignr-docs-reassessment-render-2026-10-06/`. This proves local
-rendering only. Independent semantic review, matching application release,
-publication and hosted readback remain pending; do not describe automatic
+rendering only. Draft docs PR
+[#40](https://github.com/ledgrhq/alignr-docs/pull/40) is stacked on the current
+Overview candidate PR #39 so its review diff stays limited to the reassessment
+addition and provenance refresh. Independent semantic review, matching application
+release, publication and hosted readback remain pending; do not describe automatic
 reassessment as shipped yet.

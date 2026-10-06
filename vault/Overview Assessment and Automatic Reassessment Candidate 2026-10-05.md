@@ -48,5 +48,7 @@ No OpenAPI, MCP, predicate, seeded-control or template contract changes are invo
 Generated references therefore do not require regeneration. Docs build, link checks
 and accessibility checks passed with Node `22.13.1` and workflow-pinned Mint
 `4.2.939`. Local 1440px and 390px renders of all three affected pages showed the
-expected text without horizontal overflow. Independent semantic review, matching
-app release, publication and hosted readback remain pending.
+expected text without horizontal overflow. Draft docs PR
+[#40](https://github.com/ledgrhq/alignr-docs/pull/40) is stacked on the current
+Overview candidate PR #39. Independent semantic review, matching app release,
+publication and hosted readback remain pending.
