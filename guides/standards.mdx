@@ -69,6 +69,14 @@ A copied library template, checklist import or new blank/general standard starts
 
 For a scoped assistant workflow, a user-owned key can [preview the complete copied draft and activate that exact revision](/mcp/activate-standard-draft). That action enables the workspace default, including future clients; existing client overrides still apply. It does not run checks or establish a passing result. A separate [one-client evaluation request](/mcp/evaluate-one-client) can assess the automated controls of one enabled standard against available evidence for a client within its scope. It does not change assignments or complete manual checks. Confirm that those evaluation tools appear in the live reference before using them.
 
+## After a standard changes
+
+Supported changes to a standard's control definition, parameters or enabled state, the standard's enabled state, a client's effective control override, or the standard's client assignments can queue an automatic reassessment for affected clients. Cosmetic control changes do not queue this work. Reassessment runs asynchronously, so completion depends on worker availability and queue load; there is no guaranteed completion time.
+
+It evaluates existing eligible evidence and does not collect fresh vendor data or complete manual reviews. If required evidence is missing, stale or unavailable, the result remains unknown or uncovered rather than treating the control as passed. Use **Refresh evidence** when new source observations are needed, then review the resulting assessment.
+
+A client removed from the assignment or archived before processing is skipped. Recorded issues use a separate detection workflow, so this reassessment does not immediately create, close or otherwise synchronise them.
+
 ## Read the run outcome
 
 From **Standards**, **Run checks** collects through sources mapped to the selected clients, then evaluates that standard for those clients. Some connected sources may read an account-wide provider inventory, but this run publishes evidence and results only for selected clients. It does not change assignments. You can search the client list, select or deselect visible matches, and run checks for 1–200 clients at a time. Every selected client must remain active, be applicable to the standard and have a mapped evidence source. A connection-wide refresh remains available separately when you need to refresh every client on a source. If a run request's outcome is uncertain, reopen the same standard's dialog and check its original request before starting another run; see [Run checks for selected clients](/api-reference/run-scoped-standard-checks) for recovery details.

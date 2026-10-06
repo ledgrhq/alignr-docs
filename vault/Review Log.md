@@ -1404,9 +1404,64 @@ These are remote rendered-docs checks, not hosted-site readback or production
 acceptance. Docs PR #38 remains a draft until matching application acceptance and
 release; do not publish based on this preview alone.
 
-## 5 October: Overview incident documentation
+## 5 October — Overview assessment and automatic reassessment copy (held)
 
-Prepared daily-review changes against PR107 merged70bbd36e and verified head7ba12813.
-Compared labels/retry behaviour with source and exact-source Chromium proof37268236005.
-No catalogue/API/MCP changes, so no generated references require regeneration.
-No public deployment claim; validation/render/publish gates are pending.
+Updated `guides/daily-review.mdx`, `guides/standards.mdx` and
+`guides/workspace-health.mdx` on an isolated branch that integrates the existing
+Overview assessment candidate and its held documentation base. Overview
+copy now uses **Checks passing** and **Assessment coverage**, defines the latter as
+current assessed results rather than run progress, explains the em-dash **No
+current results** state, and clarifies that a recorded issue may remain open after
+evidence becomes stale. Standards/health copy describes asynchronous reassessment
+for the supported standard/control, enablement, effective client override and
+assignment changes, using existing evidence only. It promises no completion time,
+source refresh or manual-review completion.
+
+PR107 source `7ba12813`, merged as `70bbd36e` and present in current production
+source `66433b34`, supplies the Overview labels and bounded assessment-read retry.
+The reassessment copy was refreshed against final PR108 head
+`0ffbae16de981d34e716e8c92c0a686def841dec`, whose merge base is current production
+`66433b34ae2838f5c048904c3eea291c3054c334`. Source review covered the mutation
+hooks, durable request/worker, assignment and archive rechecks, and the explicit
+boundary that native control reassessment does not synchronise detection issues.
+Connection-policy changes and catalogue upgrades remain outside this initial trigger
+scope. No API, MCP, predicate, seeded-control or template contract changed, so
+generated reference regeneration does not apply.
+
+PR108's post-Fleet focused workflow
+[`37505935404`](https://github.com/ledgrhq/ledgr/actions/runs/37505935404)
+passed its ordered PostgreSQL migration and reassessment suite, including the
+claim-loss red/green proof. PR107 exact-source rendered/regression proof
+`37268236005` covered the Overview retry.
+
+Local docs validation used Node `22.13.1` and the workflow-pinned Mint CLI
+`4.2.939`. The vault guard passed with 16 indexed notes; broken links, OpenAPI,
+accessibility across 95 MDX files, build validation and `git diff --check` all
+passed. The older globally installed Mint CLI was deliberately not used for the
+acceptance result because it lacks `validate` and reports excluded maintainer links
+that the pinned workflow version correctly omits.
+
+The local Mintlify preview rendered `guides/daily-review.mdx`,
+`guides/standards.mdx` and `guides/workspace-health.mdx` at 1440px desktop and
+390px mobile widths. Review covered the Overview metric table and bounded retry,
+the exact automatic trigger/exclusion and issue-lifecycle paragraph, and the health
+page's existing-evidence boundary. All required text was visible and readable; the
+document width equalled the viewport at both sizes, with no horizontal overflow.
+Screenshots are held outside the repository in
+`/private/tmp/alignr-docs-reassessment-render-2026-10-06/`. This proves local
+rendering only. Draft docs PR
+[#40](https://github.com/ledgrhq/alignr-docs/pull/40) is stacked on the current
+Overview candidate PR #39 so its review diff stays limited to the reassessment
+addition and provenance refresh. Independent semantic review, matching application
+release, publication and hosted readback remain pending; do not describe automatic
+reassessment as shipped yet.
+
+Independent DOC-R02 review found that an added daily-review sentence cited **No live
+checks to score** and **Not assessed yet** from the retired `AlignmentPage.tsx`.
+Current routing uses `WorkspaceOverviewPage`, so the unreachable labels were removed
+and the existing Overview **No current results** explanation was preserved. The long
+automatic-reassessment paragraph in the Standards guide was split for readability
+without changing its trigger or evidence semantics. The revised daily-review and
+Standards sections rendered readably at desktop and 390 px mobile widths without
+horizontal overflow. Matching application release, publication and hosted readback
+remain pending.

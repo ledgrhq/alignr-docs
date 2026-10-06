@@ -18,6 +18,8 @@ This is the source of truth for **how the public docs are designed, written and 
 - [Maintenance workflow](Maintenance%20Workflow.md) — source ownership, generators, publication and vault updates.
 - [Review checklist](Review%20Checklist.md) — repeatable criteria for independent review and re-review.
 - [Review log](Review%20Log.md) — verification, known gaps and next improvements.
+- [Overview assessment coverage](Overview%20Assessment%20Coverage%202026-10-05.md) — bounded loading and current-results terminology for PR107.
+- [Overview assessment and automatic reassessment candidate](Overview%20Assessment%20and%20Automatic%20Reassessment%20Candidate%202026-10-05.md) — source-aligned Overview terminology and held reassessment guidance.
 
 ## Coverage audit
 
@@ -36,5 +38,3 @@ This is the source of truth for **how the public docs are designed, written and 
 `vault/` is excluded from Mintlify through `.mintignore`, together with agent instructions and maintainer scripts. Never add vault pages to public navigation or link to them from public MDX. This is a publication boundary, not a secret store: repository readers can still see these notes. Do not store credentials or customer data here.
 
 Agents must consult these files when working; there is no background process that automatically reads or updates them. CI checks the index, exclusion rules and public links, while maintainers remain responsible for semantic accuracy.
-
-- [Overview assessment coverage](Overview%20Assessment%20Coverage%202026-10-05.md) — bounded loading and current-results terminology for PR107.
