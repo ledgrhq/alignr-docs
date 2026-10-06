@@ -2,6 +2,32 @@
 
 Append dated entries. Keep evidence precise and do not turn planned checks into passed checks.
 
+## 2026-10-07 — Partner capability checks are read-only (held)
+
+Updated `guides/client-microsoft-connections.mdx` to distinguish the observational
+**Check access** action from the explicit **Connect client** action that may request
+declared read-only customer consent. The Check access response can report core
+capabilities and optional gaps from the existing grant; consent and GDAP remain
+separate setup states. This corrects the prior sentence that said an explicit access
+check could request customer consent.
+
+The prose is checked against application candidate `bf3ef09f` based on production
+`ff24d03e`: the capability route now probes the selected customer's Partner Graph
+connector and does not call the Connect consent service. The application candidate
+is not deployed; PR #127's focused database/API proof and full CI remain pending. No
+generated API/MCP reference changes because the path, permissions and response shape
+remain unchanged. The docs follow-up branch is based on the stacked docs PR #40; do
+not merge or publish until the matching app change passes its independent review
+and release gates.
+
+`check-docs-vault.py` passed for 16 indexed notes, `mint openapi-check` passed,
+`mint a11y` passed for 96 MDX pages and `git diff --check` passed. `mint broken-links`
+reported only the two existing maintainer README links to excluded `AGENTS.md` and
+`vault/MOC.md`; it found no public MDX link failures. The installed Mintlify CLI
+does not support `mint validate`. A rendered desktop/mobile preview, hosted
+readback and app release remain pending. No live customer grant or collection was
+performed.
+
 ## 2026-10-01 — Published Standards and Facts table search/sort docs
 
 Updated `guides/standards.mdx` for the routed Standards table and

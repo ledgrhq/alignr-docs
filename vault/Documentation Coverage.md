@@ -304,6 +304,15 @@ client Microsoft, Microsoft prerequisites, health and settings guides. Publicati
 is coupled to application PRs 69/70/73/74; do not present the pending source as a
 verified production release. Existing API/MCP catalogues remain unchanged.
 
+### 7 October — Check access vs Connect client
+
+The client Microsoft guide now describes **Check access** as a read-only probe of
+the existing customer grant. It directs consent requests to the separate explicit
+**Connect client** action. This follows ALI-13 application candidate `bf3ef09f`, based
+on `ff24d03e`; its API response shape and generated references are unchanged. Keep the
+docs follow-up stacked after PR #40 and unpublished until the application candidate
+is reviewed, released and the docs checks pass.
+
 ## Progressive findings candidate — 2 October 2026
 
 Issue triage and Standards guides explain reviewing verified findings during a
