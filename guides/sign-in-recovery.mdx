@@ -5,6 +5,8 @@ description: "Recover your password, complete a security-key challenge and know 
 
 Sign in at [app.alignr.io/login](https://app.alignr.io/login) with your workspace email and password. If you have an invitation, open that link first and choose your password; an invitation and a password-reset link serve different purposes.
 
+Use a current browser over HTTPS and allow site storage. Alignr keeps one sign-in consistent across your open tabs, so the browser must support this shared sign-in feature. Local development on `localhost` is supported.
+
 ## Reset a forgotten password
 
 <Steps>
@@ -53,5 +55,7 @@ Once signed in, [register and manage your authenticators](/guides/account-and-te
 | Email recovery is unavailable. | Try again later or contact your workspace administrator. |
 | Too many attempts. | Stop retrying repeatedly and try again later. |
 | No email, despite the generic confirmation. | Check email/workspace spelling, spam and whether the account uses an invitation or SSO. An administrator can check account status. |
+| The browser cannot safely keep your sign-in. | Use a current browser over HTTPS, allow site storage, then sign in again. |
+| Workspace creation or invitation acceptance succeeded, but sign-in could not be saved. | Use a current browser over HTTPS and sign in. Do not submit the workspace form or accept the invitation again. |
 
 **Checkpoint:** you can sign in to the intended workspace and complete its required authentication steps. If you can sign in but cannot access a page, review [roles and permissions](/guides/account-and-team#review-and-change-access) rather than resetting the password again.

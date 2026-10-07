@@ -1393,3 +1393,22 @@ release and hosted readback. No public schema or catalogue changed in this
 label correction. Vault structural and diff checks and the version-pinned
 Mintlify build validation passed after the correction. The root-owned browser
 and preview were closed after review.
+
+
+## 2026-10-07 — held cross-tab sign-in recovery copy
+
+ALI-32 coordinator: Codex root. The frontend candidate requires a current browser
+over HTTPS with site storage enabled so tabs can coordinate one active sign-in.
+Updated `guides/sign-in-recovery.mdx` and the recovery-path note in Information
+Architecture to state that requirement and give a safe recovery after workspace
+creation or invitation acceptance succeeds but session storage fails. The copy
+explicitly directs the person to sign in again instead of repeating account or
+invitation submission.
+
+The browser requirement was checked against the MDN references for the Web Locks
+API and `Navigator.locks`, including secure-context restrictions and same-origin
+coordination. This docs change is held with its application candidate; it is not
+published evidence of release support. `python3 scripts/check-docs-vault.py`,
+`git diff --check`, `npx --yes mint@4.2.939 validate`, `broken-links` and `a11y`
+passed (Mint ran in the Node 22 container because the host Node 16 binary cannot
+run it). Rendered review and hosted readback remain pending after source freeze.
