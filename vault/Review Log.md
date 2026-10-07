@@ -1366,3 +1366,30 @@ acceptance. Grouped conditions and draft preview are being implemented in the
 application and are not publicly documented as available. Their eventual docs
 need the custom-control, condition, advanced-definition and rollout guides plus
 the curated API reference and actual create/edit/preview worked examples.
+
+
+## 2026-10-07 — Root rendered grouped-preview guide review
+
+ALI-46: root reviewed draft PR43 at `5d0b213bec28064c6ee1e5580190c4cc368c690b`
+with Mintlify 4.2.939 and an isolated local browser. Remote validation
+[37590565656](https://github.com/ledgrhq/alignr-docs/actions/runs/37590565656)
+and the Mintlify preview passed at that revision. The real routed application
+uses **Checks → Add check**, unlike the legacy unrouted ControlsTab component;
+corrected the two corresponding labels in `controls/create-custom.mdx`.
+
+Inspected the grouped-condition example at 1440×900 in dark mode and 390×844
+on mobile, the preview guide and error table in light mode at mobile width,
+the custom-control guide at mobile width, and the rollout evidence table at
+desktop and mobile widths. The document/body width remained 390 pixels on
+the narrow pages; wide code/table content stays within its own scroll region.
+Mobile navigation expansion/collapse and the theme switch worked. Screenshots:
+[rendered evidence](Review%20Evidence/grouped-preview-2026-10-07/).
+
+This is a limited rendered documentation pass, not full keyboard/screen-reader
+acceptance or proof of the app's create/edit/preview journey. The combined app
+UI is still under independent browser review, including an identified reorder
+icon defect. Public publication remains held for the final reviewed application
+release and hosted readback. No public schema or catalogue changed in this
+label correction. Vault structural and diff checks and the version-pinned
+Mintlify build validation passed after the correction. The root-owned browser
+and preview were closed after review.
