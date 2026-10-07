@@ -27,8 +27,26 @@ The example message is illustrative. Branch on the status and machine-readable c
 | `409` | The request conflicts with current state. |
 | `422` | The request fails validation. Inspect safe error details. |
 | `429` | Requests are being rate limited. Back off and respect a retry header when provided. |
+| `503` | A required service is temporarily unavailable. For `GET /api/v1/dashboard/alignment` and `GET /api/v1/dashboard/operations`, this can mean the server could not finish bounded database-session cleanup after a timeout. |
 | `5xx` | A server or upstream failure. Preserve enough context to diagnose it. |
+
+The deployment-specific `GET /api/v1/dashboard/alignment` and
+`GET /api/v1/dashboard/operations` reads can return `504` with code
+`dashboard_read_timeout` when their service read exceeds its 12-second budget.
+The server cancels that read and returns no partial result. The budget
+covers the read only: authentication and other request dependencies are outside
+it, and timed-out session cleanup can take up to three additional seconds. It is
+not a strict end-to-end HTTP deadline. If bounded cleanup cannot close the
+session, the request instead returns `503` with code `dependency_unavailable`.
+These limits apply only to those two reads; they do not describe
+`GET /api/v1/dashboard/workspace-home` or other endpoints. The alignment and
+operations reads are not part of the curated OpenAPI snapshot, so check the
+authenticated live schema for their availability in your deployment.
 
 ## Retry deliberately
 
-Use bounded retries with backoff for transient read failures. Do not blindly repeat a mutation after a timeout: the original request may have succeeded. Confirm the resulting state before retrying an operation that changes data.
+For a dashboard-read `504` or transient `503`, retry the read only after a short
+backoff, with a bounded retry count; repeated immediate requests can add load
+without making the underlying read faster. Do not blindly repeat a mutation
+after a timeout: the original request may have succeeded. Confirm the resulting
+state before retrying an operation that changes data.

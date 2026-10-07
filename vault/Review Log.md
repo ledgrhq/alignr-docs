@@ -2,6 +2,71 @@
 
 Append dated entries. Keep evidence precise and do not turn planned checks into passed checks.
 
+## 7 October 2026 — PR47 hosted preview review, publication still held
+
+Codex root reviewed the hosted PR47 preview at source
+`c862ea668aa4dad8e2ef5a4aef14b9521043a32d`, after its GitHub validation and
+Mintlify preview checks passed. Application PR170 merged as
+`435cd668d4ade5a07bd6558a0b2901d07a867ed7`; production workflow
+`37679369462` is still running its repository gate at 20:25 UTC. This does not
+establish deployment or live timeout acceptance. Docs PR46 is now published;
+PR47 has been retargeted to main and remains held for the application runtime.
+
+The changed errors guide rendered at 1440×1000 desktop and 390×844 mobile.
+The timeout explanation and retry guidance wrapped legibly; mobile document
+width matched the 390px viewport, with no horizontal overflow. The desktop
+capture includes the lower timeout prose and retry section; the dedicated
+mobile timeout capture includes the paragraph from its beginning. This is
+limited rendered prose/layout evidence, not a fresh keyboard or full-site
+accessibility audit. Source/contract review and four independent PostgreSQL
+checks are recorded below; they remain distinct from live behaviour.
+
+Review artifacts are private under `/private/tmp/alignr-docs47-root-review`
+(`desktop-errors.png`, `mobile-timeout.png`, `mobile-errors.png`). The owned
+`alignr-docs47-root` browser session was closed after inspection. No local
+preview server was started for this hosted review. Next: verify the matching
+application runtime, merge the reviewed docs after required checks, and inspect
+the public errors URL before claiming publication.
+
+## 7 October 2026 — Dashboard read timeout errors (held)
+
+Updated `api-reference/errors.mdx` against the ALI-83 dashboard deadline candidate
+in `/private/tmp/alignr-ali83-dashboard-deadline` (application checkout based at
+`62a5048e`). Source review covered the two route call sites, the 12-second
+read-only service wrapper, `DashboardReadTimeout`, its safe 504 envelope, and
+the shared-session cleanup path. A timed alignment or operations read returns
+HTTP 504 / `dashboard_read_timeout` without partial data. If bounded cleanup
+cannot close the request session, the cleanup exception inherits the generic
+HTTP 503 / `dependency_unavailable` response. The 12 seconds cover only the
+service read; authentication and other request dependencies are outside the
+budget, with up to three seconds of cleanup grace. The text expressly excludes
+`/dashboard/workspace-home`, which remains a separate contract.
+
+The curated OpenAPI snapshot contains `GET /api/v1/dashboard/workspace-home`
+but not the alignment or operations reads, so no generated reference was
+regenerated. The errors page directs deployment-specific callers to the
+authenticated live schema and recommends a bounded backoff for transient read
+failures. Application evidence independently rerun for this review was four
+focused PostgreSQL integration tests: timeout stops the active statement and
+the same session can run another query; operations returns its positive empty
+workspace result; foreign-Organization reads return 404; and the permission
+check remains enforced. All four passed. The test-owned post-timeout connection
+is explicitly closed; no SQLAlchemy connection-GC warning appeared. This does
+not establish full CI, broad load behaviour, deployment availability or hosted
+documentation acceptance. The change is held on a branch based on open docs PR
+#46 until matching application release and independent docs review.
+
+Docs checks passed: `check-docs-vault.py` (14 indexed notes),
+`mint openapi-check api-reference/openapi.json`, `mint a11y` (97 MDX pages) and
+`git diff --check`. `mint broken-links` found only the two existing README links
+to intentionally excluded `AGENTS.md` and `vault/MOC.md`; no public MDX link
+failed. The available CLI was Mintlify 4.2.229 under Node 22.13.1; the repository
+workflow's pinned 4.2.939 was unavailable, and this CLI has no `mint validate`
+command. `mint dev` reported ready and a local GET of the changed page returned
+200 with the new error text in its response; the preview process also logged
+`ResponseAborted`. No desktop/mobile visual inspection or hosted readback was
+performed.
+
 ## 2026-10-01 — Published Standards and Facts table search/sort docs
 
 Updated `guides/standards.mdx` for the routed Standards table and
