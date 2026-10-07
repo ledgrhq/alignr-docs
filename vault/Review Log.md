@@ -2,6 +2,50 @@
 
 Append dated entries. Keep evidence precise and do not turn planned checks into passed checks.
 
+## 2026-10-07 — Held grouped-control authoring and preview documentation
+
+Prepared a docs-only candidate on branch `docs/ali25-26-grouped-controls-20261007`
+in `/private/tmp/alignr-docs-ali25-26`, based on docs `main` at
+`e0864d0e4de4577f94cf154502a3a7ae313ccaf2`. The implementation source checked
+was application PR #148 at `d575aa3bf2f28fa26f296e1a460820cbff2a0d3a`.
+The backend source was reconciled with root's follow-up commits
+`31861accc762d6c28809775efdeb48e4e22fe0f6` and
+`836beb2714b7f3c8e7b4807a639062287cca9bcb`. The separate UI candidate is
+`49cc2925c406fb329eee7e4433193fa0238f184b` on `codex/control-condition-ui`; it is
+not integrated with the backend or released. These are source-inspection
+checkpoints, not release evidence.
+
+Changed the custom-control, advanced-definition and test/rollout guides; added
+an API-tab recipe for the read-only `POST /standards/{standard_id}/controls/preview`;
+linked it from the API introduction and navigation; updated this coverage map
+and Information Architecture. The prose covers nested `all`/`any` semantics,
+missing/stale evidence, branch-aware gaps, depth/node bounds, same-subject
+evaluation, edit/reopen/reorder/persist behavior and one-client preview. The
+endpoint's two permissions are stated separately from the app picker reads.
+The POST remains deliberately outside the curated read-only OpenAPI snapshot,
+following the existing one-client evaluation recipe convention. No control
+catalogue, predicate reference or MCP catalogue generation was necessary.
+
+Source checks confirmed the editor labels and definition-only PATCH behavior in
+UI commit `49cc2925c406fb329eee7e4433193fa0238f184b`, and backend
+request/response, route dependencies and caps in app
+`836beb2714b7f3c8e7b4807a639062287cca9bcb` (including bounded-preview fixes from
+`31861acc`). The current prose describes the 8-second service budget,
+2-second statement timeout and up to 2-second rollback budget; these are not an
+end-to-end browser latency guarantee. Root's independent observer review and the
+UI's stable source pin remain pending. Reconcile the page again with the final
+reviewed contract before publication. On docs branch
+`docs/ali25-26-grouped-controls-20261007`, `python3 scripts/check-docs-vault.py`,
+`mint validate`, `mint openapi-check api-reference/openapi.json`, `mint a11y`,
+`mint broken-links`, `git diff --check` and the local grouped-result example
+check passed; `mint broken-links` also passed on clean `origin/main`. Mint dev
+served the advanced-definition page and the accessibility tree showed expected
+headings and links. Desktop/mobile visual inspection was not completed because
+browser screenshot capture hung and no usable browser surface was available.
+This candidate is held: no public build, app runtime acceptance, merge,
+deployment or hosted readback is claimed. The required app/UI integration,
+independent reviews, matching release and remote docs validation remain gates.
+
 ## 2026-10-01 — Published Standards and Facts table search/sort docs
 
 Updated `guides/standards.mdx` for the routed Standards table and

@@ -1,0 +1,91 @@
+---
+title: "Preview a custom control definition"
+description: "Check an unsaved grouped control against current evidence for one authorised client."
+---
+
+This request evaluates an unsaved control definition for one client in the standard's scope. It is a read-only preview: it does not save the definition, collect evidence, create a control evaluation or publish detections. Use it to inspect the result before saving a custom control in the app.
+
+<Note>This is a `POST` because the definition and parameter values are sent in the request body. The operation does not mutate workspace data. The curated OpenAPI snapshot on this site intentionally lists selected reads; confirm this route and its current request/response schemas in your deployment's [authenticated live schema](/api-reference/live-schema).</Note>
+
+## Permissions
+
+The request requires both `detection_rule.write` and `fact.read`. Although it does not save or publish anything, the submitted definition can ask questions about a client's facts, so the fact-read permission is required as well as control-write authority. A user-owned API key must carry both scopes, and its owner must retain both permissions.
+
+The app's client picker also needs `organization.read` and `detection_rule.read` to list the clients available to the signed-in user. Those extra read permissions are for the app picker; the preview route itself checks `detection_rule.write` and `fact.read`.
+
+## Submit an unsaved definition
+
+Use the standard ID in the path and one client ID in the `organizationId` query parameter. The request's `definition` is the full control definition, including its population `match`, grouped `expect`, severity and title. This example checks the same exact subject for account state and MFA registration:
+
+```http
+POST /api/v1/standards/<standard-id>/controls/preview?organizationId=<client-id>
+Authorization: Bearer <user-owned-api-key>
+Content-Type: application/json
+
+{
+  "definition": {
+    "match": { "predicate": "account_enabled" },
+    "expect": {
+      "any": [
+        { "fact": "account_enabled", "op": "eq", "value": false },
+        {
+          "all": [
+            { "fact": "account_enabled", "op": "eq", "value": true },
+            { "fact": "mfa_registered", "op": "eq", "value": true }
+          ]
+        }
+      ]
+    },
+    "severity": "high",
+    "title": "Enabled accounts have MFA registered",
+    "evidence": ["account_enabled", "mfa_registered"]
+  },
+  "parameters": {},
+  "parameterValues": {}
+}
+```
+
+`parameters` contains the definition's parameter declarations. `parameterValues` supplies explicit values for this preview; those take precedence over a saved client override and declared defaults. Both objects may be omitted when empty. A grouped expectation may use nested `all` and `any` groups; see [advanced control definitions](/controls/advanced-definitions) for the shape, operator behaviour and limits.
+
+When previewing a saved control's edited conditions, include its `controlId`. It must identify a control in the path's standard and tenant. The server then uses that client's saved parameter and source-selection overrides where the request does not supply a preview parameter value. Do not include a control ID from another standard. The app sends this ID automatically when you edit an existing control.
+
+Workspace-scoped draft standards can be previewed for an active client before the standard is activated. For a standard with selected-client scope, the client must already be assigned to it. A preview for an unassigned or foreign client returns not found.
+
+## Read the preview
+
+A complete response contains the overall `status`, `complete`, subject counts, a bounded `subjects` list, `sourceGaps` and a `limit`. Each subject has a `status` (`pass`, `fail` or `unknown`), decisive condition paths and any `missingPredicates`. Overall status is `pass`, `fail`, `no_data`, `not_covered` or `error`.
+
+```json
+{
+  "standardId": "11111111-1111-4111-8111-111111111111",
+  "controlId": null,
+  "organizationId": "22222222-2222-4222-8222-222222222222",
+  "status": "no_data",
+  "complete": true,
+  "evaluatedSubjects": 0,
+  "failingSubjects": 0,
+  "unknownSubjects": 0,
+  "subjects": [],
+  "sourceGaps": [],
+  "limit": 100,
+  "errorCode": null
+}
+```
+
+This is a shape example, not a prediction for a particular client. `pass` and `fail` report the evaluated control logic; `no_data` means the available facts do not decide it; `not_covered` indicates that the required condition cannot be supported by selected connected sources; and `error` with `complete: false` means the preview could not return a complete verdict. Subject rows affected by stale evidence are shown as `unknown`, and the counts reflect that downgrade. A source gap on an unused `any` alternative does not by itself invalidate another complete branch. Missing or stale evidence never counts as passing.
+
+The preview is bounded to 3,000 relevant facts, 100 evaluated subjects and 256 source bindings. The service allows up to 8 seconds for preview work, applies a 2-second timeout to each database statement, and allows up to 2 seconds to roll back after cancellation. A cap being exceeded, a timeout or a changed source/policy/fact snapshot makes the response incomplete; never treat it as a pass. These are server-side budgets and do not guarantee end-to-end browser latency. Error codes include `fact_limit_exceeded`, `subject_limit_exceeded`, `source_limit_exceeded`, `evaluation_timeout`, `evaluation_failed` and `stale_snapshot`; check the live schema for the deployment's exact response model.
+
+The preview reads current eligible client facts and applies the standard's source selection and account-population rules. It does not call a provider, run the verifier, reconcile guest-account findings or create an evaluation or detection. A preview does not refresh evidence or replace the later saved assessment. Use the app's [control editor](/controls/create-custom) and [testing checklist](/controls/test-and-rollout) for the complete authoring journey.
+
+## Handle errors and uncertainty
+
+| Response | What to do |
+| --- | --- |
+| `401` | Check the bearer credential and expiry. |
+| `403` | Confirm both `detection_rule.write` and `fact.read` are granted and, for a user-owned key, still held by its owner. |
+| `404` | Check the standard, client and optional control ID belong to this workspace; for selected-client scope, confirm the client assignment. |
+| `422` | Correct the definition, operator, parameter declaration or explicit parameter value using the live schema and definition constraints. |
+| `200` with `status: "error"` and `complete: false` | Read `errorCode`, correct the limit or stale condition where possible, then submit a new preview. Do not use partial subjects as a verdict. |
+
+This endpoint does not create an idempotency receipt because it makes no workspace mutation. A complete preview is only a point-in-time check for the selected client. Save the reviewed control, then run the standard's normal checks when it is ready for assessment.
