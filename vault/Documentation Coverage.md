@@ -366,3 +366,9 @@ The adjacent [API errors guide](../api-reference/errors.mdx) now explains the
 deployment-specific alignment and operations reads. It explicitly excludes the
 workspace-home endpoint and does not present either read as part of the curated
 OpenAPI snapshot.
+
+PR47 hosted preview review on 7 October covered the changed error prose at
+desktop and 390px mobile widths without horizontal overflow. Application PR170
+is merged as `435cd668d4ade5a07bd6558a0b2901d07a867ed7`, but production workflow
+`37679369462` has not yet completed at the 20:25 UTC checkpoint. Keep this errors
+change held for verified runtime and public URL readback; see the dated review log.

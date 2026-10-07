@@ -2,6 +2,32 @@
 
 Append dated entries. Keep evidence precise and do not turn planned checks into passed checks.
 
+## 7 October 2026 — PR47 hosted preview review, publication still held
+
+Codex root reviewed the hosted PR47 preview at source
+`c862ea668aa4dad8e2ef5a4aef14b9521043a32d`, after its GitHub validation and
+Mintlify preview checks passed. Application PR170 merged as
+`435cd668d4ade5a07bd6558a0b2901d07a867ed7`; production workflow
+`37679369462` is still running its repository gate at 20:25 UTC. This does not
+establish deployment or live timeout acceptance. Docs PR46 is now published;
+PR47 has been retargeted to main and remains held for the application runtime.
+
+The changed errors guide rendered at 1440×1000 desktop and 390×844 mobile.
+The timeout explanation and retry guidance wrapped legibly; mobile document
+width matched the 390px viewport, with no horizontal overflow. The desktop
+capture includes the lower timeout prose and retry section; the dedicated
+mobile timeout capture includes the paragraph from its beginning. This is
+limited rendered prose/layout evidence, not a fresh keyboard or full-site
+accessibility audit. Source/contract review and four independent PostgreSQL
+checks are recorded below; they remain distinct from live behaviour.
+
+Review artifacts are private under `/private/tmp/alignr-docs47-root-review`
+(`desktop-errors.png`, `mobile-timeout.png`, `mobile-errors.png`). The owned
+`alignr-docs47-root` browser session was closed after inspection. No local
+preview server was started for this hosted review. Next: verify the matching
+application runtime, merge the reviewed docs after required checks, and inspect
+the public errors URL before claiming publication.
+
 ## 7 October 2026 — Dashboard read timeout errors (held)
 
 Updated `api-reference/errors.mdx` against the ALI-83 dashboard deadline candidate
