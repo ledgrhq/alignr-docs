@@ -1303,3 +1303,40 @@ acceptance. Grouped conditions and draft preview are being implemented in the
 application and are not publicly documented as available. Their eventual docs
 need the custom-control, condition, advanced-definition and rollout guides plus
 the curated API reference and actual create/edit/preview worked examples.
+
+## 7 October — compact workspace Overview API reference (held)
+
+Updated the curated API reference and added `api-reference/workspace-overview.mdx`
+against application PR #165 head `5abbff250fef594092dca600e25865e89e2e330f`
+([PR #165](https://github.com/ledgrhq/ledgr/pull/165)), based on the reviewed
+prod source at `3f3ed0265129d8ec54f3d9672c512ff0bc6d14c4`. Source inspection
+covered `dashboard.py`, `workspace_home.py`, `dashboard_service.py`, the mounted
+`WorkspaceOverviewPage`, `useWorkspaceHome` and tenant-isolation tests. The
+contract requires `dashboard.read`, accepts optional `organizationId` and the
+legacy `organization_id` (camelCase wins), returns only `needsAttention`,
+`integrationHealth` and `discovery`, and uses 404 rather than widening an invalid
+or foreign Organization filter. Selected-client discovery fields narrow; the
+six-row connection preview, connection totals, unmapped remote-company count
+and terminal-sweep history remain tenant-wide. Discovery observation counts use active, non-superseded, unretracted facts; they do not assert freshness, collection completeness or a passing control. Alignment/coverage statistics
+are a separate read and are not added to this response. `/dashboard/overview`
+remains a separate broad compatibility contract.
+
+The generator now selects the read-only `GET /api/v1/dashboard/workspace-home`
+operation in the Dashboard group. Regeneration from the exact PR #165 application
+checkout produced 21 selected GET operations and left the 33-tool MCP catalogue
+unchanged. The operation includes the `WorkspaceHomeRead` schema, both query
+spellings, `dashboard.read`, and 403/404 explanations. It states that generated
+source does not establish deployment availability.
+
+The docs vault guard passed (14 indexed notes and publication boundaries),
+`mint openapi-check` passed, `mint a11y` passed for 97 MDX pages and
+`git diff --check` passed. `mint broken-links` reports only the two existing
+README links to intentionally excluded `AGENTS.md` and `vault/MOC.md`; no public
+MDX link failed. The installed Mintlify CLI is 4.2.229 on Node 22.13.1; it does
+not provide `mint validate`. Local `mint dev` reported the preview ready, then
+logged a `transformAlgorithm` TypeError; the new prose page and generated
+operation nevertheless rendered. Desktop and 390px mobile previews showed the
+page, navigation and response table without visible overflow. No authenticated
+API call, production runtime check, hosted docs readback or publication was
+performed. Application PR #165 remains open; keep this docs change held until
+matching application review/release and fresh docs review.

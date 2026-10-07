@@ -17,6 +17,7 @@ GROUPS = {
     'Organizations': [('/organizations', 'List Organizations'), ('/organizations/{organization_id}', 'Get an Organization')],
     'Standards': [('/standards', 'List standards'), ('/standards/{standard_id}', 'Get a standard'), ('/standards/{standard_id}/controls', 'List controls'), ('/standards/{standard_id}/assignments', 'Get standard client assignments'), ('/standards/{standard_id}/activation-preview', 'Preview copied-standard activation (legacy)'), ('/standards/{standard_id}/activation-preview/summary', 'Read standard activation summary'), ('/standards/{standard_id}/activation-preview/pages', 'Read standard activation page'), ('/standards/{standard_id}/evaluation-preview', 'Preview one-client evaluation'), ('/standards/{standard_id}/evaluation-requests/{operation_id}', 'Get an evaluation request')],
     'Alignment': [('/organizations/{organization_id}/compliance', 'Get client compliance'), ('/organizations/{organization_id}/compliance/trend', 'Get compliance trend')],
+    'Dashboard': [('/dashboard/workspace-home', 'Read compact workspace Overview panels')],
     'Detections': [('/detections', 'List detections'), ('/detections/{detection_id}', 'Get a detection')],
     'Remediations': [('/remediations', 'List remediation runs'), ('/approvals', 'List approval requests')],
     'Evidence': [('/facts', 'List facts'), ('/integrations/{integration_id}/client-mapping-candidates', 'List source client mappings'), ('/integrations/{integration_id}/sync-operations/{operation_id}', 'Get an evidence refresh')],
@@ -35,6 +36,37 @@ for group, endpoints in GROUPS.items():
             raise ValueError(f'Expected an explicit permission for {path}')
         operation.update(summary=title, tags=[group], security=[{'BearerAuth': []}])
         operation['description'] = f'Requires `{permission}`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability.'
+        if suffix == '/dashboard/workspace-home':
+            operation['description'] += (
+                ' Returns only `needsAttention`, `integrationHealth` and `discovery`; '
+                'it does not include alignment percentages, assessment counts or control results. '
+                'The mounted workspace Overview reads alignment statistics separately. '
+                '`needsAttention` is capped at four open findings. '
+                '`organizationId` is the canonical optional client filter; the legacy '
+                '`organization_id` spelling is also accepted, and `organizationId` takes '
+                'precedence if both are supplied. Without a client filter, client lists and '
+                'discovery scope cover the tenant. With one, `needsAttention`, '
+                '`organizationsInScope`, `organizationsObserved` and '
+                '`unobservedOrganizations` are narrowed to that client; `fullyObserved` '
+                'follows the selected client scope. '
+                '`integrationHealth` (up to six integrations, ordered by name), '
+                '`connectedIntegrations`, `totalIntegrations`, `unmappedRemoteCompanies` '
+                'and `everSwept` remain tenant-wide. `unobservedOrganizations` is capped '
+                'at six entries. `everSwept` reports whether any tenant sweep completed '
+                'or failed; `everLooked` is true when the selected scope has active, '
+                'non-superseded, unretracted facts or the tenant has a terminal sweep. These are discovery '
+                'signals, not a freshness threshold or a passing control result. Neither '
+                'is a client-specific assessment timestamp. A missing or foreign client ID '
+                'returns 404; a caller '
+                'without `dashboard.read` receives 403. This read neither starts collection '
+                'nor evaluates controls.'
+            )
+            operation['responses']['403'] = {
+                'description': 'The authenticated user or API key lacks `dashboard.read`.'
+            }
+            operation['responses']['404'] = {
+                'description': 'The selected Organization does not exist in the authenticated tenant.'
+            }
         if suffix == '/approvals':
             operation['description'] += ' Search q is a literal case-insensitive substring of detection title/reference, Organization name or requester display label, trimmed at the edges and bounded to 200 characters. Search, status/subject filters and sorting apply before count and pagination. Sort accepts request, organization, requester, requested or status with _asc/_desc. Missing optional request/Organization context sorts last; requester labels use full name or email, falling back to System when unavailable. Status sorts the displayed Approved/Declined/Pending labels. Omitted sort preserves created-time descending; equal values use descending approval UUID. Generic subjects and missing context remain in the unfiltered queue. This read cannot approve, decline or execute a change.'
         if suffix == '/remediations':

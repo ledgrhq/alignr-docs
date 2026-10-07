@@ -59,6 +59,7 @@
               "anyOf": [
                 {
                   "type": "integer",
+                  "maximum": 100000,
                   "minimum": 1
                 },
                 {
@@ -116,6 +117,7 @@
               "anyOf": [
                 {
                   "type": "integer",
+                  "maximum": 20000000,
                   "minimum": 0
                 },
                 {
@@ -955,6 +957,86 @@
         "x-ledgr-permission": "detection.read"
       }
     },
+    "/api/v1/dashboard/workspace-home": {
+      "get": {
+        "tags": [
+          "Dashboard"
+        ],
+        "summary": "Read compact workspace Overview panels",
+        "description": "Requires `dashboard.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability. Returns only `needsAttention`, `integrationHealth` and `discovery`; it does not include alignment percentages, assessment counts or control results. The mounted workspace Overview reads alignment statistics separately. `needsAttention` is capped at four open findings. `organizationId` is the canonical optional client filter; the legacy `organization_id` spelling is also accepted, and `organizationId` takes precedence if both are supplied. Without a client filter, client lists and discovery scope cover the tenant. With one, `needsAttention`, `organizationsInScope`, `organizationsObserved` and `unobservedOrganizations` are narrowed to that client; `fullyObserved` follows the selected client scope. `integrationHealth` (up to six integrations, ordered by name), `connectedIntegrations`, `totalIntegrations`, `unmappedRemoteCompanies` and `everSwept` remain tenant-wide. `unobservedOrganizations` is capped at six entries. `everSwept` reports whether any tenant sweep completed or failed; `everLooked` is true when the selected scope has active, non-superseded, unretracted facts or the tenant has a terminal sweep. These are discovery signals, not a freshness threshold or a passing control result. Neither is a client-specific assessment timestamp. A missing or foreign client ID returns 404; a caller without `dashboard.read` receives 403. This read neither starts collection nor evaluates controls.",
+        "operationId": "workspace_home_api_v1_dashboard_workspace_home_get",
+        "parameters": [
+          {
+            "name": "organization_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Organization Id"
+            }
+          },
+          {
+            "name": "organizationId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Organizationid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkspaceHomeRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The authenticated user or API key lacks `dashboard.read`."
+          },
+          "404": {
+            "description": "The selected Organization does not exist in the authenticated tenant."
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "x-ledgr-permission": "dashboard.read"
+      }
+    },
     "/api/v1/detections": {
       "get": {
         "tags": [
@@ -1166,6 +1248,7 @@
               "anyOf": [
                 {
                   "type": "integer",
+                  "maximum": 100000,
                   "minimum": 1
                 },
                 {
@@ -1223,6 +1306,7 @@
               "anyOf": [
                 {
                   "type": "integer",
+                  "maximum": 20000000,
                   "minimum": 0
                 },
                 {
@@ -1432,6 +1516,7 @@
               "anyOf": [
                 {
                   "type": "integer",
+                  "maximum": 100000,
                   "minimum": 1
                 },
                 {
@@ -1489,6 +1574,7 @@
               "anyOf": [
                 {
                   "type": "integer",
+                  "maximum": 20000000,
                   "minimum": 0
                 },
                 {
@@ -1640,6 +1726,7 @@
               "anyOf": [
                 {
                   "type": "integer",
+                  "maximum": 100000,
                   "minimum": 1
                 },
                 {
@@ -1697,6 +1784,7 @@
               "anyOf": [
                 {
                   "type": "integer",
+                  "maximum": 20000000,
                   "minimum": 0
                 },
                 {
@@ -1908,6 +1996,7 @@
               "anyOf": [
                 {
                   "type": "integer",
+                  "maximum": 100000,
                   "minimum": 1
                 },
                 {
@@ -1965,6 +2054,7 @@
               "anyOf": [
                 {
                   "type": "integer",
+                  "maximum": 20000000,
                   "minimum": 0
                 },
                 {
@@ -2867,6 +2957,218 @@
           "dismissed"
         ],
         "title": "DetectionStatus"
+      },
+      "WorkspaceHomeRead": {
+        "properties": {
+          "needsAttention": {
+            "items": {
+              "$ref": "#/components/schemas/WorkspaceNeedsAttentionItem"
+            },
+            "type": "array",
+            "title": "Needsattention"
+          },
+          "integrationHealth": {
+            "items": {
+              "$ref": "#/components/schemas/WorkspaceIntegrationHealth"
+            },
+            "type": "array",
+            "title": "Integrationhealth"
+          },
+          "discovery": {
+            "$ref": "#/components/schemas/WorkspaceDiscoveryPosture"
+          }
+        },
+        "type": "object",
+        "required": [
+          "needsAttention",
+          "integrationHealth",
+          "discovery"
+        ],
+        "title": "WorkspaceHomeRead"
+      },
+      "WorkspaceDiscoveryPosture": {
+        "properties": {
+          "connectedIntegrations": {
+            "type": "integer",
+            "title": "Connectedintegrations"
+          },
+          "totalIntegrations": {
+            "type": "integer",
+            "title": "Totalintegrations"
+          },
+          "unmappedRemoteCompanies": {
+            "type": "integer",
+            "title": "Unmappedremotecompanies"
+          },
+          "organizationsInScope": {
+            "type": "integer",
+            "title": "Organizationsinscope"
+          },
+          "organizationsObserved": {
+            "type": "integer",
+            "title": "Organizationsobserved"
+          },
+          "unobservedOrganizations": {
+            "items": {
+              "$ref": "#/components/schemas/WorkspaceUnobservedOrganization"
+            },
+            "type": "array",
+            "title": "Unobservedorganizations"
+          },
+          "everSwept": {
+            "type": "boolean",
+            "title": "Everswept"
+          },
+          "everLooked": {
+            "type": "boolean",
+            "title": "Everlooked"
+          },
+          "fullyObserved": {
+            "type": "boolean",
+            "title": "Fullyobserved"
+          }
+        },
+        "type": "object",
+        "required": [
+          "connectedIntegrations",
+          "totalIntegrations",
+          "unmappedRemoteCompanies",
+          "organizationsInScope",
+          "organizationsObserved",
+          "unobservedOrganizations",
+          "everSwept",
+          "everLooked",
+          "fullyObserved"
+        ],
+        "title": "WorkspaceDiscoveryPosture"
+      },
+      "WorkspaceUnobservedOrganization": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "unmapped": {
+            "type": "boolean",
+            "title": "Unmapped"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "unmapped"
+        ],
+        "title": "WorkspaceUnobservedOrganization"
+      },
+      "WorkspaceIntegrationHealth": {
+        "properties": {
+          "mode": {
+            "type": "string",
+            "title": "Mode",
+            "default": "unverified"
+          },
+          "integrationId": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Integrationid"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "icon": {
+            "type": "string",
+            "title": "Icon"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "lastSyncAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lastsyncat"
+          }
+        },
+        "type": "object",
+        "required": [
+          "integrationId",
+          "name",
+          "icon",
+          "status",
+          "lastSyncAt"
+        ],
+        "title": "WorkspaceIntegrationHealth"
+      },
+      "WorkspaceNeedsAttentionItem": {
+        "properties": {
+          "detectionId": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Detectionid"
+          },
+          "ref": {
+            "type": "string",
+            "title": "Ref"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "subject": {
+            "type": "string",
+            "title": "Subject"
+          },
+          "organizationId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Organizationid"
+          },
+          "organizationName": {
+            "type": "string",
+            "title": "Organizationname"
+          },
+          "severity": {
+            "type": "string",
+            "title": "Severity"
+          },
+          "actionLabel": {
+            "type": "string",
+            "title": "Actionlabel"
+          }
+        },
+        "type": "object",
+        "required": [
+          "detectionId",
+          "ref",
+          "title",
+          "subject",
+          "organizationId",
+          "organizationName",
+          "severity",
+          "actionLabel"
+        ],
+        "title": "WorkspaceNeedsAttentionItem"
       },
       "ComplianceTrendRead": {
         "properties": {

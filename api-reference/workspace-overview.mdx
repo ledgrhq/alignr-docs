@@ -1,0 +1,40 @@
+---
+title: "Read workspace Overview data"
+description: "Use the compact workspace-home read for attention, connection and discovery panels, and keep it separate from alignment results."
+---
+
+The workspace Overview uses a compact read for its attention list, connection preview and discovery posture. It does not return assessment scores or control results. Read the generated **Dashboard** operation for the exact request and response schema.
+
+## Request the compact projection
+
+```bash
+curl --fail-with-body \
+  'https://api.alignr.io/api/v1/dashboard/workspace-home?organizationId=ORGANIZATION_ID' \
+  --header "Authorization: Bearer $ALIGNR_API_KEY"
+```
+
+The bearer key needs `dashboard.read`. `organizationId` is optional. Without it, the client list and discovery scope cover the authenticated MSP workspace. When set, the selected Organization must belong to that workspace. The older `organization_id` spelling is also accepted; if both names are present, `organizationId` takes precedence.
+
+## Understand the response and its scope
+
+The response contains only three top-level fields:
+
+| Field | Meaning |
+| --- | --- |
+| `needsAttention` | Up to four open findings, ordered by the server's rank and stable tie-break. A selected Organization narrows this list. An empty list is not by itself an all-clear. |
+| `integrationHealth` | Up to six connections, ordered by name. This preview remains workspace-wide even when `organizationId` is set. `lastSyncAt` may be `null`; no completed sync is different from a healthy connection or fresh evidence. |
+| `discovery` | Signals describing whether clients are mapped and have active, non-superseded, unretracted facts. Client-scope counts and `unobservedOrganizations` follow the optional Organization filter; connection totals, `unmappedRemoteCompanies` and `everSwept` remain workspace-wide. The unobserved-client list is capped at six entries. |
+
+`discovery` separates “not observed” from “nothing needs attention”. `organizationsObserved` counts in-scope clients with active, non-superseded, unretracted facts. An item in `unobservedOrganizations` has no such fact in scope; `unmapped` distinguishes a client without a mapped source from one that is mapped but has no active, non-superseded, unretracted facts. `fullyObserved` is false when the scope is empty or any client is unobserved. These active-fact signals do not establish freshness, completeness of collection, or a passing control result. `everSwept` is tenant-wide terminal sweep history, including completed or failed sweeps. `everLooked` is true when the selected scope has active, non-superseded, unretracted facts or the tenant has a terminal sweep. Neither field is a selected client's assessment timestamp.
+
+This endpoint does not include alignment percentages, assessment counts, coverage or per-control results. The app loads those statistics separately. For client control detail, use the client-compliance reads in the API reference's **Alignment** group and interpret statuses with the [control-status guide](/guides/control-status). A quiet attention list means only that the response contains no open finding in that scope.
+
+The existing `/dashboard/overview` response is a separate, broader compatibility contract; do not use its fields to infer the compact endpoint's shape. Check the authenticated live schema for the endpoints available in your deployment.
+
+## Handle errors and limits
+
+- `403` means the caller lacks `dashboard.read`.
+- `404` means the selected Organization is absent from the authenticated tenant. The API does not fall back to tenant-wide data for an invalid or foreign ID.
+- This is a read-only projection. It does not collect evidence, run checks, update a mapping or change a finding.
+
+Use the live API reference for deployment-specific availability. A generated schema describes the application source used to build the docs; it does not confirm a deployment.
