@@ -370,3 +370,22 @@ Exchange PowerShell's `-Organization` parameter; the candidate's initial Graph
 domain is not proven to be that domain after tenant changes. Do not publish this
 copy or describe Exchange readiness as available until source review and runtime
 acceptance resolve these gaps. No customer credentials or tenant data were used.
+
+### 7 October 2026 — selected-mailbox forwarding read (held follow-up)
+
+The held ALI-18/19 application branch adds one fixed read of
+`ForwardingAddress`, `ForwardingSmtpAddress` and
+`DeliverToMailboxAndForward`, tied to a current user fact observed by the
+selected Direct integration. The API guide now documents the exact
+`mailbox.forwarding.read` request, `integration.read` permission, idempotency,
+safe unknown/failure cases, and the absence of any setting-write or remediation
+operation. `scripts/sync-reference.py` regenerated the selected GET OpenAPI
+snapshot from that candidate; its operation schema now includes the new result
+shape. The POST operation-creation route stays outside the curated read-only
+OpenAPI selection and is documented manually in the API guide.
+
+The matching docs worktree is `/private/tmp/alignr-docs-exchange-ali18`, branch
+`docs/exchange-certificate-probe-20261007`. It remains held and unpublished until
+application source review, runtime and release gates pass. The Graph/PowerShell
+domain compatibility gap remains explicit. This update does not claim production
+availability, mailbox collection, remediation, or any Exchange writes.

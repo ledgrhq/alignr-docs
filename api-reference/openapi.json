@@ -2259,7 +2259,7 @@
             "BearerAuth": []
           }
         ],
-        "description": "Requires `integration.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability. Exchange certificate responses contain public certificate metadata only; private certificate material is never returned. The connection probe checks the selected tenant/application identity and Exchange RBAC by reading organization configuration. It does not collect mailbox data or change Exchange settings.",
+        "description": "Requires `integration.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability. Exchange certificate responses contain public certificate metadata only; private certificate material is never returned.",
         "x-ledgr-permission": "integration.read"
       }
     },
@@ -2319,7 +2319,7 @@
             "BearerAuth": []
           }
         ],
-        "description": "Requires `integration.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability. Exchange certificate responses contain public certificate metadata only; private certificate material is never returned. The connection probe checks the selected tenant/application identity and Exchange RBAC by reading organization configuration. It does not collect mailbox data or change Exchange settings.",
+        "description": "Requires `integration.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability.",
         "x-ledgr-permission": "integration.read"
       }
     },
@@ -2389,7 +2389,7 @@
             "BearerAuth": []
           }
         ],
-        "description": "Requires `integration.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability. Exchange certificate responses contain public certificate metadata only; private certificate material is never returned. The connection probe checks the selected tenant/application identity and Exchange RBAC by reading organization configuration. It does not collect mailbox data or change Exchange settings.",
+        "description": "Requires `integration.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability. Operation types are fixed: `connection_probe` checks selected tenant/application identity and reads organization configuration; `mailbox.forwarding.read` reads only ForwardingAddress, ForwardingSmtpAddress and DeliverToMailboxAndForward for one mailbox resolved from a current fact in this selected Direct connection. It does not enumerate mailboxes or change Exchange settings.",
         "x-ledgr-permission": "integration.read"
       }
     }
@@ -2475,8 +2475,23 @@
           },
           "operationCode": {
             "type": "string",
-            "const": "connection_probe",
+            "enum": [
+              "connection_probe",
+              "mailbox.forwarding.read"
+            ],
             "title": "Operationcode"
+          },
+          "targetExternalDirectoryObjectId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Targetexternaldirectoryobjectid"
           },
           "state": {
             "type": "string",
@@ -2535,9 +2550,13 @@
                 "$ref": "#/components/schemas/ExchangeConnectionProbeResult"
               },
               {
+                "$ref": "#/components/schemas/ExchangeMailboxForwardingReadResult"
+              },
+              {
                 "type": "null"
               }
-            ]
+            ],
+            "title": "Result"
           }
         },
         "type": "object",
@@ -2554,6 +2573,55 @@
           "result"
         ],
         "title": "ExchangeRuntimeOperationRead"
+      },
+      "ExchangeMailboxForwardingReadResult": {
+        "properties": {
+          "targetExternalDirectoryObjectId": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Targetexternaldirectoryobjectid"
+          },
+          "forwardingAddress": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Forwardingaddress"
+          },
+          "forwardingSmtpAddress": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Forwardingsmtpaddress"
+          },
+          "deliverToMailboxAndForward": {
+            "type": "boolean",
+            "title": "Delivertomailboxandforward"
+          },
+          "checkedAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Checkedat"
+          }
+        },
+        "type": "object",
+        "required": [
+          "targetExternalDirectoryObjectId",
+          "forwardingAddress",
+          "forwardingSmtpAddress",
+          "deliverToMailboxAndForward",
+          "checkedAt"
+        ],
+        "title": "ExchangeMailboxForwardingReadResult"
       },
       "ExchangeConnectionProbeResult": {
         "properties": {

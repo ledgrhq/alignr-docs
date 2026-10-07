@@ -1352,3 +1352,26 @@ principal role-group membership, distinct from Entra `Exchange.ManageAsApp`
 consent and from RBAC for Applications mailbox-data permissions. The setup and
 API recipe link directly to Microsoft's custom role-group instructions; no broad
 role grant is recommended.
+
+### 7 October 2026 — one-mailbox forwarding read follow-up (held)
+
+Reconciled the Exchange API draft with the ALI-18/19 source candidate at
+`fa11fc9b7b4f1aa823e83f4ea7ed47b09dc3f433` plus its uncommitted read-slice
+changes. The guide documents a fixed `mailbox.forwarding.read` request bound to
+the current `account_enabled` fact observed by the selected Direct integration,
+with exact Graph tenant/user verification and a three-property
+`Get-EXOMailbox -ExternalDirectoryObjectId` projection. It says that missing or
+stale facts, absent properties and changed authority are unavailable/failed,
+never “forwarding is off”; it makes no write, rollback, collection or control-pass
+claim. `scripts/sync-reference.py` regenerated 23 curated GETs and 33 MCP tools;
+the existing GET operation schema now contains the exact forwarding result shape.
+The POST operation-creation path remains manual prose because the curated OpenAPI
+selection is intentionally GET-only.
+
+This is source/prose reconciliation only. No live Microsoft call, app runtime,
+full docs build, desktop/mobile preview or publication was performed in this
+follow-up. The candidate docs branch remains held pending the application's
+review, runtime, full CI and release. The `-Organization` primary-domain gap is
+still open and explicitly described. The earlier independent docs render and
+runtime evidence above applies to the prior app candidate and does not prove this
+new API slice.
