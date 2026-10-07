@@ -2,6 +2,47 @@
 
 Append dated entries. Keep evidence precise and do not turn planned checks into passed checks.
 
+## 2026-10-07 — Partner capability checks are read-only (held)
+
+Updated `guides/client-microsoft-connections.mdx` to distinguish the observational
+**Check access** action from the explicit **Connect client** action that may request
+declared read-only customer consent. The Check access response can report core
+capabilities and optional gaps from the existing grant; consent and GDAP remain
+separate setup states. This corrects the prior sentence that said an explicit access
+check could request customer consent.
+
+The prose is checked against application candidate `bf3ef09f` based on production
+`ff24d03e`: the capability route now probes the selected customer's Partner Graph
+connector and does not call the Connect consent service. The application candidate
+is not deployed; PR #127's focused database/API proof and full CI remain pending. No
+generated API/MCP reference changes because the path, permissions and response shape
+remain unchanged. The docs follow-up branch is based on the stacked docs PR #40; do
+not merge or publish until the matching app change passes its independent review
+and release gates.
+
+`check-docs-vault.py` passed for 16 indexed notes, `mint openapi-check` passed,
+`mint a11y` passed for 96 MDX pages and `git diff --check` passed. `mint broken-links`
+reported only the two existing maintainer README links to excluded `AGENTS.md` and
+`vault/MOC.md`; it found no public MDX link failures. The installed Mintlify CLI
+does not support `mint validate`.
+
+An independent local render review used exact docs PR #41 head
+`158a96746d648298102bb3fa62724ca13c99d7a0` and the changed paragraph in
+`guides/client-microsoft-connections.mdx`, with Node 22.13.1 and Mintlify CLI
+4.2.229. At 1440×1000 and 390×844, the capability/consent paragraph and its
+client-page versus integration-page boundary remained readable at 16px/28px,
+inside the article column, with no clipped edges or document-wide horizontal
+overflow (`scrollWidth` equalled 1440 and 390 respectively). The mobile paragraph
+wrapped to 308px without overlap. **Microsoft’s introduction** was visible and
+opened the exact external target
+`https://learn.microsoft.com/en-us/partner-center/customers/gdap-introduction`
+in a new tab. This covers the responsive and link checks in application Review
+Standards v1.11 UI-009 and documentation checks DOC-R02/DOC-R08. Private captures
+and DOM measurements are under
+`/private/tmp/alignr-docs-pr41-render-2026-10-07/`. This is a local docs render;
+hosted readback and app release remain pending. No live customer grant or
+collection was performed.
+
 ## 2026-10-01 — Published Standards and Facts table search/sort docs
 
 Updated `guides/standards.mdx` for the routed Standards table and
