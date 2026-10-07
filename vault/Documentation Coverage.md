@@ -335,3 +335,14 @@ No API/MCP contract, permission, predicate, control definition or generated
 catalogue changed, so no API references were regenerated. Source-aligned
 candidate only: application release and docs review remain outstanding;
 hosted/rendered acceptance is not claimed.
+
+
+## 7 October delivery reconciliation
+
+ALI-46: the open issue-triage PR29 is superseded by main's current single-filter
+workspace guide; all four proposed paragraphs were reconciled against main and
+application candidate a494c772. See Review Log for retained versus obsolete
+instructions. No public-copy change is required to account for that PR.
+PR37–41 remain subject to their application acceptance gates. Nested condition
+create/edit/client preview documentation is required when the new contract is
+reviewed; its implementation is not yet a public availability claim.
