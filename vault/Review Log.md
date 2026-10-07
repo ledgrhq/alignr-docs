@@ -1334,8 +1334,21 @@ console/page errors were empty. Screenshots are held at
 The exact pinned PowerShell 7.6.6 and ExchangeOnlineManagement 3.10.1 package
 artifacts passed checksum verification in a disposable Ubuntu 24.04 amd64
 container; the dispatcher parsed and a synthetic PFX loaded with `EphemeralKeySet`.
-No provider connection was attempted. The full candidate Docker image build could
-not complete because its apt step reported insufficient local archive space.
-Thus this is package, parser and certificate-import smoke evidence, not complete
-image, Exchange connection, consent, RBAC or production verification. Hosted
-readback remains unverified while the guide is held.
+No provider connection was attempted. The original image recipe failed because
+apt duplicated the downloaded package and the base image already owned the
+requested UID/GID. A separate local Dockerfile follow-up installed the verified
+package with `dpkg`, created a non-colliding system user, and built the complete
+image. In a read-only container at that user identity, PowerShell and
+ExchangeOnlineManagement imported, the dispatcher parsed, and a synthetic PFX
+loaded with `EphemeralKeySet`. This is image/runtime packaging evidence only;
+Exchange connection, consent, cmdlet RBAC, tenant-domain compatibility and
+production verification remain unverified. The follow-up image source is not
+merged or deployed, and hosted readback remains unverified while the guide is
+held.
+
+Source attribution was refined after review: the probe's `Get-OrganizationConfig`
+authorization is described as app-only PowerShell cmdlet RBAC through service
+principal role-group membership, distinct from Entra `Exchange.ManageAsApp`
+consent and from RBAC for Applications mailbox-data permissions. The setup and
+API recipe link directly to Microsoft's custom role-group instructions; no broad
+role grant is recommended.
