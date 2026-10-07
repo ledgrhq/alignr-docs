@@ -360,3 +360,9 @@ separate alignment statistics read. The generated OpenAPI selection contains 21
 GET operations and the MCP catalogue remains at 33 tools. This docs branch is a
 held candidate: the app PR is open, deployment/runtime and hosted availability
 are unverified, and no publication is claimed.
+
+The adjacent [API errors guide](../api-reference/errors.mdx) now explains the
+12-second service-read timeout and bounded cleanup response for the separate
+deployment-specific alignment and operations reads. It explicitly excludes the
+workspace-home endpoint and does not present either read as part of the curated
+OpenAPI snapshot.

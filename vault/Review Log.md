@@ -2,6 +2,45 @@
 
 Append dated entries. Keep evidence precise and do not turn planned checks into passed checks.
 
+## 7 October 2026 — Dashboard read timeout errors (held)
+
+Updated `api-reference/errors.mdx` against the ALI-83 dashboard deadline candidate
+in `/private/tmp/alignr-ali83-dashboard-deadline` (application checkout based at
+`62a5048e`). Source review covered the two route call sites, the 12-second
+read-only service wrapper, `DashboardReadTimeout`, its safe 504 envelope, and
+the shared-session cleanup path. A timed alignment or operations read returns
+HTTP 504 / `dashboard_read_timeout` without partial data. If bounded cleanup
+cannot close the request session, the cleanup exception inherits the generic
+HTTP 503 / `dependency_unavailable` response. The 12 seconds cover only the
+service read; authentication and other request dependencies are outside the
+budget, with up to three seconds of cleanup grace. The text expressly excludes
+`/dashboard/workspace-home`, which remains a separate contract.
+
+The curated OpenAPI snapshot contains `GET /api/v1/dashboard/workspace-home`
+but not the alignment or operations reads, so no generated reference was
+regenerated. The errors page directs deployment-specific callers to the
+authenticated live schema and recommends a bounded backoff for transient read
+failures. Application evidence independently rerun for this review was four
+focused PostgreSQL integration tests: timeout stops the active statement and
+the same session can run another query; operations returns its positive empty
+workspace result; foreign-Organization reads return 404; and the permission
+check remains enforced. All four passed. The test-owned post-timeout connection
+is explicitly closed; no SQLAlchemy connection-GC warning appeared. This does
+not establish full CI, broad load behaviour, deployment availability or hosted
+documentation acceptance. The change is held on a branch based on open docs PR
+#46 until matching application release and independent docs review.
+
+Docs checks passed: `check-docs-vault.py` (14 indexed notes),
+`mint openapi-check api-reference/openapi.json`, `mint a11y` (97 MDX pages) and
+`git diff --check`. `mint broken-links` found only the two existing README links
+to intentionally excluded `AGENTS.md` and `vault/MOC.md`; no public MDX link
+failed. The available CLI was Mintlify 4.2.229 under Node 22.13.1; the repository
+workflow's pinned 4.2.939 was unavailable, and this CLI has no `mint validate`
+command. `mint dev` reported ready and a local GET of the changed page returned
+200 with the new error text in its response; the preview process also logged
+`ResponseAborted`. No desktop/mobile visual inspection or hosted readback was
+performed.
+
 ## 2026-10-01 — Published Standards and Facts table search/sort docs
 
 Updated `guides/standards.mdx` for the routed Standards table and
