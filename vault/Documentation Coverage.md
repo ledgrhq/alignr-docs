@@ -75,6 +75,26 @@ Unrouted legacy Ask/Overview/client editing screens; standalone agents or notifi
 
 ## Keep this map current
 
+## 2026-10-07 — Grouped control authoring and client preview (held candidate)
+
+Drafted updates for `controls/create-custom.mdx`,
+`controls/advanced-definitions.mdx`, `controls/test-and-rollout.mdx`,
+`api-reference/preview-control-definition.mdx`, the API introduction and
+navigation. They explain recursive All/Any control expectations, unknown and
+stale evidence, branch-aware source gaps, editing and persistence, and a
+read-only preview against one authorised client's current evidence. The
+preview recipe states the required `detection_rule.write` + `fact.read`
+permissions; its POST remains outside the curated read-only OpenAPI snapshot.
+
+Backend claims were first checked against application commit `d575aa3b` in PR #148,
+then reconciled with root's preview corrections `31861accc762d6c28809775efdeb48e4e22fe0f6`
+and `836beb2714b7f3c8e7b4807a639062287cca9bcb`. The separate UI candidate is
+commit `ab73a682a4f68ab85c8131bdd8190185e057e9dc` on
+`codex/control-condition-ui`; it is not integrated with the backend or released.
+Do not publish until the application changes are integrated,
+independently reviewed and released. The exact docs branch and checks belong in
+the dated Review Log entry.
+
 The held one-client evaluation candidate is covered by [REST evaluation](../api-reference/evaluate-one-client.mdx), [MCP evaluation](../mcp/evaluate-one-client.mdx), authentication, standards and developer introductions, plus two curated GETs and three generated tools against application `d65fc8a`. The request write is explained in the guide and authenticated live schema, not silently added to the selected read-only snapshot. This work remains unpublished and unverified against a deployed evaluation worker; no current production availability is claimed.
 
 

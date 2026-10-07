@@ -16,7 +16,7 @@ From the standards page, **More → Create a blank standard** starts your own co
     Use a name such as **MDM-enrolled devices report encryption enabled**. In the description, explain why it matters and its limit: reported encryption does not establish recovery-key custody.
   </Step>
   <Step title="Add the control">
-    Open your editable standard's controls and select **Add control**. Set a unique, readable slug such as `mdm-encryption-enabled`, choose an endpoint category and appropriate severity, and use **Suggest only** autonomy while reviewing the behaviour.
+    Open your editable standard's **Checks** tab and select **Add check**. Set a unique, readable slug such as `mdm-encryption-enabled`, choose an endpoint category and appropriate severity, and use **Suggest only** autonomy while reviewing the behaviour.
 
     Clear **Enabled** while drafting. The new-control form starts enabled; saving a control is not automatically a draft workflow.
   </Step>
@@ -24,12 +24,12 @@ From the standards page, **More → Create a blank standard** starts your own co
     Set **Population predicate** to `mdm_enrolled_by`. This selects subjects with that observation. It does not select every device in the client's inventory.
   </Step>
   <Step title="Define the expectation">
-    Set **Fact to verify** to `device_encryption_enabled`, **Operator** to **equals**, **Value source** to **True / false**, and the expected value to `true`.
+    Set **Fact to verify** to `device_encryption_enabled`, **Operator** to **equals**, **Value source** to **True / false**, and the expected value to `true`. A single condition is the default. Use **Add another condition** to add a condition; choose whether the group uses **All conditions** or **Any condition**. Use **Add nested group** when an alternative needs more than one condition.
 
     Use a Boolean value, not the text string `"true"`.
   </Step>
-  <Step title="Review and save">
-    Check the name, population, expected fact, type, severity and enabled state before saving. Then follow the [testing checklist](/controls/test-and-rollout) and inspect actual client evidence before rollout.
+  <Step title="Preview and save">
+    In **Preview against a client**, choose one active client and select **Preview conditions** to check this unsaved definition against that client's current eligible facts. Review the status, subject results, decisive conditions and source gaps. The preview is read-only; it does not save the control or publish findings. Check the name, population, expected fact, type, severity and enabled state before saving. Then follow the [testing checklist](/controls/test-and-rollout) before rollout.
   </Step>
 </Steps>
 
@@ -54,10 +54,18 @@ Under **Parameters**, add `maximum` with type **Integer**, label **Maximum open 
 
 A count of zero is real evidence. No count observation is a coverage gap, not zero. Read [parameters and overrides](/controls/parameters) before changing the threshold for a client.
 
+## Combine conditions without changing their meaning
+
+Use **All conditions** when every child must be true. Use **Any condition** when one evidenced alternative is enough. Groups can be nested, so a control can express `A OR (B AND C)` without turning the three facts into an implicit AND. For the exact JSON shape and the meaning of missing evidence, see [advanced control definitions](/controls/advanced-definitions).
+
+The editor keeps the familiar flat expectation for a single condition. When you add another condition, it starts in an **All conditions** group; change **Combine as** to **Any condition** when that matches the intended policy. Inside a group, use **Move up** or **Move down** to reorder items and **Remove** to remove a condition or group. The saved order is retained when you reopen the control.
+
+To change an existing control, open its **Checks** tab and choose **Edit conditions**. The editor loads the saved tree. **Save conditions** updates the control definition while preserving its other settings. If the saved condition shape is not supported by the editor, it is left unchanged until it can be reviewed safely.
+
 ## Know the editor's scope
 
-The simple creation form defines one population predicate and one expectation. It does not expose an exact population value (`match.object`) or additional `where` filters.
+The basic creation form defines one population predicate and a grouped expected state. It does not expose an exact population value (`match.object`) or additional `where` filters.
 
 For example, choosing `account_enabled` as the population predicate alone includes observed enabled **and disabled** accounts. “Enabled accounts only” requires an exact value filter. See [advanced definitions](/controls/advanced-definitions) for that distinction and a complete example.
 
-Custom controls use supported predicates; typing a new name does not create an integration or collect a new kind of evidence. Use the [predicate reference](/guides/predicate-reference) to check meaning and coverage.
+Custom controls use supported predicates; typing a new name does not create an integration or collect a new kind of evidence. Use the [predicate reference](/guides/predicate-reference) to check meaning and coverage. A preview reads real client evidence, so use it only for a client you are authorised to inspect; it does not create an assessment, change facts or prove that another client has the same evidence.
