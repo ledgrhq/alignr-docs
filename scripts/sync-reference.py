@@ -20,6 +20,7 @@ GROUPS = {
     'Detections': [('/detections', 'List detections'), ('/detections/{detection_id}', 'Get a detection')],
     'Remediations': [('/remediations', 'List remediation runs'), ('/approvals', 'List approval requests')],
     'Evidence': [('/facts', 'List facts'), ('/integrations/{integration_id}/client-mapping-candidates', 'List source client mappings'), ('/integrations/{integration_id}/sync-operations/{operation_id}', 'Get an evidence refresh')],
+    'Exchange Online': [('/integrations/{integration_id}/exchange/certificate', 'Read Exchange certificate metadata'), ('/integrations/{integration_id}/exchange/readiness', 'Read Exchange access readiness'), ('/integrations/{integration_id}/exchange/operations/{operation_id}', 'Get an Exchange connection probe')],
 }
 schema = app.openapi()
 permissions = {path: _permission_for_route(route) for path, route in _api_routes(app.routes) if 'GET' in route.methods}
@@ -35,6 +36,8 @@ for group, endpoints in GROUPS.items():
             raise ValueError(f'Expected an explicit permission for {path}')
         operation.update(summary=title, tags=[group], security=[{'BearerAuth': []}])
         operation['description'] = f'Requires `{permission}`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability.'
+        if '/exchange/' in suffix:
+            operation['description'] += ' Exchange certificate responses contain public certificate metadata only; private certificate material is never returned. The connection probe checks the selected tenant/application identity and Exchange RBAC by reading organization configuration. It does not collect mailbox data or change Exchange settings.'
         if suffix == '/approvals':
             operation['description'] += ' Search q is a literal case-insensitive substring of detection title/reference, Organization name or requester display label, trimmed at the edges and bounded to 200 characters. Search, status/subject filters and sorting apply before count and pagination. Sort accepts request, organization, requester, requested or status with _asc/_desc. Missing optional request/Organization context sorts last; requester labels use full name or email, falling back to System when unavailable. Status sorts the displayed Approved/Declined/Pending labels. Omitted sort preserves created-time descending; equal values use descending approval UUID. Generic subjects and missing context remain in the unfiltered queue. This read cannot approve, decline or execute a change.'
         if suffix == '/remediations':

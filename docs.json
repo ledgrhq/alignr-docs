@@ -221,7 +221,8 @@
               "api-reference/activate-standard-draft",
               "api-reference/evaluate-one-client",
               "api-reference/run-scoped-standard-checks",
-              "api-reference/assign-standard-clients"
+              "api-reference/assign-standard-clients",
+              "api-reference/exchange-online-certificate"
             ]
           },
           {
@@ -284,6 +285,15 @@
               "GET /api/v1/facts",
               "GET /api/v1/integrations/{integration_id}/client-mapping-candidates",
               "GET /api/v1/integrations/{integration_id}/sync-operations/{operation_id}"
+            ]
+          },
+          {
+            "group": "Exchange Online",
+            "openapi": "/api-reference/openapi.json",
+            "pages": [
+              "GET /api/v1/integrations/{integration_id}/exchange/certificate",
+              "GET /api/v1/integrations/{integration_id}/exchange/readiness",
+              "GET /api/v1/integrations/{integration_id}/exchange/operations/{operation_id}"
             ]
           }
         ]

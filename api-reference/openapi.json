@@ -59,6 +59,7 @@
               "anyOf": [
                 {
                   "type": "integer",
+                  "maximum": 100000,
                   "minimum": 1
                 },
                 {
@@ -116,6 +117,7 @@
               "anyOf": [
                 {
                   "type": "integer",
+                  "maximum": 20000000,
                   "minimum": 0
                 },
                 {
@@ -1166,6 +1168,7 @@
               "anyOf": [
                 {
                   "type": "integer",
+                  "maximum": 100000,
                   "minimum": 1
                 },
                 {
@@ -1223,6 +1226,7 @@
               "anyOf": [
                 {
                   "type": "integer",
+                  "maximum": 20000000,
                   "minimum": 0
                 },
                 {
@@ -1432,6 +1436,7 @@
               "anyOf": [
                 {
                   "type": "integer",
+                  "maximum": 100000,
                   "minimum": 1
                 },
                 {
@@ -1489,6 +1494,7 @@
               "anyOf": [
                 {
                   "type": "integer",
+                  "maximum": 20000000,
                   "minimum": 0
                 },
                 {
@@ -1640,6 +1646,7 @@
               "anyOf": [
                 {
                   "type": "integer",
+                  "maximum": 100000,
                   "minimum": 1
                 },
                 {
@@ -1697,6 +1704,7 @@
               "anyOf": [
                 {
                   "type": "integer",
+                  "maximum": 20000000,
                   "minimum": 0
                 },
                 {
@@ -1908,6 +1916,7 @@
               "anyOf": [
                 {
                   "type": "integer",
+                  "maximum": 100000,
                   "minimum": 1
                 },
                 {
@@ -1965,6 +1974,7 @@
               "anyOf": [
                 {
                   "type": "integer",
+                  "maximum": 20000000,
                   "minimum": 0
                 },
                 {
@@ -2192,6 +2202,196 @@
         "description": "Requires `integration.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability. Read the current durable state of the exact source-wide collection. `completed` means its SyncRun finished evidence collection; `assessmentState: unknown` does not attest a passing control or completed downstream evaluation. A foreign or mismatched source/operation pair returns 404.",
         "x-ledgr-permission": "integration.read"
       }
+    },
+    "/api/v1/integrations/{integration_id}/exchange/certificate": {
+      "get": {
+        "tags": [
+          "Exchange Online"
+        ],
+        "summary": "Read Exchange certificate metadata",
+        "operationId": "certificate_state_api_v1_integrations__integration_id__exchange_certificate_get",
+        "parameters": [
+          {
+            "name": "integration_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Integration Id"
+            }
+          },
+          {
+            "name": "organizationId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Organizationid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExchangeCertificateState"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "description": "Requires `integration.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability. Exchange certificate responses contain public certificate metadata only; private certificate material is never returned. The connection probe checks the selected tenant/application identity and Exchange RBAC by reading organization configuration. It does not collect mailbox data or change Exchange settings.",
+        "x-ledgr-permission": "integration.read"
+      }
+    },
+    "/api/v1/integrations/{integration_id}/exchange/readiness": {
+      "get": {
+        "tags": [
+          "Exchange Online"
+        ],
+        "summary": "Read Exchange access readiness",
+        "operationId": "readiness_api_v1_integrations__integration_id__exchange_readiness_get",
+        "parameters": [
+          {
+            "name": "integration_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Integration Id"
+            }
+          },
+          {
+            "name": "organizationId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Organizationid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExchangeAccessReadiness"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "description": "Requires `integration.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability. Exchange certificate responses contain public certificate metadata only; private certificate material is never returned. The connection probe checks the selected tenant/application identity and Exchange RBAC by reading organization configuration. It does not collect mailbox data or change Exchange settings.",
+        "x-ledgr-permission": "integration.read"
+      }
+    },
+    "/api/v1/integrations/{integration_id}/exchange/operations/{operation_id}": {
+      "get": {
+        "tags": [
+          "Exchange Online"
+        ],
+        "summary": "Get an Exchange connection probe",
+        "operationId": "read_operation_api_v1_integrations__integration_id__exchange_operations__operation_id__get",
+        "parameters": [
+          {
+            "name": "integration_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Integration Id"
+            }
+          },
+          {
+            "name": "operation_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Operation Id"
+            }
+          },
+          {
+            "name": "organizationId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Organizationid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExchangeRuntimeOperationRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "description": "Requires `integration.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability. Exchange certificate responses contain public certificate metadata only; private certificate material is never returned. The connection probe checks the selected tenant/application identity and Exchange RBAC by reading organization configuration. It does not collect mailbox data or change Exchange settings.",
+        "x-ledgr-permission": "integration.read"
+      }
     }
   },
   "components": {
@@ -2255,6 +2455,322 @@
           "type"
         ],
         "title": "ValidationError"
+      },
+      "ExchangeRuntimeOperationRead": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "integrationId": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Integrationid"
+          },
+          "organizationId": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Organizationid"
+          },
+          "operationCode": {
+            "type": "string",
+            "const": "connection_probe",
+            "title": "Operationcode"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "running",
+              "succeeded",
+              "failed",
+              "cancelled",
+              "interrupted"
+            ],
+            "title": "State"
+          },
+          "startedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Startedat"
+          },
+          "finishedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Finishedat"
+          },
+          "cancelRequested": {
+            "type": "boolean",
+            "title": "Cancelrequested"
+          },
+          "errorCode": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Errorcode"
+          },
+          "result": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ExchangeConnectionProbeResult"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "integrationId",
+          "organizationId",
+          "operationCode",
+          "state",
+          "startedAt",
+          "finishedAt",
+          "cancelRequested",
+          "errorCode",
+          "result"
+        ],
+        "title": "ExchangeRuntimeOperationRead"
+      },
+      "ExchangeConnectionProbeResult": {
+        "properties": {
+          "tenantVerified": {
+            "type": "boolean",
+            "title": "Tenantverified"
+          },
+          "applicationVerified": {
+            "type": "boolean",
+            "title": "Applicationverified"
+          },
+          "exchangeRbacProbe": {
+            "type": "string",
+            "const": "succeeded",
+            "title": "Exchangerbacprobe"
+          },
+          "checkedAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Checkedat"
+          }
+        },
+        "type": "object",
+        "required": [
+          "tenantVerified",
+          "applicationVerified",
+          "exchangeRbacProbe",
+          "checkedAt"
+        ],
+        "title": "ExchangeConnectionProbeResult"
+      },
+      "ExchangeAccessReadiness": {
+        "properties": {
+          "organizationId": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Organizationid"
+          },
+          "integrationId": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Integrationid"
+          },
+          "tenantId": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Tenantid"
+          },
+          "applicationId": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Applicationid"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "certificate": {
+            "$ref": "#/components/schemas/ExchangeCertificateState"
+          },
+          "verifiedChecks": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Verifiedchecks"
+          },
+          "requiredChecks": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Requiredchecks"
+          },
+          "latestCheck": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ExchangeRuntimeCheckSummary"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          }
+        },
+        "type": "object",
+        "required": [
+          "organizationId",
+          "integrationId",
+          "tenantId",
+          "applicationId",
+          "status",
+          "certificate",
+          "verifiedChecks",
+          "requiredChecks",
+          "message"
+        ],
+        "title": "ExchangeAccessReadiness"
+      },
+      "ExchangeRuntimeCheckSummary": {
+        "properties": {
+          "operationId": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Operationid"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "running",
+              "succeeded",
+              "failed",
+              "cancelled",
+              "interrupted"
+            ],
+            "title": "State"
+          },
+          "checkedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Checkedat"
+          },
+          "errorCode": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Errorcode"
+          }
+        },
+        "type": "object",
+        "required": [
+          "operationId",
+          "state",
+          "checkedAt",
+          "errorCode"
+        ],
+        "title": "ExchangeRuntimeCheckSummary"
+      },
+      "ExchangeCertificateState": {
+        "properties": {
+          "active": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ExchangeCertificateMetadata"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "retiring": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ExchangeCertificateMetadata"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "active",
+          "retiring"
+        ],
+        "title": "ExchangeCertificateState"
+      },
+      "ExchangeCertificateMetadata": {
+        "properties": {
+          "generation": {
+            "type": "string",
+            "title": "Generation"
+          },
+          "thumbprint": {
+            "type": "string",
+            "title": "Thumbprint"
+          },
+          "notBefore": {
+            "type": "string",
+            "title": "Notbefore"
+          },
+          "notAfter": {
+            "type": "string",
+            "title": "Notafter"
+          },
+          "publicCertificateBase64": {
+            "type": "string",
+            "title": "Publiccertificatebase64"
+          }
+        },
+        "type": "object",
+        "required": [
+          "generation",
+          "thumbprint",
+          "notBefore",
+          "notAfter",
+          "publicCertificateBase64"
+        ],
+        "title": "ExchangeCertificateMetadata"
       },
       "IntegrationSyncOperationRead": {
         "properties": {

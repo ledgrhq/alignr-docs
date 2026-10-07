@@ -346,3 +346,27 @@ instructions. No public-copy change is required to account for that PR.
 PR37–41 remain subject to their application acceptance gates. Nested condition
 create/edit/client preview documentation is required when the new contract is
 reviewed; its implementation is not yet a public availability claim.
+
+### 7 October 2026 — Exchange certificate setup and probe (held)
+
+Drafted `integrations/microsoft-setup.mdx` and
+`api-reference/exchange-online-certificate.mdx` against the ALI-18/19 candidate
+application at `f1d559b0be96de4d6607374fd6fab3fd4b909be0` (app source commit
+`1837c35244b13d4be51412d0f70b05fb86cdf1f3`). The draft covers the customer-owned
+certificate lifecycle, Direct-only scope, `Exchange.ManageAsApp` plus Exchange
+RBAC, exact operation polling/idempotency, and the read-only probe boundary. The
+curated API generator adds only GET operations and explains that certificate
+responses contain public metadata. No MCP tools, predicate catalogues, or mailbox
+collection claims are added.
+
+The docs are held for source review and matching application release. A disposable
+Ubuntu 24.04 amd64 smoke installed the exact pinned PowerShell 7.6.6 and
+ExchangeOnlineManagement 3.10.1 packages by Dockerfile SHA-256, parsed the dispatch
+script and round-tripped a synthetic PFX with `EphemeralKeySet`; it did not execute
+the complete image or contact Microsoft. The full candidate Docker image build
+stopped because Docker reported insufficient apt archive space. No live Microsoft
+tenant probe was run. Microsoft specifies the primary `.onmicrosoft.com` domain for
+Exchange PowerShell's `-Organization` parameter; the candidate's initial Graph
+domain is not proven to be that domain after tenant changes. Do not publish this
+copy or describe Exchange readiness as available until source review and runtime
+acceptance resolve these gaps. No customer credentials or tenant data were used.

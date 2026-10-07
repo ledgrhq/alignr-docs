@@ -1303,3 +1303,39 @@ acceptance. Grouped conditions and draft preview are being implemented in the
 application and are not publicly documented as available. Their eventual docs
 need the custom-control, condition, advanced-definition and rollout guides plus
 the curated API reference and actual create/edit/preview worked examples.
+
+## 7 October 2026 — Exchange Online certificate/probe draft
+
+Prepared a held setup/API guide against application candidate `1837c352` and its
+vault evidence pin `f1d559b0`. Added source-backed Direct connection and
+certificate requirements, read/write scopes, the fixed operation contract and
+limitations. `scripts/sync-reference.py` was extended with three Exchange GETs;
+the public OpenAPI file will be regenerated from the isolated application
+candidate. The page and navigation remain unpublished pending application
+security review, Linux runtime verification and release. No Exchange tenant,
+certificate or provider endpoint was accessed.
+
+Official Microsoft source check found that `Connect-ExchangeOnline -Organization`
+requires the primary `.onmicrosoft.com` domain. Graph `isInitial` and `isDefault`
+are distinct properties; the candidate's initial-domain selection is not proven
+to match Exchange's required domain after tenant domain changes. The draft records
+that gap; no claim of successful Microsoft access, mailbox collection or control
+coverage is made.
+
+Validation: `check-docs-vault.py` passed (14 indexed notes); generated 23 curated
+read endpoints and 33 MCP tools from the isolated ALI-18 application source;
+`mint openapi-check` passed. `mint broken-links` reported only the two existing
+README references to excluded `AGENTS.md` and `vault/MOC.md`. Installed Mintlify
+CLI has no `mint validate` command. Desktop and 390px mobile previews were inspected
+in dark and light mode; the new API recipe rendered without clipping, and browser
+console/page errors were empty. Screenshots are held at
+`/private/tmp/alignr-exchange-ali18-evidence/` for coordinator review.
+
+The exact pinned PowerShell 7.6.6 and ExchangeOnlineManagement 3.10.1 package
+artifacts passed checksum verification in a disposable Ubuntu 24.04 amd64
+container; the dispatcher parsed and a synthetic PFX loaded with `EphemeralKeySet`.
+No provider connection was attempted. The full candidate Docker image build could
+not complete because its apt step reported insufficient local archive space.
+Thus this is package, parser and certificate-import smoke evidence, not complete
+image, Exchange connection, consent, RBAC or production verification. Hosted
+readback remains unverified while the guide is held.
