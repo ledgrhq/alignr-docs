@@ -1336,3 +1336,33 @@ pull-request validation workflow from running on f0bb28f, although Mintlify pass
 The resolved branch requires fresh remote validation and rendered desktop/mobile
 acceptance. Application PR93 is merged as3fe5a298 and deployment37225095097 is
 running. These public changes remain held until the matching staff release is live.
+
+
+### 7 October — held issue-guide PR29 reconciliation
+
+ALI-46 coordinator: Codex root. Documentation main `e0864d0` and application
+release candidate `a494c772fb02cbc590b8f3b259eba04f57b7a4b8` were inspected in
+clean isolated checkouts. PR29 `d9f1763` describes an older Issues toolbar. All
+four changed paragraphs were compared with main and the current
+`WorkspaceIssueFilters` / `WorkspaceIssuesPage` / toolbar source.
+
+- Removable chips, Clear filters and email-domain compatibility are already in
+  the published-main guide. The current fields are Category and Email domain.
+- Search, sort, filter and pagination URL state, reset to page one, and 25/50/100
+  row choices are already documented.
+- The old More filters inline expansion and Finding-heading sorting do not
+  describe the current single filter popover and Display options control.
+- The old global-client-selector advice is superseded by the current workspace
+  shell; the guide explains page URL and Client filtering.
+
+The useful changes are accounted for in main (notably the rebuilt workspace
+revision `ea5fc5a`); merging PR29 would restore obsolete instructions. It should
+be closed as superseded, not merged. No public page or navigation is changed by
+this reconciliation. Source/prose inspection passes DOC-R02 for this narrow
+comparison; it is not a new rendered or authenticated production acceptance.
+
+Docs PR37–41 remain held for fresh activity/Guest/reassessment and runtime
+acceptance. Grouped conditions and draft preview are being implemented in the
+application and are not publicly documented as available. Their eventual docs
+need the custom-control, condition, advanced-definition and rollout guides plus
+the curated API reference and actual create/edit/preview worked examples.
