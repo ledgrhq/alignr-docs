@@ -89,7 +89,7 @@ permissions; its POST remains outside the curated read-only OpenAPI snapshot.
 Backend claims were first checked against application commit `d575aa3b` in PR #148,
 then reconciled with root's preview corrections `31861accc762d6c28809775efdeb48e4e22fe0f6`
 and `836beb2714b7f3c8e7b4807a639062287cca9bcb`. The separate UI candidate is
-commit `49cc2925c406fb329eee7e4433193fa0238f184b` on
+commit `ab73a682a4f68ab85c8131bdd8190185e057e9dc` on
 `codex/control-condition-ui`; it is not integrated with the backend or released.
 Do not publish until the application changes are integrated,
 independently reviewed and released. The exact docs branch and checks belong in

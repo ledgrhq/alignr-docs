@@ -2,6 +2,24 @@
 
 Append dated entries. Keep evidence precise and do not turn planned checks into passed checks.
 
+## 2026-10-07 — Independent grouped-preview contract review follow-up
+
+Root reconciled independent reviewer findings against backend `836beb27` and
+UI `ab73a682`. Corrected two API-recipe ambiguities: 100 subjects is the
+complete-result gate checked after evaluation, not a hard evaluator stop;
+saved client source selection always applies, while only parameter values
+follow request → client override → declaration default. Updated candidate UI
+pins after the independently verified draft/list-value fixes. No endpoint,
+permission, catalogue or publication boundary changed. The reviewer also checked
+same-subject semantics, missing/stale truth values, source gaps, camelCase fields,
+limits, read-only behaviour and selected-client scope. Docs vault and diff checks
+passed independently. API-backed UI verification, desktop/mobile docs rendering,
+final release alignment and publication remain outstanding. Follow-up independent
+review found both wording issues resolved. Root reran vault checks, diff checks,
+Mintlify 4.2.939 build validation and broken-link checks successfully. An initial
+invocation used the older globally installed CLI, which has no validate command;
+the version-pinned invocation passed. This is a held draft.
+
 ## 2026-10-07 — Held grouped-control authoring and preview documentation
 
 Prepared a docs-only candidate on branch `docs/ali25-26-grouped-controls-20261007`
@@ -11,7 +29,7 @@ was application PR #148 at `d575aa3bf2f28fa26f296e1a460820cbff2a0d3a`.
 The backend source was reconciled with root's follow-up commits
 `31861accc762d6c28809775efdeb48e4e22fe0f6` and
 `836beb2714b7f3c8e7b4807a639062287cca9bcb`. The separate UI candidate is
-`49cc2925c406fb329eee7e4433193fa0238f184b` on `codex/control-condition-ui`; it is
+`ab73a682a4f68ab85c8131bdd8190185e057e9dc` on `codex/control-condition-ui`; it is
 not integrated with the backend or released. These are source-inspection
 checkpoints, not release evidence.
 
@@ -27,14 +45,15 @@ following the existing one-client evaluation recipe convention. No control
 catalogue, predicate reference or MCP catalogue generation was necessary.
 
 Source checks confirmed the editor labels and definition-only PATCH behavior in
-UI commit `49cc2925c406fb329eee7e4433193fa0238f184b`, and backend
+UI commit `ab73a682a4f68ab85c8131bdd8190185e057e9dc`, and backend
 request/response, route dependencies and caps in app
 `836beb2714b7f3c8e7b4807a639062287cca9bcb` (including bounded-preview fixes from
 `31861acc`). The current prose describes the 8-second service budget,
 2-second statement timeout and up to 2-second rollback budget; these are not an
-end-to-end browser latency guarantee. Root's independent observer review and the
-UI's stable source pin remain pending. Reconcile the page again with the final
-reviewed contract before publication. On docs branch
+end-to-end browser latency guarantee. Independent review reconciled backend `836beb27` and UI `ab73a682`, including
+the source-cap scope boundary and repaired draft/list-value handling. The UI
+review independently passed 56 focused tests. Reconcile the page again with
+the final integrated release before publication. On docs branch
 `docs/ali25-26-grouped-controls-20261007`, `python3 scripts/check-docs-vault.py`,
 `mint validate`, `mint openapi-check api-reference/openapi.json`, `mint a11y`,
 `mint broken-links`, `git diff --check` and the local grouped-result example
