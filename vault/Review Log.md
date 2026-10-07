@@ -1303,3 +1303,75 @@ acceptance. Grouped conditions and draft preview are being implemented in the
 application and are not publicly documented as available. Their eventual docs
 need the custom-control, condition, advanced-definition and rollout guides plus
 the curated API reference and actual create/edit/preview worked examples.
+
+## 7 October 2026 — Exchange Online certificate/probe draft
+
+Prepared a held setup/API guide against application candidate `1837c352` and its
+vault evidence pin `f1d559b0`. Added source-backed Direct connection and
+certificate requirements, read/write scopes, the fixed operation contract and
+limitations. `scripts/sync-reference.py` was extended with three Exchange GETs;
+the public OpenAPI file will be regenerated from the isolated application
+candidate. The page and navigation remain unpublished pending application
+security review, Linux runtime verification and release. No Exchange tenant,
+certificate or provider endpoint was accessed.
+
+Official Microsoft source check found that `Connect-ExchangeOnline -Organization`
+requires the primary `.onmicrosoft.com` domain. Graph `isInitial` and `isDefault`
+are distinct properties; the candidate's initial-domain selection is not proven
+to match Exchange's required domain after tenant domain changes. The draft records
+that gap; no claim of successful Microsoft access, mailbox collection or control
+coverage is made.
+
+Validation: `check-docs-vault.py` passed (14 indexed notes); generated 23 curated
+read endpoints and 33 MCP tools from the isolated ALI-18 application source;
+`mint openapi-check` passed. `mint broken-links` reported only the two existing
+README references to excluded `AGENTS.md` and `vault/MOC.md`. Installed Mintlify
+CLI has no `mint validate` command. Desktop and 390px mobile previews were inspected
+in dark and light mode; the new API recipe rendered without clipping, and browser
+console/page errors were empty. Screenshots are held at
+`/private/tmp/alignr-exchange-ali18-evidence/` for coordinator review.
+
+The exact pinned PowerShell 7.6.6 and ExchangeOnlineManagement 3.10.1 package
+artifacts passed checksum verification in a disposable Ubuntu 24.04 amd64
+container; the dispatcher parsed and a synthetic PFX loaded with `EphemeralKeySet`.
+No provider connection was attempted. The original image recipe failed because
+apt duplicated the downloaded package and the base image already owned the
+requested UID/GID. A separate local Dockerfile follow-up installed the verified
+package with `dpkg`, created a non-colliding system user, and built the complete
+image. In a read-only container at that user identity, PowerShell and
+ExchangeOnlineManagement imported, the dispatcher parsed, and a synthetic PFX
+loaded with `EphemeralKeySet`. This is image/runtime packaging evidence only;
+Exchange connection, consent, cmdlet RBAC, tenant-domain compatibility and
+production verification remain unverified. The follow-up image source is not
+merged or deployed, and hosted readback remains unverified while the guide is
+held.
+
+Source attribution was refined after review: the probe's `Get-OrganizationConfig`
+authorization is described as app-only PowerShell cmdlet RBAC through service
+principal role-group membership, distinct from Entra `Exchange.ManageAsApp`
+consent and from RBAC for Applications mailbox-data permissions. The setup and
+API recipe link directly to Microsoft's custom role-group instructions; no broad
+role grant is recommended.
+
+### 7 October 2026 — one-mailbox forwarding read follow-up (held)
+
+Reconciled the Exchange API draft with the ALI-18/19 source candidate at
+`fa11fc9b7b4f1aa823e83f4ea7ed47b09dc3f433` plus its uncommitted read-slice
+changes. The guide documents a fixed `mailbox.forwarding.read` request bound to
+the current `account_enabled` fact observed by the selected Direct integration,
+with exact Graph tenant/user verification and a three-property
+`Get-EXOMailbox -ExternalDirectoryObjectId` projection. It says that missing or
+stale facts, absent properties and changed authority are unavailable/failed,
+never “forwarding is off”; it makes no write, rollback, collection or control-pass
+claim. `scripts/sync-reference.py` regenerated 23 curated GETs and 33 MCP tools;
+the existing GET operation schema now contains the exact forwarding result shape.
+The POST operation-creation path remains manual prose because the curated OpenAPI
+selection is intentionally GET-only.
+
+This is source/prose reconciliation only. No live Microsoft call, app runtime,
+full docs build, desktop/mobile preview or publication was performed in this
+follow-up. The candidate docs branch remains held pending the application's
+review, runtime, full CI and release. The `-Organization` primary-domain gap is
+still open and explicitly described. The earlier independent docs render and
+runtime evidence above applies to the prior app candidate and does not prove this
+new API slice.

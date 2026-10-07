@@ -1,0 +1,128 @@
+---
+title: "Exchange Online certificate access"
+description: "Store a customer-owned certificate and request fixed, read-only Exchange identity or mailbox-forwarding checks."
+---
+
+This API manages a customer-owned certificate for one selected Direct Microsoft connection and requests fixed, read-only Exchange operations. The operation set contains an identity probe and a single-mailbox forwarding read; it does not accept arbitrary cmdlets, enumerate mailboxes or change Exchange settings. Availability depends on the deployment; confirm the routes in the authenticated [live API schema](/api-reference/live-schema) before use.
+
+Every request uses bearer authentication. Certificate management and probe cancellation require `integration.manage`; reads and mailbox-forwarding read requests require `integration.read`. Requests are scoped to the authenticated MSP tenant and the exact client and connection. A foreign or missing resource is returned as not found.
+
+## Prepare Microsoft access
+
+The selected connection must be an enabled Direct Microsoft connection for the Organization. The customer-owned Entra application needs the Exchange Online application permission `Exchange.ManageAsApp` with administrator consent. App-only PowerShell cmdlets are separately authorized through Exchange RBAC role-group membership assigned to the service principal; configure a role group permitting `Get-OrganizationConfig` and `Get-EXOMailbox` with only the mailbox property reads required here, following Microsoft's [custom role-group guidance](https://learn.microsoft.com/en-us/powershell/exchange/app-only-auth-powershell-v2#option-2-assign-custom-role-groups-to-the-application-using-service-principals). Entra consent permits the app-only session; Exchange cmdlet RBAC authorizes each command. Microsoft's [RBAC for Applications](https://learn.microsoft.com/en-us/Exchange/permissions-exo/application-rbac) is a separate model for application access to mailbox data and does not grant PowerShell cmdlet access. Follow your organisation's least-privilege policy; do not assign a broad unrelated role to make a request pass.
+
+Microsoft requires the organization's primary `.onmicrosoft.com` domain for Exchange PowerShell's `-Organization` parameter. [Microsoft Graph distinguishes initial from default domain properties](https://learn.microsoft.com/en-us/graph/api/resources/verifieddomain?view=graph-rest-1.0); the current candidate discovers the initial domain, which does not prove it is the Exchange primary domain after a tenant domain change. That case remains unverified; do not infer readiness from saved settings. Require a successful probe whose Exchange-reported tenant and application IDs match the request. Never guess a domain from an email address.
+
+## Read certificate metadata
+
+```http
+GET /api/v1/integrations/{integration_id}/exchange/certificate?organizationId={organization_id}
+```
+
+Requires `integration.read`. The response contains `active` and `retiring` public certificate metadata (`generation`, `thumbprint`, validity dates and `publicCertificateBase64`). It never returns the private PFX or its password.
+
+## Upload or rotate the certificate
+
+```http
+POST /api/v1/integrations/{integration_id}/exchange/certificate
+Content-Type: application/json
+```
+
+Requires `integration.manage`.
+
+```json
+{
+  "organizationId": "<organization UUID>",
+  "pfxBase64": "<base64-encoded PFX, at most 64 KiB decoded>",
+  "password": "<PFX password>",
+  "expectedGeneration": "<current generation UUID, when rotating>"
+}
+```
+
+For a first upload, omit `expectedGeneration`. For rotation, send the generation currently active so a stale form cannot replace a newer certificate. The response contains the public certificate metadata. Upload the returned public certificate to the same Entra application. Keep the old public certificate available while you verify the new one; after a successful probe, retire the previous private certificate with the route below and remove its public certificate from Entra separately.
+
+Treat the PFX and password as secrets. Send them only over TLS through a protected client process and secret manager. Do not put them in shell command history, source control, logs or a ticket. Although the API accepts them in its JSON body, its response and audit record do not contain their values.
+
+To remove the previous stored certificate after rotation:
+
+```http
+DELETE /api/v1/integrations/{integration_id}/exchange/certificate/previous
+Content-Type: application/json
+```
+
+Requires `integration.manage`; send `organizationId` and the currently active `expectedGeneration`. This removes the previous private certificate from Alignr. It does not remove the corresponding public certificate from Microsoft Entra.
+
+## Check saved readiness
+
+```http
+GET /api/v1/integrations/{integration_id}/exchange/readiness?organizationId={organization_id}
+```
+
+Requires `integration.read`. Readiness reports saved tenant/application configuration, certificate state, required and previously verified checks, and the latest probe receipt. Reading readiness does not start a new Microsoft connection attempt. Use `Cache-Control: no-store` for credential-adjacent operational state; the API sets it on these responses.
+
+## Request and poll a connection probe
+
+Create an identity probe:
+
+```http
+POST /api/v1/integrations/{integration_id}/exchange/operations
+Idempotency-Key: <canonical UUID>
+Content-Type: application/json
+```
+
+Requires `integration.manage`.
+
+```json
+{
+  "organizationId": "<organization UUID>",
+  "certificateGeneration": "<active certificate generation UUID>"
+}
+```
+
+The operation type is fixed as `connection_probe`; arbitrary PowerShell or cmdlets cannot be submitted. A new request returns `202 Accepted` and a durable operation ID. Poll that exact operation:
+
+```http
+GET /api/v1/integrations/{integration_id}/exchange/operations/{operation_id}?organizationId={organization_id}
+```
+
+Requires `integration.read`. States are `pending`, `running`, `succeeded`, `failed`, `cancelled` and `interrupted`. The result contains only whether the tenant and application identity checks passed and whether the organization-configuration read succeeded. It contains no mailbox data.
+
+If the create response is uncertain, reuse the same canonical UUID idempotency key with the same authenticated actor, Organization, connection and certificate generation. An identical retry within 24 hours returns the original operation; changed request identity or payload is refused. Use a new key for a new intentional probe. Only one operation can be pending or running for that client connection at a time.
+
+To request cancellation of the exact operation:
+
+```http
+POST /api/v1/integrations/{integration_id}/exchange/operations/{operation_id}/cancel?organizationId={organization_id}
+```
+
+Requires `integration.manage`. Cancellation of a pending operation is immediate; a running operation receives a cancellation request and may finish before the worker observes it. Poll the same operation to read its final state. Do not create a replacement request while the original is still active.
+
+## Read forwarding settings for one mailbox
+
+Request this read with a current Entra user fact ID from the same client and selected Direct connection. The API resolves the immutable Entra user ID from the fact's `users/{id}` source reference and verifies that the selected connection still observed that fact. You cannot supply a tenant, mailbox address, arbitrary user ID or cmdlet.
+
+```http
+POST /api/v1/integrations/{integration_id}/exchange/mailbox-forwarding/operations
+Idempotency-Key: <canonical UUID>
+Content-Type: application/json
+```
+
+Requires `integration.read`.
+
+```json
+{
+  "organizationId": "<organization UUID>",
+  "certificateGeneration": "<active certificate generation UUID>",
+  "mailboxFactId": "<current account_enabled fact UUID>"
+}
+```
+
+The worker rechecks the selected client connection, certificate generation and current fact before dispatch, confirms the target's canonical ID in that same Microsoft tenant, and then runs a fixed `Get-EXOMailbox -ExternalDirectoryObjectId` read. The projection contains only `ForwardingAddress`, `ForwardingSmtpAddress` and `DeliverToMailboxAndForward`. It does not read other mailbox properties or discover other mailboxes.
+
+The request returns `202 Accepted` and a durable operation ID. Poll it using the operation detail route above. A successful `mailbox.forwarding.read` result contains the target's immutable ExternalDirectoryObjectId and the three forwarding fields. A missing mailbox, unavailable field, stale or foreign fact, tenant mismatch, changed connection, or insufficient permission remains unavailable or failed; it is never interpreted as “forwarding is off”.
+
+Reuse the same idempotency key only to resolve an uncertain outcome for the same actor, client, connection, certificate generation and mailbox fact. A different target or changed binding conflicts. This is a read operation only; it does not set or clear forwarding. No remediation, rollback or write operation is provided by this API.
+
+## What a successful probe means
+
+A successful probe confirms that the isolated runtime connected with the selected tenant and application and could read Exchange organization configuration. A successful forwarding read confirms only that the exact target mailbox and those requested property values were returned at that time. Neither operation proves mailbox licensing, message access, complete Exchange coverage, or that any Alignr control passed. Broader mailbox collection and all Exchange setting changes remain outside this API's current operation set.
