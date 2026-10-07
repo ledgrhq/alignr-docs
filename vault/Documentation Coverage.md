@@ -346,3 +346,17 @@ instructions. No public-copy change is required to account for that PR.
 PR37–41 remain subject to their application acceptance gates. Nested condition
 create/edit/client preview documentation is required when the new contract is
 reviewed; its implementation is not yet a public availability claim.
+
+## 7 October — compact workspace Overview read (held)
+
+The new [workspace Overview API guide](../api-reference/workspace-overview.mdx)
+and the curated Dashboard read document `GET /api/v1/dashboard/workspace-home`
+from application PR #165 head `5abbff250fef594092dca600e25865e89e2e330f`.
+The source response contains only bounded attention, connection-health and
+discovery panels; it does not carry alignment percentages or assessment counts.
+The guide distinguishes client-filtered discovery lists from tenant-wide
+connection fields, the retained broad `/dashboard/overview` contract and the
+separate alignment statistics read. The generated OpenAPI selection contains 21
+GET operations and the MCP catalogue remains at 33 tools. This docs branch is a
+held candidate: the app PR is open, deployment/runtime and hosted availability
+are unverified, and no publication is claimed.

@@ -209,6 +209,7 @@
             "group": "Overview",
             "pages": [
               "api-reference/introduction",
+              "api-reference/workspace-overview",
               "guides/api-keys",
               "api-reference/authentication",
               "api-reference/pagination",
@@ -259,6 +260,13 @@
             "pages": [
               "GET /api/v1/organizations/{organization_id}/compliance",
               "GET /api/v1/organizations/{organization_id}/compliance/trend"
+            ]
+          },
+          {
+            "group": "Dashboard",
+            "openapi": "/api-reference/openapi.json",
+            "pages": [
+              "GET /api/v1/dashboard/workspace-home"
             ]
           },
           {
