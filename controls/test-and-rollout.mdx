@@ -3,7 +3,7 @@ title: "Test and roll out a control"
 description: "Check that a control asks the right question before relying on its results."
 ---
 
-A syntactically valid definition can still ask the wrong question. Test the population, comparison and explanation, then assess whether your connected sources can support the conclusion.
+A syntactically valid definition can still ask the wrong question. Test the population, comparison and explanation, then assess whether your connected sources can support the conclusion. For grouped conditions, test each branch and the cases where evidence is missing or stale.
 
 ## Use four evidence cases
 
@@ -27,12 +27,20 @@ Also inspect mixed populations: a known failure can make the control fail while 
 - Check the same subject is used across sources; a similar display name is insufficient.
 - Review client overrides and the disabled state of the control and its parent standard.
 
+## Preview the definition for one client
+
+The control editor can run a read-only **Preview against a client** using a client in the standard's current scope. Choose **Preview client**, then **Preview conditions** after the required control details are complete. The request evaluates the current unsaved expected-condition tree for that one client. When editing a saved control, the preview also uses that client's saved parameter and source overrides; for a new control it uses the declared parameter defaults and connected, mapped sources.
+
+Read the result as a bounded snapshot, not as a saved assessment. The preview can show an overall pass or fail, no data, not covered, or an incomplete result, with subject counts, decisive condition paths, missing predicates and source gaps. A true `any` branch can decide a result without every alternative being available. The preview does not collect fresh evidence, change the saved control, write a control evaluation or publish detections. A preview is specific to the selected client's current evidence; it does not establish how another client would evaluate.
+
+The app needs client and control read access plus control write and fact read access to load the picker and preview. The preview request itself requires `detection_rule.write` and `fact.read`; the fact-read permission prevents the preview from becoming a way to inspect arbitrary client predicates without authority. For the request and response fields, see [Preview a custom control definition with the API](/api-reference/preview-control-definition).
+
 ## Roll out in a reviewable sequence
 
 <Steps>
   <Step title="Prepare an editable draft">Copy a suitable library template or create a standard. Library copies start disabled; clear Enabled when drafting an individual custom control.</Step>
-  <Step title="Check evidence coverage">Use a test workspace or an agreed representative client context. Confirm the relevant integrations are connected, mapped and supplying the required predicates.</Step>
-  <Step title="Inspect the definition and settings">Review scope, filters, expectations, thresholds and autonomy with the person responsible for the standard.</Step>
+  <Step title="Check evidence coverage">Use the editor preview for an authorised client or an agreed representative workspace. Confirm the relevant integrations are connected, mapped and supplying the required predicates; review every reported source gap.</Step>
+  <Step title="Inspect the definition and settings">Review scope, filters, each All/Any branch, thresholds and autonomy with the person responsible for the standard. Reopen the saved control and verify the tree and order persisted.</Step>
   <Step title="Enable deliberately and run checks">Account for the standard's scope and client overrides before enabling it. Use Run checks and inspect the resulting assessments, evidence and evaluation time.</Step>
   <Step title="Review the wider impact">Investigate unexpected failures and gaps before relying on the standard across clients. Document intentional exceptions and identify who handles follow-up.</Step>
 </Steps>

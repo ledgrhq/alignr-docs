@@ -2,6 +2,69 @@
 
 Append dated entries. Keep evidence precise and do not turn planned checks into passed checks.
 
+## 2026-10-07 — Independent grouped-preview contract review follow-up
+
+Root reconciled independent reviewer findings against backend `836beb27` and
+UI `ab73a682`. Corrected two API-recipe ambiguities: 100 subjects is the
+complete-result gate checked after evaluation, not a hard evaluator stop;
+saved client source selection always applies, while only parameter values
+follow request → client override → declaration default. Updated candidate UI
+pins after the independently verified draft/list-value fixes. No endpoint,
+permission, catalogue or publication boundary changed. The reviewer also checked
+same-subject semantics, missing/stale truth values, source gaps, camelCase fields,
+limits, read-only behaviour and selected-client scope. Docs vault and diff checks
+passed independently. API-backed UI verification, desktop/mobile docs rendering,
+final release alignment and publication remain outstanding. Follow-up independent
+review found both wording issues resolved. Root reran vault checks, diff checks,
+Mintlify 4.2.939 build validation and broken-link checks successfully. An initial
+invocation used the older globally installed CLI, which has no validate command;
+the version-pinned invocation passed. This is a held draft.
+
+## 2026-10-07 — Held grouped-control authoring and preview documentation
+
+Prepared a docs-only candidate on branch `docs/ali25-26-grouped-controls-20261007`
+in `/private/tmp/alignr-docs-ali25-26`, based on docs `main` at
+`e0864d0e4de4577f94cf154502a3a7ae313ccaf2`. The implementation source checked
+was application PR #148 at `d575aa3bf2f28fa26f296e1a460820cbff2a0d3a`.
+The backend source was reconciled with root's follow-up commits
+`31861accc762d6c28809775efdeb48e4e22fe0f6` and
+`836beb2714b7f3c8e7b4807a639062287cca9bcb`. The separate UI candidate is
+`ab73a682a4f68ab85c8131bdd8190185e057e9dc` on `codex/control-condition-ui`; it is
+not integrated with the backend or released. These are source-inspection
+checkpoints, not release evidence.
+
+Changed the custom-control, advanced-definition and test/rollout guides; added
+an API-tab recipe for the read-only `POST /standards/{standard_id}/controls/preview`;
+linked it from the API introduction and navigation; updated this coverage map
+and Information Architecture. The prose covers nested `all`/`any` semantics,
+missing/stale evidence, branch-aware gaps, depth/node bounds, same-subject
+evaluation, edit/reopen/reorder/persist behavior and one-client preview. The
+endpoint's two permissions are stated separately from the app picker reads.
+The POST remains deliberately outside the curated read-only OpenAPI snapshot,
+following the existing one-client evaluation recipe convention. No control
+catalogue, predicate reference or MCP catalogue generation was necessary.
+
+Source checks confirmed the editor labels and definition-only PATCH behavior in
+UI commit `ab73a682a4f68ab85c8131bdd8190185e057e9dc`, and backend
+request/response, route dependencies and caps in app
+`836beb2714b7f3c8e7b4807a639062287cca9bcb` (including bounded-preview fixes from
+`31861acc`). The current prose describes the 8-second service budget,
+2-second statement timeout and up to 2-second rollback budget; these are not an
+end-to-end browser latency guarantee. Independent review reconciled backend `836beb27` and UI `ab73a682`, including
+the source-cap scope boundary and repaired draft/list-value handling. The UI
+review independently passed 56 focused tests. Reconcile the page again with
+the final integrated release before publication. On docs branch
+`docs/ali25-26-grouped-controls-20261007`, `python3 scripts/check-docs-vault.py`,
+`mint validate`, `mint openapi-check api-reference/openapi.json`, `mint a11y`,
+`mint broken-links`, `git diff --check` and the local grouped-result example
+check passed; `mint broken-links` also passed on clean `origin/main`. Mint dev
+served the advanced-definition page and the accessibility tree showed expected
+headings and links. Desktop/mobile visual inspection was not completed because
+browser screenshot capture hung and no usable browser surface was available.
+This candidate is held: no public build, app runtime acceptance, merge,
+deployment or hosted readback is claimed. The required app/UI integration,
+independent reviews, matching release and remote docs validation remain gates.
+
 ## 2026-10-01 — Published Standards and Facts table search/sort docs
 
 Updated `guides/standards.mdx` for the routed Standards table and
@@ -1303,3 +1366,49 @@ acceptance. Grouped conditions and draft preview are being implemented in the
 application and are not publicly documented as available. Their eventual docs
 need the custom-control, condition, advanced-definition and rollout guides plus
 the curated API reference and actual create/edit/preview worked examples.
+
+
+## 2026-10-07 — Root rendered grouped-preview guide review
+
+ALI-46: root reviewed draft PR43 at `5d0b213bec28064c6ee1e5580190c4cc368c690b`
+with Mintlify 4.2.939 and an isolated local browser. Remote validation
+[37590565656](https://github.com/ledgrhq/alignr-docs/actions/runs/37590565656)
+and the Mintlify preview passed at that revision. The real routed application
+uses **Checks → Add check**, unlike the legacy unrouted ControlsTab component;
+corrected the two corresponding labels in `controls/create-custom.mdx`.
+
+Inspected the grouped-condition example at 1440×900 in dark mode and 390×844
+on mobile, the preview guide and error table in light mode at mobile width,
+the custom-control guide at mobile width, and the rollout evidence table at
+desktop and mobile widths. The document/body width remained 390 pixels on
+the narrow pages; wide code/table content stays within its own scroll region.
+Mobile navigation expansion/collapse and the theme switch worked. Screenshots:
+[rendered evidence](Review%20Evidence/grouped-preview-2026-10-07/).
+
+This is a limited rendered documentation pass, not full keyboard/screen-reader
+acceptance or proof of the app's create/edit/preview journey. The combined app
+UI is still under independent browser review, including an identified reorder
+icon defect. Public publication remains held for the final reviewed application
+release and hosted readback. No public schema or catalogue changed in this
+label correction. Vault structural and diff checks and the version-pinned
+Mintlify build validation passed after the correction. The root-owned browser
+and preview were closed after review.
+
+
+## 2026-10-07 — held cross-tab sign-in recovery copy
+
+ALI-32 coordinator: Codex root. The frontend candidate requires a current browser
+over HTTPS with site storage enabled so tabs can coordinate one active sign-in.
+Updated `guides/sign-in-recovery.mdx` and the recovery-path note in Information
+Architecture to state that requirement and give a safe recovery after workspace
+creation or invitation acceptance succeeds but session storage fails. The copy
+explicitly directs the person to sign in again instead of repeating account or
+invitation submission.
+
+The browser requirement was checked against the MDN references for the Web Locks
+API and `Navigator.locks`, including secure-context restrictions and same-origin
+coordination. This docs change is held with its application candidate; it is not
+published evidence of release support. `python3 scripts/check-docs-vault.py`,
+`git diff --check`, `npx --yes mint@4.2.939 validate`, `broken-links` and `a11y`
+passed (Mint ran in the Node 22 container because the host Node 16 binary cannot
+run it). Rendered review and hosted readback remain pending after source freeze.
