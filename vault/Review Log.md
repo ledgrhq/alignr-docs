@@ -1429,6 +1429,9 @@ check, accessibility scan for 97 MDX files and `git diff --check` passed.
 Mintlify CLI is 4.2.229 on Node 22.13.1 and does not support `mint validate`.
 The local preview rendered the affected guide pages and the setup diagram at
 desktop and 390px mobile widths; `mint dev` also logged a `transformAlgorithm`
-TypeError after reporting the preview ready. No production readback or
-publication was done. Keep publication held until the matching app change is
-accepted/released and docs PR review/CI passes.
+TypeError after reporting the preview ready. Draft docs PR [#48](https://github.com/ledgrhq/alignr-docs/pull/48)
+contains source commit `d6b0bc4b8289b85d7d418e276a4cde5748ef6e1d`; GitHub
+Documentation checks (`validate`) and the Mintlify Deployment check passed for
+that commit. No production readback or publication was done. Keep publication
+held until the matching app change is accepted/released and docs PR review is
+complete.
