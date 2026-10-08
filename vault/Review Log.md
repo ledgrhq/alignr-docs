@@ -2,6 +2,26 @@
 
 Append dated entries. Keep evidence precise and do not turn planned checks into passed checks.
 
+## 8 October 2026 — logo drawn as outlined artwork (held for application PR211)
+
+Claude replaced `logo/light.svg` and `logo/dark.svg`. They previously set the
+"alignr" wordmark as live Arial text (21px/400, −0.9px), which rendered with
+whatever font the reader's system had. They now carry the same outlined
+artwork as the application's `Logo.tsx`: the 20px icon tile, a 7px gap and
+Geist Medium lettering drawn as paths, in `#202024` (light) and `#EEEEEF` (dark)
+to match the application's workspace text colours. `favicon.svg` already
+matched the application's icon and is unchanged. This keeps DOC-002/DOC-007's
+exact Alignr branding; no decision changes.
+
+Source: application PR211 (`claude/logo-as-image`, commit `2df7274e`), which
+moves the app logo from Arial text to the same outlined SVG. alignr.io and its
+brand page already use this artwork (ledgr-website `b56a23a`, `432e3ae`).
+Publication is held until PR211 merges and deploys, so the help site never
+shows a logo the application does not.
+
+Checks: `python3 scripts/check-docs-vault.py` and `mint validate` recorded in
+the PR. No page content, navigation or reference data changed.
+
 ## 7 October 2026 — PR47 hosted preview review, publication still held
 
 Codex root reviewed the hosted PR47 preview at source
