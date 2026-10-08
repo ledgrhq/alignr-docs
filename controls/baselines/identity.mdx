@@ -11,6 +11,8 @@ Whether the seeded Alignr Baseline is available depends on how your workspace wa
 
 Expand a control to see the exact population, expectation and defaults. A pass requires usable evidence for the selected population. A known contrary observation can prove failure; missing observations or an empty population must not become a pass.
 
+For Microsoft account controls using the selected Entra source, the ordinary account population defaults to accounts observed as **Member**. A current, selected-source `user_type` observation is required to establish that scope. Accounts explicitly observed as **Guest**, and accounts whose type is missing, stale or otherwise unverified, are outside that ordinary population; their exclusion is not a pass. Member service and non-mailbox accounts remain in scope. A control that explicitly selects `user_type` can assess a Guest population. Scope comes from structured evidence, not an address or display-name pattern.
+
 <AccordionGroup>
 
 <Accordion title="MFA required for active accounts">

@@ -1405,3 +1405,18 @@ page, navigation and response table without visible overflow. No authenticated
 API call, production runtime check, hosted docs readback or publication was
 performed. Application PR #165 remains open; keep this docs change held until
 matching application review/release and fresh docs review.
+
+
+### 8 October 2026 — Microsoft account Guest population explanation (candidate)
+
+Updated `controls/baselines/identity.mdx` and `controls/advanced-definitions.mdx`
+to explain the source-backed default Member population, selected-source current
+`user_type` requirement, Guest opt-in and unknown handling. Member service and
+non-mailbox accounts remain eligible. No address heuristic is specified. The app
+candidate is isolated at `/private/tmp/alignr-ali15-guest-exclusion-20261008`; its
+relationship to production issue CD-4846 remains unverified, and historical issue
+reconciliation requires a fresh Microsoft collection/identity witness. No predicate,
+control definition or generated catalogue changed. The docs worktree is an isolated
+branch from `origin/main`; source edits are a candidate only. Mintlify validation,
+rendered preview, independent review, merge, publication and hosted readback remain
+unverified.
