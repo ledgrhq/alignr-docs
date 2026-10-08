@@ -1405,3 +1405,30 @@ page, navigation and response table without visible overflow. No authenticated
 API call, production runtime check, hosted docs readback or publication was
 performed. Application PR #165 remains open; keep this docs change held until
 matching application review/release and fresh docs review.
+
+## 8 October — ALI-13 client Microsoft access and consent wording (held)
+
+Updated the Partner workflow in `guides/client-microsoft-connections.mdx` and
+`integrations/microsoft-setup.mdx` against application PRs [#177](https://github.com/ledgrhq/ledgr/pull/177)
+and [#178](https://github.com/ledgrhq/ledgr/pull/178). The client-page
+**Check access** action is a read-only sample of that client's currently
+available capabilities; it does not request consent. **Connect client** is the
+explicit Partner action that can request missing customer read consent. The
+integration-page check remains an aggregate sample of selected customers.
+Updated the Microsoft setup flow diagram and this vault's information
+architecture note to keep those actions distinct. No API catalogue, permission,
+or generated reference changed.
+
+Source inspection covered the client access panel, the scoped capability route,
+the consent-capable connect route and the consent service. App PR descriptions
+report focused backend and UI tests; this docs work did not rerun the app suites
+or verify a live Microsoft tenant. The 14-note vault/publication guard, OpenAPI
+check, accessibility scan for 97 MDX files and `git diff --check` passed.
+`mint broken-links` reported only the existing README links to excluded
+`AGENTS.md` and `vault/MOC.md`; no public MDX link failed. The installed pinned
+Mintlify CLI is 4.2.229 on Node 22.13.1 and does not support `mint validate`.
+The local preview rendered the affected guide pages and the setup diagram at
+desktop and 390px mobile widths; `mint dev` also logged a `transformAlgorithm`
+TypeError after reporting the preview ready. No production readback or
+publication was done. Keep publication held until the matching app change is
+accepted/released and docs PR review/CI passes.
