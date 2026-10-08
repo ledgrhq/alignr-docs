@@ -19,8 +19,21 @@ brand page already use this artwork (ledgr-website `b56a23a`, `432e3ae`).
 Publication is held until PR211 merges and deploys, so the help site never
 shows a logo the application does not.
 
-Checks: `python3 scripts/check-docs-vault.py` and `mint validate` recorded in
-the PR. No page content, navigation or reference data changed.
+Checks on PR49's original logo commit `0ed479dd8a6f00a30232c2a9989d5ebf093dec07`:
+`python3 scripts/check-docs-vault.py` and GitHub's documentation validation
+passed. `mint broken-links` reported only the two README links to excluded
+`AGENTS.md` and `vault/MOC.md`, also present on clean `main`; the installed
+Mintlify CLI does not provide `mint validate`, so that command was not run.
+No page content, navigation or reference data changed.
+
+Codex root reviewed the [hosted PR49 preview](https://alignr-brand-docs-logo.mintlify.site/introduction)
+on 8 October before publication. At 1280px desktop in dark and light themes,
+the blue tile and outlined wordmark rendered cleanly with the intended white
+and dark lettering. At 390px light mobile, the header logo remained legible
+without clipping. The preview's interactive tree exposed an `Alignr home page`
+logo link. This is a rendered header check, not a full-site accessibility or
+browser-matrix review. The owned browser session was closed after inspection.
+The publication hold above remains until the application is deployed.
 
 ## 7 October 2026 — PR47 hosted preview review, publication still held
 
