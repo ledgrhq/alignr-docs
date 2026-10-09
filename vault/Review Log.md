@@ -1132,7 +1132,7 @@ PR [#27](https://github.com/ledgrhq/alignr-docs/pull/27), head
 `4fd460cc3816f9e6391a8c59b0980ea02f13cea2` on 2 October 2026. That publication
 does not include the new ALI-12 clarification below.
 
-## 2026-10-09 — ALI-12 scheduled fact-count clarification (app deployed; docs publication pending)
+## 2026-10-09 — ALI-12 scheduled fact-count clarification (published; hosted content verified)
 
 Updated [Workspace health](../guides/workspace-health.mdx) against application
 PR [#242](https://github.com/ledgrhq/ledgr/pull/242), head
@@ -1150,15 +1150,24 @@ control preview. Application PR #242 merged as
 completed successfully at 13:33:29 UTC on 9 October 2026. ECS API110 and worker109
 were each PRIMARY/COMPLETED 1/1; `/readyz` returned HTTP 200 in 0.44 seconds.
 This is deployment and basic health evidence only. No affected-client assessment
-above 5,000 facts has been verified or is claimed. The docs PR can proceed to
-publication once its final checks pass; it does not claim a live large-client
-assessment result.
+above 5,000 facts has been verified or is claimed; the guide does not claim a live
+large-client assessment result.
 
 This follow-up is tracked in docs PR
 [#53](https://github.com/ledgrhq/alignr-docs/pull/53), linked to ALI-12. The PR
 was held as a draft until the matching application deployment and basic health
-were confirmed. The docs change itself is not yet merged or published at this
-review point.
+were confirmed, then merged as
+`585cbfab3ae47c117c7cae06a3b11f431472115e` at 13:41:19 UTC on 9 October 2026.
+Main validation run
+[#37938631707](https://github.com/ledgrhq/alignr-docs/actions/runs/37938631707)
+passed at 13:42:19 UTC. A read-only browser check of the live
+[Workspace health guide](https://docs.alignr.io/guides/workspace-health) found
+the new boundary paragraph on the production URL. The text remained present in
+both dark and light theme modes (DOM theme classes and text colours: dark/white,
+light/black). The Mintlify Deployment status context on the final vault-only PR
+head was skipped, so no successful deployment check is claimed; live hosted-content
+readback is the evidence that the guide is available. Browser screenshot capture
+stalled, and no desktop/mobile screenshot or layout acceptance is claimed.
 
 No API, MCP, route, schema, predicate or control definition changed, so generated
 references were not regenerated. Independent review also identified a separate
@@ -1181,8 +1190,9 @@ vault check passed (14 indexed notes). With Node 22.13.1 and pinned Mintlify CLI
 4.2.939, `mint broken-links`, `mint openapi-check api-reference/openapi.json`,
 `mint a11y` (96 MDX files) and `mint validate` passed; `git diff --check` passed.
 `openapi-check` reported its deprecation notice and confirmed the definition is
-valid. No local rendered desktop/mobile preview was performed. The docs PR is
-ready for publication review; hosted production verification remains pending.
+valid. No local rendered desktop/mobile preview was performed. Publication and
+hosted-content verification are recorded above; no affected-client assessment
+above 5,000 facts is claimed.
 
 
 ## Held Linear workspace navigation and setup guides — 2 October 2026
