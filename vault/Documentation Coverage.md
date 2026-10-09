@@ -14,7 +14,15 @@ completed successfully on 9 October 2026 at 13:33:29 UTC; ECS API110 and worker1
 were each PRIMARY/COMPLETED 1/1, and `/readyz` returned HTTP 200 in 0.44 seconds.
 This confirms deployment and basic health only; no affected-client assessment
 above 5,000 facts is claimed. No route, schema, predicate or control definition
-changed, so generated references remain unchanged.
+changed, so generated references remain unchanged. The clarification was published
+in docs PR [#53](https://github.com/ledgrhq/alignr-docs/pull/53), merge
+`585cbfab3ae47c117c7cae06a3b11f431472115e`. Main validation run
+[#37938631707](https://github.com/ledgrhq/alignr-docs/actions/runs/37938631707)
+passed. The live [Workspace health guide](https://docs.alignr.io/guides/workspace-health)
+was read back with the new boundary paragraph visible in dark and light themes.
+The PR's Mintlify Deployment status for its final vault-only head was skipped;
+this is not recorded as a successful deployment check. No desktop/mobile screenshot
+or affected-client assessment above 5,000 facts is claimed.
 
 Living coverage map. Last audited 2026-09-26 against application `565fae53f166e14dae4f3d872572ab3e3bdfdc28` and published documentation `0bf7785de4d97ac9f8a759bb9626d837fa4feeca`. The audit used three independent subagents plus the coordinator, followed by a separate review of the immediate corrections.
 
