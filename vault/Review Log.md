@@ -2,6 +2,60 @@
 
 Append dated entries. Keep evidence precise and do not turn planned checks into passed checks.
 
+## 9 October 2026 — application logo live; PR49 hold cleared
+
+The application logo from PR211, with the 22px sidebar adjustment from PR228,
+is live at `app.alignr.io`. The exact Vercel production candidate
+`dpl_414vZp72kaJRWuoeNSMKbrFVqs92` was read back on the public alias after
+promotion. Its protected build was checked against the production API base
+`https://api.alignr.io/api/v1` before promotion. The public `/login` page then
+served the candidate's assets; its home link contained the outlined SVG and no
+`alignr-wordmark-text` element. Browser captures of the public sign-in page in
+dark and light themes showed legible blue icon and outlined lettering. The
+owned test browser was closed.
+
+This supersedes the *publication hold* in the 8 October entry, not that entry's
+preview evidence. PR49's hosted preview and validation were independently
+reviewed again before merge: the preview renders the logo in both themes,
+`mint a11y` passed on 97 MDX files, and the two `mint broken-links` failures
+remain the same excluded README links on clean `main`. The docs production
+deployment and `docs.alignr.io` live header still require verification after
+the PR merges. This is a logo release check, not a full-site accessibility or
+browser-matrix audit.
+
+## 8 October 2026 — logo drawn as outlined artwork (held for application PR211)
+
+Claude replaced `logo/light.svg` and `logo/dark.svg`. They previously set the
+"alignr" wordmark as live Arial text (21px/400, −0.9px), which rendered with
+whatever font the reader's system had. They now carry the same outlined
+artwork as the application's `Logo.tsx`: the 20px icon tile, a 7px gap and
+Geist Medium lettering drawn as paths, in `#202024` (light) and `#EEEEEF` (dark)
+to match the application's workspace text colours. `favicon.svg` already
+matched the application's icon and is unchanged. This keeps DOC-002/DOC-007's
+exact Alignr branding; no decision changes.
+
+Source: application PR211 (`claude/logo-as-image`, commit `2df7274e`), which
+moves the app logo from Arial text to the same outlined SVG. alignr.io and its
+brand page already use this artwork (ledgr-website `b56a23a`, `432e3ae`).
+Publication is held until PR211 merges and deploys, so the help site never
+shows a logo the application does not.
+
+Checks on PR49's original logo commit `0ed479dd8a6f00a30232c2a9989d5ebf093dec07`:
+`python3 scripts/check-docs-vault.py` and GitHub's documentation validation
+passed. `mint broken-links` reported only the two README links to excluded
+`AGENTS.md` and `vault/MOC.md`, also present on clean `main`; the installed
+Mintlify CLI does not provide `mint validate`, so that command was not run.
+No page content, navigation or reference data changed.
+
+Codex root reviewed the [hosted PR49 preview](https://alignr-brand-docs-logo.mintlify.site/introduction)
+on 8 October before publication. At 1280px desktop in dark and light themes,
+the blue tile and outlined wordmark rendered cleanly with the intended white
+and dark lettering. At 390px light mobile, the header logo remained legible
+without clipping. The preview's interactive tree exposed an `Alignr home page`
+logo link. This is a rendered header check, not a full-site accessibility or
+browser-matrix review. The owned browser session was closed after inspection.
+The publication hold above remains until the application is deployed.
+
 ## 7 October 2026 — PR47 hosted preview review, publication still held
 
 Codex root reviewed the hosted PR47 preview at source
