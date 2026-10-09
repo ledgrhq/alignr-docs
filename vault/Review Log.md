@@ -1130,10 +1130,9 @@ Subsequent release record: the initial fact-volume documentation shipped in docs
 PR [#27](https://github.com/ledgrhq/alignr-docs/pull/27), head
 `836b65e3f86a51620f9cb5a5505acc8bed4a5d72`, merged as
 `4fd460cc3816f9e6391a8c59b0980ea02f13cea2` on 2 October 2026. That publication
-does not include the new ALI-12 clarification below; it remains held for app PR
-#242 deployment.
+does not include the new ALI-12 clarification below.
 
-## 2026-10-09 — ALI-12 scheduled fact-count clarification (held)
+## 2026-10-09 — ALI-12 scheduled fact-count clarification (app deployed; docs publication pending)
 
 Updated [Workspace health](../guides/workspace-health.mdx) against application
 PR [#242](https://github.com/ledgrhq/ledgr/pull/242), head
@@ -1145,12 +1144,21 @@ generation bounds and the 3,000-fact draft control preview limit; overflow does
 not yield a result from a partial snapshot. Candidate and verification limits can
 still leave work incomplete. Source inspection covered `scheduled_deterministic_candidates`,
 scheduled operation error handling, LLM generation input validation and bounded
-control preview. PR #242 is open and not deployed; publication remains held until
-the matching application change is deployed and accepted.
+control preview. Application PR #242 merged as
+`468f94051d78c5a2baf45b4b2b9a63eebfc9325f`. Production workflow run
+[#37930483754](https://github.com/ledgrhq/ledgr/actions/runs/37930483754)
+completed successfully at 13:33:29 UTC on 9 October 2026. ECS API110 and worker109
+were each PRIMARY/COMPLETED 1/1; `/readyz` returned HTTP 200 in 0.44 seconds.
+This is deployment and basic health evidence only. No affected-client assessment
+above 5,000 facts has been verified or is claimed. The docs PR can proceed to
+publication once its final checks pass; it does not claim a live large-client
+assessment result.
 
-This follow-up is tracked in draft docs PR
-[#53](https://github.com/ledgrhq/alignr-docs/pull/53), linked to ALI-12. Keep it
-in draft until app PR #242 has production deployment and acceptance evidence.
+This follow-up is tracked in docs PR
+[#53](https://github.com/ledgrhq/alignr-docs/pull/53), linked to ALI-12. The PR
+was held as a draft until the matching application deployment and basic health
+were confirmed. The docs change itself is not yet merged or published at this
+review point.
 
 No API, MCP, route, schema, predicate or control definition changed, so generated
 references were not regenerated. Independent review also identified a separate
@@ -1163,8 +1171,18 @@ For the updated text, `check-docs-vault.py` passed (14 indexed notes); with Node
 and `mint validate` passed; `git diff --check` passed. `mint openapi-check` and
 `mint a11y` passed for the initial prose revision before the 4 MiB wording was
 added. The default shell Node 16 could not run Mint (`Blob is not defined`); all
-Mint checks were run under Node 22. No local rendered desktop/mobile preview,
-hosted publication, or production workflow acceptance is claimed.
+Mint checks were run under Node 22. At that draft review, no local rendered
+desktop/mobile preview or production workflow acceptance was claimed; production
+deployment and basic health evidence is recorded above. No affected-client
+assessment above 5,000 facts was conducted or is claimed.
+
+After reconciling this record with the successful application deployment, the
+vault check passed (14 indexed notes). With Node 22.13.1 and pinned Mintlify CLI
+4.2.939, `mint broken-links`, `mint openapi-check api-reference/openapi.json`,
+`mint a11y` (96 MDX files) and `mint validate` passed; `git diff --check` passed.
+`openapi-check` reported its deprecation notice and confirmed the definition is
+valid. No local rendered desktop/mobile preview was performed. The docs PR is
+ready for publication review; hosted production verification remains pending.
 
 
 ## Held Linear workspace navigation and setup guides — 2 October 2026

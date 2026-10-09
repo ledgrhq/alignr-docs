@@ -7,9 +7,14 @@ eligible facts can span 5,000-fact chunks across subjects, while one subject ove
 5,000 still fails closed; LLM generation has separate 5,000-fact and 4 MiB
 serialised-input limits, and draft control preview retains its 3,000-fact cap.
 Prepared against application PR [#242](https://github.com/ledgrhq/ledgr/pull/242),
-head `f98bd907`, which is open and not deployed. No route, schema, predicate or
-control definition changed, so generated references remain unchanged. Hold this
-follow-up until the matching application change is deployed.
+source head `f98bd9078b7b69eb08c60cb2f3d8036e555393b2`, merged as
+`468f94051d78c5a2baf45b4b2b9a63eebfc9325f`. Production workflow run
+[#37930483754](https://github.com/ledgrhq/ledgr/actions/runs/37930483754)
+completed successfully on 9 October 2026 at 13:33:29 UTC; ECS API110 and worker109
+were each PRIMARY/COMPLETED 1/1, and `/readyz` returned HTTP 200 in 0.44 seconds.
+This confirms deployment and basic health only; no affected-client assessment
+above 5,000 facts is claimed. No route, schema, predicate or control definition
+changed, so generated references remain unchanged.
 
 Living coverage map. Last audited 2026-09-26 against application `565fae53f166e14dae4f3d872572ab3e3bdfdc28` and published documentation `0bf7785de4d97ac9f8a759bb9626d837fa4feeca`. The audit used three independent subagents plus the coordinator, followed by a separate review of the immediate corrections.
 
