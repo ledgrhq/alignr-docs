@@ -2,6 +2,20 @@
 
 Append dated entries. Keep evidence precise and do not turn planned checks into passed checks.
 
+## 9 October 2026 — docs logo verified live after PR49
+
+After PR49 merged as `12ac46af1bfb38d14adf48d4a82b894ef3857065`, a browser
+review of the public `https://docs.alignr.io/introduction` page confirmed the
+new logo is clear and unclipped in desktop light and dark themes and at 390 ×
+844 mobile in dark theme. GitHub Documentation checks for the merge commit
+completed successfully in [run 37900063273](https://github.com/ledgrhq/alignr-docs/actions/runs/37900063273).
+
+The public page is live, but GitHub's deployment record for the merge SHA is
+labelled `staging` even though its target URL is `docs.alignr.io`; the GitHub
+production deployment record has not caught up. This browser readback verifies
+the visible page, not a production deployment record. No full-site accessibility
+or broader browser-matrix review was performed.
+
 ## 9 October 2026 — application logo live; PR49 hold cleared
 
 The application logo from PR211, with the 22px sidebar adjustment from PR228,
