@@ -22,10 +22,10 @@ and [#178](https://github.com/ledgrhq/ledgr/pull/178): it samples only the chose
 client and is read-only; **Connect client** is the explicit consent-capable action.
 The integration-level check remains an aggregate of selected customers. This
 source review does not establish a live tenant result. PR177 is merged, PR178 is
-open, and backend PR225 remains a draft; keep the whole docs PR held until the
-matching frontend/backend release is verified. In particular, do not claim the
-partial status is production-visible before the frontend terminal-warning state
-is released.
+open, and backend PR225 remains a draft. Keep the whole docs PR held until PR225,
+the selected-client Check access UI in PR178, and the frontend partial terminal
+warning support are released. Do not claim that the partial status is production
+visible before its matching frontend state is released.
 
 No API/MCP route, permission, predicate or control changed, so generated
 references were not regenerated. The information architecture now records the
@@ -37,10 +37,18 @@ two existing README links to the intentionally excluded `AGENTS.md` and
 `vault/MOC.md`; no public MDX link failed. Local Mintlify is 4.2.229 under Node
 22.13.1; it has no `mint validate` command, while CI pins 4.2.939. Hosted
 readback, visual preview, app deployment and publication are not performed by
-this work. Keep this docs change held until app PRs [#225](https://github.com/ledgrhq/ledgr/pull/225)
-and [#178](https://github.com/ledgrhq/ledgr/pull/178) are released and the
-partial-warning UI is verified; PR #177 is merged but its source review alone
-does not establish production availability.
+this work. Keep this docs change held until app PR #225, the selected-client
+Check access UI in [PR #178](https://github.com/ledgrhq/ledgr/pull/178), and the
+frontend partial-warning state are released and verified; PR #177 is merged but
+its source review alone does not establish production availability.
+
+Docs PR [#51](https://github.com/ledgrhq/alignr-docs/pull/51) is an open draft
+stacked on docs PR #48, with content commit `a413b400dcacb02bb9396f1db066a1230b0b341f`.
+GitHub Documentation checks run [37876701592](https://github.com/ledgrhq/alignr-docs/actions/runs/37876701592)
+passed the vault guard, broken-link check, OpenAPI check and pinned Mintlify
+validation on that source head. Mintlify Deployment was skipped because the PR
+is a draft. This follow-up records review evidence and does not change the public
+MDX.
 
 ## 7 October 2026 — PR47 hosted preview review, publication still held
 

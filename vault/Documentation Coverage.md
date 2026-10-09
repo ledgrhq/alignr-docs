@@ -301,8 +301,9 @@ failed attempt. The docs also retain the client-only, read-only **Check access**
 semantics from PRs #177/#178 and keep consent and collection as separate steps.
 Source review is against PR225 head `bf38da4a5a9dce9430cff6e9fbf0d3cd19f368ed`;
 PR225 remains draft and PR178 remains open. Keep publication held until the
-backend and client UI are released and the partial warning is supported in the
-frontend. This is source-aligned candidate copy, not production availability.
+backend PR225 and client Check access UI PR178 are released, and the frontend's
+partial terminal-warning support is released. This is source-aligned candidate
+copy, not production availability.
 
 ## Progressive findings candidate — 2 October 2026
 
