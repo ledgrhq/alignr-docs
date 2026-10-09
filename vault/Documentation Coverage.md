@@ -4,8 +4,9 @@ The initial fact-volume capacity guidance in docs PR [#27](https://github.com/le
 merged as `4fd460cc3816f9e6391a8c59b0980ea02f13cea2`. Its ALI-12 follow-up updates
 Workspace health to state the scheduled deterministic boundary precisely:
 eligible facts can span 5,000-fact chunks across subjects, while one subject over
-5,000 still fails closed; LLM generation and draft control preview retain separate
-fact caps. Prepared against application PR [#242](https://github.com/ledgrhq/ledgr/pull/242),
+5,000 still fails closed; LLM generation has separate 5,000-fact and 4 MiB
+serialised-input limits, and draft control preview retains its 3,000-fact cap.
+Prepared against application PR [#242](https://github.com/ledgrhq/ledgr/pull/242),
 head `f98bd907`, which is open and not deployed. No route, schema, predicate or
 control definition changed, so generated references remain unchanged. Hold this
 follow-up until the matching application change is deployed.

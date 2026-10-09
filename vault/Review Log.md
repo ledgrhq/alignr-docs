@@ -1140,10 +1140,10 @@ PR [#242](https://github.com/ledgrhq/ledgr/pull/242), head
 `f98bd9078b7b69eb08c60cb2f3d8036e555393b2`. The guide now distinguishes the
 removed aggregate scheduled deterministic fact-count barrier from the retained
 per-subject 5,000-fact boundary: a subject over that bound leaves the run
-incomplete. It also names the separate 5,000-fact LLM generation and 3,000-fact
-draft control preview limits and states that overflow does not yield a result from
-a partial snapshot. Candidate and verification limits can still leave work
-incomplete. Source inspection covered `scheduled_deterministic_candidates`,
+incomplete. It also names the separate 5,000-fact and 4 MiB serialised-input LLM
+generation bounds and the 3,000-fact draft control preview limit; overflow does
+not yield a result from a partial snapshot. Candidate and verification limits can
+still leave work incomplete. Source inspection covered `scheduled_deterministic_candidates`,
 scheduled operation error handling, LLM generation input validation and bounded
 control preview. PR #242 is open and not deployed; publication remains held until
 the matching application change is deployed and accepted.
@@ -1153,14 +1153,18 @@ This follow-up is tracked in draft docs PR
 in draft until app PR #242 has production deployment and acceptance evidence.
 
 No API, MCP, route, schema, predicate or control definition changed, so generated
-references were not regenerated. Validation for this docs candidate is recorded
-here: `check-docs-vault.py` passed (14 indexed notes); with Node 22.13.1 and pinned
-Mintlify CLI 4.2.939, `mint broken-links` found no broken links, `mint
-openapi-check` passed, `mint a11y` passed for 96 MDX pages and `mint validate`
-passed. `git diff --check` passed. The default shell Node 16 could not run Mint
-(`Blob is not defined`); every Mint check was rerun under Node 22 and passed. No
-local rendered desktop/mobile preview, hosted publication, or production workflow
-acceptance is claimed.
+references were not regenerated. Independent review also identified a separate
+`MAX_INPUT_BYTES` bound: `_canonical` rejects serialised generation material over
+4 MiB (`generation_input_too_large`). The public guide and coverage note now state
+this alongside the 5,000-fact generation cap.
+
+For the updated text, `check-docs-vault.py` passed (14 indexed notes); with Node
+22.13.1 and pinned Mintlify CLI 4.2.939, `mint broken-links` found no broken links
+and `mint validate` passed; `git diff --check` passed. `mint openapi-check` and
+`mint a11y` passed for the initial prose revision before the 4 MiB wording was
+added. The default shell Node 16 could not run Mint (`Blob is not defined`); all
+Mint checks were run under Node 22. No local rendered desktop/mobile preview,
+hosted publication, or production workflow acceptance is claimed.
 
 
 ## Held Linear workspace navigation and setup guides — 2 October 2026
