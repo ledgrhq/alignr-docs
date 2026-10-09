@@ -1405,3 +1405,45 @@ page, navigation and response table without visible overflow. No authenticated
 API call, production runtime check, hosted docs readback or publication was
 performed. Application PR #165 remains open; keep this docs change held until
 matching application review/release and fresh docs review.
+
+
+### 8 October 2026 — Microsoft account Guest population explanation (candidate)
+
+Updated `controls/baselines/identity.mdx` and `controls/advanced-definitions.mdx`
+to explain the source-backed default Member population, selected-source current
+`user_type` requirement, Guest opt-in and unknown handling. Member service and
+non-mailbox accounts remain eligible. No address heuristic is specified. The app
+candidate is isolated at `/private/tmp/alignr-ali15-guest-exclusion-20261008`; its
+relationship to production issue CD-4846 remains unverified, and historical issue
+reconciliation requires a fresh Microsoft collection/identity witness. No predicate,
+control definition or generated catalogue changed. The docs worktree is an isolated
+branch from `origin/main`; source edits are a candidate only. Mintlify validation,
+rendered preview, independent review, merge, publication and hosted readback remain
+unverified.
+
+
+## 9 October — PR #50 guest-population preview review
+
+Reviewed the hosted PR #50 preview at source head
+`c2c23ac4a8d2c206ba01897ee82805d02d0b46d3`:
+`https://alignr-docs-ali15-guest-population-20261008.mintlify.site/`. The changed
+pages, `controls/baselines/identity` and `controls/advanced-definitions`, rendered
+in light and dark themes at desktop and 390 × 844 mobile dimensions. At 390 CSS
+pixels, both the document and body measured 390 pixels wide; neither page had
+horizontal document overflow. The guest-scope copy was readable in both themes.
+The advanced-definition code example remains horizontally scrollable within its
+own block on mobile.
+
+No visual defect was found. Mintlify's fixed Ask Assistant composer occupies the
+bottom of the mobile viewport while scrolling; both changed paragraphs remained
+readable after scrolling. This is rendered preview evidence only. It does not
+verify the application behavior described by the copy, production deployment,
+keyboard or screen-reader behavior, or the live docs URL. Review screenshots were
+kept outside the repository under `/tmp/pr50-review/`. The docs vault guard passed
+(14 indexed notes); with Mintlify 4.2.939 on Node 22.13.1, `mint broken-links`,
+`mint openapi-check api-reference/openapi.json`, `mint a11y` (96 MDX files),
+`mint validate` and `git diff --check` passed. The OpenAPI command reports that it
+is deprecated in favour of `mint validate`, but the definition was valid. GitHub
+Documentation checks and Mintlify Deployment were green on the original PR head
+when this review began; the review-log-only change does not alter public MDX or
+generated references. Its updated CI result is available from PR #50.

@@ -34,6 +34,8 @@ Do not copy a control population into a standalone rule and assume it still desc
 
 In plain English: **select accounts observed as enabled, then check that each selected account is observed as registered for MFA**. This does not prove MFA enforcement at sign-in.
 
+For Microsoft account predicates, this ordinary population also applies the default Member scope described in [Identity and access](/controls/baselines/identity). Add an explicit structured `user_type` match or filter when a control is intended to assess Guests; missing or stale type evidence remains unknown and is not treated as Member.
+
 `match.object` is an exact population value. Omitting it selects subjects with an `account_enabled` observation regardless of whether the observed value is true or false.
 
 ## Add filters only when they express the intended scope

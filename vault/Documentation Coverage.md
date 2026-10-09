@@ -372,3 +372,19 @@ desktop and 390px mobile widths without horizontal overflow. Application PR170
 is merged as `435cd668d4ade5a07bd6558a0b2901d07a867ed7`, but production workflow
 `37679369462` has not yet completed at the 20:25 UTC checkpoint. Keep this errors
 change held for verified runtime and public URL readback; see the dated review log.
+
+
+## 8 October 2026 — Microsoft account population scope candidate
+
+Application candidate `codex/ali-15-guest-exclusion-llm` from production source
+`7690824e43912e1f392b5ed15c3b6ee974f460c` adds source-backed Guest exclusion for
+structured account predicates on the LLM-assisted path. The public identity baseline
+and advanced-definition guide now state the existing Microsoft account population
+contract: default Member scope requires current selected-source `user_type`; Guest
+and missing/stale/unverified type are outside scope and are not passes; Member service
+and non-mailbox accounts remain eligible; explicit structured type selection can
+opt into Guest scope. No UPN/name heuristic is described. This is candidate copy,
+paired with application review; it is not published or production acceptance.
+No catalogue regeneration is needed because control definitions and predicate
+metadata are unchanged. Review and publication remain pending source/CI review and
+matching application release.
