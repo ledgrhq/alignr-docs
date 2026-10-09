@@ -1126,7 +1126,37 @@ pending. No local browser or build was started because of the owner's laptop
 resource constraint. Earlier guide screenshots do not establish visual acceptance
 of the added paragraphs.
 
-Reconciled published capacity docs main `4fd460c` into this candidate before publication. The only conflict was appended review-log history; both records are retained. Navigation MDX stayed unchanged. The previous conflict prevented GitHub pull-request validation from starting on recent heads; exact merged-head validation is now required.
+Subsequent release record: the initial fact-volume documentation shipped in docs
+PR [#27](https://github.com/ledgrhq/alignr-docs/pull/27), head
+`836b65e3f86a51620f9cb5a5505acc8bed4a5d72`, merged as
+`4fd460cc3816f9e6391a8c59b0980ea02f13cea2` on 2 October 2026. That publication
+does not include the new ALI-12 clarification below; it remains held for app PR
+#242 deployment.
+
+## 2026-10-09 — ALI-12 scheduled fact-count clarification (held)
+
+Updated [Workspace health](../guides/workspace-health.mdx) against application
+PR [#242](https://github.com/ledgrhq/ledgr/pull/242), head
+`f98bd9078b7b69eb08c60cb2f3d8036e555393b2`. The guide now distinguishes the
+removed aggregate scheduled deterministic fact-count barrier from the retained
+per-subject 5,000-fact boundary: a subject over that bound leaves the run
+incomplete. It also names the separate 5,000-fact LLM generation and 3,000-fact
+draft control preview limits and states that overflow does not yield a result from
+a partial snapshot. Candidate and verification limits can still leave work
+incomplete. Source inspection covered `scheduled_deterministic_candidates`,
+scheduled operation error handling, LLM generation input validation and bounded
+control preview. PR #242 is open and not deployed; publication remains held until
+the matching application change is deployed and accepted.
+
+No API, MCP, route, schema, predicate or control definition changed, so generated
+references were not regenerated. Validation for this docs candidate is recorded
+here: `check-docs-vault.py` passed (14 indexed notes); with Node 22.13.1 and pinned
+Mintlify CLI 4.2.939, `mint broken-links` found no broken links, `mint
+openapi-check` passed, `mint a11y` passed for 96 MDX pages and `mint validate`
+passed. `git diff --check` passed. The default shell Node 16 could not run Mint
+(`Blob is not defined`); every Mint check was rerun under Node 22 and passed. No
+local rendered desktop/mobile preview, hosted publication, or production workflow
+acceptance is claimed.
 
 
 ## Held Linear workspace navigation and setup guides — 2 October 2026

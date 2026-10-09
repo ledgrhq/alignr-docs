@@ -1,11 +1,14 @@
 # Application documentation coverage
 
-Fact-volume capacity candidate: REST and MCP one-client evaluation guides explain
-streamed current-fact snapshots and truthful partial outcomes; Workspace health
-distinguishes the removed aggregate scheduled-evidence ceiling from remaining
-per-rule and provider constraints. Held for the matching capacity release, after
-Health PR25 and scoring PR26. No route, schema, predicate or control definition
-changed, so generated references remain unchanged.
+The initial fact-volume capacity guidance in docs PR [#27](https://github.com/ledgrhq/alignr-docs/pull/27)
+merged as `4fd460cc3816f9e6391a8c59b0980ea02f13cea2`. Its ALI-12 follow-up updates
+Workspace health to state the scheduled deterministic boundary precisely:
+eligible facts can span 5,000-fact chunks across subjects, while one subject over
+5,000 still fails closed; LLM generation and draft control preview retain separate
+fact caps. Prepared against application PR [#242](https://github.com/ledgrhq/ledgr/pull/242),
+head `f98bd907`, which is open and not deployed. No route, schema, predicate or
+control definition changed, so generated references remain unchanged. Hold this
+follow-up until the matching application change is deployed.
 
 Living coverage map. Last audited 2026-09-26 against application `565fae53f166e14dae4f3d872572ab3e3bdfdc28` and published documentation `0bf7785de4d97ac9f8a759bb9626d837fa4feeca`. The audit used three independent subagents plus the coordinator, followed by a separate review of the immediate corrections.
 
