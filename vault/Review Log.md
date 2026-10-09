@@ -1148,6 +1148,10 @@ scheduled operation error handling, LLM generation input validation and bounded
 control preview. PR #242 is open and not deployed; publication remains held until
 the matching application change is deployed and accepted.
 
+This follow-up is tracked in draft docs PR
+[#53](https://github.com/ledgrhq/alignr-docs/pull/53), linked to ALI-12. Keep it
+in draft until app PR #242 has production deployment and acceptance evidence.
+
 No API, MCP, route, schema, predicate or control definition changed, so generated
 references were not regenerated. Validation for this docs candidate is recorded
 here: `check-docs-vault.py` passed (14 indexed notes); with Node 22.13.1 and pinned
