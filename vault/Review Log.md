@@ -1471,3 +1471,8 @@ reported the local preview ready, then logged the known
 so desktop/mobile rendering was not visually inspected. Independent docs review,
 hosted readback and publication remain outstanding; do not claim public docs are
 current or deployed until those gates are completed.
+
+The source changes are in [docs PR #55](https://github.com/ledgrhq/alignr-docs/pull/55),
+stacked on PR #48. The matching application draft is
+[ledgrhq/ledgr#278](https://github.com/ledgrhq/ledgr/pull/278). Rebase the docs
+PR after #48 lands and keep it unpublished until application acceptance.
