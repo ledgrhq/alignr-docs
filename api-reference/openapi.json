@@ -3100,7 +3100,39 @@
                 "type": "null"
               }
             ],
-            "title": "Lastsyncat"
+            "title": "Lastsyncat",
+            "description": "Most recent fully completed collection; partial or failed attempts do not advance it."
+          },
+          "latestAttemptAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latestattemptat",
+            "description": "Started-at time of the newest recorded sync attempt, regardless of outcome."
+          },
+          "latestAttemptStatus": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latestattemptstatus",
+            "description": "Outcome of the newest attempt: running, completed, partial or failed."
+          },
+          "authRequiredMappingCount": {
+            "type": "integer",
+            "title": "Authrequiredmappingcount",
+            "description": "Current customer mappings requiring authorisation for this integration.",
+            "default": 0
           }
         },
         "type": "object",
@@ -3111,7 +3143,8 @@
           "status",
           "lastSyncAt"
         ],
-        "title": "WorkspaceIntegrationHealth"
+        "title": "WorkspaceIntegrationHealth",
+        "description": "Tenant-wide connection health with complete evidence and latest attempt split."
       },
       "WorkspaceNeedsAttentionItem": {
         "properties": {

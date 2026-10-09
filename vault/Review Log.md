@@ -1435,3 +1435,39 @@ Documentation checks (`validate`) and the Mintlify Deployment check passed for
 that commit. No production readback or publication was done. Keep publication
 held until the matching app change is accepted/released and docs PR review is
 complete.
+
+## 9 October — workspace Overview partial collection status (held)
+
+The mounted Overview and Technical alignment now need to distinguish the last
+fully completed collection from a newer partial, failed or running attempt. The
+source contract retains `Integration.last_sync_at` as the complete-sync clock,
+while `SyncRun.started_at` and status represent the newest attempt. The dashboard
+adds tenant-wide `latestAttemptAt`, `latestAttemptStatus` and
+`authRequiredMappingCount` fields; the latter includes only current mapping
+revisions with an `auth_required` failure in the same tenant. No migration or
+customer operation is involved.
+
+Updated `api-reference/workspace-overview.mdx` and regenerated the curated
+Dashboard operation in `api-reference/openapi.json` from application candidate
+branch `codex/ali-13-partial-status-overview` at `592cf1d4`, based on production
+source `6b32eae2f17b76a52d3e3a897eacd12d5a76858b`. The guide now explains that connection
+status can remain `connected` during a partial attempt, that only a full
+collection advances `lastSyncAt`, and how the new fields should be interpreted.
+The generator still selects 21 GET operations and 33 MCP tools; only the dashboard
+response schema and descriptions changed. This docs candidate is on a separate
+branch from open PR #48 because both update this append-only log. Its separate
+draft PR should remain stacked on PR #48 until the base is available on `main`.
+
+The application owner reports the focused API regression passed with isolated
+PostgreSQL after it failed on exact production source because `latestAttemptStatus`
+was absent; scoped UI tests and typecheck passed. Those are application checks,
+not docs validation. On the docs candidate, `python3 scripts/check-docs-vault.py`,
+`mint openapi-check api-reference/openapi.json`, `mint a11y` and `git diff --check`
+passed. `mint broken-links` found only the existing README links to excluded
+`AGENTS.md` and `vault/MOC.md`; no public MDX link failed. Pinned Mintlify CLI
+4.2.229 on Node 22.13.1 does not implement `mint validate`. `mint dev --port 3000`
+reported the local preview ready, then logged the known
+`transformAlgorithm` TypeError. The computer-use browser surface was unavailable,
+so desktop/mobile rendering was not visually inspected. Independent docs review,
+hosted readback and publication remain outstanding; do not claim public docs are
+current or deployed until those gates are completed.

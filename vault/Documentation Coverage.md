@@ -361,6 +361,14 @@ GET operations and the MCP catalogue remains at 33 tools. This docs branch is a
 held candidate: the app PR is open, deployment/runtime and hosted availability
 are unverified, and no publication is claimed.
 
+The 9 October partial-attempt follow-up adds `latestAttemptAt`,
+`latestAttemptStatus` and `authRequiredMappingCount` to each connection preview.
+`lastSyncAt` remains the timestamp of the last fully completed collection; partial
+and failed attempts do not advance it. The new authorisation count is tenant-wide
+and includes only current linked mappings. The source-aligned guide and generated
+OpenAPI are being updated in a separate docs pull request; production availability
+and publication remain unverified.
+
 The adjacent [API errors guide](../api-reference/errors.mdx) now explains the
 12-second service-read timeout and bounded cleanup response for the separate
 deployment-specific alignment and operations reads. It explicitly excludes the
