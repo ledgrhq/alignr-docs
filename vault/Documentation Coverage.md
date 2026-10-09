@@ -291,6 +291,19 @@ client Microsoft, Microsoft prerequisites, health and settings guides. Publicati
 is coupled to application PRs 69/70/73/74; do not present the pending source as a
 verified production release. Existing API/MCP catalogues remain unchanged.
 
+The held ALI-13 follow-up updates [client Microsoft connections](../guides/client-microsoft-connections.mdx)
+and [integration maintenance](../guides/maintain-integrations.mdx) for app PR #225:
+Partner Graph collection continues across selected mapped customers, publishes
+successful customers' new facts on a partial attempt, excludes the failed
+customer's old Partner Graph observations from current evidence/coverage, and
+does not advance the shared cursor. All selected customers failing remains a
+failed attempt. The docs also retain the client-only, read-only **Check access**
+semantics from PRs #177/#178 and keep consent and collection as separate steps.
+Source review is against PR225 head `bf38da4a5a9dce9430cff6e9fbf0d3cd19f368ed`;
+PR225 remains draft and PR178 remains open. Keep publication held until the
+backend and client UI are released and the partial warning is supported in the
+frontend. This is source-aligned candidate copy, not production availability.
+
 ## Progressive findings candidate — 2 October 2026
 
 Issue triage and Standards guides explain reviewing verified findings during a

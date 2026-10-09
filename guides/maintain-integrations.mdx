@@ -73,6 +73,8 @@ For a failed attempt, read the full explanation first. Where recorded, **Attempt
 
 **Records read** counts source records processed during the attempt. **Facts written** counts evidence saved. An attempt can read records and still fail before saving evidence. A populated client directory therefore does not prove that evidence collection succeeded.
 
+Microsoft Partner Graph collects each selected customer independently. If one customer's Graph access fails while another succeeds, collection can finish **partially**: fresh facts for successful customers are published, but the failed customer's existing Partner Graph observations do not count as current evidence or coverage. The shared collection cursor stays unchanged, allowing the next attempt to retry the missed customer without treating its old observations as fresh. If all selected customers fail, the attempt fails. Fix the affected customer's access, then select **Collect now** and review the new attempt. This collection recovery does not grant consent or change GDAP roles; use the client Microsoft guide's explicit access and consent steps where needed.
+
 Older attempts may have no response details. Their original response cannot be recovered from this view. After addressing the reported problem, use **Collect now** and inspect the new attempt. **Refresh** updates history; it does not start a collection.
 
 ## Refresh across clients

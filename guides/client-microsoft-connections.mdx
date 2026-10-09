@@ -68,6 +68,8 @@ If some reads work and others are unavailable, review the specific missing capab
 
 Use **Collection history → View details** for the saved failure explanation and available response fields. [Collection troubleshooting](/guides/maintain-integrations#inspect-a-collection-attempt) explains the difference between records read and facts written, and the limits of older attempts without diagnostics.
 
+Partner Graph collection handles each selected customer independently. If at least one customer succeeds and another fails, the attempt is **partial**: fresh facts from successful customers are published, while the failed customer's existing Partner Graph observations remain historical and do not count as current evidence or coverage. The shared collection cursor does not advance, so retry collection after resolving the failed customer's access. If every selected customer fails, the attempt fails. Collection does not change customer consent or GDAP roles. See [Inspect a collection attempt](/guides/maintain-integrations#inspect-a-collection-attempt) for recovery guidance.
+
 ## Replace an existing connection
 
 Review the saved client route, tenant and mappings before replacing a connection. A replacement application or tenant requires its own authorisation and fresh evidence. Keep the old connection's history available while verifying the replacement, and follow [integration maintenance](/guides/maintain-integrations) before retiring it.
