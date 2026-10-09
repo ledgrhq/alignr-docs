@@ -2,6 +2,27 @@
 
 Append dated entries. Keep evidence precise and do not turn planned checks into passed checks.
 
+## 9 October 2026 — application logo live; PR49 hold cleared
+
+The application logo from PR211, with the 22px sidebar adjustment from PR228,
+is live at `app.alignr.io`. The exact Vercel production candidate
+`dpl_414vZp72kaJRWuoeNSMKbrFVqs92` was read back on the public alias after
+promotion. Its protected build was checked against the production API base
+`https://api.alignr.io/api/v1` before promotion. The public `/login` page then
+served the candidate's assets; its home link contained the outlined SVG and no
+`alignr-wordmark-text` element. Browser captures of the public sign-in page in
+dark and light themes showed legible blue icon and outlined lettering. The
+owned test browser was closed.
+
+This supersedes the *publication hold* in the 8 October entry, not that entry's
+preview evidence. PR49's hosted preview and validation were independently
+reviewed again before merge: the preview renders the logo in both themes,
+`mint a11y` passed on 97 MDX files, and the two `mint broken-links` failures
+remain the same excluded README links on clean `main`. The docs production
+deployment and `docs.alignr.io` live header still require verification after
+the PR merges. This is a logo release check, not a full-site accessibility or
+browser-matrix audit.
+
 ## 8 October 2026 — logo drawn as outlined artwork (held for application PR211)
 
 Claude replaced `logo/light.svg` and `logo/dark.svg`. They previously set the
