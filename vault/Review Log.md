@@ -2,6 +2,74 @@
 
 Append dated entries. Keep evidence precise and do not turn planned checks into passed checks.
 
+## 9 October 2026 — docs logo verified live after PR49
+
+After PR49 merged as `12ac46af1bfb38d14adf48d4a82b894ef3857065`, a browser
+review of the public `https://docs.alignr.io/introduction` page confirmed the
+new logo is clear and unclipped in desktop light and dark themes and at 390 ×
+844 mobile in dark theme. GitHub Documentation checks for the merge commit
+completed successfully in [run 37900063273](https://github.com/ledgrhq/alignr-docs/actions/runs/37900063273).
+
+The public page is live, but GitHub's deployment record for the merge SHA is
+labelled `staging` even though its target URL is `docs.alignr.io`; the GitHub
+production deployment record has not caught up. This browser readback verifies
+the visible page, not a production deployment record. No full-site accessibility
+or broader browser-matrix review was performed.
+
+## 9 October 2026 — application logo live; PR49 hold cleared
+
+The application logo from PR211, with the 22px sidebar adjustment from PR228,
+is live at `app.alignr.io`. The exact Vercel production candidate
+`dpl_414vZp72kaJRWuoeNSMKbrFVqs92` was read back on the public alias after
+promotion. Its protected build was checked against the production API base
+`https://api.alignr.io/api/v1` before promotion. The public `/login` page then
+served the candidate's assets; its home link contained the outlined SVG and no
+`alignr-wordmark-text` element. Browser captures of the public sign-in page in
+dark and light themes showed legible blue icon and outlined lettering. The
+owned test browser was closed.
+
+This supersedes the *publication hold* in the 8 October entry, not that entry's
+preview evidence. PR49's hosted preview and validation were independently
+reviewed again before merge: the preview renders the logo in both themes,
+`mint a11y` passed on 97 MDX files, and the two `mint broken-links` failures
+remain the same excluded README links on clean `main`. The docs production
+deployment and `docs.alignr.io` live header still require verification after
+the PR merges. This is a logo release check, not a full-site accessibility or
+browser-matrix audit.
+
+## 8 October 2026 — logo drawn as outlined artwork (held for application PR211)
+
+Claude replaced `logo/light.svg` and `logo/dark.svg`. They previously set the
+"alignr" wordmark as live Arial text (21px/400, −0.9px), which rendered with
+whatever font the reader's system had. They now carry the same outlined
+artwork as the application's `Logo.tsx`: the 20px icon tile, a 7px gap and
+Geist Medium lettering drawn as paths, in `#202024` (light) and `#EEEEEF` (dark)
+to match the application's workspace text colours. `favicon.svg` already
+matched the application's icon and is unchanged. This keeps DOC-002/DOC-007's
+exact Alignr branding; no decision changes.
+
+Source: application PR211 (`claude/logo-as-image`, commit `2df7274e`), which
+moves the app logo from Arial text to the same outlined SVG. alignr.io and its
+brand page already use this artwork (ledgr-website `b56a23a`, `432e3ae`).
+Publication is held until PR211 merges and deploys, so the help site never
+shows a logo the application does not.
+
+Checks on PR49's original logo commit `0ed479dd8a6f00a30232c2a9989d5ebf093dec07`:
+`python3 scripts/check-docs-vault.py` and GitHub's documentation validation
+passed. `mint broken-links` reported only the two README links to excluded
+`AGENTS.md` and `vault/MOC.md`, also present on clean `main`; the installed
+Mintlify CLI does not provide `mint validate`, so that command was not run.
+No page content, navigation or reference data changed.
+
+Codex root reviewed the [hosted PR49 preview](https://alignr-brand-docs-logo.mintlify.site/introduction)
+on 8 October before publication. At 1280px desktop in dark and light themes,
+the blue tile and outlined wordmark rendered cleanly with the intended white
+and dark lettering. At 390px light mobile, the header logo remained legible
+without clipping. The preview's interactive tree exposed an `Alignr home page`
+logo link. This is a rendered header check, not a full-site accessibility or
+browser-matrix review. The owned browser session was closed after inspection.
+The publication hold above remains until the application is deployed.
+
 ## 7 October 2026 — PR47 hosted preview review, publication still held
 
 Codex root reviewed the hosted PR47 preview at source
@@ -1058,7 +1126,73 @@ pending. No local browser or build was started because of the owner's laptop
 resource constraint. Earlier guide screenshots do not establish visual acceptance
 of the added paragraphs.
 
-Reconciled published capacity docs main `4fd460c` into this candidate before publication. The only conflict was appended review-log history; both records are retained. Navigation MDX stayed unchanged. The previous conflict prevented GitHub pull-request validation from starting on recent heads; exact merged-head validation is now required.
+Subsequent release record: the initial fact-volume documentation shipped in docs
+PR [#27](https://github.com/ledgrhq/alignr-docs/pull/27), head
+`836b65e3f86a51620f9cb5a5505acc8bed4a5d72`, merged as
+`4fd460cc3816f9e6391a8c59b0980ea02f13cea2` on 2 October 2026. That publication
+does not include the new ALI-12 clarification below.
+
+## 2026-10-09 — ALI-12 scheduled fact-count clarification (published; hosted content verified)
+
+Updated [Workspace health](../guides/workspace-health.mdx) against application
+PR [#242](https://github.com/ledgrhq/ledgr/pull/242), head
+`f98bd9078b7b69eb08c60cb2f3d8036e555393b2`. The guide now distinguishes the
+removed aggregate scheduled deterministic fact-count barrier from the retained
+per-subject 5,000-fact boundary: a subject over that bound leaves the run
+incomplete. It also names the separate 5,000-fact and 4 MiB serialised-input LLM
+generation bounds and the 3,000-fact draft control preview limit; overflow does
+not yield a result from a partial snapshot. Candidate and verification limits can
+still leave work incomplete. Source inspection covered `scheduled_deterministic_candidates`,
+scheduled operation error handling, LLM generation input validation and bounded
+control preview. Application PR #242 merged as
+`468f94051d78c5a2baf45b4b2b9a63eebfc9325f`. Production workflow run
+[#37930483754](https://github.com/ledgrhq/ledgr/actions/runs/37930483754)
+completed successfully at 13:33:29 UTC on 9 October 2026. ECS API110 and worker109
+were each PRIMARY/COMPLETED 1/1; `/readyz` returned HTTP 200 in 0.44 seconds.
+This is deployment and basic health evidence only. No affected-client assessment
+above 5,000 facts has been verified or is claimed; the guide does not claim a live
+large-client assessment result.
+
+This follow-up is tracked in docs PR
+[#53](https://github.com/ledgrhq/alignr-docs/pull/53), linked to ALI-12. The PR
+was held as a draft until the matching application deployment and basic health
+were confirmed, then merged as
+`585cbfab3ae47c117c7cae06a3b11f431472115e` at 13:41:19 UTC on 9 October 2026.
+Main validation run
+[#37938631707](https://github.com/ledgrhq/alignr-docs/actions/runs/37938631707)
+passed at 13:42:19 UTC. A read-only browser check of the live
+[Workspace health guide](https://docs.alignr.io/guides/workspace-health) found
+the new boundary paragraph on the production URL. The text remained present in
+both dark and light theme modes (DOM theme classes and text colours: dark/white,
+light/black). The Mintlify Deployment status context on the final vault-only PR
+head was skipped, so no successful deployment check is claimed; live hosted-content
+readback is the evidence that the guide is available. Browser screenshot capture
+stalled, and no desktop/mobile screenshot or layout acceptance is claimed.
+
+No API, MCP, route, schema, predicate or control definition changed, so generated
+references were not regenerated. Independent review also identified a separate
+`MAX_INPUT_BYTES` bound: `_canonical` rejects serialised generation material over
+4 MiB (`generation_input_too_large`). The public guide and coverage note now state
+this alongside the 5,000-fact generation cap.
+
+For the updated text, `check-docs-vault.py` passed (14 indexed notes); with Node
+22.13.1 and pinned Mintlify CLI 4.2.939, `mint broken-links` found no broken links
+and `mint validate` passed; `git diff --check` passed. `mint openapi-check` and
+`mint a11y` passed for the initial prose revision before the 4 MiB wording was
+added. The default shell Node 16 could not run Mint (`Blob is not defined`); all
+Mint checks were run under Node 22. At that draft review, no local rendered
+desktop/mobile preview or production workflow acceptance was claimed; production
+deployment and basic health evidence is recorded above. No affected-client
+assessment above 5,000 facts was conducted or is claimed.
+
+After reconciling this record with the successful application deployment, the
+vault check passed (14 indexed notes). With Node 22.13.1 and pinned Mintlify CLI
+4.2.939, `mint broken-links`, `mint openapi-check api-reference/openapi.json`,
+`mint a11y` (96 MDX files) and `mint validate` passed; `git diff --check` passed.
+`openapi-check` reported its deprecation notice and confirmed the definition is
+valid. No local rendered desktop/mobile preview was performed. Publication and
+hosted-content verification are recorded above; no affected-client assessment
+above 5,000 facts is claimed.
 
 
 ## Held Linear workspace navigation and setup guides — 2 October 2026
@@ -1435,3 +1569,61 @@ Documentation checks (`validate`) and the Mintlify Deployment check passed for
 that commit. No production readback or publication was done. Keep publication
 held until the matching app change is accepted/released and docs PR review is
 complete.
+
+### 8 October 2026 — Microsoft account Guest population explanation (candidate)
+
+Updated `controls/baselines/identity.mdx` and `controls/advanced-definitions.mdx`
+to explain the source-backed default Member population, selected-source current
+`user_type` requirement, Guest opt-in and unknown handling. Member service and
+non-mailbox accounts remain eligible. No address heuristic is specified. The app
+candidate is isolated at `/private/tmp/alignr-ali15-guest-exclusion-20261008`; its
+relationship to production issue CD-4846 remains unverified, and historical issue
+reconciliation requires a fresh Microsoft collection/identity witness. No predicate,
+control definition or generated catalogue changed. The docs worktree is an isolated
+branch from `origin/main`; source edits are a candidate only. Mintlify validation,
+rendered preview, independent review, merge, publication and hosted readback remain
+unverified.
+
+
+## 9 October — PR #50 guest-population preview review
+
+Reviewed the hosted PR #50 preview at source head
+`c2c23ac4a8d2c206ba01897ee82805d02d0b46d3`:
+`https://alignr-docs-ali15-guest-population-20261008.mintlify.site/`. The changed
+pages, `controls/baselines/identity` and `controls/advanced-definitions`, rendered
+in light and dark themes at desktop and 390 × 844 mobile dimensions. At 390 CSS
+pixels, both the document and body measured 390 pixels wide; neither page had
+horizontal document overflow. The guest-scope copy was readable in both themes.
+The advanced-definition code example remains horizontally scrollable within its
+own block on mobile.
+
+No visual defect was found. Mintlify's fixed Ask Assistant composer occupies the
+bottom of the mobile viewport while scrolling; both changed paragraphs remained
+readable after scrolling. This is rendered preview evidence only. It does not
+verify the application behavior described by the copy, production deployment,
+keyboard or screen-reader behavior, or the live docs URL. Review screenshots were
+kept outside the repository under `/tmp/pr50-review/`. The docs vault guard passed
+(14 indexed notes); with Mintlify 4.2.939 on Node 22.13.1, `mint broken-links`,
+`mint openapi-check api-reference/openapi.json`, `mint a11y` (96 MDX files),
+`mint validate` and `git diff --check` passed. The OpenAPI command reports that it
+is deprecated in favour of `mint validate`, but the definition was valid. GitHub
+Documentation checks and Mintlify Deployment were green on the original PR head
+when this review began; the review-log-only change does not alter public MDX or
+generated references. Its updated CI result is available from PR #50.
+
+## 10 October — docs PR #48 conflict reconciliation and PR #277 impact review
+
+Reconciled docs PR #48 with current `main` in an isolated worktree after its
+merge conflict was found in this append-only review log. Preserved both the
+ALI-13 Microsoft access/consent review and the newer Guest-population review
+records from PR #50. The Microsoft guide and information-architecture changes
+applied cleanly. The matching app PR #278 remains a draft; the docs candidate
+remains unpublished pending app acceptance and docs review.
+
+Reviewed application PR #277's described behavior and changed-file scope. Its
+Guest/unknown filtering is in scheduled LLM generation and does not add a public
+route, permission, control definition, predicate or user-facing workflow. The
+existing identity baseline and advanced-definition pages already explain the
+default Member population, Guest opt-in and unknown handling, so no additional
+public content or generated reference is required. This is source-scope review
+only; PR #277 remains a draft and no production behavior or cleanup was verified.

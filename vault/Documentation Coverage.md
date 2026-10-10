@@ -1,11 +1,28 @@
 # Application documentation coverage
 
-Fact-volume capacity candidate: REST and MCP one-client evaluation guides explain
-streamed current-fact snapshots and truthful partial outcomes; Workspace health
-distinguishes the removed aggregate scheduled-evidence ceiling from remaining
-per-rule and provider constraints. Held for the matching capacity release, after
-Health PR25 and scoring PR26. No route, schema, predicate or control definition
-changed, so generated references remain unchanged.
+The initial fact-volume capacity guidance in docs PR [#27](https://github.com/ledgrhq/alignr-docs/pull/27)
+merged as `4fd460cc3816f9e6391a8c59b0980ea02f13cea2`. Its ALI-12 follow-up updates
+Workspace health to state the scheduled deterministic boundary precisely:
+eligible facts can span 5,000-fact chunks across subjects, while one subject over
+5,000 still fails closed; LLM generation has separate 5,000-fact and 4 MiB
+serialised-input limits, and draft control preview retains its 3,000-fact cap.
+Prepared against application PR [#242](https://github.com/ledgrhq/ledgr/pull/242),
+source head `f98bd9078b7b69eb08c60cb2f3d8036e555393b2`, merged as
+`468f94051d78c5a2baf45b4b2b9a63eebfc9325f`. Production workflow run
+[#37930483754](https://github.com/ledgrhq/ledgr/actions/runs/37930483754)
+completed successfully on 9 October 2026 at 13:33:29 UTC; ECS API110 and worker109
+were each PRIMARY/COMPLETED 1/1, and `/readyz` returned HTTP 200 in 0.44 seconds.
+This confirms deployment and basic health only; no affected-client assessment
+above 5,000 facts is claimed. No route, schema, predicate or control definition
+changed, so generated references remain unchanged. The clarification was published
+in docs PR [#53](https://github.com/ledgrhq/alignr-docs/pull/53), merge
+`585cbfab3ae47c117c7cae06a3b11f431472115e`. Main validation run
+[#37938631707](https://github.com/ledgrhq/alignr-docs/actions/runs/37938631707)
+passed. The live [Workspace health guide](https://docs.alignr.io/guides/workspace-health)
+was read back with the new boundary paragraph visible in dark and light themes.
+The PR's Mintlify Deployment status for its final vault-only head was skipped;
+this is not recorded as a successful deployment check. No desktop/mobile screenshot
+or affected-client assessment above 5,000 facts is claimed.
 
 Living coverage map. Last audited 2026-09-26 against application `565fae53f166e14dae4f3d872572ab3e3bdfdc28` and published documentation `0bf7785de4d97ac9f8a759bb9626d837fa4feeca`. The audit used three independent subagents plus the coordinator, followed by a separate review of the immediate corrections.
 
@@ -372,3 +389,19 @@ desktop and 390px mobile widths without horizontal overflow. Application PR170
 is merged as `435cd668d4ade5a07bd6558a0b2901d07a867ed7`, but production workflow
 `37679369462` has not yet completed at the 20:25 UTC checkpoint. Keep this errors
 change held for verified runtime and public URL readback; see the dated review log.
+
+
+## 8 October 2026 — Microsoft account population scope candidate
+
+Application candidate `codex/ali-15-guest-exclusion-llm` from production source
+`7690824e43912e1f392b5ed15c3b6ee974f460c` adds source-backed Guest exclusion for
+structured account predicates on the LLM-assisted path. The public identity baseline
+and advanced-definition guide now state the existing Microsoft account population
+contract: default Member scope requires current selected-source `user_type`; Guest
+and missing/stale/unverified type are outside scope and are not passes; Member service
+and non-mailbox accounts remain eligible; explicit structured type selection can
+opt into Guest scope. No UPN/name heuristic is described. This is candidate copy,
+paired with application review; it is not published or production acceptance.
+No catalogue regeneration is needed because control definitions and predicate
+metadata are unchanged. Review and publication remain pending source/CI review and
+matching application release.
