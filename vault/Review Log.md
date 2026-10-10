@@ -1540,6 +1540,35 @@ API call, production runtime check, hosted docs readback or publication was
 performed. Application PR #165 remains open; keep this docs change held until
 matching application review/release and fresh docs review.
 
+## 8 October — ALI-13 client Microsoft access and consent wording (held)
+
+Updated the Partner workflow in `guides/client-microsoft-connections.mdx` and
+`integrations/microsoft-setup.mdx` against application PRs [#177](https://github.com/ledgrhq/ledgr/pull/177)
+and [#178](https://github.com/ledgrhq/ledgr/pull/178). The client-page
+**Check access** action is a read-only sample of that client's currently
+available capabilities; it does not request consent. **Connect client** is the
+explicit Partner action that can request missing customer read consent. The
+integration-page check remains an aggregate sample of selected customers.
+Updated the Microsoft setup flow diagram and this vault's information
+architecture note to keep those actions distinct. No API catalogue, permission,
+or generated reference changed.
+
+Source inspection covered the client access panel, the scoped capability route,
+the consent-capable connect route and the consent service. App PR descriptions
+report focused backend and UI tests; this docs work did not rerun the app suites
+or verify a live Microsoft tenant. The 14-note vault/publication guard, OpenAPI
+check, accessibility scan for 97 MDX files and `git diff --check` passed.
+`mint broken-links` reported only the existing README links to excluded
+`AGENTS.md` and `vault/MOC.md`; no public MDX link failed. The installed pinned
+Mintlify CLI is 4.2.229 on Node 22.13.1 and does not support `mint validate`.
+The local preview rendered the affected guide pages and the setup diagram at
+desktop and 390px mobile widths; `mint dev` also logged a `transformAlgorithm`
+TypeError after reporting the preview ready. Draft docs PR [#48](https://github.com/ledgrhq/alignr-docs/pull/48)
+contains source commit `d6b0bc4b8289b85d7d418e276a4cde5748ef6e1d`; GitHub
+Documentation checks (`validate`) and the Mintlify Deployment check passed for
+that commit. No production readback or publication was done. Keep publication
+held until the matching app change is accepted/released and docs PR review is
+complete.
 
 ### 8 October 2026 — Microsoft account Guest population explanation (candidate)
 
@@ -1581,3 +1610,20 @@ is deprecated in favour of `mint validate`, but the definition was valid. GitHub
 Documentation checks and Mintlify Deployment were green on the original PR head
 when this review began; the review-log-only change does not alter public MDX or
 generated references. Its updated CI result is available from PR #50.
+
+## 10 October — docs PR #48 conflict reconciliation and PR #277 impact review
+
+Reconciled docs PR #48 with current `main` in an isolated worktree after its
+merge conflict was found in this append-only review log. Preserved both the
+ALI-13 Microsoft access/consent review and the newer Guest-population review
+records from PR #50. The Microsoft guide and information-architecture changes
+applied cleanly. The matching app PR #278 remains a draft; the docs candidate
+remains unpublished pending app acceptance and docs review.
+
+Reviewed application PR #277's described behavior and changed-file scope. Its
+Guest/unknown filtering is in scheduled LLM generation and does not add a public
+route, permission, control definition, predicate or user-facing workflow. The
+existing identity baseline and advanced-definition pages already explain the
+default Member population, Guest opt-in and unknown handling, so no additional
+public content or generated reference is required. This is source-scope review
+only; PR #277 remains a draft and no production behavior or cleanup was verified.

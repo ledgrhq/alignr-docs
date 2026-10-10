@@ -54,16 +54,15 @@ Use Direct when the client is outside your partner relationship or needs the sup
 1. Confirm the intended partner account is selected in **Settings → Microsoft** and has completed partner authorisation.
 2. In the client's **Connections** tab, select **Link Partner Center connection**. Choose the saved partner account if prompted.
 3. Find the Microsoft customer belonging to this client and select **Link to client**. Use **Refresh sites** if its directory needs updating. Customers already assigned elsewhere must be reviewed in the connection's **Client mapping** before moving them.
-4. Open **Client sites and access** for the linked connection. In the **Sites and Microsoft access** dialog, select **Check access**.
-5. Review the result, then open the integration and use **Collect now**. Inspect the new attempt and current client evidence before running checks.
+4. On the client page, select **Check access** to sample the linked customer's current Microsoft capabilities. It checks this client only and does not request consent. The result is an observation of access at check time, not a guarantee that every record can be collected.
+5. If consent is missing, use **Connect client** in the Partner access panel. This is the explicit consent action: it checks the assigned customer and can request the missing read consent through your authorised Partner Center account. It uses the existing delegated relationship; it does not create a GDAP relationship or add roles to your partner user. **GDAP** means Microsoft's granular delegated admin privileges. See [Microsoft's introduction](https://learn.microsoft.com/en-us/partner-center/customers/gdap-introduction).
+6. Open the integration and use **Collect now**. Inspect the new attempt and current client evidence before running checks.
 
-When customer app consent is missing, an explicit access check can request it through your authorised Partner Center account. This uses the existing delegated relationship and roles; it does not create a GDAP relationship or add roles to your partner user. **GDAP** means Microsoft's granular delegated admin privileges. See [Microsoft's introduction](https://learn.microsoft.com/en-us/partner-center/customers/gdap-introduction).
-
-A client-page access check tests that client's linked tenant. An integration-page check covers the selected customers for that connection. Collection covers the connection's eligible mapped clients, so a successful check for one client does not prove every customer can be collected.
+The client-page **Check access** action is read-only and scoped to that client. The integration-page **Check access** action samples the selected customers for that connection. **Connect client** is the named Partner action that can request customer read consent; collection is a separate step. A successful sample for one customer does not prove every customer can be collected.
 
 ## Read the result
 
-The partner panel shows completed partner setup separately from customer access. A completed administrator-consent return and a saved partner authorisation are setup milestones; the customer result tells you which reads currently work.
+The partner panel shows completed partner setup separately from customer access. **Check access** reports the capabilities currently available to the client. Use **Connect client** when you intend to request missing read consent. A completed administrator-consent return and a saved partner authorisation are setup milestones; neither proves customer access.
 
 If some reads work and others are unavailable, review the specific missing capability. Licensing, workload availability and GDAP roles can affect it even when app consent has succeeded. Repeating an already accepted, unchanged app grant does not repair those conditions.
 
