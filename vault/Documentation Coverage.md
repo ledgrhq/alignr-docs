@@ -383,8 +383,10 @@ The 9 October partial-attempt follow-up adds `latestAttemptAt`,
 `lastSyncAt` remains the timestamp of the last fully completed collection; partial
 and failed attempts do not advance it. The new authorisation count is tenant-wide
 and includes only current linked mappings. The source-aligned guide and generated
-OpenAPI are being updated in a separate docs pull request; production availability
-and publication remain unverified.
+OpenAPI were merged in docs PR #55 after the base guide in PR #48. The hosted
+guide now serves these fields; see the 10 October publication readback in the
+Review Log. This confirms documentation availability, not a successful
+authenticated application read or complete Microsoft collection.
 
 The adjacent [API errors guide](../api-reference/errors.mdx) now explains the
 12-second service-read timeout and bounded cleanup response for the separate
