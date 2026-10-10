@@ -1668,3 +1668,18 @@ existing identity baseline and advanced-definition pages already explain the
 default Member population, Guest opt-in and unknown handling, so no additional
 public content or generated reference is required. This is source-scope review
 only; PR #277 remains a draft and no production behavior or cleanup was verified.
+
+## 10 October — workspace Overview guide publication readback
+
+The earlier held records above describe their review state at the time. Docs
+[PR #48](https://github.com/ledgrhq/alignr-docs/pull/48) merged to `main` as
+`ba22daf744bf84ac96fa0e304713a240c2836acc`, followed by
+[PR #55](https://github.com/ledgrhq/alignr-docs/pull/55) as
+`05ca046923ca5a4eacd8aa45d3a724356467215c`. The resulting `main`
+[Documentation checks](https://github.com/ledgrhq/alignr-docs/actions/runs/38091551186)
+passed. At 22:34 UTC, `https://docs.alignr.io/api-reference/workspace-overview`
+returned HTTP 200 and its served HTML contained `latestAttemptAt`,
+`latestAttemptStatus` and `authRequiredMappingCount`. This is hosted guide
+publication evidence. It does not establish that an authenticated app Overview
+request succeeds, that Microsoft collection completed, or that all source facts
+are current; those remain application acceptance work in ALI-13 and ALI-6.
