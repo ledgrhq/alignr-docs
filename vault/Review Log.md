@@ -2,6 +2,34 @@
 
 Append dated entries. Keep evidence precise and do not turn planned checks into passed checks.
 
+## 11 October 2026 — ALI-100 Partner customer retry (held, stacked on docs PR #57)
+
+Updated [Request an evidence refresh](../api-reference/refresh-evidence.mdx) and
+[Authentication](../api-reference/authentication.mdx) against application
+candidate `9a960d3d6b478acc7241628cda8956eadbd095f9` and handover
+`/private/tmp/ledgr-ali100-targeted-retry-20261011/vault/09-Delivery/ALI-100 Customer Scoped Partner Retry Handover 2026-10-11.md`.
+The docs branch `codex/ali100-customer-retry-docs-20261011` is based on exact
+open docs PR #57 head `5e7011ff8cc535b01d7b708da4718643ded4a7d3`; PR #57 files
+were left unchanged. Source inspection covered the REST route and
+`integration_sync_operation_service.py`, including canonical UUID validation,
+human REST restriction, tenant-scoped active mapping lookup, keyed replay and
+conflict behavior, target persistence, singleton worker scope, publication
+recheck and cursor suppression. Review against DOC-R01/02/04/07 found that the
+guide distinguishes the unchanged source-wide request from this Partner-only
+targeted path, states 202/200/403/404/409 behavior, and does not imply consent
+is prepared, a mapping is created, or an assessment passes. The route is a POST
+and the curated OpenAPI generator selects GET operations, so generated
+references were not changed.
+
+`python3 scripts/check-docs-vault.py`, `mint broken-links`,
+`mint openapi-check api-reference/openapi.json`, `mint a11y` (97 MDX files),
+`mint validate`, and `git diff --check` passed locally with Node 22.13.1 and
+Mintlify 4.2.939. The API documentation source was inspected, but no API test
+was rerun. No responsive preview, authenticated API call, hosted-page check,
+application release, deployment or production acceptance is claimed. This is a
+local stacked docs candidate only; hold publication until application PR #337
+is reviewed/released and the docs candidate is independently reviewed.
+
 ## 9 October 2026 — docs logo verified live after PR49
 
 After PR49 merged as `12ac46af1bfb38d14adf48d4a82b894ef3857065`, a browser
