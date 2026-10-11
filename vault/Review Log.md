@@ -1698,6 +1698,8 @@ archived Organization is excluded. `collectionFailureChangedAt` is the category
 change time, not last attempt. No grant-recovery instruction, UI workflow, or
 production availability is claimed.
 
+The public content and generated schema were committed as `90f87303531eb0901a925dadfaec73b71600656f` on `codex/ali13-collection-failure-docs-20261011`; the following commit records this review evidence. The draft PR remains unpublished pending the application release.
+
 Generation used an isolated application worktree at the exact PR head and the app's
 installed Python environment. `scripts/sync-reference.py` reported 22 curated GET
 operations and 33 MCP tools; the only generated schema addition is the new mapping
