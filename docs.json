@@ -217,6 +217,7 @@
               "api-reference/client-assessment-recipe",
               "api-reference/manage-clients-recipe",
               "api-reference/refresh-evidence",
+              "api-reference/integration-mappings",
               "api-reference/link-source-clients",
               "api-reference/create-standard-recipe",
               "api-reference/activate-standard-draft",
@@ -290,6 +291,7 @@
             "openapi": "/api-reference/openapi.json",
             "pages": [
               "GET /api/v1/facts",
+              "GET /api/v1/integrations/{integration_id}/mappings",
               "GET /api/v1/integrations/{integration_id}/client-mapping-candidates",
               "GET /api/v1/integrations/{integration_id}/sync-operations/{operation_id}"
             ]

@@ -2100,6 +2100,200 @@
         "x-ledgr-permission": "fact.read"
       }
     },
+    "/api/v1/integrations/{integration_id}/mappings": {
+      "get": {
+        "tags": [
+          "Evidence"
+        ],
+        "summary": "List integration mappings",
+        "operationId": "list_mappings_api_v1_integrations__integration_id__mappings_get",
+        "parameters": [
+          {
+            "name": "integration_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Integration Id"
+            }
+          },
+          {
+            "name": "organizationId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Organizationid"
+            }
+          },
+          {
+            "name": "remoteId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 300
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Remoteid"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 300
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "name": "assignment",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "all",
+                "assigned",
+                "unassigned"
+              ],
+              "type": "string",
+              "default": "all",
+              "title": "Assignment"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "maximum": 100000,
+                  "minimum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "1-based page number",
+              "title": "Page"
+            },
+            "description": "1-based page number"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Rows per page",
+              "title": "Pagesize"
+            },
+            "description": "Rows per page"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Rows per page (alias of pageSize)",
+              "title": "Limit"
+            },
+            "description": "Rows per page (alias of pageSize)"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "maximum": 20000000,
+                  "minimum": 0
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Rows to skip (alias of page)",
+              "title": "Offset"
+            },
+            "description": "Rows to skip (alias of page)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntegrationMappingPage"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "description": "Requires `integration.read`. Results are scoped to the authenticated tenant. This reference is generated from source; consult the authenticated live schema for deployment-specific availability. Returns this tenant-scoped integration\u2019s paginated remote-company mappings. `collectionFailureCode` and `collectionFailureChangedAt` describe a current recorded Microsoft Partner customer collection failure where one exists. Codes are `auth_required`, `unavailable`, `rate_limited` and `collection_failed`; `auth_required` includes customer authorisation failure or identity mismatch and does not identify a specific OAuth error such as `invalid_grant`. Null means no current failure is recorded, not that collection succeeded, the customer is healthy or the evidence is fresh: this response has no per-customer success marker or last-attempt time. Stale failures for a previous mapping revision or archived Organization are excluded. The timestamp marks when the stored category last changed, not the latest attempt; repeated failures with the same category need not advance it. Failure details and vendor text are not returned.",
+        "x-ledgr-permission": "integration.read"
+      }
+    },
     "/api/v1/integrations/{integration_id}/client-mapping-candidates": {
       "get": {
         "tags": [
@@ -2520,6 +2714,131 @@
           "revision"
         ],
         "title": "MappingCandidateRead"
+      },
+      "IntegrationMappingPage": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/IntegrationMappingRead"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "page": {
+            "type": "integer",
+            "title": "Page"
+          },
+          "pageSize": {
+            "type": "integer",
+            "title": "Pagesize"
+          },
+          "totalPages": {
+            "type": "integer",
+            "title": "Totalpages"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items",
+          "total",
+          "page",
+          "pageSize",
+          "totalPages"
+        ],
+        "title": "IntegrationMappingPage"
+      },
+      "IntegrationMappingRead": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "integrationId": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Integrationid"
+          },
+          "remoteId": {
+            "type": "string",
+            "title": "Remoteid"
+          },
+          "remoteName": {
+            "type": "string",
+            "title": "Remotename"
+          },
+          "organizationId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Organizationid"
+          },
+          "organizationName": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Organizationname"
+          },
+          "collectionFailureCode": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Collectionfailurecode"
+          },
+          "collectionFailureChangedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Collectionfailurechangedat"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Createdat"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updatedat"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "integrationId",
+          "remoteId",
+          "remoteName",
+          "createdAt",
+          "updatedAt"
+        ],
+        "title": "IntegrationMappingRead",
+        "description": "One remote-company -> Ledgr-organization mapping.\n\n`organizationName` is denormalised on: `IntegrationOrgMapping` stores only the id,\nand the mapping table has to render a name (DEFECT 5). `organizationId: null` is\nmeaningful \u2014 it is an unmapped remote company, which is what `unmappedCount` counts."
       },
       "ApprovalStatus": {
         "type": "string",
