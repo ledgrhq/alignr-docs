@@ -30,6 +30,9 @@ Connection status and collection outcomes are separate. A connection can remain
 outcome, and the complete-sync timestamp to understand when the evidence was last
 fully refreshed. A non-zero `authRequiredMappingCount` means the connection
 details need review; it does not imply that every customer mapping is blocked.
+Use [integration mappings](/api-reference/integration-mappings) to inspect a
+current recorded category for an individual Microsoft Partner customer. A null
+category does not prove healthy or fresh collection.
 
 `discovery` separates “not observed” from “nothing needs attention”. `organizationsObserved` counts in-scope clients with active, non-superseded, unretracted facts. An item in `unobservedOrganizations` has no such fact in scope; `unmapped` distinguishes a client without a mapped source from one that is mapped but has no active, non-superseded, unretracted facts. `fullyObserved` is false when the scope is empty or any client is unobserved. These active-fact signals do not establish freshness, completeness of collection, or a passing control result. `everSwept` is tenant-wide terminal sweep history, including completed or failed sweeps. `everLooked` is true when the selected scope has active, non-superseded, unretracted facts or the tenant has a terminal sweep. Neither field is a selected client's assessment timestamp.
 

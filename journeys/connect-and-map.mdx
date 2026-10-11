@@ -25,6 +25,8 @@ Your goal is to find usable role and MFA registration observations for the same 
   <Step title="Inspect collected observations">
     A client-directory import does not collect assessment facts. Use an evidence source that supplies role membership and MFA registration. Where available, use **Sync now** and review **Sync history**. After collection completes, inspect a selected account's **Directory role** (`has_role`) and **MFA registered** (`mfa_registered`) observations. Confirm that both describe the same account under Acme. Check their source and observation time.
 
+    For a Microsoft Partner connection, the **Client mapping** tab may show a per-customer category such as **Authorisation needed**. **Not verified** there means only that no current failure is recorded; it does not confirm that collection ran or that observations are fresh.
+
     **Checkpoint:** the role observation identifies the intended administrator, and you can see whether the MFA observation is present.
 
     **If you are stuck:** [Trace missing evidence](/guides/troubleshooting). A missing registration observation is a useful finding about coverage; do not replace it with an assumed false or true value.

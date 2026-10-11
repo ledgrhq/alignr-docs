@@ -1683,3 +1683,76 @@ returned HTTP 200 and its served HTML contained `latestAttemptAt`,
 publication evidence. It does not establish that an authenticated app Overview
 request succeeds, that Microsoft collection completed, or that all source facts
 are current; those remain application acceptance work in ALI-13 and ALI-6.
+
+## 11 October — ALI-13 per-customer collection category (held)
+
+Application [PR #328](https://github.com/ledgrhq/ledgr/pull/328) head
+`046ac309f2396961911f120187511148df698b10` adds two nullable fields to the existing
+tenant-scoped `GET /integrations/{integration_id}/mappings` read. The docs candidate
+adds the exact operation to the curated OpenAPI snapshot and the readable
+[integration mappings guide](../api-reference/integration-mappings.mdx). It records
+that `auth_required` includes both customer authorisation failure and identity
+mismatch; it does not prove `invalid_grant`. Null means no current failure row, not
+healthy, successful or fresh collection. A failure for an old mapping revision or
+archived Organization is excluded. `collectionFailureChangedAt` is the category
+change time, not last attempt. No grant-recovery instruction, UI workflow, or
+production availability is claimed.
+
+The public content and generated schema were committed as `90f87303531eb0901a925dadfaec73b71600656f` on `codex/ali13-collection-failure-docs-20261011`; the following commit records this review evidence. The draft PR remains unpublished pending the application release.
+
+Generation used an isolated application worktree at the exact PR head and the app's
+installed Python environment. `scripts/sync-reference.py` reported 22 curated GET
+operations and 33 MCP tools; the only generated schema addition is the new mapping
+read and its response models. `python3 scripts/check-docs-vault.py`, `mint broken-links`,
+`mint openapi-check api-reference/openapi.json`, `mint a11y`, `mint validate` and
+`git diff --check` passed with Node 22.13.1 and Mintlify 4.2.939. The local guide and
+generated operation were inspected at 1280 × 720 and 390 × 844, in light and dark
+themes; the 390px document and body widths were both 390px. Mintlify dev printed a
+`ResponseAborted` notice after reporting the preview ready, but both pages rendered.
+Screenshots are outside the repository under `/tmp/ali13-integration-mappings-*.png`.
+
+This is a source-aligned candidate only. Application PR #328 is draft; no app tests,
+authenticated API request, hosted preview, docs publication, deployment or live
+readback was performed. Hold both content and generated operation until the app
+release and docs review gates are satisfied.
+
+Draft docs [PR #57](https://github.com/ledgrhq/alignr-docs/pull/57) was opened from
+`codex/ali13-collection-failure-docs-20261011`; its initial pushed head was
+`fd80cd045c34468a001d5a652751ddb023373f3c`, confirmed by remote branch readback.
+At that head, GitHub Documentation checks passed in workflow run
+`38112015670`; Mintlify Deployment was skipped because this PR is draft. The PR
+remains unpublished and is paired with application PR #328.
+
+## 11 October — ALI-13 docs correction for application PR #346 (held, local)
+
+Corrects docs [PR #57](https://github.com/ledgrhq/alignr-docs/pull/57) (head
+`5e7011ff8cc535b01d7b708da4718643ded4a7d3`) against application draft
+[PR #346](https://github.com/ledgrhq/ledgr/pull/346) at
+`dc76f54a509f475c2298690782fc8da976326b7c`, which replaces historical #328 as the
+current source candidate. Earlier entries are retained as history. Changes: the
+mapping fields appear only in the list (other mapping-shaped responses return null);
+`collectionFailureCode` is an open string set whose unknown values must not be
+treated as healthy; there is no per-customer recovery action and a category does not
+name a corrective step; and the application's Client mapping labels, including the
+neutral **Not verified**, are explained in the API page and in the Microsoft
+connection, integration maintenance and connect-and-map guides. Source checked: the
+`IntegrationMappingRead` model, `list_mappings`, `current_collection_failures`,
+`WorkspaceIntegrationDetailPage.tsx` and the ALI-13 application notes at that head.
+`scripts/sync-reference.py` was run with an isolated worktree of the exact head on
+`PYTHONPATH` and produced no OpenAPI or MCP diff (22 read operations, 33 tools).
+Limits: no rendered UI, authenticated request, hosted CI, publication or deployment
+was performed or claimed; the docs and application PRs remain draft.
+
+## 11 October — ALI-13 correction review and PR publication
+
+The preceding “held, local” checkpoint is historical. Independent Codex review
+found one misleading sentence: the API guide said the Client mapping tab showed
+one unverified caveat above all rows, while the application renders that caveat
+within each **Not verified** row. The sentence was corrected in commit `5af68df`;
+the reviewer found the other checked labels and API field meanings consistent with
+application PR #346. `python3 scripts/check-docs-vault.py` and `git diff --check`
+pass after this correction. The earlier Claude validation used Node 22.13.1 and
+Mintlify 4.2.939; no new rendered preview was performed for the sentence change.
+The correction has been pushed to open draft [PR #57](https://github.com/ledgrhq/alignr-docs/pull/57).
+Its remote exact head and hosted checks still require readback after this log entry.
+It remains unpublished until the application release and live contract are verified.

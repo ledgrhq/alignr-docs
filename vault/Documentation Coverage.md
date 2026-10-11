@@ -415,3 +415,35 @@ paired with application review; it is not published or production acceptance.
 No catalogue regeneration is needed because control definitions and predicate
 metadata are unchanged. Review and publication remain pending source/CI review and
 matching application release.
+
+## 11 October 2026 — per-customer collection failure fields (held)
+
+Application PR #328 (`046ac309f2396961911f120187511148df698b10`) adds
+`collectionFailureCode` and `collectionFailureChangedAt` to the existing
+`GET /api/v1/integrations/{integration_id}/mappings` response. The docs candidate
+adds this read to the curated OpenAPI selection and explains the values in the
+[integration-mappings guide](../api-reference/integration-mappings.mdx). It states
+that `auth_required` also includes identity mismatch, null does not prove success
+or freshness, and the changed-time value is not a last-attempt clock. The source
+has no customer success marker or last-attempt timestamp. No grant-recovery step or
+production availability is claimed. Application PR #328 is still a draft; docs
+validation, review, publication and deployment remain pending.
+
+## 11 October 2026 — correction: current source candidate is PR #346
+
+The entry above is preserved as historical evidence. Application
+[PR #328](https://github.com/ledgrhq/ledgr/pull/328) (`046ac309`) is **not** the
+current source candidate for these fields: the API and the connection page's mapping
+status UI were restacked onto `prod` as draft
+[PR #346](https://github.com/ledgrhq/ledgr/pull/346) at
+`dc76f54a509f475c2298690782fc8da976326b7c`. The correction adds the Client mapping
+labels (**Authorisation needed**, **Collection unavailable**, **Rate limited**,
+**Collection failed**, **Collection status unknown**, **Not verified**), states that
+only the mapping list populates the fields (other responses carry null), that
+unknown codes must be tolerated, and that there is no per-customer recovery action.
+It updates the integration-mappings API page and the Microsoft connection,
+integration maintenance and connect-and-map pages. The generated snapshot was
+regenerated against the exact #346 head and is unchanged: field descriptions in the
+app source are comments, not schema text, so the guide carries the semantics.
+Everything remains held: #346 is draft, and its 390px rendered check, hosted CI,
+release and any docs publication are outstanding.
