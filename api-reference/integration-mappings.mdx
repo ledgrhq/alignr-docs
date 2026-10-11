@@ -19,7 +19,7 @@ Only this list populates the two fields. Other responses that use the same mappi
 
 ## See the same values in the application
 
-On a connection's **Client mapping** tab, each source row shows one label: **Authorisation needed** (`auth_required`), **Collection unavailable** (`unavailable`), **Rate limited** (`rate_limited`), **Collection failed** (`collection_failed`), **Collection status unknown** (an unrecognised code) or **Not verified** (`null`). Only **Authorisation needed** shows **Category changed** with `collectionFailureChangedAt`; it is not the time of the latest attempt. **Not verified** is deliberately neutral: it means no current failure is recorded, not that collection is healthy or fresh. The tab shows this caveat once above the rows when any row is unverified. The labels are read-only status, with no action attached.
+On a connection's **Client mapping** tab, each source row shows one label: **Authorisation needed** (`auth_required`), **Collection unavailable** (`unavailable`), **Rate limited** (`rate_limited`), **Collection failed** (`collection_failed`), **Collection status unknown** (an unrecognised code) or **Not verified** (`null`). Only **Authorisation needed** shows **Category changed** with `collectionFailureChangedAt`; it is not the time of the latest attempt. Each **Not verified** row explains that no current failure is recorded and collection health remains unverified. The labels are read-only status, with no action attached.
 
 The dashboard's `authRequiredMappingCount` is a workspace connection summary. Use this mapping list to inspect the individual current category, while keeping connection status, collection outcome and evidence freshness separate.
 
