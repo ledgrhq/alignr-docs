@@ -1742,3 +1742,17 @@ connection, integration maintenance and connect-and-map guides. Source checked: 
 `PYTHONPATH` and produced no OpenAPI or MCP diff (22 read operations, 33 tools).
 Limits: no rendered UI, authenticated request, hosted CI, publication or deployment
 was performed or claimed; the docs and application PRs remain draft.
+
+## 11 October — ALI-13 correction review and PR publication
+
+The preceding “held, local” checkpoint is historical. Independent Codex review
+found one misleading sentence: the API guide said the Client mapping tab showed
+one unverified caveat above all rows, while the application renders that caveat
+within each **Not verified** row. The sentence was corrected in commit `5af68df`;
+the reviewer found the other checked labels and API field meanings consistent with
+application PR #346. `python3 scripts/check-docs-vault.py` and `git diff --check`
+pass after this correction. The earlier Claude validation used Node 22.13.1 and
+Mintlify 4.2.939; no new rendered preview was performed for the sentence change.
+The correction has been pushed to open draft [PR #57](https://github.com/ledgrhq/alignr-docs/pull/57).
+Its remote exact head and hosted checks still require readback after this log entry.
+It remains unpublished until the application release and live contract are verified.
