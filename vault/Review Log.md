@@ -1715,3 +1715,10 @@ This is a source-aligned candidate only. Application PR #328 is draft; no app te
 authenticated API request, hosted preview, docs publication, deployment or live
 readback was performed. Hold both content and generated operation until the app
 release and docs review gates are satisfied.
+
+Draft docs [PR #57](https://github.com/ledgrhq/alignr-docs/pull/57) was opened from
+`codex/ali13-collection-failure-docs-20261011`; its initial pushed head was
+`fd80cd045c34468a001d5a652751ddb023373f3c`, confirmed by remote branch readback.
+At that head, GitHub Documentation checks passed in workflow run
+`38112015670`; Mintlify Deployment was skipped because this PR is draft. The PR
+remains unpublished and is paired with application PR #328.
