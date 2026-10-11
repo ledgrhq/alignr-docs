@@ -73,6 +73,8 @@ For a failed attempt, read the full explanation first. Where recorded, **Attempt
 
 **Records read** counts source records processed during the attempt. **Facts written** counts evidence saved. An attempt can read records and still fail before saving evidence. A populated client directory therefore does not prove that evidence collection succeeded.
 
+For Microsoft Partner connections, **Client mapping** can also show a current failure category per customer (**Authorisation needed**, **Collection unavailable**, **Rate limited**, **Collection failed** or **Collection status unknown**). Treat **Not verified** as absence of a recorded failure only: it is not a healthy state and not evidence of a recent collection. The labels do not trigger recovery. Use **Collect now**, then confirm the customer's label and observation times after the new attempt. See [Microsoft connection results](/guides/client-microsoft-connections#read-the-result).
+
 Older attempts may have no response details. Their original response cannot be recovered from this view. After addressing the reported problem, use **Collect now** and inspect the new attempt. **Refresh** updates history; it does not start a collection.
 
 ## Refresh across clients

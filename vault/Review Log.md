@@ -1722,3 +1722,23 @@ Draft docs [PR #57](https://github.com/ledgrhq/alignr-docs/pull/57) was opened f
 At that head, GitHub Documentation checks passed in workflow run
 `38112015670`; Mintlify Deployment was skipped because this PR is draft. The PR
 remains unpublished and is paired with application PR #328.
+
+## 11 October — ALI-13 docs correction for application PR #346 (held, local)
+
+Corrects docs [PR #57](https://github.com/ledgrhq/alignr-docs/pull/57) (head
+`5e7011ff8cc535b01d7b708da4718643ded4a7d3`) against application draft
+[PR #346](https://github.com/ledgrhq/ledgr/pull/346) at
+`dc76f54a509f475c2298690782fc8da976326b7c`, which replaces historical #328 as the
+current source candidate. Earlier entries are retained as history. Changes: the
+mapping fields appear only in the list (other mapping-shaped responses return null);
+`collectionFailureCode` is an open string set whose unknown values must not be
+treated as healthy; there is no per-customer recovery action and a category does not
+name a corrective step; and the application's Client mapping labels, including the
+neutral **Not verified**, are explained in the API page and in the Microsoft
+connection, integration maintenance and connect-and-map guides. Source checked: the
+`IntegrationMappingRead` model, `list_mappings`, `current_collection_failures`,
+`WorkspaceIntegrationDetailPage.tsx` and the ALI-13 application notes at that head.
+`scripts/sync-reference.py` was run with an isolated worktree of the exact head on
+`PYTHONPATH` and produced no OpenAPI or MCP diff (22 read operations, 33 tools).
+Limits: no rendered UI, authenticated request, hosted CI, publication or deployment
+was performed or claimed; the docs and application PRs remain draft.

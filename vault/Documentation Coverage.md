@@ -428,3 +428,22 @@ or freshness, and the changed-time value is not a last-attempt clock. The source
 has no customer success marker or last-attempt timestamp. No grant-recovery step or
 production availability is claimed. Application PR #328 is still a draft; docs
 validation, review, publication and deployment remain pending.
+
+## 11 October 2026 — correction: current source candidate is PR #346
+
+The entry above is preserved as historical evidence. Application
+[PR #328](https://github.com/ledgrhq/ledgr/pull/328) (`046ac309`) is **not** the
+current source candidate for these fields: the API and the connection page's mapping
+status UI were restacked onto `prod` as draft
+[PR #346](https://github.com/ledgrhq/ledgr/pull/346) at
+`dc76f54a509f475c2298690782fc8da976326b7c`. The correction adds the Client mapping
+labels (**Authorisation needed**, **Collection unavailable**, **Rate limited**,
+**Collection failed**, **Collection status unknown**, **Not verified**), states that
+only the mapping list populates the fields (other responses carry null), that
+unknown codes must be tolerated, and that there is no per-customer recovery action.
+It updates the integration-mappings API page and the Microsoft connection,
+integration maintenance and connect-and-map pages. The generated snapshot was
+regenerated against the exact #346 head and is unchanged: field descriptions in the
+app source are comments, not schema text, so the guide carries the semantics.
+Everything remains held: #346 is draft, and its 390px rendered check, hosted CI,
+release and any docs publication are outstanding.

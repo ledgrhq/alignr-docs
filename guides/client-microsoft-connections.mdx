@@ -66,6 +66,10 @@ The partner panel shows completed partner setup separately from customer access.
 
 If some reads work and others are unavailable, review the specific missing capability. Licensing, workload availability and GDAP roles can affect it even when app consent has succeeded. Repeating an already accepted, unchanged app grant does not repair those conditions.
 
+After a Partner Center collection, the connection's **Client mapping** tab can label an individual customer **Authorisation needed**, **Collection unavailable**, **Rate limited** or **Collection failed**. **Authorisation needed** covers a customer authorisation failure or a Microsoft tenant identity mismatch; it does not identify a specific Microsoft error. **Category changed** shows when that category last changed, not when the latest attempt ran. **Collection status unknown** means the application does not recognise a returned category.
+
+**Not verified** means no current failure is recorded for that customer. It does not mean access is healthy, collection succeeded or evidence is fresh, because no per-customer success or last-attempt time is recorded. These labels are read-only: none requests consent, reauthorises the customer or starts a collection, and none says which step will resolve the problem. Investigate with the client page's read-only **Check access** and **Collection history → View details**; a later successful collection of that customer clears a recorded failure. See [the mapping API fields](/api-reference/integration-mappings) for the contract.
+
 Use **Collection history → View details** for the saved failure explanation and available response fields. [Collection troubleshooting](/guides/maintain-integrations#inspect-a-collection-attempt) explains the difference between records read and facts written, and the limits of older attempts without diagnostics.
 
 ## Replace an existing connection
