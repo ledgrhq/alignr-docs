@@ -11,7 +11,7 @@
 
 Documentation contains Start here (Introduction, Setup wizard, Quickstart, Your first assessment) and expandable groups for workspace setup, connecting tools, workspace management, day-to-day work, reports/client portal, assessment concepts, controls, and help/reference. Controls contains the overview, baseline selection, recipes, category references, build/manage guides and advanced definitions.
 
-API reference contains key setup, authentication, interface guidance and curated read operations. MCP contains connection, task-based tool reference and security guidance. Neither is a prerequisite for using the app.
+API reference contains key setup, authentication, interface guidance and curated read operations. The integration-mappings guide explains the limits of customer collection-failure fields alongside the generated operation schema. MCP contains connection, task-based tool reference and security guidance. Neither is a prerequisite for using the app.
 
 `docs.json` is the executable navigation configuration. Generators must locate tabs by name, never by array position. Changing navigation also requires updating Introduction's explanation and checking mobile navigation.
 

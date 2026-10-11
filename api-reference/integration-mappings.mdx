@@ -1,0 +1,20 @@
+---
+title: "Read integration mappings"
+description: "List a connection's remote-company mappings and interpret recorded customer collection failures."
+---
+
+Use `GET /api/v1/integrations/{integration_id}/mappings` with `integration.read` to list a connection's remote-company mappings. The **Evidence** group in the generated API reference gives the full query and response schema. A caller without `integration.read` receives `403`; a connection outside the authenticated MSP workspace returns `404`.
+
+## Interpret the collection fields
+
+Each mapping may include `collectionFailureCode` and `collectionFailureChangedAt`. They describe a current recorded Microsoft Partner customer collection failure when one is present. The safe categories are `auth_required`, `unavailable`, `rate_limited` and `collection_failed`.
+
+`auth_required` covers a customer authorisation failure or an identity mismatch. It does not prove a particular OAuth error such as `invalid_grant`, and the response does not include vendor error text. Use it as a signal to review that customer's authorisation and identity; it does not say which corrective step will resolve access.
+
+If `collectionFailureCode` is `null`, no current failure is recorded. That does not establish a successful or recent collection: the API has no per-customer success marker or last-attempt time, so a never-attempted customer and a customer without a current failure cannot be distinguished here. A successful collection can clear a previously recorded failure. A failure for an older mapping revision or an archived Organization is also excluded, so a stale stored failure is not reported as current. `collectionFailureChangedAt` marks when the stored category last changed, not when the most recent attempt ran; repeated failures with the same category may leave it unchanged. Do not use either null values or this timestamp as a freshness check.
+
+The dashboard's `authRequiredMappingCount` is a workspace connection summary. Use this mapping list to inspect the individual current category, while keeping connection status, collection outcome and evidence freshness separate.
+
+## Continue
+
+[Request and poll an evidence refresh](/api-reference/refresh-evidence) to read the outcome of a new source-wide collection. Collection completion alone does not attest that a later assessment passed.

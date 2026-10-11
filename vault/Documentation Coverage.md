@@ -415,3 +415,16 @@ paired with application review; it is not published or production acceptance.
 No catalogue regeneration is needed because control definitions and predicate
 metadata are unchanged. Review and publication remain pending source/CI review and
 matching application release.
+
+## 11 October 2026 — per-customer collection failure fields (held)
+
+Application PR #328 (`046ac309f2396961911f120187511148df698b10`) adds
+`collectionFailureCode` and `collectionFailureChangedAt` to the existing
+`GET /api/v1/integrations/{integration_id}/mappings` response. The docs candidate
+adds this read to the curated OpenAPI selection and explains the values in the
+[integration-mappings guide](../api-reference/integration-mappings.mdx). It states
+that `auth_required` also includes identity mismatch, null does not prove success
+or freshness, and the changed-time value is not a last-attempt clock. The source
+has no customer success marker or last-attempt timestamp. No grant-recovery step or
+production availability is claimed. Application PR #328 is still a draft; docs
+validation, review, publication and deployment remain pending.
