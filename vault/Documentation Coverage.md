@@ -415,3 +415,14 @@ paired with application review; it is not published or production acceptance.
 No catalogue regeneration is needed because control definitions and predicate
 metadata are unchanged. Review and publication remain pending source/CI review and
 matching application release.
+
+## 12 October 2026 — ALI-13 rate-limited access probe candidate
+
+Application branch `codex/ali13-auth-error-mapping-20261012` at
+`3e5aa094e454f2d0a1cac528857aa258da17540f` now exposes Partner probe throttling
+as `rate_limited`, with retry guidance in all three affected UI surfaces. The
+client connection and Microsoft setup guides now explain that a temporary limit
+requires waiting and retrying and does not prove consent or Partner relationship
+is missing. No OpenAPI or catalogue regeneration is needed: response schema and
+enum are unchanged. Candidate remains held pending application review/release and
+public-doc review; this does not claim the behavior is published or live.

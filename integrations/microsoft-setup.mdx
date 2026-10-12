@@ -87,6 +87,8 @@ For a custom application, review its **API permissions** in Microsoft Entra, cho
 
 The client-page **Check access** action is an observational, read-only sample for that client. The integration-page **Check access** action samples the selected customers for the connection. **Connect client** is the explicit Partner action that can request missing customer read consent. **Collect now** starts collection; scheduled collection does not create new consent grants.
 
+If a Partner access check is temporarily rate-limited, wait briefly and repeat the check. A rate limit is not evidence that consent or the Partner relationship is missing; use **Connect client** only when the check reports a consent gap.
+
 If the app grant has already been accepted for the same customer, application and saved assignment, a remaining optional capability gap does not cause repeated consent requests when **Connect client** is used. The unavailable capability remains visible so you can review its GDAP roles, licensing or workload availability. Changing the assignment or application requires a fresh access check.
 
 The current customer-consent request contains these delegated Graph permissions:

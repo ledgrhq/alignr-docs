@@ -1683,3 +1683,21 @@ returned HTTP 200 and its served HTML contained `latestAttemptAt`,
 publication evidence. It does not establish that an authenticated app Overview
 request succeeds, that Microsoft collection completed, or that all source facts
 are current; those remain application acceptance work in ALI-13 and ALI-6.
+
+## 12 October 2026 — ALI-13 throttled Check access candidate
+
+Updated `guides/client-microsoft-connections.mdx` and `integrations/microsoft-setup.mdx`
+to clarify that a rate-limited Partner access probe should be retried and does not
+show a consent or relationship gap. Source candidate is application branch
+`codex/ali13-auth-error-mapping-20261012` at
+`3e5aa094e454f2d0a1cac528857aa258da17540f`; no API schema changed, so generated
+references were not regenerated. The docs branch is still a held candidate pending
+matching application review/release. No hosted preview, visual QA, or publication
+is claimed at this checkpoint.
+
+Validation for the 12 October candidate: `python3 scripts/check-docs-vault.py`
+passed (14 indexed notes), `git diff --check` passed, and pinned Mintlify
+4.2.939 `broken-links` and `validate` passed under Node 22.13.1. No hosted
+preview or responsive rendering has been performed. The application change is now
+stacked as draft PR #365 on draft PR #360; do not publish these guides until the
+application stack is accepted and deployed.
