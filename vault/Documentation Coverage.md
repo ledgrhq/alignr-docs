@@ -400,6 +400,16 @@ is merged as `435cd668d4ade5a07bd6558a0b2901d07a867ed7`, but production workflow
 `37679369462` has not yet completed at the 20:25 UTC checkpoint. Keep this errors
 change held for verified runtime and public URL readback; see the dated review log.
 
+The 15 October ALI-114 network candidate updates the BIOS network reference to one
+UniFi-only reported-reachability control plus four manual reviews. `network_device_state`
+is a composite population/state fact (`online`, `offline`, `unknown`) with a
+controller-scoped subject; the catalogue explains that `unknown` is no-data and that
+the controller's list must still be reconciled with the MSP's expected estate. The
+generated catalogue removes the unsupported firmware auto-verdict and updates the
+library total to 15 controls and 20 manual checks. These docs are a held candidate for
+the matching application source; the docs PR, hosted preview and publication remain
+unverified.
+
 
 ## 8 October 2026 — Microsoft account population scope candidate
 

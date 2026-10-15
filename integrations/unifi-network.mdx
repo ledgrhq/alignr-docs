@@ -3,7 +3,7 @@ title: "Connect UniFi Network"
 description: "Choose cloud or local-console access, use the matching key and map each UniFi site."
 ---
 
-UniFi Network supplies device role, model, IP address, reachability, firmware, available-update and uplink observations. Choose how Alignr will reach the console before preparing credentials.
+UniFi Network supplies device role, model, IP address, reachability, firmware, available-update and uplink observations. Its `network_device_state` observation binds an identified device row to `online`, `offline` or `unknown` under a controller-and-site-scoped subject. Choose how Alignr will reach the console before preparing credentials.
 
 ## Choose the connection mode
 
@@ -45,7 +45,7 @@ flowchart TD
     D --> E["Collect device observations"]
 ```
 
-The connection authenticates a console; the site mapping decides which client receives each site's evidence.
+The connection authenticates a console; the site mapping decides which client receives each site's evidence. The network reachability check uses a complete paginated device snapshot. A device explicitly reported offline fails; missing or unfamiliar state remains unknown and does not pass. This checks the devices UniFi reports, so reconcile that list with the MSP's expected inventory.
 
 ## Common setup problems
 

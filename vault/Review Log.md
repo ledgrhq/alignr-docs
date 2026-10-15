@@ -1683,3 +1683,25 @@ returned HTTP 200 and its served HTML contained `latestAttemptAt`,
 publication evidence. It does not establish that an authenticated app Overview
 request succeeds, that Microsoft collection completed, or that all source facts
 are current; those remain application acceptance work in ALI-13 and ALI-6.
+
+## 15 October — ALI-114 UniFi network reachability candidate
+
+The application candidate on `codex/ali-114-network-firewall` adds a UniFi-only
+`network_device_state` fact and a BIOS library check that uses the same predicate for
+population and expectation. The public predicate entry documents the `online`,
+`offline` and `unknown` states and their limits; the network category now shows the
+reachability check, four manual reviews and the removal of the unsupported firmware
+auto-verdict. The integration guide explains complete pagination and expected-inventory
+reconciliation. The current application's vocabulary also contains
+`last_successful_sign_in`; its predicate entry and generated identity baseline were
+refreshed from the same source checkout.
+
+The catalogue generator reported 18 seeded controls, seven templates, 15 library
+controls and 20 manual checks; the predicate generator validated 90 descriptions.
+Generated content was reviewed for network scope and unknown-state wording. No Node,
+Mintlify, preview browser, hosted site or visual check was run. The application focused
+host checks passed, but no DB-backed/full-suite or live UniFi acceptance ran. The docs
+branch `docs/ali114-unifi-network-check` is a candidate from `origin/main` at
+`54a20d8`; its commit is pending. Matching application PR #497 is draft at
+`a562b587579a829d30e1652db72bfbeb78223854`, and independent exact-head review is
+pending. No public publication or runtime acceptance is claimed.

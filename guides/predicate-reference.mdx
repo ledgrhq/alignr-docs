@@ -7,7 +7,7 @@ Use this reference when choosing evidence for a control or reading a technical r
 
 ## How to use this reference
 
-This catalogue covers **88 registered predicates** in the application vocabulary. Availability depends on your connected sources and deployment. Check client-specific coverage and actual observations before using a predicate in a control.
+This catalogue covers **90 registered predicates** in the application vocabulary. Availability depends on your connected sources and deployment. Check client-specific coverage and actual observations before using a predicate in a control.
 
 Use the docs search to find a technical identifier, or the page contents to jump to a topic category.
 
@@ -58,6 +58,16 @@ When the identity source reports the last interactive sign-in.
 When the source reports the last non-interactive sign-in.
 
 **Interpretation:** Background activity is different from a person actively signing in.
+
+</Accordion>
+
+<Accordion title="Last successful sign-in">
+
+`last_successful_sign_in`
+
+When the source reports the latest successful interactive or non-interactive sign-in.
+
+**Interpretation:** A missing history is unknown, not proof the account has never signed in.
 
 </Accordion>
 
@@ -548,6 +558,16 @@ A role the device performs, such as switching or wireless access.
 **Interpretation:** One appliance can have several roles.
 
 **Multiple values:** several values can legitimately coexist for one subject.
+
+</Accordion>
+
+<Accordion title="Network device state">
+
+`network_device_state`
+
+A UniFi controller's current state for one device in its enumerated inventory: online, offline, or unknown.
+
+**Interpretation:** The controller-scoped subject and state share one observation so this check cannot join another controller's status. Unknown means no verdict. It covers only devices the controller reports, not the MSP's complete expected inventory.
 
 </Accordion>
 
