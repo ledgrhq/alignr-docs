@@ -1702,6 +1702,6 @@ Generated content was reviewed for network scope and unknown-state wording. No N
 Mintlify, preview browser, hosted site or visual check was run. The application focused
 host checks passed, but no DB-backed/full-suite or live UniFi acceptance ran. The docs
 branch `docs/ali114-unifi-network-check` is a candidate from `origin/main` at
-`54a20d8`; its commit is pending. Matching application PR #497 is draft at
+`54a20d8`; documentation draft PR #60 is at `dd9df368402000efb1ef2902ebf82c3ddccf3703`. Matching application PR #497 is draft at
 `a562b587579a829d30e1652db72bfbeb78223854`, and independent exact-head review is
 pending. No public publication or runtime acceptance is claimed.
