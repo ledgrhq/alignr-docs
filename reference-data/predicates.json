@@ -29,6 +29,13 @@
   },
   {
     "group": "Identity and access",
+    "name": "last_successful_sign_in",
+    "label": "Last successful sign-in",
+    "description": "When the source reports the latest successful interactive or non-interactive sign-in.",
+    "interpretation": "A missing history is unknown, not proof the account has never signed in."
+  },
+  {
+    "group": "Identity and access",
     "name": "user_type",
     "label": "User type",
     "description": "The type of directory user reported by the source.",
@@ -327,6 +334,13 @@
     "label": "Network device role",
     "description": "A role the device performs, such as switching or wireless access.",
     "interpretation": "One appliance can have several roles."
+  },
+  {
+    "group": "Networks and firewalls",
+    "name": "network_device_state",
+    "label": "Network device state",
+    "description": "A UniFi controller's current state for one device in its enumerated inventory: online, offline, or unknown.",
+    "interpretation": "The controller-scoped subject and state share one observation so this check cannot join another controller's status. Unknown means no verdict. It covers only devices the controller reports, not the MSP's complete expected inventory."
   },
   {
     "group": "Networks and firewalls",

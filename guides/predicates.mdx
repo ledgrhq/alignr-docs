@@ -39,6 +39,7 @@ The diagram combines the subject, the property being observed and its value into
 | EDR agent installed | The source reports an EDR agent. | The agent is healthy, up to date or reporting recently. |
 | Backup product present | A backup product reports protection. | The last backup succeeded or a restore has been tested. |
 | Device online | A source reports the device online. | Its patches, encryption or security posture are satisfactory. |
+| UniFi network device state | A UniFi controller reports one enumerated device as `online`, `offline` or `unknown`. | The MSP's full expected network inventory, or any firewall configuration baseline. |
 | SPF record present | A DNS observation found an SPF record. | Its content is correct or mail delivery is secure. |
 
 Choose the observation that answers the actual question. A related observation is not a substitute.
@@ -50,6 +51,7 @@ Choose the observation that answers the actual question. A related observation i
 - **Text or a state:** `os_platform`, `ca_policy_state`, `backup_job_state`.
 - **A timestamp or date:** `last_sign_in`, `backup_last_successful_at`, `licence_renewal_date`.
 - **A relationship or set member:** `has_role`, `member_of`, `has_licence`.
+- **A composite reported state:** `network_device_state` carries the UniFi device's population row and its reachability status in one observation.
 
 Use a matching value type in the control. For example, use the boolean `true` for MFA registration, a number for a patch count, and the actual observed state string for a status comparison. Vendor status vocabularies are not interchangeable.
 
@@ -71,6 +73,8 @@ Do not assume every comparison automatically checks every member of a set. [Cont
 | An old MFA fact | We have an observation, but must check whether it is still usable. |
 
 Missing evidence is not false, zero or a pass. It may mean missing source permissions, incomplete collection, an unmapped client or a predicate the connector does not provide.
+
+For `network_device_state`, the explicit `unknown` value is also not a verdict. It keeps the device visible in the observed population while the control returns `no_data` for that subject. A complete controller snapshot must finish before its facts can replace the prior snapshot; an incomplete page walk is a collection failure.
 
 ## Why the names look technical
 
