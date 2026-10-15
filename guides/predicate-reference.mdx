@@ -7,7 +7,7 @@ Use this reference when choosing evidence for a control or reading a technical r
 
 ## How to use this reference
 
-This catalogue covers **88 registered predicates** in the application vocabulary. Availability depends on your connected sources and deployment. Check client-specific coverage and actual observations before using a predicate in a control.
+This catalogue covers **90 registered predicates** in the application vocabulary. Availability depends on your connected sources and deployment. Check client-specific coverage and actual observations before using a predicate in a control.
 
 Use the docs search to find a technical identifier, or the page contents to jump to a topic category.
 
@@ -58,6 +58,16 @@ When the identity source reports the last interactive sign-in.
 When the source reports the last non-interactive sign-in.
 
 **Interpretation:** Background activity is different from a person actively signing in.
+
+</Accordion>
+
+<Accordion title="Last successful sign-in">
+
+`last_successful_sign_in`
+
+When the identity source reports the last successful sign-in.
+
+**Interpretation:** A successful sign-in observation does not establish that access remains appropriate or that every sign-in is protected by the expected policy.
 
 </Accordion>
 
@@ -538,6 +548,16 @@ An individual patch reported missing from the subject.
 ## Networks and firewalls
 
 <AccordionGroup>
+
+<Accordion title="Controller-reported network device state">
+
+`network_device_state`
+
+The network controller's reported state for the device.
+
+**Interpretation:** Reachability is limited to devices present in the controller's observed inventory; it does not prove the MSP's approved device population or firewall configuration quality.
+
+</Accordion>
 
 <Accordion title="Network device role">
 

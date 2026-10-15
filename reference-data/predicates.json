@@ -29,6 +29,13 @@
   },
   {
     "group": "Identity and access",
+    "name": "last_successful_sign_in",
+    "label": "Last successful sign-in",
+    "description": "When the identity source reports the last successful sign-in.",
+    "interpretation": "A successful sign-in observation does not establish that access remains appropriate or that every sign-in is protected by the expected policy."
+  },
+  {
+    "group": "Identity and access",
     "name": "user_type",
     "label": "User type",
     "description": "The type of directory user reported by the source.",
@@ -320,6 +327,13 @@
     "label": "Missing patch",
     "description": "An individual patch reported missing from the subject.",
     "interpretation": "Several patches can be missing. This differs from the total pending-patch count."
+  },
+  {
+    "group": "Networks and firewalls",
+    "name": "network_device_state",
+    "label": "Controller-reported network device state",
+    "description": "The network controller's reported state for the device.",
+    "interpretation": "Reachability is limited to devices present in the controller's observed inventory; it does not prove the MSP's approved device population or firewall configuration quality."
   },
   {
     "group": "Networks and firewalls",

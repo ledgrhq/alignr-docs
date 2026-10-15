@@ -1,9 +1,9 @@
 ---
 title: "Networks and firewalls"
-description: "Firmware availability, network inventory and configuration recovery."
+description: "Controller-reported reachability, firmware lifecycle and network inventory."
 ---
 
-This category contains **1 automated control definitions** and **3 manual checks** across the sources named below. Similar controls from different standards are listed separately because names, thresholds or severity can differ.
+This category contains **1 automated control definitions** and **4 manual checks** across the sources named below. Similar controls from different standards are listed separately because names, thresholds or severity can differ.
 
 Whether the seeded Alignr Baseline is available depends on how your workspace was provisioned. Library templates are copied as disabled drafts. See [Choose a baseline](/controls/baselines/overview) before enabling anything.
 
@@ -13,22 +13,22 @@ Expand a control to see the exact population, expectation and defaults. A pass r
 
 <AccordionGroup>
 
-<Accordion title="Network firmware has no update pending">
+<Accordion title="Controller-reported network devices report reachable">
 
 <Tabs sync={false}>
 <Tab title="Explanation">
 
-Each selected device should report that no firmware update is available.
+Each device in the complete controller-reported inventory should report online.
 
 Part of **BIOS Network Health**.
 
 **Applies to**
 
-Subjects with a recorded firmware update available observation.
+Devices reported in a complete network-controller inventory.
 
 **What the result tells you**
 
-No reported update is not proof of supported firmware or full device hardening. An available update still needs risk review and scheduling.
+This is limited to devices returned by a complete controller inventory. It does not prove the MSP-approved estate is complete or that firewall configuration meets a security baseline.
 
 </Tab>
 <Tab title="Definition">
@@ -36,36 +36,36 @@ No reported update is not proof of supported firmware or full device hardening. 
 | Setting | Value |
 | --- | --- |
 | Standard | BIOS Network Health |
-| Severity | Medium |
+| Severity | High |
 | Declared autonomy | Suggest only |
 
 **Population condition**
 
-**Firmware update available** (`firmware_update_available`) has an observation.
+**Controller-reported network device state** (`network_device_state`) has an observation.
 
 
 **Expected evidence**
 
-- **Firmware update available** (`firmware_update_available`) equals `false`.
+- **Controller-reported network device state** (`network_device_state`) equals `"online"`.
 
-**Required predicates:** `firmware_update_available`.
+**Required predicates:** `network_device_state`.
 
 ```json
 {
   "match": {
-    "predicate": "firmware_update_available"
+    "predicate": "network_device_state"
   },
   "expect": [
     {
-      "fact": "firmware_update_available",
+      "fact": "network_device_state",
       "op": "eq",
-      "value": false
+      "value": "online"
     }
   ],
-  "severity": "medium",
-  "title": "Network firmware update is available",
+  "severity": "high",
+  "title": "Network device is not reachable",
   "evidence": [
-    "firmware_update_available"
+    "network_device_state"
   ]
 }
 ```
@@ -83,11 +83,21 @@ These are human reviews, not automated evidence. The interval below is the templ
 
 <AccordionGroup>
 
-<Accordion title="Review network device availability">
+<Accordion title="Review network firmware and lifecycle">
 
 **Review every 30 days** · BIOS Network Health
 
-Check the firewall, switches and access points against the approved network inventory. Record missing or offline devices and confirm the source population excludes endpoints and unrelated resources.
+Pass when every in-scope firewall, switch and access point is reconciled to an MSP-approved firmware version and current vendor support status. Fail when any device is behind the approved version, unsupported, end of life, missing from the inventory, or has unknown status. Evidence: approved version source, device model and installed firmware, vendor lifecycle reference, and a list of unresolved devices or mismatches. Controller-reported model, firmware and update-availability facts can support this review but do not prove population completeness, approved-version compliance or vendor support.
+
+**Record:** who performed the review, when it was performed, the evidence, the conclusion and any follow-up or approved exception. A due review is not evidence of a completed review.
+
+</Accordion>
+
+<Accordion title="Review network inventory and reachability">
+
+**Review every 30 days** · BIOS Network Health
+
+Reconcile controller-reported devices against the approved firewall, switch and access point inventory. Record expected devices absent from the controller feed and investigate offline or unmanaged devices. The automated UniFi and SonicWall checks cover only devices returned by each controller; neither proves the MSP's expected inventory is complete.
 
 **Record:** who performed the review, when it was performed, the evidence, the conclusion and any follow-up or approved exception. A due review is not evidence of a completed review.
 

@@ -2,6 +2,34 @@
 
 Append dated entries. Keep evidence precise and do not turn planned checks into passed checks.
 
+## 15 October 2026 — Generic network reachability guide and SonicWall contract
+
+Updated the generated network control reference and SonicWall setup guide against
+the ALI-118 application candidate. The control says only that devices in a
+complete UniFi or SonicWall controller inventory report online; its limit text
+keeps approved-estate reconciliation, firewall policy, firmware compliance,
+licensing and end-of-life review outside that automated claim. The SonicWall
+guide records the selected-tenant summary-count/inventory agreement, unique
+serial and boolean `liveStatus` requirements, and the no-empty-inventory pass
+boundary. The category overview now reflects the source template's 20 manual
+checks.
+
+The predicate generator first found two application vocabulary entries absent
+from this docs branch (`last_successful_sign_in` and `network_device_state`);
+their human descriptions were added before regeneration. The control generator
+then required an interpretation for the new network predicate; this was added
+before regenerating the catalogue. Its full output also refreshed an unrelated
+Identity control against the supplied app candidate. That change is retained
+as source-backed catalogue reconciliation and should be reviewed with the
+generator diff.
+
+Predicate/control generators ran against the application candidate; the docs
+vault checker, Mintlify broken-link, OpenAPI, build and accessibility checks
+passed. A local Mintlify preview could not be brought up: the Node 22 container
+stalled during a second global CLI install, so no desktop/mobile rendering check
+is claimed. The supplied app candidate's focused checks passed, but this is not
+production or BIOS-live acceptance. No docs publication has occurred.
+
 ## 9 October 2026 — docs logo verified live after PR49
 
 After PR49 merged as `12ac46af1bfb38d14adf48d4a82b894ef3857065`, a browser

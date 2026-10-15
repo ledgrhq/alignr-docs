@@ -41,6 +41,8 @@ SonicWall NSM supplies firewall inventory, firmware, reachability, reported upda
 
 For SaaS, discovery may list several tenants, but this connection collects the **selected NSM tenant**. Configure separate connections for other tenant scopes. Mapping every discovered tenant does not make one tenant-scoped credential collect them all.
 
+Before a collection can support the guided reachability check, Alignr compares the selected tenant's device-summary count with the fully paginated inventory. Every device must have a unique serial, tenant attribution and a boolean `liveStatus`; a mismatch or missing field fails the collection. The check describes only devices reported by that NSM inventory. It does not compare the controller inventory with your approved estate, and an empty inventory does not pass it.
+
 **Checkpoint:** the credential reaches the intended NSM service, tenant assignments are correct and one client's firewall evidence matches its environment.
 
 ## Recover from a setup problem

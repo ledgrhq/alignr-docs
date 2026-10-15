@@ -55,6 +55,7 @@ notes = {
  'has_licence':'This checks that an observed licence value exists, not that the licence is paid, appropriate, actively used or required for every account type. Review exceptions for service and other special-purpose identities.',
  'licence_renewal_date':'This checks that a renewal value is present, not that the date is in the future or the commercial terms are suitable.',
  'firmware_update_available':'No reported update is not proof of supported firmware or full device hardening. An available update still needs risk review and scheduling.',
+ 'network_device_state':'This is limited to devices returned by a complete controller inventory. It does not prove the MSP-approved estate is complete or that firewall configuration meets a security baseline.',
  'external_spf_present':'This is the bounded DNS presence check, not a full validation of authorised senders or every SPF include. Complete the manual SPF review.',
  'external_dmarc_enforced':'This checks the collected DNS enforcement signal. It does not test actual message alignment, reporting operation or every mail flow.',
  'external_mx_present':'A usable MX observation does not prove mail acceptance or correct routing for every sender. Null MX does not satisfy the source check.',
@@ -88,6 +89,7 @@ for key,(title,desc) in groups.items():
    'backup_protected_by': 'Workloads with a recorded backup product.',
    'backup_job_state': 'Backup jobs with a recorded status.',
    'licence_seats_purchased': 'Licences with a purchased-seat observation.',
+   'network_device_state': 'Devices reported in a complete network-controller inventory.',
   }.get(d['match']['predicate'], 'Subjects with a recorded '+labels[d['match']['predicate']].lower()+' observation.')
   explanations = {
    'mfa_registered': 'Each selected account should have MFA registered.',
@@ -108,6 +110,7 @@ for key,(title,desc) in groups.items():
    'has_licence': 'Each selected account should have a recorded licence.',
    'licence_renewal_date': 'Each selected licence should have a recorded renewal date.',
    'firmware_update_available': 'Each selected device should report that no firmware update is available.',
+   'network_device_state': 'Each device in the complete controller-reported inventory should report online.',
    'external_spf_present': 'Each selected domain should have the expected SPF presence signal.',
    'external_dmarc_enforced': 'Each selected domain should have the expected DMARC enforcement signal.',
    'external_mx_present': 'Each selected domain should have a usable MX observation.',

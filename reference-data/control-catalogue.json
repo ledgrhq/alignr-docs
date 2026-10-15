@@ -3,7 +3,7 @@
     "seeded_controls": 18,
     "library_templates": 7,
     "library_controls": 15,
-    "manual_checks": 19
+    "manual_checks": 20
   },
   "seeded_controls": [
     {
@@ -63,7 +63,7 @@
     {
       "name": "Dormant accounts are disabled",
       "slug": "dormant-accounts-are-disabled",
-      "description": "An account with no sign-in for longer than the configured window should be disabled, not left enabled and unattended \u2014 the classic shape of an incomplete offboarding or a forgotten test account.",
+      "description": "An account with no successful sign-in for longer than the configured window should be disabled. Microsoft includes successful background app sign-ins; a mailbox is not required.",
       "severity": "high",
       "category": "Identity",
       "autonomy": "change_ticket",
@@ -73,7 +73,7 @@
         },
         "where": [
           {
-            "fact": "last_sign_in",
+            "fact": "last_successful_sign_in",
             "op": "older_than_days",
             "value": {
               "param": "dormant_days"
@@ -91,7 +91,7 @@
         "title": "Dormant account is still enabled",
         "evidence": [
           "account_enabled",
-          "last_sign_in"
+          "last_successful_sign_in"
         ]
       },
       "parameters": {
@@ -101,7 +101,7 @@
           "min": 1,
           "max": 365,
           "label": "Dormant after (days)",
-          "help": "How long an account may go without an interactive sign-in before it should have been disabled."
+          "help": "How long an account may go without a successful sign-in before it should have been disabled."
         }
       }
     },
@@ -813,7 +813,7 @@
       "key": "bios-network",
       "name": "BIOS Network Health",
       "domain": "Firewall and network",
-      "summary": "Check firmware updates and review your network equipment and settings.",
+      "summary": "Review network inventory, firmware lifecycle and security settings.",
       "source_workflows": [
         "WF-19",
         "WF-20",
@@ -822,40 +822,49 @@
       ],
       "controls": [
         {
-          "name": "Network firmware has no update pending",
-          "slug": "firmware-current",
-          "description": "Managed network devices must not report an available firmware update.",
+          "name": "Controller-reported network devices report reachable",
+          "slug": "network-devices-report-reachable",
+          "description": "Checks only devices returned by a complete UniFi Network or SonicWall NSM inventory snapshot. Offline devices fail; failed or incomplete inventory and missing state remain no-data. Expected devices absent from the controller still require manual reconciliation.",
           "category": "Network",
-          "severity": "medium",
+          "severity": "high",
           "autonomy": "suggest_only",
           "definition": {
             "match": {
-              "predicate": "firmware_update_available"
+              "predicate": "network_device_state"
             },
             "expect": [
               {
-                "fact": "firmware_update_available",
+                "fact": "network_device_state",
                 "op": "eq",
-                "value": false
+                "value": "online"
               }
             ],
-            "severity": "medium",
-            "title": "Network firmware update is available",
+            "severity": "high",
+            "title": "Network device is not reachable",
             "evidence": [
-              "firmware_update_available"
+              "network_device_state"
             ]
           },
           "parameters": {},
           "enabled": true,
           "source_workflows": [
-            "WF-20"
+            "WF-24"
           ]
         }
       ],
       "manual_checks": [
         {
-          "name": "Review network device availability",
-          "instructions": "Check the firewall, switches and access points against the approved network inventory. Record missing or offline devices and confirm the source population excludes endpoints and unrelated resources.",
+          "name": "Review network firmware and lifecycle",
+          "instructions": "Pass when every in-scope firewall, switch and access point is reconciled to an MSP-approved firmware version and current vendor support status. Fail when any device is behind the approved version, unsupported, end of life, missing from the inventory, or has unknown status. Evidence: approved version source, device model and installed firmware, vendor lifecycle reference, and a list of unresolved devices or mismatches. Controller-reported model, firmware and update-availability facts can support this review but do not prove population completeness, approved-version compliance or vendor support.",
+          "category": "Network",
+          "review_interval_days": 30,
+          "source_workflows": [
+            "WF-20"
+          ]
+        },
+        {
+          "name": "Review network inventory and reachability",
+          "instructions": "Reconcile controller-reported devices against the approved firewall, switch and access point inventory. Record expected devices absent from the controller feed and investigate offline or unmanaged devices. The automated UniFi check covers only devices returned by that controller; it does not prove the MSP's expected inventory is complete.",
           "category": "Network",
           "review_interval_days": 30,
           "source_workflows": [
